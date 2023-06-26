@@ -258,6 +258,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.4.2)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -342,6 +343,7 @@ DEPENDENCIES
   simple_form
   spring
   sprockets (= 3.6.3)
+  sqlite3 (~> 1.4)
   therubyracer
   thinreports
   touchpunch-rails

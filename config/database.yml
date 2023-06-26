@@ -62,17 +62,17 @@ test:
 production:
   <<: *default
   
-	#for render
-	adapter: postgresql
+  #for render
+  adapter: postgresql
   encoding: unicode
   pool: 5
-	
-	#for centos
-	#database: adusu_db
+  
+  #for centos
+  #database: adusu_db
   #username: adusu
   #password: Adusu2023%
   
-	#below is not work well...pending.
+  #below is not work well...pending.
   #username: <%= ENV['RAILS_USER'] %>
   #password: <%= ENV['RAILS_DATABASE_PASSWORD'] %>
 
