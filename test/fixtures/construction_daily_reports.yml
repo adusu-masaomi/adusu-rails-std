@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  working_date: 2023-05-13
+  construction_datum_id: 1
+  staff_id: 1
+  start_time_1: 2023-05-13 16:26:27
+  end_time_1: 2023-05-13 16:26:27
+  start_time_2: 2023-05-13 16:26:27
+  end_time_2: 2023-05-13 16:26:27
+  working_times: 1
+  man_month: 9.99
+  labor_cost: 1
+  working_details: MyString
+
+two:
+  working_date: 2023-05-13
+  construction_datum_id: 1
+  staff_id: 1
+  start_time_1: 2023-05-13 16:26:27
+  end_time_1: 2023-05-13 16:26:27
+  start_time_2: 2023-05-13 16:26:27
+  end_time_2: 2023-05-13 16:26:27
+  working_times: 1
+  man_month: 9.99
+  labor_cost: 1
+  working_details: MyString

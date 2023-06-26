@@ -1,0 +1,58 @@
+<%= simple_form_for @company, :html => { :class => 'well form-horizontal' } do |f| %>
+  <%= f.input :name, input_html:{:tabindex=>"1"} %>
+  <%= f.input :representative_title, input_html:{:tabindex=>"2"} %>
+  <%= f.input :representative_name, input_html:{:tabindex=>"3"} %>
+  <%= f.input :post, hint: "＊数値のみ（ハイフンなし）で入力して下さい。" , input_html:{id:"post", :tabindex=>"4", :onchange => "formatPost()",  :onKeyUp => "AjaxZip3.zip2addr(this,'','addressX','addressX');" } %>
+  <%= f.input :address, input_html:{id:"address", :tabindex=>"5", name:"addressX"} %>
+  <!--<%= f.input :house_number, input_html:{:tabindex=>"6"} %>-->
+  <%= f.input :address2, input_html:{:tabindex=>"6"} %>
+  <%= f.input :tel, input_html:{:tabindex=>"7"} %>
+  <%= f.input :fax, input_html:{:tabindex=>"8"} %>
+  <%= f.input :email, input_html:{:tabindex=>"9"} %>
+  <%= f.input :invoice_number, input_html:{:tabindex=>"10"} %>
+  <%= f.input :estimate_labor_cost, input_html:{:tabindex=>"11"} %>
+  <!--担当者(注文)-->
+  <%= f.input :responsible_order, input_html:{:tabindex=>"12"} %>
+  
+  <!--振込先１-->
+  <%= f.input :bank_name_1, input_html:{:tabindex=>"13"} %>
+  <%= f.input :bank_branch_name_1, input_html:{:tabindex=>"14"} %>
+  <%= f.label :口座種別１, {:class => "my-custom-class-l", style: 'width:70px;'} %>
+  <%= f.select :account_type_1, Company.account_type_division, {:include_blank => true}, 
+       {id:'account_type_1', :class => "my-custom-class",
+          style: 'width:120px;margin-left:0px;font-size:18px;', :tabindex=>"15" } %>
+          
+  <%= f.input :account_number_1, input_html:{:tabindex=>"16"} %>
+  <%= f.input :holder_1, input_html:{:tabindex=>"17"} %>
+  
+  <!--振込先２-->
+  <%= f.input :bank_name_2, input_html:{:tabindex=>"18"} %>
+  <%= f.input :bank_branch_name_2, input_html:{:tabindex=>"19"} %>
+  
+  <%= f.label :口座種別２ , {:class => "my-custom-class-l", style: 'width:70px;'} %>
+  <%= f.select :account_type_2, Company.account_type_division, {:include_blank => true}, 
+       {id:'account_type_2', :class => "my-custom-class",
+          style: 'width:120px;margin-left:0px;font-size:18px;', :tabindex=>"20" } %>
+  
+  <%= f.input :account_number_2, input_html:{:tabindex=>"21"} %>
+  <%= f.input :holder_2, input_html:{:tabindex=>"22"} %>
+  
+  <%= f.input :bank_name_3, input_html:{:tabindex=>"23"} %>
+  <%= f.input :bank_branch_name_3, input_html:{:tabindex=>"24"} %>
+  
+  <%= f.label :口座種別３ , {:class => "my-custom-class-l", style: 'width:70px;'} %>
+  <%= f.select :account_type_3, Company.account_type_division, {:include_blank => true}, 
+       {id:'account_type_3', :class => "my-custom-class",
+          style: 'width:120px;margin-left:0px;font-size:18px;', :tabindex=>"25" } %>
+  
+  <%= f.input :account_number_3, input_html:{:tabindex=>"26"} %>
+  <%= f.input :holder_3, input_html:{:tabindex=>"27"} %>
+  
+  <!-- -->
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                companies_path, :class => 'btn btn-default' %>
+<% end %>
+
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>

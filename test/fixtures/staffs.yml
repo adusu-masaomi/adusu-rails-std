@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  staff_name: MyString
+  furigana: MyString
+  affiliation_id: 1
+  hourly_wage: 1
+  daily_pay: 1
+
+two:
+  id: 1
+  staff_name: MyString
+  furigana: MyString
+  affiliation_id: 1
+  hourly_wage: 1
+  daily_pay: 1

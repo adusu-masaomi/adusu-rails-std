@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quotation_material_header_id: 1
+  material_id: 1
+  material_code: MyString
+  material_name: MyString
+  maker_id: 1
+  maker_name: MyString
+  quantity: 1
+  unit_master_id: 1
+  list_price: 1
+  quotation_unit_price_1: 1
+  quotation_unit_price_2: 1
+  quotation_unit_price_3: 1
+  quotation_price_1: 1
+  quotation_price_2: 1
+  quotation_price_3: 1
+  bid_flag_1: 1
+  bid_flag_2: 1
+  bid_flag_3: 1
+  mail_sent_flag: 1
+  quotation_email_flag_1: 1
+  quotation_email_flag_2: 1
+  quotation_email_flag_3: 1
+  order_email_flag_1: 1
+  order_email_flag_2: 1
+  order_email_flag_3: 1
+  sequential_id: 1
+
+two:
+  quotation_material_header_id: 1
+  material_id: 1
+  material_code: MyString
+  material_name: MyString
+  maker_id: 1
+  maker_name: MyString
+  quantity: 1
+  unit_master_id: 1
+  list_price: 1
+  quotation_unit_price_1: 1
+  quotation_unit_price_2: 1
+  quotation_unit_price_3: 1
+  quotation_price_1: 1
+  quotation_price_2: 1
+  quotation_price_3: 1
+  bid_flag_1: 1
+  bid_flag_2: 1
+  bid_flag_3: 1
+  mail_sent_flag: 1
+  quotation_email_flag_1: 1
+  quotation_email_flag_2: 1
+  quotation_email_flag_3: 1
+  order_email_flag_1: 1
+  order_email_flag_2: 1
+  order_email_flag_3: 1
+  sequential_id: 1

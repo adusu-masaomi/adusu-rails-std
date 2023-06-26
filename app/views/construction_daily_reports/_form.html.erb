@@ -1,0 +1,937 @@
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+<%= simple_form_for @construction_daily_report, :html => {id: "report-form" ,  :class => 'well form-horizontal'}  do |f| %>
+  
+  <% if @construction_daily_report.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @construction_daily_report.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @construction_daily_report.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+ <% end %>
+  
+  <!--スマホ対応 datepicker使う場合は多めに上余白を空ける--> 
+  <!--</br></br></br></br>-->
+  <!--<%= f.input :working_date , input_html:{id: "working_date" , class: "test", style: 'width:220px' , :tabindex=>"0" } , as: :date_picker %>-->
+  
+  <%= f.input :working_date , as: :string, input_html:{id: "working_date" , class: "datepicker", style: 'width:120px' , :tabindex=>"0" }  %>
+  <!--下記だと工事日がうまく更新されないので保留・・・-->
+  <!--<%= f.input :working_date , input_html:{id: "working_date" , style: 'width:220px'}  %>-->
+  <%= f.label :工事名, {:class => "my-custom-class-l"}  %></br>
+  <% if @construction_data.present? %>
+    <%= f.collection_select :construction_datum_id, @construction_data, :id, :p_cd_name, {} , 
+           {id:"construction_datum_id",  class: "searchableConstructionCode" , style: 'width:400px', :tabindex=>"1" } %>
+  <% else %>
+    <%= f.collection_select :construction_datum_id, ConstructionDatum.order('construction_code DESC').all, :id, :p_cd_name, {:prompt => "どれか一つを選択して下さい"} , 
+           {id:"construction_datum_id",  class: "searchableConstructionCode" , style: 'width:400px', :tabindex=>"1" } %>
+  <% end %>
+  </br>
+  <%= f.label :社員, {:class => "my-custom-class-l"}  %></br>
+  <%= f.collection_select :staff_id, Staff.all, :id, :staff_name, {:prompt => "どれか一つを選択して下さい" } , {id:"staff_id", class: "my-custom-class" , 
+      :tabindex=>"2", :onchange=> "getDailyPay(this.form)" }  %>
+  <%= f.collection_select :daily_pay, Staff.all, :id, :daily_pay, {:selected => @construction_daily_report.staff_id} , { id:"daily_pay" , :readonly => true } %>
+  
+  <!--所属 add170707 -->
+  <!--<%= f.collection_select :affiliation_id, Staff.all, :id, :affiliation_id, 
+         {:selected => @construction_daily_report.staff_id} , { id:"affiliation_id" }%>-->
+  <%= f.input :affiliation , input_html:{id:"affiliation"}, as: :hidden  %>
+  
+  
+  <%= f.input :start_time_1, default: Time.parse('00:00'), input_html:{id: "start_time_1" , :tabindex=>"3", :onchange => "calcTimeVarious(this.form)"} %>
+  <%= f.input :end_time_1, default: Time.parse('00:00'), input_html:{id: "end_time_1", :tabindex=>"4", :onchange => "calcTimeVarious(this.form)"} %>
+  <%= f.input :start_time_2, default: Time.parse('00:00') , input_html:{id: "start_time_2", :tabindex=>"5", :onchange => "calcTimeVarious_2(this.form)"} %>
+  <%= f.input :end_time_2, default: Time.parse('00:00') , input_html:{id: "end_time_2", :tabindex=>"6", :onchange => "calcTimeVarious_2(this.form)"} %>
+  
+  <div style="margin-left : -10px">
+  <!--<%= f.check_box :regard_one_day, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} , "true", "false" %>-->
+  <%= f.check_box :is_one_day_work, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} , "true", "false" %>
+  <%= f.label_tag :regard_one_day, '１日勤務とみなす', {style: 'color: blue'} %>
+  
+  &nbsp;&nbsp;
+  <%= f.check_box :is_no_break_time_1, {id: "is_no_break_time_1", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.label_tag :is_no_break_time_1, '休憩１を含めない', {style: 'color: black'} %>
+  &nbsp;&nbsp;
+  <%= f.check_box :is_no_break_time_2, {id: "is_no_break_time_2", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.label_tag :is_no_break_time_2, '休憩２を含めない', {style: 'color: black'} %>
+  &nbsp;&nbsp;
+  <%= f.check_box :is_no_break_time_3, {id: "is_no_break_time_3", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.label_tag :is_no_break_time_3, '休憩３を含めない', {style: 'color: black'} %>
+    
+  </br>
+  
+  </br>
+  
+  
+  <!--半日勤務の判断は難しいため、一旦保留とする-->
+  <%= f.check_box :regard_half_day, {id: "regard_half_day", :onchange => "calcRegardTimeAs(this.form)", :style => "display: none;" }, "true", "false" %>
+  <!-- <%= f.label_tag :regard_half_day, '半日勤務とみなす', {style: 'color: brown'} %></br>-->
+  </div>
+  
+  <%= f.input :working_times, input_html:{id:"working_times", :tabindex=>"7"} , hint: "*ここは自動計算されますので、通常は入力不要です。" %>
+  <%= f.input :man_month, input_html:{id:"man_month", :tabindex=>"8"} , hint: "*ここは自動計算されますので、通常は入力不要です。"  %>
+  <%= f.input :labor_cost, input_html:{id:"labor_cost", :tabindex=>"9"} , hint: "*ここは自動計算されますので、通常は入力不要です。"  %>
+  <%= f.input :labor_cost_no_add, label: "労務費（加算なし）", input_html:{id:"labor_cost_no_add", :tabindex=>"10", :readonly => true}   %>
+  
+  <%= f.input :working_details, input_html:{id:"working_details", :tabindex=>"11"} %>
+  
+  <%= f.fields_for :construction_datum, :remote => true do |p| %>
+    <%= p.input :construction_start_date , input_html:{id:"construction_start_date"}, as: :date_picker, as: :hidden   %>
+    <%= p.input :construction_end_date , input_html:{id:"construction_end_date"}, as: :date_picker, as: :hidden    %>
+  <% end %>
+  
+  <!--作業時間計算用-->
+  <!--休憩時間など、各種設定を読み込む 標準仕様 -->
+  <!--<%= f.input :break_time_1_start_time , :value => @break_time_1_start_time, input_html:{id:"break_time_1_start_time"}, as: :hidden  %>-->
+  <%= f.hidden_field :working_hour, :value => @working_hour, id:"working_hour" %>
+  
+  <%= f.hidden_field :working_time_start_time, :value => @working_time_start_time, id:"working_time_start_time" %>
+  <%= f.hidden_field :working_time_end_time, :value => @working_time_end_time, id:"working_time_end_time" %>
+  
+  <%= f.hidden_field :break_time_1_start_time, :value => @break_time_1_start_time, id:"break_time_1_start_time" %>
+  <%= f.hidden_field :break_time_1_end_time, :value => @break_time_1_end_time, id:"break_time_1_end_time" %>
+  <%= f.hidden_field :break_time_2_start_time, :value => @break_time_2_start_time, id:"break_time_2_start_time" %>
+  <%= f.hidden_field :break_time_2_end_time, :value => @break_time_2_end_time, id:"break_time_2_end_time" %>
+  <%= f.hidden_field :break_time_3_start_time, :value => @break_time_3_start_time, id:"break_time_3_start_time" %>
+  <%= f.hidden_field :break_time_3_end_time, :value => @break_time_3_end_time, id:"break_time_3_end_time" %>
+  <!--早出時間-->
+  <%= f.hidden_field :overtime_early_start_time, :value => @overtime_early_start_time, id:"overtime_early_start_time" %>
+  <%= f.hidden_field :overtime_early_end_time, :value => @overtime_early_end_time, id:"overtime_early_end_time" %>
+  <!--残業時間-->
+  <%= f.hidden_field :overtime_start_time, :value => @overtime_start_time, id:"overtime_start_time" %>
+  <%= f.hidden_field :overtime_end_time, :value => @overtime_end_time, id:"overtime_end_time" %>
+  <!--深夜残業時間-->
+  <%= f.hidden_field :overtime_midnight_start_time, :value => @overtime_midnight_start_time, id:"overtime_midnight_start_time" %>
+  <%= f.hidden_field :overtime_midnight_end_time, :value => @overtime_midnight_end_time, id:"overtime_midnight_end_time" %>
+  <!---->
+  
+  <!--コントローラ側に画面遷移用のパラメータを渡すためのタグ。-->
+  <%= hidden_field_tag(:construction_id, params[:construction_id]) %>
+  <%= hidden_field_tag(:move_flag, params[:move_flag]) %>
+  <!-- -->
+  
+  <%= f.input :holiday_flag, input_html:{id:'holiday_flag'} , as: :hidden %>
+  
+  <%= f.button :submit, :class => 'btn-primary', :tabindex => "12" %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                construction_daily_reports_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                :class => 'btn btn-white_rsd' %>
+
+<% end %>
+
+ 
+
+<script type="text/javascript">
+  
+  var working_hour = 0;
+  var working_time_start_time = 0;
+  var working_time_end_time = 0;
+  
+  $(document).ready(function(){
+  //$(document).on('turbolinks:load', function(){
+      //検索可能なリストボックス(品名の場合)
+       $(".searchableConstructionCode").select2({ theme: "classic" });
+
+       $(".searchableConstructionCode").change(function(e) {
+         setConstructionDateDefault();
+       });  
+       //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。イマイチだが・・
+       $( ".searchableConstructionCode" ).on("select2:close", function (e) {
+         $('[tabindex=2]').focus(); 
+       });
+      
+	  
+	  $(".datepicker").on("dp.change", function(e) {
+	    getDailyPay.call({}, this.form);
+        //add180501
+        //工事画面から遷移した場合、日付のみ入力もあり得る為
+        setConstructionDateDefault();
+	  });
+	  
+	  //debugger;
+    
+    //就業時間の取得 -- 標準版仕様
+    //var working_hour = 0;
+    if (document.getElementById('working_hour').value != null){
+      working_hour = parseInt(document.getElementById('working_hour').value);
+    }else{
+      working_hour = 27000;  //nullの場合のデフォルト---基本、ないはず..
+    }
+    //
+	  
+    if (document.getElementById('working_time_start_time').value != null){
+      working_time_start_time = parseInt(document.getElementById('working_time_start_time').value);
+    }
+    if (document.getElementById('working_time_end_time').value != null){
+      working_time_end_time = parseInt(document.getElementById('working_time_end_time').value);
+    }
+    
+    //debugger;
+    
+  });
+  
+  //工事日のセット(デフォルト)
+   function setConstructionDateDefault()
+   {  
+     obj = document.getElementById("construction_datum_id");
+     construction_id = parseInt(obj.value);
+     
+     if (!(isNaN(construction_id))){  
+       
+       $.get("<%= construction_daily_reportz_start_day_select_path %>",
+         {id: construction_id },
+          function(data){
+               obj = document.getElementById("construction_start_date").textContent;
+               document.getElementById("construction_start_date").value = obj;
+            //   obj = document.getElementById("construction_end_date");
+            //   debugger;
+          }
+        );
+        $.get("<%= construction_daily_reportz_end_day_select_path %>",
+         {id: construction_id },
+          function(data){
+               obj = document.getElementById("construction_end_date").textContent;
+               document.getElementById("construction_end_date").value = obj;
+               //obj = document.getElementById("construction_end_date");
+               //debugger;
+          }
+        );
+      }
+    };
+  
+     // 登録前処理(工事日のセット)
+     $('#report-form').submit(function(){
+    //$(document).on('click', 'btn-submit', function(){
+     
+     // 作業日を常に最新の作業開始日・終了日へ更新させる!!
+     var working_date = document.getElementById("working_date").value;
+     var start_date = document.getElementById("construction_start_date").value;
+     var end_date = document.getElementById("construction_end_date").value;
+　　　　
+　　　working_date = new Date(working_date);
+     start_date = new Date(start_date);
+     end_date = new Date(end_date);　          
+
+     // 工事開始日の判定
+     //if (working_date <= start_date) {
+     //upd180501 タイミングの問題で日付がNULLになっているケース有るため条件追加
+     if (working_date <= start_date || start_date.toString() === "Invalid Date") {
+       document.getElementById("construction_start_date").value = working_date;
+     }
+     
+     // 工事終了日の判定
+     //if (working_date >= end_date) {
+     //upd180501 タイミングの問題で日付がNULLになっているケース有るため条件追加
+     if (working_date >= end_date || end_date.toString() === "Invalid Date") {
+       document.getElementById("construction_end_date").value = working_date;
+     }
+     
+     //obj = document.getElementById("construction_start_date").value;
+    
+   });
+
+  //勤務時間計算
+  var kinmu_time = 0;
+  var kinmu_time_2 = 0;
+  var start_time = 0;
+  var end_time = 0;
+  
+   function calcTimeVarious(f)
+   { 
+     // 勤務時間を計算
+     kinmu_time = 0;
+     
+     //開始時間1
+     obj = document.getElementById("start_time_1");
+     start_time = obj.value; 
+     if (start_time >= 0) {
+       start_time = ( parseInt(start_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
+     }
+     //終了時間1
+     obj = document.getElementById("end_time_1");
+     end_time = obj.value;
+     
+     if (end_time != 0) 
+     {
+       end_time = ( parseInt(end_time) * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+     }else{
+       //終了時間24時の場合
+       if (start_time > 0) {
+         end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+       }
+     }
+
+     //calcWorkTime.call(); 
+     var tmp_kinmu_time = 0;
+     kinmu_time = calcWorkTime(tmp_kinmu_time); 
+     
+     //テキストへセット
+     document.getElementById("working_times").value = kinmu_time + kinmu_time_2 ;  
+     
+     //debugger;
+     
+     // 工数を算出
+     if (kinmu_time >= 0) {
+       var temp_kinmu_time = 0 ;
+       //temp_kinmu_time = (kinmu_time + kinmu_time_2) / 27000;
+       //標準版仕様---
+       temp_kinmu_time = (kinmu_time + kinmu_time_2) / working_hour;
+       temp_kinmu_time =  floatFormat(temp_kinmu_time, 3) ; 
+       document.getElementById("man_month").value = temp_kinmu_time;
+       
+       //日給を取得
+       getDailyPay.call({}, f);
+     }
+      
+     //みなし勤務の場合の計算
+     if (document.getElementById("regard_one_day").checked == true || document.getElementById("regard_half_day").checked == true) {
+      calcRegardTimeAs(f);
+     }
+   }
+ 
+ overtime_50 = 0;
+ overtime_25 = 0;
+ pay_50 = 0;
+ pay_25 = 0;
+ //社員IDを切り替えた場合に変数リセット
+  function resetValue(){
+    overtime_50 = 0;
+    overtime_25 = 0;
+    pay_50 = 0;
+    pay_25 = 0;
+  }
+ 
+ function calcTimeVariousOverTime() {
+ //休日・残業時間の加算 
+   //早出時間(規定)の取得
+   overtime_early_start_time = 0;
+   if (document.getElementById('overtime_early_start_time').value != null){
+     overtime_early_start_time = parseInt(document.getElementById('overtime_early_start_time').value);
+   }
+   overtime_early_end_time = 0;
+   if (document.getElementById('overtime_early_end_time').value != null){
+     overtime_early_end_time = parseInt(document.getElementById('overtime_early_end_time').value);
+   }
+   
+   //早朝(5:00~8:00)の計算
+   if (end_time <= overtime_early_end_time && end_time >= overtime_early_start_time) {
+     //終了時間が朝５時以降８時までの場合  
+     if (start_time >= overtime_early_start_time) {
+       overtime_25 = end_time - start_time;
+     }else if(start_time <= overtime_early_start_time || start_time >= working_time_end_time) {
+       //開始が前日の定時以降で、当日の早出開始時刻の前の場合
+       overtime_25 = end_time - overtime_early_start_time;
+     }
+   }else if (end_time >= overtime_early_end_time && start_time >= overtime_early_start_time && start_time <= overtime_early_end_time) {
+     //終了時時間が８時前、かつ開始時間が５〜８時の間(ex.6~8時)
+     overtime_25 = overtime_early_end_time - start_time;
+   }else if (end_time >= overtime_early_end_time && (start_time >= 0 && start_time <= overtime_early_start_time) || 
+      (end_time <= working_time_end_time && end_time >= overtime_early_end_time) && start_time >= working_time_end_time ) {
+     
+     //終了時間８時以降かつ開始時間８時前、または、終了時間８時から１７時３０、開始時間１７時３０以降の場合
+     //ex.0:00~9:00, 22:00~10:00
+     overtime_25 = overtime_early_end_time - overtime_early_start_time;
+   }
+   
+   
+   //残業時間(規定)の取得
+   overtime_start_time = 0;
+   if (document.getElementById('overtime_start_time').value != null){
+     overtime_start_time = parseInt(document.getElementById('overtime_start_time').value);
+   }
+   overtime_end_time = 0;
+   if (document.getElementById('overtime_end_time').value != null){
+     overtime_end_time = parseInt(document.getElementById('overtime_end_time').value);
+   }
+   
+   
+   //残業時間(18:00~22:00)の計算
+   //debugger;
+   
+   //if (end_time > 64800 && start_time < 79200) {
+   if (end_time > overtime_start_time && start_time < overtime_end_time) {
+     tmp_time = 0;
+     
+     //if (end_time < 79200 && start_time >= 64800) {
+     if (end_time < overtime_end_time && start_time >= overtime_start_time) {
+     //終了時間２２時以前かつ開始時間１８時以降の場合
+       tmp_time = end_time - start_time;
+     //}else if (end_time < 79200 && start_time >= 18000) { 
+     }else if (end_time < overtime_end_time && start_time >= overtime_early_start_time) { 
+       //終了時間２２時以前かつ開始時間５時以降の場合
+       tmp_time = end_time - overtime_start_time;
+     //}else if (end_time < 86400 && end_time >=79200) {
+     }else if (end_time < 86400 && end_time >= overtime_end_time) {
+       //終了時間２２時以降かつ終了時間２４時前の場合
+       //if (start_time >= 64800) {
+       if (start_time >= overtime_start_time) {
+         //開始時間が１８時以降？
+         //tmp_time = 79200 - start_time;
+         tmp_time = overtime_end_time - start_time;
+       } else {
+         //tmp_time = 79200 - 64800;
+         tmp_time = overtime_end_time - overtime_start_time;
+       }
+     //}else if (start_time >= 18000 && end_time > 0) {
+     }else if (start_time >= overtime_early_start_time && end_time > 0) {
+       //終了時間０時以降かつ開始時間５時以降の場合
+	     //tmp_time = 79200 - 64800;
+       tmp_time = overtime_end_time - overtime_start_time;
+     }
+     
+     overtime_25 += tmp_time;
+   
+   //}else if (start_time >= 64800 && end_time <= 18000 ) {
+   }else if (start_time >= overtime_start_time && end_time <= overtime_early_start_time ) {
+     //開始時１８時以降、終了時間５時前の場合(add171228)
+     //tmp_time = 79200 - start_time;
+     tmp_time = overtime_end_time - start_time;
+     
+     overtime_25 += tmp_time;
+   }
+   //}else if (start_time >= overtime_early_start_time && end_time > 0) {
+   //レアケース？(ex.5:00~2:00)
+   //  //終了時間０時以降かつ開始時間５時以降の場合
+   //  //tmp_time = 79200 - 64800;
+   //  tmp_time = overtime_end_time - overtime_start_time;
+   //  overtime_25 += tmp_time;
+   //}
+   
+   
+   //深夜残業時間(規定)の取得
+   overtime_midnight_start_time = 0;
+   if (document.getElementById('overtime_midnight_start_time').value != null){
+     overtime_midnight_start_time = parseInt(document.getElementById('overtime_midnight_start_time').value);
+   }
+   overtime_midnight_end_time = 0;
+   if (document.getElementById('overtime_midnight_end_time').value != null){
+     overtime_midnight_end_time = parseInt(document.getElementById('overtime_midnight_end_time').value);
+   }
+   
+   
+   //深夜帯(22:00~5:00)の計算
+   //if (start_time >=79200 || start_time >= 0 && start_time <= 18000 || end_time >=79200 ) {
+   if (start_time >= overtime_midnight_start_time || 
+      start_time >= 0 && start_time <= overtime_midnight_end_time || 
+      end_time >= overtime_midnight_start_time ) {
+    
+     //if (start_time >=79200 && (end_time >=79200 && end_time <= 89940) ){
+     if (start_time >= overtime_midnight_start_time && (end_time >= overtime_midnight_start_time
+         && end_time <= 89940) ){
+       //開始２２時以降かつ終了時間２２時以降〜０時59分前
+       overtime_50 = end_time - start_time;
+     //}else if (start_time >= 79200 && end_time <= 18000) {
+     }else if (start_time >= overtime_midnight_start_time && end_time <= overtime_midnight_end_time) {
+       //開始２２時以降かつ終了時間５時前
+       overtime_50 = 86400 - start_time + end_time;
+     //}else if (start_time >= 79200 && end_time > 18000) {
+     }else if (start_time >= overtime_midnight_start_time && end_time > overtime_midnight_end_time) {
+       //開始２２時以降かつ終了時間５時以降
+       //overtime_50 = 86400 - start_time + 18000;
+       overtime_50 = 86400 - start_time + overtime_midnight_end_time;
+     //}else if (start_time >= 0 && start_time <= 18000 && end_time <= 18000) {
+     }else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
+               end_time <= overtime_midnight_end_time) {
+       //開始０時以降５時以前
+       overtime_50 = end_time - start_time;
+     //}else if (start_time >= 0 && start_time <= 18000 && end_time > 18000) {
+     }else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
+               end_time > overtime_midnight_end_time) {
+       //開始０時以降５時以降
+       //overtime_50 = 18000 - start_time;
+       overtime_50 = 86400 - end_time;  //upd230623
+       overtime_50 += overtime_midnight_end_time - start_time;
+     //}else if (start_time >= 0 && end_time > 79200) {
+     }else if (start_time >= 0 && end_time > overtime_midnight_start_time) {
+       //開始０時以降で終了時間が２２時以降
+       //overtime_50 = end_time - 79200;
+       overtime_50 = end_time - overtime_midnight_start_time;
+     }
+   //}else if (start_time >= 64800 && end_time <= 18000) {
+   }else if (start_time >= overtime_start_time && end_time <= overtime_midnight_end_time) {
+     //開始18時以降で終了時間が５時以前 
+     midnight_time = 86400 - overtime_midnight_start_time;
+     
+     overtime_50 = end_time + midnight_time;   //(22:00~24:00分を足す。)
+   }
+   
+   //労務費の加算分を算出
+   //daily_pay = document.getElementById("daily_pay").options[0].innerText;
+   tmp_daily_pay = parseInt(daily_pay);
+   if (overtime_25 > 0) {
+     //overtime_25 = overtime_25 / 27000;
+     overtime_25 = overtime_25 / working_hour;
+     overtime_25 =  floatFormat(overtime_25, 3);
+     pay_25 += tmp_daily_pay * overtime_25 * 0.25
+   }
+   if (overtime_50 > 0) {
+     //overtime_50 = overtime_50 / 27000;
+     overtime_50 = overtime_50 / working_hour;
+     overtime_50 =  floatFormat(overtime_50, 3);
+     pay_50 += tmp_daily_pay * overtime_50 * 0.5
+   }
+   
+  
+   //
+ }
+ 
+ function calcTimeVarious_2(f)
+   { 
+     //calcTimeVariousとほぼ同じ
+   
+     // 勤務時間を計算
+     kinmu_time_2 = 0;
+     //開始時間1
+     obj = document.getElementById("start_time_2");
+     start_time = obj.value 
+     if (start_time >= 0) {
+       start_time = ( parseInt(start_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
+    }
+    //終了時間1
+     obj = document.getElementById("end_time_2");
+     end_time = obj.value 
+     
+     if (end_time != 0) {
+       end_time = ( parseInt(end_time) * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+     }else{
+        //終了時間24時の場合
+        if (start_time > 0) {
+           end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+        }
+     }
+       
+        var tmp_kinmu_time = 0;
+        kinmu_time_2 = calcWorkTime(tmp_kinmu_time); 
+       
+       //再編集時の場合の処理追加. 勤務時間1を再セットする。 
+       if (kinmu_time == 0 && document.getElementById("start_time_1").value > 0 && document.getElementById("end_time_1").value > 0 ) {
+           calcTimeVarious(f);
+         }
+       //
+	   
+	   //テキストへセット
+       document.getElementById("working_times").value = kinmu_time + kinmu_time_2;  
+   
+        // 工数を算出
+       if (kinmu_time_2 >= 0) {
+          
+          //debugger;
+          
+          var temp_kinmu_time = 0 ;
+          //temp_kinmu_time = (kinmu_time + kinmu_time_2) / 27000 ;
+          temp_kinmu_time = (kinmu_time + kinmu_time_2) / working_hour;
+          
+          temp_kinmu_time =  floatFormat(temp_kinmu_time, 3) ; 
+          document.getElementById("man_month").value = temp_kinmu_time;
+       }
+          
+         //日給を取得
+        getDailyPay.call({}, f)
+     //}
+   
+   };
+ 
+  //みなし勤務判定
+  function calcRegardTimeAs(f)
+  {
+    if (document.getElementById("regard_one_day").checked == true) {
+      //kinmu_time = 27000;
+      kinmu_time = working_hour;
+    
+    } else if (document.getElementById("regard_half_day").checked == true){
+      //現在未使用？？
+      kinmu_time = 13500;
+    }
+    
+    //終了時間1が１８時以降なら加算。(注！時間２は考慮しないものとする。)
+    obj = document.getElementById("end_time_1");
+    end_time = obj.value;
+    if (end_time != 0) {
+      end_time = ( parseInt(end_time) * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+    }
+    
+    //debugger;
+    
+    //if (end_time > 64800) {
+    if (end_time > working_time_end_time) {
+      //var add_time = end_time - 64800;
+      var add_time = end_time - working_time_end_time;
+      kinmu_time += add_time
+    }
+    
+    
+    //テキストへセット
+    document.getElementById("working_times").value = kinmu_time ;  
+    
+    if (document.getElementById("regard_one_day").checked == false && document.getElementById("regard_half_day").checked == false ){
+      calcTimeVarious(f)
+    }
+	
+    // 工数を算出
+    if (kinmu_time >= 0) {
+      var temp_kinmu_time = 0 ;
+      
+      //temp_kinmu_time = (kinmu_time + kinmu_time_2) / 27000;
+      temp_kinmu_time = (kinmu_time + kinmu_time_2) / working_hour;
+      
+      temp_kinmu_time =  floatFormat(temp_kinmu_time, 3) ; 
+      document.getElementById("man_month").value = temp_kinmu_time;
+            
+      //日給を取得
+      getDailyPay.call({}, f);
+        //document.getElementById("labor_cost").value = document.getElementById("daily_pay").value ; 
+    }
+    
+  }
+  
+  FLAG_SATURDAY_HOIDAY = 1;
+  FLAG_SUNDAY_HOLIDAY = 2;
+  
+  holiday_flag = 0;
+  
+  //土日祝、会社休日を求める。
+  function getHoliday(in_house, num_no_add,num){
+    // 曜日の表記
+    //var weekDayList = [ "日", "月", "火", "水", "木", "金", "土" ] ;
+    
+    var dateObject = document.getElementById("working_date").value;
+    dateObject =  new Date(dateObject);
+	
+    //var weekDay = weekDayList[ dateObj.getDay() ] ;	// 曜日
+    var wday = dateObject.getDay();
+		
+    if (wday == 0){
+      //日曜？
+      holiday_flag = FLAG_SUNDAY_HOLIDAY;
+      //休日の判定＆労務費へのセット(必須！)
+      addHoliday(holiday_flag, num_no_add,num);
+    } else {
+      //祝日or会社休日ないか判定。
+      if (getNationalHoliday(dateObject) == "祝日") {
+        //祝日判定(関数はapplication.htmlにて定義)
+        holiday_flag = FLAG_SATURDAY_HOIDAY;
+		  
+        //休日の判定＆労務費へのセット(必須！)
+        addHoliday(holiday_flag, num_no_add,num);
+      } else {
+        //upd170718 会社休日加算があるのは社内の人のみとする。
+        if (in_house == true) {
+          //会社休日の判定
+          var working_date = document.getElementById("working_date").value;
+		  
+          $.get("<%= business_holidayz_get_business_holiday_path %>",
+              { working_date: working_date },
+          function(data){
+			    
+            //jsの動き注意・・・（以下に繋がってjs発動するようにする必要あり!!）
+            obj = document.getElementById("holiday_flag").textContent
+            if (obj != undefined) {
+              if (obj == "1") {
+                if (wday == 6) {
+                  holiday_flag = FLAG_SATURDAY_HOIDAY;
+                } else {
+                  //土曜以外は日曜と同じ扱い(*0.35)
+                  holiday_flag = FLAG_SUNDAY_HOLIDAY;
+                }
+                //addHoliday(holiday_flag, num_no_add,num);
+              }else{
+                holiday_flag = 0;
+              }
+            }
+            //休日の判定＆労務費へのセット(必須！)
+            addHoliday(holiday_flag, num_no_add,num);
+          }
+            );
+		    } else {
+          //外注の場合
+          holiday_flag = 0;
+          //休日の判定＆労務費へのセット(必須！)
+          addHoliday(holiday_flag, num_no_add,num);
+        }
+	   }
+	  
+	}
+	
+	//return flag;
+	
+	
+  }
+ 
+ //休日の判定＆労務費へのセット(必須！)
+ function addHoliday(holiday_flag, num_no_add,num){
+   //add170801
+   pay_holiday = 0;
+	
+   switch (holiday_flag){
+   case FLAG_SATURDAY_HOIDAY:
+	 pay_holiday = num_no_add * 0.25
+	 num += pay_holiday
+     break;
+   case FLAG_SUNDAY_HOLIDAY:
+	 pay_holiday = num_no_add * 0.35
+	 num += pay_holiday
+     break;
+   }
+     	    
+   if (num >= 0) {
+      document.getElementById("labor_cost").value = num;
+	  document.getElementById("labor_cost_no_add").value = num_no_add;
+   }
+	//return pay_holiday;
+	//
+ 
+ }
+ 
+ 
+  var daily_pay = 0;
+  var staff_id = 0;
+  
+  // 日給をajaxで取得
+  function getDailyPay(f){
+    var staff_id = f.staff_id.value;
+    $.get("<%= construction_daily_reportz_staff_information_select_path %>",{ id: staff_id },
+      function(data){
+        //労務費をセット
+        obj = document.getElementById("daily_pay");
+        index = document.getElementById("daily_pay").selectedIndex;
+        if (index != undefined){
+          if (obj.options[index] != undefined){
+            daily_pay  = obj.options[index].innerText;
+          }
+        }
+      
+        //所属をセットし、社内か外注か判定する
+        obj = document.getElementById("affiliation").textContent;
+        document.getElementById("affiliation").value = obj;
+        var in_house = false;
+        
+        //↓↓↓ 標準版はカット？？？ ↓↓↓
+        
+        if (obj != null) {
+          var affiliation = parseInt(obj);
+          //村山さんも原則的に社員扱い
+          //須戸さんも同様 (upd210827)
+          //if (affiliation != AFFILIATION_OUTSOURCING || staff_id == 3) {
+          //if (affiliation != AFFILIATION_OUTSOURCING || (staff_id == 3 || staff_id == 6)) {
+          //  in_house = true;
+          
+          //標準仕様--外注も会社休日を考慮する
+          in_house = true;
+          
+          //}
+        }
+        //
+    
+        //var tmp_daily_pay  = daily_pay.options[0].innerText;	 
+        var num =  daily_pay * document.getElementById("man_month").value;
+        var num_no_add = num;   //手当加算前のものも保持する
+    
+        //休日・深夜帯分を加える
+        //add170417
+      
+        resetValue();
+        obj = document.getElementById("start_time_1");
+        start_time = obj.value;
+        calcStartTime();
+        obj = document.getElementById("end_time_1");
+        end_time = obj.value;
+        calcEndTime();
+        calcTimeVariousOverTime();
+        
+        obj = document.getElementById("start_time_2");
+        start_time = obj.value;
+        calcStartTime();
+        obj = document.getElementById("end_time_2");
+        end_time = obj.value;
+        calcEndTime();
+        calcTimeVariousOverTime();
+    
+        num += pay_25 + pay_50;
+        //
+
+        //休日の判定&労務費加算
+        
+        //getHoliday(in_house);   //upd170718
+        getHoliday(in_house, num_no_add,num);
+      
+        }
+    );
+  }
+  
+  
+  function calcStartTime(){
+    if (start_time >= 0) {
+      start_time = ( parseInt(start_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
+    }
+  }
+  function calcEndTime(){
+    if (end_time >= 0) {
+      end_time = ( parseInt(end_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
+    }else{
+      //add230623
+      end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
+    }
+  }
+  
+  // 日給をajaxで取得(ajax未使用)
+   //function getDailyPay(f){
+     //var tmp_daily_pay  = daily_pay.options[0].innerText;	 
+   //  var num =  daily_pay * document.getElementById("man_month").value;
+			
+	//		//休日・深夜帯分を加える
+	//		//add170417
+	//		calcTimeVariousOverTime();
+	//		num += pay_25 + pay_50;
+	//		//
+	  //      if (num >= 0) {
+        //       document.getElementById("labor_cost").value = num;
+          //  }
+   //};
+  
+  //標準版仕様-- 休憩時間を考慮して再計算する
+  function recalcBreakTime(f){
+    calcTimeVarious(f);
+    calcTimeVarious2(f);
+  }
+
+  function calcWorkTime(tmp_kinmu_time){
+    // 勤務時間の計算
+    
+    //debugger;
+    //document.getElementById('break_time_1_start_time').value
+    
+    //標準版仕様---
+    var break_time_1_start_time = 0;
+    var break_time_1_end_time = 0;
+    var break_time_2_start_time = 0;
+    var break_time_2_end_time = 0;
+    var break_time_3_start_time = 0;
+    var break_time_3_end_time = 0;
+    
+    //規定休憩時間を取得
+    if (document.getElementById('break_time_1_start_time').value != null){
+      break_time_1_start_time = parseInt(document.getElementById('break_time_1_start_time').value);
+    }
+    if (document.getElementById('break_time_1_end_time').value != null){
+      break_time_1_end_time = parseInt(document.getElementById('break_time_1_end_time').value);
+    }
+    if (document.getElementById('break_time_2_start_time').value != null){
+      break_time_2_start_time = parseInt(document.getElementById('break_time_2_start_time').value);
+    }
+    if (document.getElementById('break_time_2_end_time').value != null){
+      break_time_2_end_time = parseInt(document.getElementById('break_time_2_end_time').value);
+    }
+    if (document.getElementById('break_time_3_start_time').value != null){
+      break_time_3_start_time = parseInt(document.getElementById('break_time_3_start_time').value);
+    }
+    if (document.getElementById('break_time_3_end_time').value != null){
+      break_time_3_end_time = parseInt(document.getElementById('break_time_3_end_time').value);
+    }
+    //
+    
+    //作業時間より、減算する休憩時間を計算
+    break_time_1 = calcBreakTime(break_time_1_start_time, break_time_1_end_time);
+    if (document.getElementById("is_no_break_time_1").checked){
+      break_time_1 = 0;
+    }
+    
+    break_time_2 = calcBreakTime(break_time_2_start_time, break_time_2_end_time);
+    if (document.getElementById("is_no_break_time_2").checked){
+      break_time_2 = 0;
+    }
+    
+    break_time_3 = calcBreakTime(break_time_3_start_time, break_time_3_end_time);
+    if (document.getElementById("is_no_break_time_3").checked){
+      break_time_3 = 0;
+    }
+    //
+    
+    //休憩時間を考慮した勤務時間を計算
+    if (end_time < start_time){
+      //終了時間より開始時間が大きい→日またがりとみなす(ex.22:00~5:00)
+      tmp_kinmu_time = (86400 - start_time) + end_time - break_time_1 - break_time_2 - break_time_3;
+    }else{
+    //その他は通常とみなす
+      //ex.9:00~16:00のような勤務は、Adusuでは小休憩を引かないようにしているが、標準版はそのままマイナスする
+      tmp_kinmu_time = end_time - start_time - break_time_1 - break_time_2 - break_time_3;
+    }
+    //
+    
+    
+    //標準版はカット(ベタ打ちしている為)---
+    //if (start_time >= 18000 & start_time <= 32400 & end_time >= 61200 & end_time <= 86400)
+    //{
+    //  // フルタイム勤務に近ければ、休憩時間を単純にマイナスする。
+    //  tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 7200; 
+    //} else if (start_time >= 18000 & start_time <= 32400 & end_time > 50400 & end_time < 61200)
+    //{
+    //  // フルタイム勤務に近ければ、休憩時間をマイナスする(但し小休憩は引かない) 161207 end=16:00以降→14:00以降に変更
+    //  tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 3600; 
+    //} else if (start_time >= 55800 & start_time <= 86400 & end_time >= 0 & end_time <= 28800)
+    //{
+    //  tmp_kinmu_time = tmp_kinmu_time + 86400 - start_time + end_time ;  
+    //} else if (start_time >= 34200 & start_time <= 37800 & end_time >= 55800 & end_time <= 86400){
+    //  //9:30~10:30 ~ の勤務は、昼と、１５時休憩をマイナスする。
+    //  tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 5400; 
+	  //} else if (start_time >= 39600 & start_time <= 43200 & end_time >= 55800 & end_time <= 86400){
+    //  //11:00 ~ の勤務は、昼休憩のみをマイナスする。→しない！！
+    //  //200608 restore 11:00~18:00のような勤務が１日扱いになるので
+    //  tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 3600; 
+    //} else 
+    //{
+    //  tmp_kinmu_time = tmp_kinmu_time + end_time - start_time;   
+    //}
+      
+     return tmp_kinmu_time;
+  
+   }
+   
+   
+   function calcBreakTime(break_time_start_time, break_time_end_time){
+     break_time = 0;
+     //開始時間が休憩開始時間以上?
+     if (start_time >= break_time_start_time){
+       if (start_time > break_time_end_time){
+         break_time = 0;
+       }else{
+         //休憩終了-開始時間
+         break_time = break_time_end_time - start_time;
+       }
+     }
+  
+     //開始時間が休憩開始時間より前?
+     if (start_time < break_time_start_time){
+       if (end_time >= break_time_end_time){
+         break_time = break_time_end_time - break_time_start_time;
+       }else if(end_time >= break_time_start_time && 
+              end_time <= break_time_end_time){
+         break_time = end_time - break_time_start_time;
+       //日付が違う場合？？考慮しない
+       }
+     }
+  
+     return break_time;
+   }
+   
+   
+   
+   // 小数点n位までを残す関数
+   // number=対象の数値
+   // n=残したい小数点以下の桁数
+   function floatFormat( number, n ) {
+       var _pow = Math.pow( 10 , n ) ;
+       return Math.round( number * _pow ) / _pow ;
+   }
+
+  function fnGetValue() {
+    return $.get(
+      "/get_value"
+    );
+  }
+
+
+
+</script>

@@ -1,0 +1,160 @@
+<script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
+<%- model_class = ConstructionCost -%>
+<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <%= search_form_for @q do |f| %>
+     <%= f.label :construction_code, '工事コード：' %>
+     <%= f.select :with_construction, options_from_collection_for_select(ConstructionDatum.all, "id", "construction_code") , {include_blank: true}, {style: 'width:220px' , class: "searchableConstructionCode" } %>
+     <%= f.label :construction_name, '工事名：' %>
+     <%= f.select :construction_datum_id_eq, options_from_collection_for_select(ConstructionDatum.all, "id", "construction_name") ,  {include_blank: true}, {style: 'width:220px',  class: "searchableConstructionName" } %>  
+     <!--<%= f.label :construction_name, '*いずれかで検索可' %> -->
+     <br>
+	
+     <%= f.label :construction_code, '工事コード(開始)：' %>
+     <%= f.select :with_construction_from, options_from_collection_for_select(ConstructionDatum.all, "id", "construction_code") , {include_blank: true}, {style: 'width:220px' , class: "searchableConstructionCodeFrom" } %>
+     <%= f.label :construction_code, '工事コード(終了)：' %>
+     <%= f.select :with_construction_to, options_from_collection_for_select(ConstructionDatum.all, "id", "construction_code") , {include_blank: true}, {style: 'width:220px' , class: "searchableConstructionCodeTo" } %>
+     
+    <div>
+    	<%= f.submit '検索する' %>
+  	</div>
+   <% end %>
+
+</div>
+            
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_construction_cost_path,
+            :class => 'btn btn-primary' %>
+<%= link_to t('.back', :default => t("工事一覧へ")), construction_data_path, :class => 'btn btn-warning'  %>
+
+<%= link_to "一覧表(確定申告時)",
+            construction_costs_path(@construction_cost, action:"index", format: "pdf"),
+            :class => 'btn  btn-orange200_ftg', :target=>["_blank"] %>
+
+
+<!--いつか使うことがあるかもしれないので、残しておく-->
+<!--<%= link_to "CSV", construction_costs_path(params.merge(format: 'csv')),:class => 'btn btn-default btn-xs'%>-->
+
+
+<!--見出し固定用設定追加-->
+<div class="span11 table-scrollable" >
+  <style>
+   table { }
+   table th, table td { white-space:nowrap; overflow:hidden; }
+  </style>
+<!--見出し固定用設定追加-->
+<table id="tablefix", class="table  table-striped", style="font-size : 14px;width:1880px;">
+<!--<table class="table table-striped">-->
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <!--<th></th>
+	  <th></th>
+      <th>　　　　　　</th>-->
+	  <th><%= model_class.human_attribute_name(:construction_code) %></th>
+	  <th><%= model_class.human_attribute_name(:construction_name) %></th>
+      <th><%= model_class.human_attribute_name(:supplies_expense) %></th>
+      <th><%= model_class.human_attribute_name(:labor_cost) %></th>
+      <th><%= model_class.human_attribute_name(:misellaneous_expense) %></th>
+      <th><%= model_class.human_attribute_name(:execution_amount) %></th>
+	  <th><%= model_class.human_attribute_name(:constructing_amount) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @construction_costs.joins(:construction_datum).select("*").order("construction_code desc").each do |construction_cost| %>
+      <tr>
+	  
+        <td><%= link_to construction_cost.id, construction_cost_path(construction_cost, construction_id: params[:construction_id], 
+                               move_flag: params[:move_flag]) %></td>
+		<!--<td><%= link_to t('.back', :default => t("仕入")), purchase_data_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                                   :class => 'btn btn-lightgreen500_rsd keep-disp'  %></td>
+		<td><%= link_to t('.back', :default => t("労務")), construction_daily_reports_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                                   :class => 'btn btn-blue500_rsd keep-disp'  %></td>
+		<td><%= link_to "工事費集計表",
+            construction_costs_path(construction_cost, construction_costs_id: construction_cost.id, format: "pdf" ),
+            :class => 'btn  btn-lime500_ftg', :target=>["_blank"], :onclick => "submitAfterValidation()" %></td>-->
+        <!--<td><%= construction_cost.construction_datum_id %></td>-->
+		<td><%= construction_cost.construction_datum.construction_code %></td>
+		<td><%= construction_cost.construction_datum.construction_name %></td>
+		<td><%= construction_cost.supplies_expense %></td>
+        <td><%= construction_cost.labor_cost %></td>
+        <td><%= construction_cost.misellaneous_expense %></td>
+		<td><%= construction_cost.execution_amount %></td>
+        <td><%= construction_cost.constructing_amount %></td>
+        <td><%=l construction_cost.created_at %></td>
+        
+		<!--add170912 JS判定用ID追加-->
+		<td id="construction_datum_id", style="display:none;"><%= construction_cost.construction_datum_id %></td>
+		
+		<td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_construction_cost_path(construction_cost, construction_id: params[:construction_id], 
+                               move_flag: params[:move_flag]), :class => 'btn btn-white_rsd btn-xs' %>
+		
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      construction_cost_path(construction_cost),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+	//検索可能なリストボックス(工事CDの場合)
+	$(".searchableConstructionCode").select2({ theme: "classic" });
+	
+    $(".searchableConstructionCodeFrom").select2({ theme: "classic" });
+    $(".searchableConstructionCodeTo").select2({ theme: "classic" });
+    
+	//検索可能なリストボックス(工事名の場合)
+	$(".searchableConstructionName").select2({ theme: "classic" });
+	
+	//見出し固定用設定追加
+	 var sz = window.parent.screen.width;
+	 var fc = 1;    //デフォルトの固定列数(社長PC基準)
+	 var ht = 618;  //デフォルトの高さ(社長PC基準)580
+	 
+	 if (sz != 1920) {
+	 //画面サイズ1920px(社長PC基準)以外は、列固定させる。
+        fc = 1;  //固定列数
+		//ht -= 70;
+		ht -= 108;
+	 }
+	 $('#tablefix').tablefix({width: sz, height: ht, fixRows: 1, fixCols: fc});
+	 //
+	 
+  });
+  
+  
+  //印刷時の確認＆集計フラグをセット。
+  function submitAfterValidation() {
+    //キャンセルした場合の処理が難しいので、確認メッセージなしとする。
+    //if (window.confirm('工事費集計表を発行しますか？')) {
+	  
+	  //ここでajax発動しコントローラで履歴保存する
+	  var id = 0;
+	  construction_datum_id = document.getElementById("construction_datum_id").innerText;
+	  
+	  $.get("<%= construction_costz_set_caluculated_flag_path %>",
+         { construction_datum_id: construction_datum_id },
+           function(data){
+		   }
+      );
+	  
+	//}
+ }
+
+  
+
+</script>
+

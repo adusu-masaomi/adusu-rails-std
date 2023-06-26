@@ -1,0 +1,175 @@
+<script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<%- model_class = DeliverySlipHeader -%>
+<% provide(:title, "納品書一覧データ") %>
+<div class="page-header", style="width:1920px">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  
+  <!-- 追加箇所開始 -->
+  <%= page_entries_info @delivery_slip_headers %>
+  <!-- 追加箇所終了 -->
+  
+  <%= search_form_for @q do |f| %>
+  <%= f.label :delivery_slip_code, '納品Ｎｏ：' %>
+  <%= f.select :id_eq, DeliverySlipHeader.all.map{|st| [st.quotation_code, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableDeliverySlipCode" } %>
+  <!--モバイル用対応  add180830-->
+  <% if browser.platform.ios? || browser.platform.android? %>
+    <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearDeliverySlipCode()" %>
+  <% end %>
+  
+  <%= f.label :construction_code, '件名：' %>
+  <%= f.select :with_id, DeliverySlipHeader.all.map{|st| [st.construction_name, st.id]}, {include_blank: true}, {style: 'width:440px' , class: "searchableConstructionName" } %>
+  <!--モバイル用対応  add180830-->
+  <% if browser.platform.ios? || browser.platform.android? %>
+    <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearConstruction()" %>
+  <% end %>
+  </br>
+  
+  <%= f.label :customer_name, '得意先：' %>
+  <%= f.select :customer_id_eq, DeliverySlipHeader.all.select(:customer_name, :customer_id).uniq.map{|st| [st.customer_name, st.customer_id]}, {include_blank: true}, {style: 'width:440px' , class: "searchableCustomerName" } %>
+  <!--モバイル用対応  add180830-->
+  <% if browser.platform.ios? || browser.platform.android? %>
+    <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearCustomer()" %>
+  <% end %>
+  </br>
+  
+  	<div>
+    	<%= f.submit '検索する' %>
+  	</div>
+   <% end %>
+
+
+</div>
+<%= link_to t('.new',:default => t("新規作成")),
+            new_delivery_slip_header_path,
+            :class => 'btn btn-primary keep-disp' %>
+<!--見出し固定用設定追加-->
+<div style="margin-top : -0px;", class="span11 table-scrollable" >
+
+  <style>
+   table { }
+   table th, table td { white-space:nowrap; overflow:hidden; }
+  </style>
+
+  <!--見出し固定用設定追加-->
+  <table id="tablefix", class="table  table-striped", style="width:1880px;">
+
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= sort_link(@q, :id, model_class.human_attribute_name(:id) ) %></th>
+      <th><%= sort_link(@q, :delivery_slip_code, model_class.human_attribute_name(:delivery_slip_code) ) %></th>
+      <th><%= sort_link(@q, :delivery_slip_date, model_class.human_attribute_name(:delivery_slip_date) ) %></th>
+      <th><%= sort_link(@q, :customer_name, model_class.human_attribute_name(:customer_name) ) %></th>
+      <th><%= sort_link(@q, :construction_name, model_class.human_attribute_name(:construction_name) ) %></th>
+      <th><div class="text-right"><%= model_class.human_attribute_name(:delivery_amount) %></div></th>
+	  <th><div class="text-right"><%= model_class.human_attribute_name(:execution_amount) %></div></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @delivery_slip_headers.order("delivery_slip_code desc").each do |delivery_slip_header| %>
+      <tr>
+        <td><%= link_to "内訳へ",
+            delivery_slip_detail_large_classifications_path(delivery_slip_header_id: delivery_slip_header.id, 
+                                                        delivery_slip_header_name: delivery_slip_header.construction_name,
+                                                        delivery_slip_code: delivery_slip_header.delivery_slip_code,
+                                                        invoice_code: delivery_slip_header.invoice_code,
+                                                        quotation_code: delivery_slip_header.quotation_code,
+                                                        new_flag: "1"),
+            :class => 'btn btn-info keep-disp' %>
+        <td><%= link_to delivery_slip_header.id, delivery_slip_header_path(delivery_slip_header) %></td>
+        <td><%= delivery_slip_header.delivery_slip_code %></td>
+        <td><%= delivery_slip_header.delivery_slip_date %></td>
+		<% if delivery_slip_header.customer_master.present? %>
+          <td><%= delivery_slip_header.customer_master.customer_name %></td>
+		<% else %>
+          <td>-</td>
+		<% end %>
+        <td><%= delivery_slip_header.construction_name %></td>
+        <td align="right"><%= number_to_currency(delivery_slip_header.delivery_amount,  precision: 0) %></td>
+        <td align="right"><%= number_to_currency(delivery_slip_header.execution_amount,  precision: 0) %></td>
+        <td><%=l delivery_slip_header.created_at.in_time_zone('Tokyo') %></td>
+        <td>
+		  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_delivery_slip_header_path(delivery_slip_header), :class => 'btn btn-white_rsd btn-xs keep-disp' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      delivery_slip_header_path(delivery_slip_header),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger keep-disp', remote: true %>
+        </td>
+      </tr>
+    <% end %>
+	<!-- 追加箇所開始 -->
+    <%= paginate @delivery_slip_headers %>
+    <!-- 追加箇所終了 -->
+  </tbody>
+  </table>
+</div>
+
+<!-- 追加箇所開始 -->
+<%= paginate @delivery_slip_headers %>
+<!-- 追加箇所終了 -->
+
+<script type="text/javascript">
+  
+  //検索可能なリストボックス
+  $(document).ready(function(){
+	$(".searchableDeliverySlipCode").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST });
+    $(".searchableConstructionName").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST });
+    $(".searchableCustomerName").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST });
+    
+    //見出し固定用設定追加
+	 var sz = window.parent.screen.width;
+	 var fc = 1;    //デフォルトの固定列数(社長PC基準)
+	 var ht = 618;  //デフォルトの高さ(社長PC基準)580
+	 
+	 if (sz != 1920) {
+	 //画面サイズ1920px(社長PC基準)以外は、列固定させる。
+        fc = 1;  //固定列数
+		//ht -= 70;
+		ht -= 108;
+        
+        sz = 1920; //for ipad pro (add180829)
+	 }
+	 $('#tablefix').tablefix({width: sz, height: ht, fixRows: 1, fixCols: fc});
+	 //
+     //画面位置保存→実行
+     $('form').keepPosition();
+  });
+
+//180914共通化
+//  //画面位置保存するプラグイン
+//  $.fn.keepPosition = function(){
+//  //cookieに保存する名前（他のページと競合しないようURLを含めるようにする）
+//    var key = 'keep-position-'+location.pathname;
+//    var win = $(window);
+//    this.each(function(){
+//    //$(this).on('submit',function(){
+//    $(".keep-disp").click(function(){
+//      div_top = bodyDiv.scrollTop();
+//	    $.cookie(key, div_top);
+//	  });
+//    });
+//    setTimeout(function(){
+//      bodyDiv.scrollTop($.cookie(key));
+//    },0);
+//  }
+  //モバイル用対応 add180830
+  //select2をクリアする
+  function clearDeliverySlipCode(){
+    $(".searchableDeliverySlipCode").val(null).trigger("change"); 
+  }
+  function clearConstruction(){
+    $(".searchableConstructionName").val(null).trigger("change"); 
+  }
+  function clearCustomer(){
+    $(".searchableCustomerName").val(null).trigger("change"); 
+  }
+  //
+  
+  
+</script>
+

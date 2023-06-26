@@ -1,0 +1,36 @@
+<h1></h1>
+
+<p>
+  <font face="游ゴシック">
+  <p>注文依頼</p>
+  <p></p>
+  <p><%= @supplier_name %></p>
+  <p><%= @responsible_name %></p>
+  <p>いつもお世話になっております。</p>
+  <p>注文書を添付いたしますので、ご確認の上よろしくお願いいたします。</p>
+  <% if @construction_place.present? %>
+    <p><%= @construction_place %></p>
+  <% end %>
+  <p>※このメールアドレスは配信専用です。このメッセージに返信しないようお願いいたします。</p>
+  <p>□■□■□■□■□■□■□■□■</p>
+  <% if @company_name.present? %>
+    <p><%= @company_name %></p>
+  <% end %>
+  <% if @company_address.present? %>
+    <p><%= @company_address %></p>
+  <% end %>
+  <% if @company_tel.present? %>
+    <p><%= @company_tel %></p>
+  <% end %>
+  <% if @company_fax.present? %>
+    <p><%= @company_fax %></p>
+  <% end %>
+  <% if @company_email.present? %>
+    <p><%= @company_email %></p>
+  <% end %>
+  <p>□■□■□■□■□■□■□■□■</p>
+  </p>
+  <font>
+</p>
+
+ 

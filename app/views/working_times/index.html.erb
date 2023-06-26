@@ -1,0 +1,64 @@
+<%- model_class = WorkingTime -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <!--<th><%= model_class.human_attribute_name(:employment_status_id) %></th>-->
+      <th><%= model_class.human_attribute_name(:working_time_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:working_time_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_early_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_early_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_midnight_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:overtime_midnight_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_1_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_1_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_2_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_2_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_3_start_time) %></th>
+      <th><%= model_class.human_attribute_name(:break_time_3_end_time) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @working_times.each do |working_time| %>
+      <tr>
+        <td><%= link_to working_time.id, working_time_path(working_time) %></td>
+        <!--<td><%= working_time.employment_status_id %></td>-->
+        <td><%= working_time.working_time_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.working_time_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_early_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_early_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_midnight_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.overtime_midnight_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_1_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_1_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_2_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_2_end_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_3_start_time.strftime("%H:%M") %></td>
+        <td><%= working_time.break_time_3_end_time.strftime("%H:%M") %></td>
+        <td><%=l working_time.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_working_time_path(working_time), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      working_time_path(working_time),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_working_time_path,
+            :class => 'btn btn-primary' %>

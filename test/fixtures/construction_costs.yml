@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  construction_datum_id: 1
+  purchase_amount: 1
+  supplies_expense: 1
+  labor_cost: 1
+  misellaneous_expense: 1
+  execution_amount: 1
+  constructing_amount: 1
+  purchase_order_amount: MyString
+  final_return_division: 1
+
+two:
+  construction_datum_id: 1
+  purchase_amount: 1
+  supplies_expense: 1
+  labor_cost: 1
+  misellaneous_expense: 1
+  execution_amount: 1
+  constructing_amount: 1
+  purchase_order_amount: MyString
+  final_return_division: 1

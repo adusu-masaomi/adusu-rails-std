@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  material_code: MyString
+  internal_code: MyString
+  material_name: MyString
+  maker_id: 1
+  unit_id: 1
+  list_price: 1
+  list_price_quotation: 1
+  standard_quantity: 1
+  standard_labor_productivity_unit: 1.5
+  standard_rate: 1.5
+  last_unit_price: 1.5
+  last_unit_price_update_at: 2023-05-11
+  inventory_category_id: 1
+  material_category_id: 1
+  list_price_update_at: 2023-05-11
+  notes: MyString
+
+two:
+  material_code: MyString
+  internal_code: MyString
+  material_name: MyString
+  maker_id: 1
+  unit_id: 1
+  list_price: 1
+  list_price_quotation: 1
+  standard_quantity: 1
+  standard_labor_productivity_unit: 1.5
+  standard_rate: 1.5
+  last_unit_price: 1.5
+  last_unit_price_update_at: 2023-05-11
+  inventory_category_id: 1
+  material_category_id: 1
+  list_price_update_at: 2023-05-11
+  notes: MyString

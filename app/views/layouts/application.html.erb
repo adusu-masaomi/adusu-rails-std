@@ -1,0 +1,611 @@
+<!--左に余白を開けない為のCSS設定。外部化は何故か上手くいかないのでここで設定。-->
+<style>
+body > .container {
+  padding-top: 0px;
+  margin-left: -15px;
+  background-color: white;
+}
+/*
+
+ * Responsive stypes
+ */
+@media (max-width: 980px) {
+
+  body > .container {
+    padding-top: 0;
+  }
+  .navbar-fixed-top {
+    margin-bottom: 0;
+  
+  }
+
+} /* END: @media (max-width: 980px) */
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title><%= content_for?(:title) ? yield(:title) : "Adusu" %></title>-->
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+
+    <!--読み込む順番注意！-->
+    <%= stylesheet_link_tag "https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", :media => "all" %>
+    <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "cb-materialbtn.min", :media => "all" %>
+
+    
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <!-- Size should be 144 x 144 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+
+    <!-- For iPhone with high-resolution Retina display: -->
+    <!-- Size should be 114 x 114 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+
+    <!-- For first- and second-generation iPad: -->
+    <!-- Size should be 72 x 72 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <!-- Size should be 57 x 57 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+
+    <!-- For all other devices -->
+    <!-- Size should be 32 x 32 pixels -->
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
+    <%= javascript_include_tag "application" %>
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  
+ 
+  
+  <body>
+   
+   <div class="container">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <!--<div class="container">-->
+	  	<div class="navbar-header">
+        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          		<span class="sr-only">Toggle navigation</span>
+          		<span class="caret"></span>
+          		<span class="icon-bar"></span>
+          		<span class="icon-bar"></span>
+        	</button>
+          	<a class="navbar-brand" href="/system/index">ADUSU業務管理Webシステム(デモver)</a>
+                
+               <div class="btn-group">
+	      <ul class="nav navbar-nav">
+		  <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">マスター管理<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+               <li><a href="/supplier_masters" >仕入先マスター管理</a></li>
+               <li><a href="/customer_masters">得意先マスター管理</a></li>
+               <li><a href="/material_masters">資材マスター管理</a></li>
+               <li><a href="/material_categories">資材分類管理</a></li>
+               <li><a href="/inventory_categories">在庫分類管理</a></li>
+               <li><a href="/supplier_responsibles" >仕入先担当管理</a></li>
+            <!--<li><a href="/task_contents">工程表項目マスター</a></li>-->
+               <li><a href="/purchase_unit_prices">資材単価マスター管理</a></li>
+               <li><a href="/maker_masters">メーカーマスター管理</a></li>
+               <li><a href="/unit_masters">単位マスター管理</a></li>
+               <li><a href="/purchase_divisions">仕入区分マスター管理</a></li>
+               <li><a href="/staffs">社員マスター管理</a></li>
+               <li><a href="/affiliations">所属マスター管理</a></li>
+               <li><a href="/contacts">連絡先マスター管理</a></li>
+               <li><a href="/companies">会社マスター管理</a></li>
+               <li><a href="/working_times">作業時間マスター管理</a></li>
+               <li><a href="/business_holidays">会社休日マスター管理</a></li>
+               <!--<li><a href="/users">ユーザー管理</a></li>-->
+            </ul>
+		   </li>
+           <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">仕入管理<b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                   <li><a href="/purchase_data" onclick="clearCookies()" >仕入データ管理</a></li>
+                   <!--<li><a href="/purchase_data?is_clear=true" onclick="clearCookies()" >仕入データ管理</a></li>-->
+                   <li><a href="/purchase_order_data">注文No管理</a></li>
+                   <!--<li><a href="/purchase_order_data?order_flag=true">注文データ管理</a></li>-->
+                   <li><a href="/purchase_order_histories">注文データ管理</a></li>
+                   <li><a href="/purchase_headers">仕入見出管理</a></li>
+                </ul>
+           </li>
+           <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">外注管理<b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                   <li><a href="/outsourcing_data" >外注データ管理</a></li>
+                   <li><a href="/outsourcing_costs">支払管理</a></li>
+				 </ul>
+           </li>
+           <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">在庫管理<b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                   <li><a href="/inventories">在庫管理</a></li>
+                   <li><a href="/inventory_histories">入出庫管理</a></li>
+				   <li><a href="/stocktakes">棚卸管理</a></li>
+				 </ul>
+           </li>
+	       <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">工事管理<b class="caret"></b></a>
+                 	<ul class="dropdown-menu">
+                 	  <li><a href="/construction_data">工事ﾃﾞｰﾀ管理</a></li>
+                          <li><a  href="/construction_daily_reports"  data-turbolinks="false" >労務ﾃﾞｰﾀ管理</a></li>
+			         <li><a href="/construction_costs">工事費集計</a></li>
+                     <li><a href="/working_safety_matters">作業安全事項ﾏｽﾀｰ</a></li>
+                     <li><a href="/sites">現場ﾏｽﾀｰ</a></li>
+					 <!--<li><a href="/tasks">工程管理</a></li>-->
+			</ul>
+               </li>
+	       <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">見積管理<b class="caret"></b></a>
+                 	<ul class="dropdown-menu">
+                 	  <li><a href="/quotation_headers">●見積書データ管理</a></li>
+                          <li><a href="/working_middle_items">○作業明細ﾏｽﾀｰ</a></li>  
+                          <li><a href="/working_units">○作業単位ﾏｽﾀｰ</a></li>
+                          <li><a href="/working_categories">○カテゴリー</a></li>
+                        </ul>
+                     </li>
+           <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">請求管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/invoice_headers">●請求書データ管理</a></li>
+                    <li><a href="/working_middle_items">○作業明細ﾏｽﾀｰ</a></li>  
+                    <li><a href="/working_units">○作業単位ﾏｽﾀｰ</a></li>
+                    <li><a href="/working_categories">○カテゴリー</a></li>
+                </ul>
+           </li>
+		   <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown">納品管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/delivery_slip_headers">●納品書データ管理</a></li>
+                    <li><a href="/working_middle_items">○作業明細ﾏｽﾀｰ</a></li>  
+                    <li><a href="/working_units">○作業単位ﾏｽﾀｰ</a></li>
+                    <li><a href="/working_categories">○カテゴリー</a></li>
+                </ul>
+           </li>
+           <!-- 標準版ではカット
+           <li class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown">メンテナンス<b class="caret"></b></a>
+               <ul class="dropdown-menu">
+                    <li><a href="/deposits">Deposit</a></li>
+                    <li><a href="/expences">Expence</a></li>
+                    <li><a href="/monthly_balances">MonthlyBalance</a></li>
+                    <li><a href="/daily_cash_flows">DailyCashFlow</a></li>
+               </ul>
+           </li>
+            -->
+            </ul>
+	  </div>
+  	  
+              <!-- <%= link_to "ログアウト", session_index_path, method: :delete %> -->　　       
+          </div>
+        
+         
+     </div>
+   </div>
+   
+    	  
+    <div class="container" >
+      <div class="row" >
+        <div class="col-lg-9" style="margin-top : -50px">
+          </br>
+		  <%= bootstrap_flash %>
+          
+          <%= yield %>
+         </div>
+         
+         <div class="col-lg-3">
+        </div><!--/span-->
+      </div><!--/row-->
+      <footer>
+         <!--<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Copyright (C) 2016 copyrights.<a href="http://adusu-denki.mydns.jp/">
+	         adusu-denki.mydns.jp</a> All Rights Reserved.
+	 </p>-->
+         <!--<%= link_to "　　ログアウト", session_index_path, method: :delete %>-->
+      </footer>
+          
+    </div> <!-- /container -->
+    
+ 
+
+  </body>
+    
+   
+
+</html>
+
+<script type="text/javascript">
+//共通モジュールを記述
+  
+  //グローバル定数をここで宣言する
+  //add170308
+  //歩掛り集計専用の作業内訳マスターIDの定数(マスター変更時注意！)
+  var ID_PIPING_WIRING_CONSTRUCTION = 2;  //配管配線工事のマスターID
+  var ID_EQUIPMENT_MOUNTING = 3;          //機器取付工事のマスターID
+  var ID_LABOR_COST = 4;                  //労務費のマスターID
+  var ID_SUBTOTAL = 5;                    //小計のマスターID
+  var ID_DISCOUNT = 6;                    //値引きのマスターID
+
+  //歩掛り集計専用などに使う、工事種別のインデックス定数(モデルのインデックス変更時注意)
+  var INDEX_SUBTOTAL = 1;                    //小計の要素順
+  var INDEX_DISCOUNT = 2;                    //値引きの要素順
+  var INDEX_PIPING_WIRING_CONSTRUCTION = 3;  //配管配線工事の要素順
+  var INDEX_EQUIPMENT_MOUNTING = 4;          //機器取付工事の要素順
+  var INDEX_LABOR_COST = 5;                  //労務費の要素順
+  //
+  var MESSAGE_LIST = "指定無し";    //select2のデフォルトのメッセージ
+  
+  //add170413
+  //仕入の区分(マスター変更時注意！)
+  var INDEX_DIVISION_PURCHASE = 1;      //仕入
+  var INDEX_DIVISION_OUTSOURCING = 2;   //外注
+  var INDEX_DIVISION_MACHINE_RENTAL = 3; //機材借入
+  var INDEX_DIVISION_SHIPPING = 5;      //出庫
+  //入出庫区分
+  var INDEX_INVENTORY_STOCK = 0;        //入庫
+  var INDEX_INVENTORY_SHIPPING = 1;     //出庫
+  //add end
+  
+  var CONSUMPTION_TAX_INCLUDE_PER_TEN = 1.10;   //消費税設定10%(application_controller同様)  add190824
+  var CONSUMPTION_TAX_INCLUDE = 1.08;           //消費税設定(application_controller同様)
+  
+  //add200630
+  var INDEX_SUPPLIER_OWN_COMPANY = 10;   //仕入先自社のID
+  
+  //add 170808 
+  ///単位id--式
+  var ID_UNIT_SET = 22;     //
+  
+  //社員所属
+  var AFFILIATION_OUTSOURCING = 4;      //外注
+  
+  //グローバル変数
+  //var radio_sort_flag = 0;   //0:ソートしない 1:する
+  //
+  
+  $(document).ready(function() {
+    //del 170427
+	//$("a.add_fields").
+    //  data("association-insertion-position", 'before').
+    //  data("association-insertion-node", 'this');
+	  
+	
+	//imeモードの制御
+	// ime-modeが使えるか
+    var supportIMEMode = ('ime-mode' in document.body.style);
+    // 非ASCII
+    var noSbcRegex = /[^\x00-\x7E]+/g;
+    // 1バイト文字専用フィールド
+    jQuery('.sbc_field')
+    .on('keydown blur paste', function(e) { 
+
+        // ime-modeが使えるならスキップ
+        if (e.type == 'keydown' || e.type == 'blur')
+            if (supportIMEMode) return;
+
+        // 2バイト文字が入力されたら削除
+        var target = jQuery(this);
+        if(!target.val().match(noSbcRegex)) return;
+        window.setTimeout( function() {
+          target.val( target.val().replace(noSbcRegex, '') );
+        }, 1);        
+    });
+	//
+    
+    //フォーム（ブラウザ）を閉じる場合の処理
+    $(window).on('beforeunload', function() {
+      //debugger;
+      //clearCookies();
+    });
+	
+	
+  });
+  
+  //ENTER→TABキーに変換する処理。
+  $('[tabindex]').keydown(function (e) {
+    if (e.keyCode == 13 || e.keyCode == 9) {
+        
+		//add171205
+		if (document.activeElement.id.slice(0,5) != "modal"){
+		
+		  var tabindex = parseInt($(this).attr('tabindex'));
+          $('[tabindex='+(tabindex+1)+']').focus();
+       
+	    }
+	
+        return false;
+    }
+    
+  });
+  
+   //郵便番号を見やすくフォーマットする
+   function formatPost()
+   {
+     document.getElementById("post")
+	 if (document.getElementById("post").value != null) {
+	   if (document.getElementById("post").value.length >= 7) {
+         beforeNum = document.getElementById("post").value;
+	     afterNum = "〒" + beforeNum.substring(0,3) + "-" + beforeNum.substring(3,7);
+	     document.getElementById("post").value = afterNum;
+		 }else{
+		  //window.alert( '郵便番号は7桁の数値で入力してください。' ); // アラートを表示
+		 }
+	 }
+   }
+  
+  //郵便番号を見やすくフォーマットする
+   //(IDがパラメータになっているVer)
+   function formatPost2(str_id)
+   {
+     document.getElementById(str_id)
+	 if (document.getElementById(str_id).value != null) {
+	   if (document.getElementById(str_id).value.length >= 7) {
+         beforeNum = document.getElementById(str_id).value;
+	     afterNum = "〒" + beforeNum.substring(0,3) + "-" + beforeNum.substring(3,7);
+	     document.getElementById(str_id).value = afterNum;
+		 }else{
+		  //window.alert( '郵便番号は7桁の数値で入力してください。' ); // アラートを表示
+		 }
+	 }
+   }
+  
+  //住所から郵便番号を返すajax
+  //(引数postIdは変換先の郵便番号ID)
+  function setPostAuto(thisAddress, postId, e){
+  	if (e.keyCode == 13 || e.keyCode == 9) {
+	  var address = thisAddress;
+	  
+	  //countはデフォの50から1に変更
+	  
+	  if (thisAddress != undefined){
+	     
+         //upd180724 既存サイト(old)閉鎖のため切替
+         $.ajax({
+           url: "https://zipcoda.net/api"
+           , data: { address: address }
+           , dataType: "jsonp"
+         }).done(function (data) {
+         
+           document.getElementById(postId).value = data.items[0].zipcode;
+           formatPost2(postId);
+         
+         //old
+         //$.ajax({
+         //  url: "http://zip.ricollab.jp/search"
+         //  , data: { q: address, type: "json", count: 1 }
+         //  , dataType: "jsonp"
+         //}).done(function (data) {
+           
+		   //var result = $.map(data.result, function (item) {
+           //  //var zip = "〒"  item.zipcode.substring(0, 3) + "-" + item.zipcode.substring(3);
+           //  document.getElementById(postId).value = item.zipcode;
+		   //  formatPost2(postId);
+		   //});
+		   
+		 }).fail(function (jqXHR, textStatus, errorThrown) {
+           //alert(textStatus);
+         });
+	  }
+	}
+  }
+
+  
+  //次のタブへコントロールを移す（select2用)
+  function nextControlSelect2(obj){
+    nextIndex = obj.tabIndex + 1;
+    $('[tabindex=' + nextIndex + ']').focus();
+  }
+  
+  //add170725 ロード時間短縮のため、ここに追記。
+  $(".searchableSelect2_1").select2({ theme: "classic" });
+  $(".searchableSelect2_2").select2({ theme: "classic" });
+  $(".searchableSelect2_3").select2({ theme: "classic" });
+  //明細フォーム用追加(次のコントロール移動をここに記述すると正常動作しないため、初期設定の宣言のみ行う）
+  $(".searchableSelect1_1").select2({ theme: "classic" });
+  $(".searchableSelect1_2").select2({ theme: "classic" });
+  $(".searchableSelect1_3").select2({ theme: "classic" });
+  //
+  
+  
+  //select2をenterキー押下した場合(リストが閉じられた時)に次のコントロールへ移動させる
+  $( ".searchableSelect2_1" ).on("select2:close", function (e) {
+	 nextControlSelect2(this);
+  });
+  $( ".searchableSelect2_2" ).on("select2:close", function (e) {
+	 nextControlSelect2(this);
+  });
+  $( ".searchableSelect2_3" ).on("select2:close", function (e) {
+	 nextControlSelect2(this);
+  });
+  //
+  
+  //
+  // 小数点n位までを残す関数
+  // number=対象の数値
+  // n=残したい小数点以下の桁数
+  function floatFormat( number, n ) {
+    var _pow = Math.pow( 10 , n ) ;
+    return Math.round( number * _pow ) / _pow ;
+  }
+  
+  
+
+function getNationalHoliday(dateobj) {
+    //祝日を判定する関数。
+    //祝日ならばその名称、祝日でなければ空文字を返す。
+    var nen, tsuki, hi, yobi;
+    var HOLIDAY = "祝日";
+	
+	if(dateobj.getFullYear() < 2007) {
+        throw new Error("2007年以上にしてください。");
+    }
+    nen = dateobj.getFullYear();
+    tsuki = dateobj.getMonth() + 1;
+    hi = dateobj.getDate();
+    yobi = dateobj.getDay();
+
+    if(tsuki == 1 && hi == 1) {
+        //return "元日";
+		return HOLIDAY;
+    }
+    if(tsuki == 2 && hi == 11) {
+        //return "建国記念の日";
+		return HOLIDAY;
+    }
+    if(tsuki == 4 && hi == 29) {
+        //return "昭和の日";
+		return HOLIDAY;
+    }
+    if(tsuki == 5 && hi == 3) {
+        //return "憲法記念日";
+		return HOLIDAY;
+    }
+    if(tsuki == 5 && hi == 4) {
+        //return "みどりの日";
+		return HOLIDAY;
+    }
+    if(tsuki == 5 && hi == 5) {
+        //return "こどもの日";
+		return HOLIDAY;
+    }
+    if(nen >= 2016 && tsuki == 8 && hi == 11) {
+        //return "山の日"; //2016-8-11から実施。
+		return HOLIDAY;
+    }
+    if(tsuki == 11 && hi == 3) {
+        //return "文化の日";
+		return HOLIDAY;
+		
+    }
+    if(tsuki == 11 && hi == 23) {
+        //return "勤労感謝の日";
+		return HOLIDAY;
+    }
+    if(tsuki == 12 && hi == 23) {
+        //return "天皇誕生日";
+		return HOLIDAY;
+    }
+    if(tsuki == 1 && yobi == 1 && 7 < hi && hi < 15) {
+        //return "成人の日"; //1月第2月曜日;
+		return HOLIDAY;
+    }
+    if(tsuki == 7 && yobi == 1 && 14 < hi && hi < 22) {
+        //return "海の日"; //7月第3月曜日
+		return HOLIDAY;
+    }
+    if(tsuki == 9 && yobi == 1 && 14 < hi && hi < 22) {
+        //return "敬老の日"; //9月第3月曜日
+		return HOLIDAY;
+    }
+    if(tsuki == 10 && yobi == 1 && 7 < hi && hi < 15) {
+        //return "体育の日"; //10月第2月曜日
+		return HOLIDAY;
+    }
+    if(tsuki == 3 && hi == shunbun(nen)) {
+        //return "春分の日";
+		return HOLIDAY;
+    }
+    if(tsuki == 9 && hi == shubun(nen)) {
+        //return "秋分の日";
+		return HOLIDAY;
+    }
+    return "";
+}
+function shunbun(nen) {//春分の日
+    if(nen < 1900 || nen > 2099) {
+        return 0;
+    }
+    if(nen % 4 === 0) {
+        return nen <= 1956 ? 21 : (nen <= 2088 ? 20 : 19);
+    } else if(nen % 4 == 1) {
+        return nen <= 1989 ? 21 : 20;
+    } else if(nen % 4 == 2) {
+        return nen <= 2022 ? 21 : 20;
+    } else {
+        return nen <= 1923 ? 22 : (nen <= 2055 ? 21 : 20);
+    }
+}
+function shubun(nen) {//秋分の日
+    if(nen < 1900 || nen > 2099) {
+        return 0;
+    }
+    if(nen % 4 === 0) {
+        return nen <= 2008 ? 23 : 22;
+    } else if(nen % 4 == 1) {
+        return nen <= 1917 ? 24 : (nen <= 2041 ? 23 : 22);
+    } else if(nen % 4 == 2) {
+        return nen <= 1946 ? 24 : (nen <= 2074 ? 23 : 22);
+    } else {
+        return nen <= 1979 ? 24 : 23;
+    }
+}
+/**
+ * 全角から半角への変革関数
+ * 入力値の英数記号を半角変換して返却
+ * [引数]   strVal: 入力値
+ * [返却値] String(): 半角変換された文字列
+ */
+function toHalfWidth(strVal){
+  // 半角変換
+  var halfVal = strVal.replace(/[！-～]/g,
+    function( tmpStr ) {
+      // 文字コードをシフト
+      return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 );
+    }
+  );
+ 
+  return halfVal;
+}
+
+//検索用cookieを削除する
+function clearCookies(){
+  
+  $.get("<%= purchase_datum_clear_cookies_path %>",
+    { },
+      function(data){
+        
+        //本番・テスト環境でパスが異なるので注意!
+        window.location.href = '/purchase_data'
+
+        //画面再描画のためリロードする
+		//window.location.reload();
+      }
+  );
+}
+
+//画面位置保存するプラグイン
+$.fn.keepPosition = function(){
+  //cookieに保存する名前（他のページと競合しないようURLを含めるようにする）
+  var key = 'keep-position-'+location.pathname;
+  var win = $(window);
+  this.each(function(){
+    //$(this).on('submit',function(){
+    $(".keep-disp").click(function(){
+       if (typeof bodyDiv != 'undefined'){  //←これがないとエラーが出るケース有
+         div_top = bodyDiv.scrollTop();
+         $.cookie(key, div_top);
+       
+         
+       }
+    });
+  });
+  setTimeout(function(){
+    if (typeof bodyDiv != 'undefined'){  //←これがないとエラーが出るケース有
+      bodyDiv.scrollTop($.cookie(key));
+    }
+  },0);
+}
+
+</script>

@@ -1,0 +1,77 @@
+<%= simple_form_for @supplier_master, :html => { :class => 'well form-horizontal' } do |f| %> 
+
+  <% if @supplier_master.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@supplier_master.errors.count, "error") %> prohibited this supplier_master from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @supplier_master.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.input :supplier_name, input_html:{:tabindex=>"0"} %>
+  <%= f.input :tel_main, input_html:{:tabindex=>"1" } %>
+  <%= f.input :fax_main, input_html:{:tabindex=>"2"} %>
+  <%= f.input :email_main , input_html:{:tabindex=>"3"} %>
+  
+  <!--
+  <%= f.input :responsible1 , input_html:{:tabindex=>"4"} %>
+  <%= f.input :email1, input_html:{:tabindex=>"5"} %>
+  <%= f.input :responsible2,  input_html:{:tabindex=>"6"} %>
+  <%= f.input :email2,  input_html:{:tabindex=>"7"} %>
+  <%= f.input :responsible3 , input_html:{:tabindex=>"8"} %>
+  <%= f.input :email3 , input_html:{:tabindex=>"9"} %>
+  -->
+  
+  <div class="supplier_responsibles" style="margin-left : -15px"> 
+    <%= f.fields_for :supplier_responsibles do |f| %> 
+      <%= f.label "担当者" %> 
+      <%= render "supplier_responsible_fields", f: f %> 
+    <% end %> 
+    <div class="links"> 
+      <%= link_to_add_association "担当者を追加", f, :supplier_responsibles, :class => 'btn btn-success' %> 
+    </div> 
+  </div> 
+  
+  
+  <%= f.input :responsible_cc , input_html:{:tabindex=>"10"} %>
+  <%= f.input :email_cc , input_html:{:tabindex=>"11"} %>
+  <%= f.input :search_character , label: "検索文字アルファベット(半角1文字だけ入力して下さい。／注番登録画面に反映)", 
+           input_html:{style: 'width:40px;', :tabindex=>"12"} %>
+  <%= f.check_box :outsourcing_flag %> 
+  <%= f.label :outsourcing_flag, "外注の場合チェックを入れる", {style: 'color: blue', :tabindex=>"13"} %>
+  </br>
+  
+  <%= f.input :post, hint: "＊数値のみ（ハイフンなし）で入力して下さい。" , 
+      input_html:{id:"post", :tabindex=>"13", :onchange => "formatPost()",  :onKeyUp => "AjaxZip3.zip2addr(this,'','addressX','addressX');" } %>
+  <%= f.input :address , input_html:{:tabindex=>"14", name:"addressX"} %>
+  <%= f.input :bank_name , input_html:{:tabindex=>"15"} %>
+  <%= f.input :bank_branch_name , input_html:{:tabindex=>"16"} %>
+  <!--<%= f.input :account_type, input_html:{:tabindex=>"17"} %>-->
+  <%= f.label :口座種別 , {:class => "my-custom-class-l", style: 'width:70px;'} %>
+  <%= f.select :account_type, SupplierMaster.account_type_division, {:include_blank => true}, 
+       {id:'account_type', :class => "my-custom-class",
+          style: 'width:120px;margin-left:0px;font-size:18px;', :tabindex=>"18" } %>
+  <%= f.input :account_number, input_html:{style: 'width:120px;' ,
+                          :tabindex=>"19"} %>
+  
+  <%= f.input :holder , input_html:{:tabindex=>"20"} %>
+  <%= f.input :responsible_name , input_html:{:tabindex=>"21"} %>
+  
+  <!--<%= f.button :submit, :class => 'btn-primary' %>-->
+  <input type="button" onclick="submit();" class = 'btn btn-primary' value="登録する" />
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                supplier_masters_path, :class => 'btn btn-default' %>
+
+
+<% end %>
+
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+<script type="text/javascript">
+</script>

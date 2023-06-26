@@ -1,0 +1,21 @@
+<%= simple_form_for @working_time, :html => { :class => 'well form-horizontal' } do |f| %>
+  <!--<%= f.input :employment_status_id %>-->
+  <%= f.input :working_time_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"1"} %>
+  <%= f.input :working_time_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"2"} %>
+  <%= f.input :overtime_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"3"} %>
+  <%= f.input :overtime_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"4"} %>
+  <%= f.input :overtime_early_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"5"} %>
+  <%= f.input :overtime_early_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"6"} %>
+  <%= f.input :overtime_midnight_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"7"} %>
+  <%= f.input :overtime_midnight_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"8"} %>
+  <%= f.input :break_time_1_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"9"} %>
+  <%= f.input :break_time_1_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"10"} %>
+  <%= f.input :break_time_2_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"11"} %>
+  <%= f.input :break_time_2_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"12"} %>
+  <%= f.input :break_time_3_start_time, default: Time.parse('00:00'), input_html:{:tabindex=>"13"} %>
+  <%= f.input :break_time_3_end_time, default: Time.parse('00:00'), input_html:{:tabindex=>"14"} %>
+  
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                working_times_path, :class => 'btn btn-default' %>
+<% end %>

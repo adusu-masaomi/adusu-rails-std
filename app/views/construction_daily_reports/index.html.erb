@@ -1,0 +1,198 @@
+<script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
+<!--グラフ用-->
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<%- model_class = ConstructionDailyReport -%>
+<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<div class="page-header", style="width:1920px">
+  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></font></h1>
+  
+  <!-- 追加箇所開始 -->
+  <%= page_entries_info @construction_daily_reports %>
+  <!-- 追加箇所終了 -->
+
+  <%= search_form_for @q do |f| %>
+  
+  <%= f.label :construction_code, '工事名　' %>
+  <%= f.select :construction_datum_id_eq, ConstructionDatum.all.map{|st| [st.p_cd_name, st.id]}, {include_blank: true}, {style: 'width:400px' , class: "searchableConstructionName" } %>
+  
+  <!--</br>-->
+  <%= f.label :staff_id, '社員' %>
+  <!--<%= f.select :staff_id_eq, options_from_collection_for_select(Staff.all, "id", "staff_name") , {include_blank: true}, {id: 'staff_id_eq', style: 'width:220px' } %>-->
+  
+  <%= f.select :staff_id_eq, Staff.all.map{|st| [st.staff_name, st.id]}, {include_blank: true}, { id: 'staff_id_eq', style: 'width:220px'} %>
+  
+  
+  <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStaff()" %>
+  
+  </br>
+  
+  <%= f.label :update_at, '入力日' %>
+  
+  <!--value~の部分は本来いらないが、入力後に日付を消したいために、あえてするVer-->
+  <%= f.text_field :updated_at_gteq, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datepicker", include_blank: true , size: "12", id: 'update_start'   %>
+  
+  <!--restore 220221-->
+  <%= f.label :working_date, '作業日' %>
+  <%= f.text_field :working_date_gteq, class:"input-append date datepicker", include_blank: true ,  id: 'working_date_start'   %>
+  <%= f.label :working_date, '〜' %>
+  <%= f.text_field :working_date_lteq, class:"input-append date datepicker", include_blank: true ,  id: 'working_date_end'   %>
+  
+  	<div>
+        <%= f.submit '検索(集計)', :class => 'btn btn-teal50_rsd' %>
+        <%= link_to "労務費集計表",
+            construction_daily_reports_path(@construction_daily_reports, format: "pdf", construction_id: params[:construction_id], move_flag: params[:move_flag], pdf_flag: "1" ),
+            :class => 'btn  btn-blue500_ftg', :target=>["_blank"] %>
+        <%= link_to "作業日報",
+            construction_daily_reports_path(@construction_daily_reports, format: "pdf", construction_id: params[:construction_id], move_flag: params[:move_flag], pdf_flag: "2" ),
+            :class => 'btn  btn-bluegrey300_ftg', :target=>["_blank"] %>
+		<!--グラフ表示機能-->
+		<!--<%= link_to "グラフ",
+		    construction_daily_reports_graph_path(@construction_daily_reports, construction_id: params[:construction_id], move_flag: params[:move_flag] ),
+            :class => 'btn  btn-lime500_ftg' %>-->
+		<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_construction_daily_report_path(:new_flag => "0", construction_id: params[:construction_id], move_flag: params[:move_flag] ),
+            :class => 'btn btn-primary' %>
+        <%= link_to t('.back', :default => t("工事一覧へ")), construction_data_path, :class => 'btn btn-warning'  %>
+        <!--<%= link_to t('.back', :default => t("工事費集計へ")), construction_costs_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                                   :class => 'btn btn-lime500_rsd keep-disp'  %>-->
+		<!--<%= link_to "CSV", construction_daily_reports_path(params.merge(format: 'csv')) , 'data-no-turbolink'=>true, :class => 'btn btn-default'%>
+        <td><font size="3">合計金額:<%=number_to_currency(@construction_daily_reports.sumprice,  precision: 0 ) %></font></td>-->
+
+  	</div>
+   <% end %>
+   
+   <!--グラフ表示-->
+   <!--<%= bar_chart @chart_data,height: "200px" %>-->
+  
+  
+</div>
+
+
+<!--<div class="span11 table-scrollable">-->
+<!--見出し固定用設定追加-->
+<div style="margin-top : -20px;", class="span11 table-scrollable" >
+ 
+ <style>
+   table { }
+   table th, table td { white-space:nowrap; overflow:hidden; }
+  </style>
+
+  <!--<table class="table  table-striped">-->
+  <!--見出し固定用設定追加-->
+  <table id="tablefix", class="table  table-striped">
+
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :id, model_class.human_attribute_name(:id), default_order: :desc ) %></th>
+      <!--<th><%= model_class.human_attribute_name(:working_date) %></th>-->
+      <th><%= sort_link(@q, :working_date, model_class.human_attribute_name(:working_date), default_order: :desc) %></th>
+      <!--<th><%= model_class.human_attribute_name(:construction_code) %></th>-->
+      <!--<th><%= model_class.human_attribute_name(:construction_name) %></th>-->
+	  <th><%= model_class.human_attribute_name(:working_details) %></th>
+      <th><%= model_class.human_attribute_name(:staff_id) %></th>
+      <th><%= model_class.human_attribute_name(:start_time_1) %></th>
+      <th><%= model_class.human_attribute_name(:end_time_1) %></th>
+      <th><%= model_class.human_attribute_name(:start_time_2) %></th>
+      <th><%= model_class.human_attribute_name(:end_time_2) %></th>
+      <th><%= model_class.human_attribute_name(:working_times) %></th>
+      <th><%= model_class.human_attribute_name(:man_month) %></th>
+      <th><%= model_class.human_attribute_name(:labor_cost) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+	  <!--<th><%= '<No.>' %></th>-->
+      <th><%= sort_link(@q, :construction_datum_construction_code, '<No.>') %></th>
+      <th><%= '<工事名>' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @construction_daily_reports.order("id desc").each do |construction_daily_report| %>
+      <tr>
+        <td><%= link_to construction_daily_report.id, construction_daily_report_path(construction_daily_report, construction_id: params[:construction_id], 
+                               move_flag: params[:move_flag]) %></td>
+        <!--色付き<td><font color="#8F00FE"><b><%= construction_daily_report.working_date %></b></font></td>-->
+		<td><%= construction_daily_report.working_date %></td>
+		
+		<td><%= construction_daily_report.working_details %></td>
+		
+		<!--<% if construction_daily_report.construction_datum.present? %> -->
+        <!--  <td><%= construction_daily_report.construction_datum.construction_code %></td> -->
+        <!--  <td><%= construction_daily_report.construction_datum.construction_name %></td> -->
+		<!--<% else %> -->
+		<!--  <td></td> -->
+        <!--  <td></td> -->
+		<!--<% end %> -->
+		
+	    <td><%= @staff[(construction_daily_report.staff_id)-1].staff_name %></td>
+        <td><%= construction_daily_report.start_time_1.to_s(:start_time_1) %></td>
+        <td><%= construction_daily_report.end_time_1.to_s(:end_time_1) %></td>
+        <td><%= construction_daily_report.start_time_2.to_s(:start_time_2) %></td>
+        <td><%= construction_daily_report.end_time_2.to_s(:end_time_2) %></td>
+        <td><%= construction_daily_report.working_times %></td>
+        <td><%= construction_daily_report.man_month %></td>
+        <td><%= construction_daily_report.labor_cost %></td>
+        <td><%=l construction_daily_report.created_at.in_time_zone('Tokyo') %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_construction_daily_report_path(construction_daily_report, construction_id: params[:construction_id], 
+                               move_flag: params[:move_flag]), :class => 'btn btn-white_rsd btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      construction_daily_report_path(construction_daily_report, construction_id: params[:construction_id], move_flag: params[:move_flag]),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+        <% if construction_daily_report.construction_datum.present? %>
+          <td><%= construction_daily_report.construction_datum.construction_code %></td>
+          <td><%= construction_daily_report.construction_datum.construction_name[0,10] %></td>
+        <% else %>
+          <td>-</td>
+          <td>-</td> 
+        <% end %>
+      </tr>
+    <% end %>
+	<!-- 追加箇所開始 -->
+    <%= paginate @construction_daily_reports %>
+    <!-- 追加箇所終了 -->
+  </tbody>
+  
+</table>
+</div>
+
+<script type="text/javascript">
+  
+  //検索可能なリストボックス
+  $(document).ready(function(){
+	$(".searchablePurchaseCode").select2({ theme: "classic" });
+
+    $(".searchableConstructionCode").select2({ theme: "classic" });
+	$(".searchableConstructionName").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST });
+	$(".searchableCustomerName").select2({ theme: "classic" });
+
+        $(".searchableMaterialCode").select2({ theme: "classic" });
+
+        $(".searchableMakerName").select2({ theme: "classic" });
+		
+		//見出し固定用設定追加
+		var sz = window.parent.screen.width;
+		var fc = 1;    //デフォルトの固定列数(社長PC基準)
+		var ht = 610;  //デフォルトの高さ(社長PC基準)
+		
+		if (sz != 1920) {
+		//画面サイズ1920px(社長PC基準)以外は、列固定させる。
+          //fc = 3;  //固定列数
+		  fc = 2;  //固定列数
+		  ht -= 70;
+          
+          sz = 1920; //for ipad pro (add180829)
+		}
+		$('#tablefix').tablefix({width: sz, height: ht, fixRows: 1, fixCols: fc});
+        //$('#tablefix').tablefix({width: 1920, height: 610, fixRows: 1, fixCols: 1});
+  });
+  
+ //社員の検索リストを空にする
+ function clearStaff(){
+   document.getElementById("staff_id_eq").value = "";
+ }
+  
+</script>

@@ -1,0 +1,49 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inventory_date: 2023-06-06
+  inventory_division_id: 1
+  construction_datum_id: 1
+  material_master_id: 1
+  quantity: 1.5
+  inventory_quantity: 1
+  unit_master_id: 1
+  unit_price: 1.5
+  price: 1
+  supplier_master_id: 1
+  slip_code: MyString
+  purchase_datum_id: 1
+  previous_quantity: 1
+  previous_unit_price: 1.5
+  current_quantity: 1.5
+  current_unit_price: 1.5
+  current_history_id: 1
+  current_warehousing_date: 2023-06-06
+  next_quantity_1: 1.5
+  next_unit_price_1: 1.5
+  next_history_id_1: 1
+  next_warehousing_date_1: 2023-06-06
+
+two:
+  inventory_date: 2023-06-06
+  inventory_division_id: 1
+  construction_datum_id: 1
+  material_master_id: 1
+  quantity: 1.5
+  inventory_quantity: 1
+  unit_master_id: 1
+  unit_price: 1.5
+  price: 1
+  supplier_master_id: 1
+  slip_code: MyString
+  purchase_datum_id: 1
+  previous_quantity: 1
+  previous_unit_price: 1.5
+  current_quantity: 1.5
+  current_unit_price: 1.5
+  current_history_id: 1
+  current_warehousing_date: 2023-06-06
+  next_quantity_1: 1.5
+  next_unit_price_1: 1.5
+  next_history_id_1: 1
+  next_warehousing_date_1: 2023-06-06

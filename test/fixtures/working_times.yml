@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employment_status_id: 1
+  working_time_start_time: 2023-06-20 09:44:20
+  working_time_end_time: 2023-06-20 09:44:20
+  overtime_start_time: 2023-06-20 09:44:20
+  overtime_end_time: 2023-06-20 09:44:20
+  overtime_early_start_time: 2023-06-20 09:44:20
+  overtime_early_end_time: 2023-06-20 09:44:20
+  overtime_midnight_start_time: 2023-06-20 09:44:20
+  overtime_midnight_end_time: 2023-06-20 09:44:20
+  break_time_1_start_time: 2023-06-20 09:44:20
+  break_time_1_end_time: 2023-06-20 09:44:20
+  break_time_2_start_time: 2023-06-20 09:44:20
+  break_time_2_end_time: 2023-06-20 09:44:20
+  break_time_3_start_time: 2023-06-20 09:44:20
+  break_time_3_end_time: 2023-06-20 09:44:20
+
+two:
+  employment_status_id: 1
+  working_time_start_time: 2023-06-20 09:44:20
+  working_time_end_time: 2023-06-20 09:44:20
+  overtime_start_time: 2023-06-20 09:44:20
+  overtime_end_time: 2023-06-20 09:44:20
+  overtime_early_start_time: 2023-06-20 09:44:20
+  overtime_early_end_time: 2023-06-20 09:44:20
+  overtime_midnight_start_time: 2023-06-20 09:44:20
+  overtime_midnight_end_time: 2023-06-20 09:44:20
+  break_time_1_start_time: 2023-06-20 09:44:20
+  break_time_1_end_time: 2023-06-20 09:44:20
+  break_time_2_start_time: 2023-06-20 09:44:20
+  break_time_2_end_time: 2023-06-20 09:44:20
+  break_time_3_start_time: 2023-06-20 09:44:20
+  break_time_3_end_time: 2023-06-20 09:44:20

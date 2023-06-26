@@ -1,0 +1,2 @@
+json.extract! working_time, :id, :employment_status_id, :working_time_start_time, :working_time_end_time, :overtime_start_time, :overtime_end_time, :overtime_early_start_time, :overtime_early_end_time, :overtime_midnight_start_time, :overtime_midnight_end_time, :break_time_1_start_time, :break_time_1_end_time, :break_time_2_start_time, :break_time_2_end_time, :break_time_3_start_time, :break_time_3_end_time, :created_at, :updated_at
+json.url working_time_url(working_time, format: :json)

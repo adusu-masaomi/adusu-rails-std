@@ -1,0 +1,47 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_name: MyString
+  search_character: MyString
+  post: MyString
+  address: MyString
+  house_number: MyString
+  address2: MyString
+  tel_main: MyString
+  fax_main: MyString
+  email_main: MyString
+  closing_date: 1
+  closing_date_division: 1
+  due_date: 1
+  due_date_division: 1
+  honorific_id: 1
+  responsible1: MyString
+  responsible2: MyString
+  contact_id: 1
+  payment_bank_id: 1
+  card_not_flag: 1
+  contractor_flag: 1
+  public_flag: 1
+
+two:
+  customer_name: MyString
+  search_character: MyString
+  post: MyString
+  address: MyString
+  house_number: MyString
+  address2: MyString
+  tel_main: MyString
+  fax_main: MyString
+  email_main: MyString
+  closing_date: 1
+  closing_date_division: 1
+  due_date: 1
+  due_date_division: 1
+  honorific_id: 1
+  responsible1: MyString
+  responsible2: MyString
+  contact_id: 1
+  payment_bank_id: 1
+  card_not_flag: 1
+  contractor_flag: 1
+  public_flag: 1

@@ -1,0 +1,16 @@
+I"@(function() {
+  $('.js-project').on('cocoon:before-insert', function(e, task_to_be_added) {
+    console.log('before insert');
+    return task_to_be_added.fadeIn('slow');
+  }).on('cocoon:after-insert', function(e, added_task) {
+    console.log('after insert');
+    return added_task.css("background", "red");
+  }).on('cocoon:before-remove', function(e, task_to_be_removed) {
+    console.log('before remove');
+    return task_to_be_removed.fadeOut('slow');
+  }).on('cocoon:after-remove', function(e, removed_task) {
+    return console.log('after remove');
+  });
+
+}).call(this);
+:ET

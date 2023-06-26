@@ -1,0 +1,232 @@
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+bundler: failed to load command: rake (/usr/local/rbenv/versions/2.2.2/bin/rake)
+Bundler::GitError: The git source git://github.com/zpaulovics/datetimepicker-rails.git is not yet checked out. Please run `bundle install` before trying to start your application
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git/git_proxy.rb:209:in `allowed_in_path'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git/git_proxy.rb:167:in `find_local_revision'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git/git_proxy.rb:61:in `revision'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git.rb:216:in `revision'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git.rb:88:in `install_path'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/path.rb:113:in `expanded_path'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/path.rb:135:in `load_spec_files'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git.rb:189:in `load_spec_files'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/path.rb:95:in `local_specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/source/git.rb:160:in `specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:556:in `block in converge_locked_specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:545:in `each'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:545:in `converge_locked_specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:195:in `resolve'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:140:in `specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:185:in `specs_for'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/definition.rb:174:in `requested_specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/environment.rb:19:in `requested_specs'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/runtime.rb:14:in `setup'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler.rb:95:in `setup'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/bundler-1.12.5/lib/bundler/setup.rb:19:in `<top (required)>'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+  /usr/local/rbenv/versions/2.2.2/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.2.2/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+bundler: failed to load command: rake (/usr/local/rbenv/versions/2.3.1/bin/rake)
+Bundler::GemNotFound: Your bundle is locked to activesupport (4.2.6), but that version could not be found in any of the sources listed in your Gemfile. If you haven't changed sources, that means the author of activesupport (4.2.6) has removed it. You'll need to update your bundle to a different version of activesupport (4.2.6) that hasn't been removed in order to install.
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/definition.rb:181:in `rescue in specs'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/definition.rb:175:in `specs'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/definition.rb:235:in `specs_for'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/definition.rb:224:in `requested_specs'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/runtime.rb:118:in `block in definition_method'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/runtime.rb:19:in `setup'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler.rb:99:in `setup'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/bundler-1.13.0/lib/bundler/setup.rb:20:in `<top (required)>'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+  /usr/local/rbenv/versions/2.3.1/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)
+rake aborted!
+Don't know how to build task 'db:backup' (see --tasks)
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `load'
+/usr/local/rbenv/versions/2.3.1/bin/bundle:23:in `<main>'
+(See full trace by running task with --trace)

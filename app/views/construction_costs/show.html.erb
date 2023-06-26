@@ -1,0 +1,43 @@
+<%- model_class = ConstructionCost -%>
+<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:construction_code) %>:</strong></dt>
+  <dd><%= @construction_cost.construction_datum.construction_code %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:construction_name) %>:</strong></dt>
+  <!--<dd><%= @construction_cost.construction_datum_id %></dd>-->
+  <dd><%= @construction_cost.construction_datum.construction_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:supplies_expense) %>:</strong></dt>
+  <dd><%= number_to_currency(@construction_cost.supplies_expense,  precision: 0) %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:labor_cost) %>:</strong></dt>
+  <dd><%= number_to_currency(@construction_cost.labor_cost,  precision: 0) %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:misellaneous_expense) %>:</strong></dt>
+  <dd><%= number_to_currency(@construction_cost.misellaneous_expense,  precision: 0) %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:constructing_amount) %>:</strong></dt>
+  <dd><%= number_to_currency(@construction_cost.constructing_amount,  precision: 0) %></dd>
+  <dt><strong>確定申告区分</strong></dt>
+  <% if @construction_cost.final_return_division.present? %>
+  <dd><%= ConstructionCost.final_division[@construction_cost.final_return_division][0] %></dd>
+  <% else %>
+  <dd>-</dd>
+  <% end %>
+</dl>
+
+<!--<%= link_to t('.back', :default => t("helpers.links.back")),
+              construction_costs_path(construction_id: params[:construction_id], 
+                        move_flag: params[:move_flag]), :class => 'btn btn-white_rsd'  %>-->  
+<%= link_to t('.back', :default => t("helpers.links.back")),
+                construction_data_path(construction_id: params[:construction_id], 
+				move_flag: params[:move_flag]), :class => 'btn btn-white_rsd' %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_construction_cost_path(@construction_cost, construction_id: params[:construction_id], 
+                    move_flag: params[:move_flag]), :class => 'btn btn-white_rsd' %>
+
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              construction_cost_path(@construction_cost),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

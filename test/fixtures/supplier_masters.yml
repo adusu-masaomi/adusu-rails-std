@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  supplier_name: MyString
+  tel_main: MyString
+  fax_main: MyString
+  email_main: MyString
+  responsible1: MyString
+  email1: MyString
+  responsible2: MyString
+  email2: MyString
+  responsible3: MyString
+  email3: MyString
+  responsible_cc: MyString
+  email_cc: MyString
+  search_character: MyString
+  outsourcing_flag: 1
+  address: MyString
+  bank_name: MyString
+  bank_branch_name: MyString
+  account_type: 1
+  account_number: MyString
+
+two:
+  supplier_name: MyString
+  tel_main: MyString
+  fax_main: MyString
+  email_main: MyString
+  responsible1: MyString
+  email1: MyString
+  responsible2: MyString
+  email2: MyString
+  responsible3: MyString
+  email3: MyString
+  responsible_cc: MyString
+  email_cc: MyString
+  search_character: MyString
+  outsourcing_flag: 1
+  address: MyString
+  bank_name: MyString
+  bank_branch_name: MyString
+  account_type: 1
+  account_number: MyString

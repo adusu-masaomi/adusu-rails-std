@@ -1,0 +1,67 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchase_date: 2023-05-12
+  slip_code: MyString
+  purchase_order_datum_id: 1
+  construction_datum_id: 1
+  material_id: 1
+  material_code: MyString
+  material_name: MyString
+  maker_id: 1
+  maker_name: MyString
+  quantity: 1.5
+  quantity2: MyString
+  float: MyString
+  unit_id: 1
+  purchase_unit_price: 1.5
+  purchase_unit_price2: 1.5
+  purchase_amount: 1
+  list_price: 1
+  purchase_id: 1
+  division_id: 1
+  supplier_id: 1
+  inventory_division_id: 1
+  unit_price_not_update_flag: 1
+  outsourcing_invoice_flag: 1
+  outsourcing_payment_flag: 1
+  purchase_header_id: 1
+  working_end_date: 2023-05-12
+  closing_date: 2023-05-12
+  payment_due_date: 2023-05-12
+  payment_date: 2023-05-12
+  unpaid_payment_date: 2023-05-12
+  notes: MyString
+
+two:
+  purchase_date: 2023-05-12
+  slip_code: MyString
+  purchase_order_datum_id: 1
+  construction_datum_id: 1
+  material_id: 1
+  material_code: MyString
+  material_name: MyString
+  maker_id: 1
+  maker_name: MyString
+  quantity: 1.5
+  quantity2: MyString
+  float: MyString
+  unit_id: 1
+  purchase_unit_price: 1.5
+  purchase_unit_price2: 1.5
+  purchase_amount: 1
+  list_price: 1
+  purchase_id: 1
+  division_id: 1
+  supplier_id: 1
+  inventory_division_id: 1
+  unit_price_not_update_flag: 1
+  outsourcing_invoice_flag: 1
+  outsourcing_payment_flag: 1
+  purchase_header_id: 1
+  working_end_date: 2023-05-12
+  closing_date: 2023-05-12
+  payment_due_date: 2023-05-12
+  payment_date: 2023-05-12
+  unpaid_payment_date: 2023-05-12
+  notes: MyString

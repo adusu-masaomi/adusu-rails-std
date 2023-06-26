@@ -1,0 +1,90 @@
+<%- model_class = SupplierMaster -%>
+<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:supplier_name) %>:</strong></dt>
+  <dd><%= @supplier_master.supplier_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tel_main) %>:</strong></dt>
+  <dd><%= @supplier_master.tel_main %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:fax_main) %>:</strong></dt>
+  <dd><%= @supplier_master.fax_main %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email_main) %>:</strong></dt>
+  <dd><%= @supplier_master.email_main %></dd>
+  
+  <!--  別テーブルで持つようにしたため除外
+  <dt><strong><%= model_class.human_attribute_name(:responsible1) %>:</strong></dt>
+  <dd><%= @supplier_master.responsible1 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email1) %>:</strong></dt>
+  <dd><%= @supplier_master.email1 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:responsible2) %>:</strong></dt>
+  <dd><%= @supplier_master.responsible2 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email2) %>:</strong></dt>
+  <dd><%= @supplier_master.email2 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:responsible3) %>:</strong></dt>
+  <dd><%= @supplier_master.responsible3 %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email3) %>:</strong></dt>
+  <dd><%= @supplier_master.email3 %></dd>
+  -->
+  <% cnt = 0 %>
+  <% @supplier_master.supplier_responsibles.first(3).each do |rp| %>
+      <% cnt += 1 %>
+      <dt><strong><%= "担当者" + cnt.to_s + ":" %></strong></dt>
+      <dd><%= rp.responsible_name %></dd>
+      <dt><strong><%= "担当" + cnt.to_s + "Email:" %></strong></dt>
+      <dd><%= rp.responsible_email %></dd>
+  <% end %>
+  <% until cnt >= 3 do %>
+    <% cnt += 1 %>
+    <dt><strong><%= "担当者" + cnt.to_s + ":" %></strong></dt>
+    <dd></dd>
+    <dt><strong><%= "担当" + cnt.to_s + "Email:" %></strong></dt>
+    <dd></dd>
+  <% end %>
+        
+  <dt><strong><%= model_class.human_attribute_name(:responsible_cc) %>:</strong></dt>
+  <dd><%= @supplier_master.responsible_cc %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:email_cc) %>:</strong></dt>
+  <dd><%= @supplier_master.email_cc %></dd>
+  
+  <!--標準版の仕様-->
+  <dt><strong><%= model_class.human_attribute_name(:post) %>:</strong></dt>
+  <dd><%= @supplier_master.post %></dd>
+  
+  <dt><strong><%= model_class.human_attribute_name(:address) %>:</strong></dt>
+  <dd><%= @supplier_master.address %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:bank_name) %>:</strong></dt>
+  <dd><%= @supplier_master.bank_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:bank_branch_name) %>:</strong></dt>
+  <dd><%= @supplier_master.bank_branch_name %></dd>
+  
+  
+  <dt><strong><%= model_class.human_attribute_name(:account_type) %>:</strong></dt>
+  <% if @supplier_master.account_type.present? %>
+  <dd><%= SupplierMaster.account_type_division[@supplier_master.account_type][0] %></dd>
+  <% else %>
+  <dd>-</dd>
+  <% end %>
+  
+  <dt><strong><%= model_class.human_attribute_name(:account_number) %>:</strong></dt>
+  <dd><%= @supplier_master.account_number %></dd>
+  
+  <dt><strong><%= model_class.human_attribute_name(:holder) %>:</strong></dt>
+  <dd><%= @supplier_master.holder %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:responsible_name) %>:</strong></dt>
+  <dd><%= @supplier_master.responsible_name %></dd>
+  <!-- -->
+  
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              supplier_masters_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_supplier_master_path(@supplier_master), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              supplier_master_path(@supplier_master),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
