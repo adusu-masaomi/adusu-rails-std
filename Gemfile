@@ -126,9 +126,11 @@ gem 'momentjs-rails'
 #gem 'momentjs-rails', '2.11.1',  :github => 'derekprior/momentjs-rails'
 
 # DateTimePicker
-gem 'datetimepicker-rails', github:'zpaulovics/datetimepicker-rails', branch:'master', submodules: true
-#gem 'datetimepicker-rails', git: 'git://github.com/zpaulovics/datetimepicker-rails', tag: 'v1.0.0'
+#test del
+#gem 'datetimepicker-rails', github:'zpaulovics/datetimepicker-rails', branch:'master', submodules: true
 
+
+#gem 'datetimepicker-rails', git: 'git://github.com/zpaulovics/datetimepicker-rails', tag: 'v1.0.0'
 # gem 'bootstrap3-datetimepicker-rails', '~> 4.17.42'
 
 # シンプルフォーム

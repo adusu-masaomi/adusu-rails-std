@@ -30,7 +30,6 @@
 //= require_self
 //= require moment
 //= require moment/ja
-//= require bootstrap-datetimepicker
 //= require pickers
 
 // require turbolinks 
