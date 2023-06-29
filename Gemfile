@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+#render用
+gem 'rake' , '13.0.3'
+
 gem 'rdoc', '6.1.2'
 gem 'psych', '3.2.0'
 
