@@ -530,7 +530,9 @@ class EstimationSheetPDF
 					  
         if quotation_detail_middle_classification.quote_price.present?
           if quotation_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL  #add 170308
-            tmp = quotation_detail_middle_classification.quote_price.delete("^0-9").to_i
+            #tmp = quotation_detail_middle_classification.quote_price.delete("^0-9").to_i
+            #upd230629
+            tmp = quotation_detail_middle_classification.quote_price
             if tmp > 0
               num = quotation_detail_middle_classification.quote_price.to_i
             else

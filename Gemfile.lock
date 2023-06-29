@@ -373,7 +373,6 @@ DEPENDENCIES
   rails-assets-typehead.js!
   rails-sweetalert2-confirm
   rails4-autocomplete
-  rake (= 13.0.3)
   ransack
   rdoc (= 6.1.2)
   responders

@@ -490,7 +490,9 @@ class EstimationSheetLandscapePDF
                   
         if quotation_detail_middle_classification.quote_price.present?
           if quotation_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL  
-            tmp = quotation_detail_middle_classification.quote_price.delete("^0-9").to_i
+            #tmp = quotation_detail_middle_classification.quote_price.delete("^0-9").to_i
+            #rails6用
+            tmp = quotation_detail_middle_classification.quote_price
             if tmp > 0
               num = quotation_detail_middle_classification.quote_price.to_i
             else
@@ -505,7 +507,10 @@ class EstimationSheetLandscapePDF
         #実行金額合計
         if quotation_detail_middle_classification.execution_price.present?
           if quotation_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL 
-            tmp = quotation_detail_middle_classification.execution_price.delete("^0-9").to_i
+            #tmp = quotation_detail_middle_classification.execution_price.delete("^0-9").to_i
+            #rails6用
+            tmp = quotation_detail_middle_classification.execution_price
+            
             if tmp > 0
               num = quotation_detail_middle_classification.execution_price.to_i
             else

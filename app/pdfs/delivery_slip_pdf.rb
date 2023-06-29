@@ -441,7 +441,9 @@ class DeliverySlipPDF
         
         if delivery_slip_detail_middle_classification.delivery_slip_price.present?
           if delivery_slip_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL  
-            tmp = delivery_slip_detail_middle_classification.delivery_slip_price.delete("^0-9").to_i
+            #tmp = delivery_slip_detail_middle_classification.delivery_slip_price.delete("^0-9").to_i
+            #rails 6
+            tmp = delivery_slip_detail_middle_classification.delivery_slip_price
             if tmp > 0
               num = delivery_slip_detail_middle_classification.delivery_slip_price.to_i
             else
