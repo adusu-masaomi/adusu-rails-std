@@ -3,6 +3,10 @@ source 'https://rubygems.org'
 #render用
 #gem 'rake' , '13.0.3'
 
+#Rails6
+gem 'matrix'
+gem 'puma'
+
 gem 'rdoc', '6.1.2'
 gem 'psych', '3.2.0'
 
@@ -111,7 +115,8 @@ gem 'bootstrap-datetimepicker-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #gem 'rails', '4.2.6'
 #railss6
-gem 'rails', '6.0.3.6'
+#gem 'rails', '6.0.3.6'
+gem 'rails', '6.1.6'
 
 #rails6 --ng
 #gem 'psych', '~> 3.1'
