@@ -17,6 +17,10 @@ default: &default
   username: adusu
   password: Adusu2023% 
   host: localhost
+  
+  #rails6 ??
+  collation: utf8mb4_general_ci
+  host: <%= ENV.fetch("DB_HOST", "127.0.0.1")  %>
 
   #adapter: mysql2
   #encoding: utf8

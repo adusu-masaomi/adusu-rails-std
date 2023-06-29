@@ -1,2 +1,2 @@
-class WorkingCategory < ActiveRecord::Base
+class WorkingCategory < ApplicationRecord
 end

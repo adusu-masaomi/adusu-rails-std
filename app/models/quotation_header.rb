@@ -1,4 +1,4 @@
-class QuotationHeader < ActiveRecord::Base
+class QuotationHeader < ApplicationRecord
    paginates_per 200  # 1ページあたり項目表示
    
    belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"

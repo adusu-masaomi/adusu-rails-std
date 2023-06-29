@@ -1,5 +1,5 @@
-class ConstructionAttachment < ActiveRecord::Base
-  belongs_to :construction_datum
+class ConstructionAttachment < ApplicationRecord
+  belongs_to :construction_datum, optional: true
   #belongs_to :construction_datum, optional: true →not work
   mount_uploader :attachment, AttachmentsUploader
  

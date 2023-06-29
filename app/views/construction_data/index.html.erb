@@ -6,7 +6,7 @@
 <% provide(:title, model_class.model_name.human.pluralize.titleize) %>
 
 <div class="page-header" style="margin-bottom:0;width:1920px;">
-  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></font></h1>
+  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human %></font></h1>
   
   <!-- 追加箇所開始 -->
   <%= page_entries_info @construction_data %>

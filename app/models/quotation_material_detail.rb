@@ -1,4 +1,4 @@
-class QuotationMaterialDetail < ActiveRecord::Base
+class QuotationMaterialDetail < ApplicationRecord
 
   belongs_to :quotation_material_header
   

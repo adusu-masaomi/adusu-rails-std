@@ -1,4 +1,4 @@
-class WorkingLargeItem < ActiveRecord::Base
+class WorkingLargeItem < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 	
 	belongs_to :WorkingUnit, :foreign_key => "working_unit_id"

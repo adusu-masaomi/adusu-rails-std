@@ -3,7 +3,7 @@
 <%- model_class = DeliverySlipHeader -%>
 <% provide(:title, "納品書一覧データ") %>
 <div class="page-header", style="width:1920px">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
   
   <!-- 追加箇所開始 -->
   <%= page_entries_info @delivery_slip_headers %>

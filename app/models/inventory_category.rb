@@ -1,2 +1,2 @@
-class InventoryCategory < ActiveRecord::Base
+class InventoryCategory < ApplicationRecord
 end

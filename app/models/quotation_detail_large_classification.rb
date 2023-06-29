@@ -1,4 +1,4 @@
-class QuotationDetailLargeClassification < ActiveRecord::Base
+class QuotationDetailLargeClassification < ApplicationRecord
   belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
   belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
   has_many :quotation_detail_middle_classifications

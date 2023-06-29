@@ -75,9 +75,11 @@
   </div>
   <div class="col-lg-4" , style="margin-left : 10px">
   
+  <!--<%= f.input :deposit_due_date ,label: "入金予定日", hint: "＊自動計算されます" , 
+          input_html:{ id:"deposit_due_date", :tabindex=>"18"} ,as: :date_picker %>-->
   <%= f.input :deposit_due_date ,label: "入金予定日", hint: "＊自動計算されます" , 
-          input_html:{ id:"deposit_due_date", :tabindex=>"18"} ,as: :date_picker %>
-  
+          as: :string, input_html:{ id:"deposit_due_date", :tabindex=>"18", class:"datetimepicker"}  %>
+          
   <!--
   <%= f.input :deposit_due_date, :include_blank => true, start_year: Date.today.year - 1,
                   end_year: Date.today.year + 3, hint: "自動計算されます(入力不要)", input_html:{ id:"deposit_due_date",
@@ -88,7 +90,7 @@
                                              name: "construction_datum[deposit_due_date_hide][]"}, as: :hidden %>
   
   </div>
-  </br></br></br></br></br></br>
+  </br></br></br></br></br></br></br>
   
   <%= f.input :deposit_date, :include_blank => true, start_year: Date.today.year - 1,
                   end_year: Date.today.year + 3, input_html:{:readonly=>true} %>

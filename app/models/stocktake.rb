@@ -1,4 +1,4 @@
-class Stocktake < ActiveRecord::Base
+class Stocktake < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
   belongs_to :material_master

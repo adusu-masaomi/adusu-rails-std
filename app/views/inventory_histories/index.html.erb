@@ -1,7 +1,7 @@
 <script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
 <%- model_class = InventoryHistory -%>
 <div class="page-header", style="width:1920px">
-  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></font></h1>
+  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human %></font></h1>
   <!-- kaminari用追加箇所開始 -->
   <%= page_entries_info @inventory_histories %>
   <!-- kaminari用追加箇所終了 -->

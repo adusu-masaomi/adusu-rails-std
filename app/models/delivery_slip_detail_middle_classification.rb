@@ -1,9 +1,9 @@
-class DeliverySlipDetailMiddleClassification < ActiveRecord::Base
-  belongs_to :DeliverySlipHeader, :foreign_key => "delivery_slip_header_id"
+class DeliverySlipDetailMiddleClassification < ApplicationRecord
+  belongs_to :DeliverySlipHeader, optional: true, :foreign_key => "delivery_slip_header_id"
   
-  belongs_to :DeliverySlipDetailLargeClassification, :foreign_key => "delivery_slip_detail_large_classification_id"
+  belongs_to :DeliverySlipDetailLargeClassification, optional: true, :foreign_key => "delivery_slip_detail_large_classification_id"
   #belongs_to :WorkingLargeItem, :foreign_key => "delivery_slip_detail_large_classification_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #行挿入用
   attr_accessor :check_line_insert

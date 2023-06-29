@@ -1,4 +1,4 @@
-class InvoiceDetailMiddleClassification < ActiveRecord::Base
+class InvoiceDetailMiddleClassification < ApplicationRecord
   belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
   
   belongs_to :InvoiceDetailLargeClassification, :foreign_key => "invoice_detail_large_classification_id"

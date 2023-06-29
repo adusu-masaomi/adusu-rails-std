@@ -105,7 +105,7 @@
   <!--資材M単価-->
   <%= f.simple_fields_for :MaterialMaster, :remote => true do |m| %>
     <%= m.input :last_unit_price , input_html:{ id:"last_unit_price"}, as: :hidden %>
-    <%= m.input :last_unit_price_update_at , input_html:{ id:"last_unit_price_update_at"} ,as: :date_picker, as: :hidden %>
+    <%= m.input :last_unit_price_update_at , input_html:{ id:"last_unit_price_update_at"} , as: :hidden %>
   <% end %>
   
   <div class="col-lg-6" , style="margin-left : -15px">
@@ -200,9 +200,8 @@
 
    var item_index = 0;
 
-   //$(document).ready(function(){
-   $(document).on('ready page:load', function(){
-   //$(document).on('turbolinks:load', function(){
+   $(document).ready(function(){
+   //$(document).on('ready page:load', function(){
      
      //連動しなくなるので保留・・・
      $(".searchableConstructionCode").select2({ theme: "bootstrap" });

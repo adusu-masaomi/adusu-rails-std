@@ -1,2 +1,2 @@
-class Link < ActiveRecord::Base
+class Link < ApplicationRecord
 end

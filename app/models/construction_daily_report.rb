@@ -1,13 +1,13 @@
-class ConstructionDailyReport < ActiveRecord::Base
+class ConstructionDailyReport < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
   #belongs_to :construction_datum, :touch => :construction_start_date
-  belongs_to :construction_datum
+  belongs_to :construction_datum, optional: true
   accepts_nested_attributes_for :construction_datum, update_only: true
   #attr_accessor :construction_datum
   
   #has_many :Staffs
-  belongs_to :Staff, :foreign_key => "staff_id"  
+  belongs_to :Staff, optional: true, :foreign_key => "staff_id"  
   
   #みなし勤務判定用
   attr_accessor :regard_one_day

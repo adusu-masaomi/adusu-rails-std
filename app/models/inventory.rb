@@ -1,11 +1,11 @@
-class Inventory < ActiveRecord::Base
+class Inventory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
-  belongs_to :material_master
-  belongs_to :unit_master
+  belongs_to :material_master, optional: true
+  belongs_to :unit_master, optional: true
   
   #add171026
-  belongs_to :supplier_master
+  belongs_to :supplier_master, optional: true
   
   #ファイルのアップローダー追加 add 171218
   mount_uploader :image, ImagesUploader

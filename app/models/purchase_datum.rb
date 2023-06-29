@@ -1,21 +1,22 @@
-class PurchaseDatum < ActiveRecord::Base
+class PurchaseDatum < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示　
-
-    belongs_to :unit_master , :foreign_key => "unit_id"
-    belongs_to :MakerMaster , :foreign_key => "maker_id"
     
-    belongs_to :MaterialMaster, :foreign_key => "material_id"
+    #rails6対応(optional: true)
+    belongs_to :unit_master , optional: true, :foreign_key => "unit_id"
+    belongs_to :MakerMaster , optional: true, :foreign_key => "maker_id"
+    
+    belongs_to :MaterialMaster, optional: true, :foreign_key => "material_id"
     accepts_nested_attributes_for :MaterialMaster, update_only: true
 	
-    belongs_to :PurchaseUnitPrice, foreign_key: [:supplier_id, :material_id]
+    belongs_to :PurchaseUnitPrice, optional: true, foreign_key: [:supplier_id, :material_id]
     accepts_nested_attributes_for :PurchaseUnitPrice, update_only: true
 
-    belongs_to :purchase_order_datum , :class_name => 'PurchaseOrderDatum',  :foreign_key => "purchase_order_datum_id"
-	belongs_to :construction_datum
-	belongs_to :SupplierMaster,  :foreign_key => "supplier_id"
-	belongs_to :CustomerMaster,  :foreign_key => "customer_id"
-	belongs_to :PurchaseDivision,  :foreign_key => "division_id"
-    belongs_to :purchase_header  
+    belongs_to :purchase_order_datum , optional: true, :class_name => 'PurchaseOrderDatum',  :foreign_key => "purchase_order_datum_id"
+	belongs_to :construction_datum, optional: true
+	belongs_to :SupplierMaster, optional: true, :foreign_key => "supplier_id"
+	belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
+	belongs_to :PurchaseDivision, optional: true, :foreign_key => "division_id"
+    belongs_to :purchase_header , optional: true
     
     #has_many :SupplierMaster,  :foreign_key => "supplier_id"
     

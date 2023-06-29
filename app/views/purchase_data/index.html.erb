@@ -3,7 +3,7 @@
 <%- model_class = PurchaseDatum -%>
 <% provide(:title, model_class.model_name.human.pluralize.titleize) %>
 <div class="page-header", style="width:1920px" >
-  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></font></h1>
+  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human %></font></h1>
   
   <!-- kaminari用追加箇所開始 -->
   <%= page_entries_info @purchase_data %>
@@ -11,12 +11,12 @@
   
   <%= search_form_for @q, :html => {:style=> 'width:1920px' } do |f| %>
   <%= f.label :purchase_date, '仕入日' %>
-  <%= f.text_field :purchase_date_gteq, class:"input-append date datepicker", include_blank: true ,  id: 'purchase_date_start'   %>
+  <%= f.text_field :purchase_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'purchase_date_start', autocomplete: 'off'   %>
   
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartDate()" %>
   
   <%= f.label :purchase_date, '～' %>
-  <%= f.text_field :purchase_date_lteq, class:"input-append date datepicker", include_blank: true, id: 'purchase_date_end'  %>
+  <%= f.text_field :purchase_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'purchase_date_end', autocomplete: 'off'  %>
 
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearEndDate()" %>
 
@@ -41,8 +41,8 @@
   <% end %>
   </br>
   
-  <!--<%= f.text_field :purchase_date_gteq, class:"my-custom-class-d datepicker", include_blank: true  %>-->
-  <!--<%= f.text_field :purchase_date_gteq, as: :datepicker, required: false, include_blank: true  %>-->
+  <!--<%= f.text_field :purchase_date_gteq, class:"my-custom-class-d ", include_blank: true  %>-->
+  <!--<%= f.text_field :purchase_date_gteq, required: false, include_blank: true  %>-->
   
   <%= f.label :purchase_order_datum_id, '注文No：：' %>
   <%= f.select :purchase_order_datum_id_eq, @purchase_order_data_extract.map{|st| [st.purchase_order_code, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchablePurchaseCode"}  %>
@@ -148,7 +148,7 @@
        <!-- 最安値ボタン追加 add211223 -->
        <%= f.button "最安値", type: 'submit', name: "subaction", value: "bestprice", class: 'btn btn-red300_rsd'%>
        
-       <!--<%= link_to "CSV", purchase_data_path(params.merge(format: 'csv')) ,:class => 'btn btn-default'%>-->
+       <!--<%= link_to "CSV", purchase_data_path(format: "csv" , params: params.to_unsafe_h) ,:class => 'btn btn-default'%>-->
        <td><font size="3">合計金額:<%=number_to_currency(@purchase_data.sumprice,  precision: 0 ) %></font></td>
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <td><font size="2">合計数量(在庫確認用):<%= number_with_delimiter(@purchase_data.sumQuantity + @purchase_data.sumShipQuantity) %></font></td>

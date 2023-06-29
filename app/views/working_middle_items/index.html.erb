@@ -3,7 +3,7 @@
 <% provide(:title, "作業明細マスター") %>
 
 <div class="page-header", style="width:1920px">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
   
   <!-- 追加箇所開始 -->
   <%= page_entries_info @working_middle_items %>

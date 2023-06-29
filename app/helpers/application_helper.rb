@@ -141,4 +141,15 @@ module ApplicationHelper
     return supplier_id
   end
   
+  #def datepicker(form, field)
+  #  form.text_field(field, data: { provide: "datepicker", 
+  #  #'date-format': 'YYYY/mm/DD',
+  #  'date-format': 'yyyy-MM-dd', 
+  #  'date-weekStart': 1, 
+  #  'date-maxViewMode': 2, 
+  #  'date-multidate': true, 
+  #  'date-daysOfWeekHighlighted': "0,6", 
+  #  'date-calendarWeeks': true }).html_safe
+  #end
+  
 end

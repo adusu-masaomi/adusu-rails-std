@@ -1,2 +1,2 @@
-class Constant < ActiveRecord::Base
+class Constant < ApplicationRecord
 end

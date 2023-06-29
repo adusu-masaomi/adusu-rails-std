@@ -1,4 +1,4 @@
-class QuotationMaterialHeader < ActiveRecord::Base
+class QuotationMaterialHeader < ApplicationRecord
 
   belongs_to :construction_datum
   belongs_to :supplier_master

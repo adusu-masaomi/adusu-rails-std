@@ -1,6 +1,6 @@
-class DeliverySlipDetailLargeClassification < ActiveRecord::Base
-  belongs_to :DeliverySlipHeader, :foreign_key => "delivery_slip_header_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+class DeliverySlipDetailLargeClassification < ApplicationRecord
+  belongs_to :DeliverySlipHeader, optional: true, :foreign_key => "delivery_slip_header_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   has_many :delivery_slip_detail_middle_classifications
 

@@ -1,2 +1,2 @@
-class TaskContent < ActiveRecord::Base
+class TaskContent < ApplicationRecord
 end

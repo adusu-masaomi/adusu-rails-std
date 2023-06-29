@@ -1,12 +1,12 @@
-class ConstructionDatum < ActiveRecord::Base
+class ConstructionDatum < ApplicationRecord
 	#kaminari用設定
     paginates_per 200  # 1ページあたり項目表示
     #paginates_per 100   # 1ページあたり項目表示   #upd210707 読み込み遅いので100件にした
 
-    belongs_to :CustomerMaster, :foreign_key => "customer_id"
+    belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
     accepts_nested_attributes_for :CustomerMaster 
-    belongs_to :PurchaseDivisionMaster
-    belongs_to :site    #add190124
+    belongs_to :PurchaseDivisionMaster, optional: true
+    belongs_to :site, optional: true    #add190124
     has_many :purchase_order_datum
 	has_many :construction_daily_reports
 	#Del190930

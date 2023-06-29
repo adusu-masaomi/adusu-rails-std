@@ -1,4 +1,4 @@
-class CustomerMaster < ActiveRecord::Base
+class CustomerMaster < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 
     #締め日区分

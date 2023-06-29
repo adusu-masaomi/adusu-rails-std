@@ -1,2 +1,2 @@
-class WorkingSpecificSmallItem < ActiveRecord::Base
+class WorkingSpecificSmallItem < ApplicationRecord
 end

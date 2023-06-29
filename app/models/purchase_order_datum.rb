@@ -1,17 +1,17 @@
-class PurchaseOrderDatum < ActiveRecord::Base
+class PurchaseOrderDatum < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 
-    belongs_to :construction_datum 
+    belongs_to :construction_datum, optional: true
     accepts_nested_attributes_for :construction_datum, update_only: true
     
     belongs_to :supplier_master
     accepts_nested_attributes_for :supplier_master, update_only: true
 
     #add210703
-    belongs_to :supplier_responsible
+    belongs_to :supplier_responsible, optional: true
     accepts_nested_attributes_for :supplier_responsible, update_only: true
 
-    belongs_to :purchase_datum
+    belongs_to :purchase_datum, optional: true
     
     #has_many :purchase_order_history
     

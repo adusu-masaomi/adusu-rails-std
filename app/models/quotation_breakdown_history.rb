@@ -1,4 +1,4 @@
-class QuotationBreakdownHistory < ActiveRecord::Base
+class QuotationBreakdownHistory < ApplicationRecord
   belongs_to :QuotationHeaderHistory, :foreign_key => "quotation_header_history_id"
   belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
   

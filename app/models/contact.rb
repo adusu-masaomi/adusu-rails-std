@@ -1,4 +1,4 @@
-class Contact < ActiveRecord::Base
+class Contact < ApplicationRecord
   
   paginates_per 200  # 1ページあたり項目表示
   

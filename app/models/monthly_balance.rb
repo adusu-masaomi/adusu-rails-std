@@ -1,3 +1,3 @@
-class MonthlyBalance < ActiveRecord::Base
+class MonthlyBalance < ApplicationRecord
   paginates_per 100 # 1ページあたり項目表示
 end

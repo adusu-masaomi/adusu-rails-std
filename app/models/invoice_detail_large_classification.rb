@@ -1,4 +1,4 @@
-class InvoiceDetailLargeClassification < ActiveRecord::Base
+class InvoiceDetailLargeClassification < ApplicationRecord
   belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
   belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
   

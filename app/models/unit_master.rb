@@ -1,4 +1,4 @@
-class UnitMaster < ActiveRecord::Base
+class UnitMaster < ApplicationRecord
   
    #バリデーション
    validates :unit_name, presence: true, uniqueness: true

@@ -1,2 +1,2 @@
-class QuotationHeaderHistory < ActiveRecord::Base
+class QuotationHeaderHistory < ApplicationRecord
 end

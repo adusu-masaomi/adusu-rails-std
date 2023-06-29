@@ -1,2 +1,2 @@
-class WorkingSafetyMatter < ActiveRecord::Base
+class WorkingSafetyMatter < ApplicationRecord
 end

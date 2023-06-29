@@ -1,7 +1,7 @@
-class DeliverySlipHeader < ActiveRecord::Base
+class DeliverySlipHeader < ApplicationRecord
 
    paginates_per 200  # 1ページあたり項目表示
-   belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
+   belongs_to :ConstructionDatum, optional: true, :foreign_key => "construction_datum_id"
    
    belongs_to :customer_master, :foreign_key => "customer_id"
    accepts_nested_attributes_for :customer_master, update_only: true

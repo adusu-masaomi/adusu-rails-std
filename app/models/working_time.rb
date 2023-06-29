@@ -1,4 +1,4 @@
-class WorkingTime < ActiveRecord::Base
+class WorkingTime < ApplicationRecord
   MAX_RECORD_COUNT = 1
   validate :count_must_be_within_limit, on: :create
   before_destroy :ensure_count

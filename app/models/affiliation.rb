@@ -1,2 +1,2 @@
-class Affiliation < ActiveRecord::Base
+class Affiliation < ApplicationRecord
 end

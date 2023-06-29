@@ -1,4 +1,4 @@
-class MakerMaster < ActiveRecord::Base
+class MakerMaster < ApplicationRecord
     paginates_per 100  # 1ページあたり項目表示(index.html)
 	has_many :PurchaseDatum
 	validates :maker_name, uniqueness: true

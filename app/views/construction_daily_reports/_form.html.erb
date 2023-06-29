@@ -13,12 +13,15 @@
     </ul>
   </div>
  <% end %>
-  
+     
+   
   <!--スマホ対応 datepicker使う場合は多めに上余白を空ける--> 
   <!--</br></br></br></br>-->
   <!--<%= f.input :working_date , input_html:{id: "working_date" , class: "test", style: 'width:220px' , :tabindex=>"0" } , as: :date_picker %>-->
+  <!--<%= f.input :working_date , as: :string, input_html:{id: "working_date" , class: "date-picker", style: 'width:120px' , :tabindex=>"0" }  %>-->
+  <!--<%= f.input :working_date , as: :datepicker, input_html:{id: "working_date" , class:"datepicker", style: 'width:120px' , :tabindex=>"0", dateInputFormat: 'yyyy-MM-dd' }  %>-->
+  <%= f.input :working_date , as: :string, input_html:{id: "working_date" , style: 'width:120px' , class:"datetimepicker", :tabindex=>"0" }  %>
   
-  <%= f.input :working_date , as: :string, input_html:{id: "working_date" , class: "datepicker", style: 'width:120px' , :tabindex=>"0" }  %>
   <!--下記だと工事日がうまく更新されないので保留・・・-->
   <!--<%= f.input :working_date , input_html:{id: "working_date" , style: 'width:220px'}  %>-->
   <%= f.label :工事名, {:class => "my-custom-class-l"}  %></br>
@@ -48,17 +51,19 @@
   
   <div style="margin-left : -10px">
   <!--<%= f.check_box :regard_one_day, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} , "true", "false" %>-->
-  <%= f.check_box :is_one_day_work, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} , "true", "false" %>
+  <!--<%= f.check_box :is_one_day_work, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} , "true", "false" %>-->
+  <%= f.check_box :is_one_day_work, {id: "regard_one_day", :onchange => "calcRegardTimeAs(this.form)"} %>
+                     
   <%= f.label_tag :regard_one_day, '１日勤務とみなす', {style: 'color: blue'} %>
   
   &nbsp;&nbsp;
-  <%= f.check_box :is_no_break_time_1, {id: "is_no_break_time_1", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.check_box :is_no_break_time_1, {id: "is_no_break_time_1", :onchange => "recalcBreakTime(this.form)"} %>
   <%= f.label_tag :is_no_break_time_1, '休憩１を含めない', {style: 'color: black'} %>
   &nbsp;&nbsp;
-  <%= f.check_box :is_no_break_time_2, {id: "is_no_break_time_2", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.check_box :is_no_break_time_2, {id: "is_no_break_time_2", :onchange => "recalcBreakTime(this.form)"} %>
   <%= f.label_tag :is_no_break_time_2, '休憩２を含めない', {style: 'color: black'} %>
   &nbsp;&nbsp;
-  <%= f.check_box :is_no_break_time_3, {id: "is_no_break_time_3", :onchange => "recalcBreakTime(this.form)"} , "true", "false" %>
+  <%= f.check_box :is_no_break_time_3, {id: "is_no_break_time_3", :onchange => "recalcBreakTime(this.form)"} %>
   <%= f.label_tag :is_no_break_time_3, '休憩３を含めない', {style: 'color: black'} %>
     
   </br>
@@ -130,8 +135,34 @@
   var working_time_start_time = 0;
   var working_time_end_time = 0;
   
+  //var data = {'data-format': 'yyyy-MM-dd' };
+  
   $(document).ready(function(){
   //$(document).on('turbolinks:load', function(){
+      
+            
+        //$('.datepicker').datetimepicker({
+        //    format:'YYYY-MM-DD',
+        //    locale: 'en'
+        //});
+      
+      
+      //$('.datepicker').attr(data);
+      //$('.datepicker').datetimepicker({format: 'YYYY/mm/DD'});
+      //$('#working_date').datetimepicker({format: 'YYYY/mm/DD'});
+      //$('#working_date').datetimepicker({'date-format': 'YYYY/mm/DD'});
+      //$('#working_date').datepicker({
+      //  format: 'yyyy-mm-dd'
+      //});
+    
+      //$.datetimepicker.setLocale('ja');
+      //$('#working_date').datepicker({ dateFormat: 'dd/mm/yyyy' });
+      
+     // $(".working_date").datepicker({
+     //       format: 'mm-dd-yyyy'
+     //   })
+	
+      
       //検索可能なリストボックス(品名の場合)
        $(".searchableConstructionCode").select2({ theme: "classic" });
 
@@ -144,12 +175,28 @@
        });
       
 	  
-	  $(".datepicker").on("dp.change", function(e) {
-	    getDailyPay.call({}, this.form);
-        //add180501
+	  //$(".datepicker").datepicker().on("dp.change", function(e) {
+	  $("#working_date").datetimepicker({
+	    onChangeDateTime:function(dp,$input){
+	  //$(".datepicker").on("dp.change", function(e) {
+	    //debugger;
+	    //
+	    var staff_id = document.getElementById('staff_id').value
+	    calcDailyPay(staff_id);
+	    //getDailyPay.call({}, this.form);
+	    
         //工事画面から遷移した場合、日付のみ入力もあり得る為
         setConstructionDateDefault();
+        }
 	  });
+	  
+	  
+	  //$(".datepicker").on("dp.change", function(e) {
+	  //  getDailyPay.call({}, this.form);
+      //  //add180501
+      //  //工事画面から遷移した場合、日付のみ入力もあり得る為
+      //  setConstructionDateDefault();
+	  //});
 	  
 	  //debugger;
     
@@ -692,6 +739,15 @@
   // 日給をajaxで取得
   function getDailyPay(f){
     var staff_id = f.staff_id.value;
+    calcDailyPay(staff_id);
+  }
+  
+  function calcDailyPay(staff_id){
+    
+    if (staff_id == ""){
+       return false;
+    }
+    
     $.get("<%= construction_daily_reportz_staff_information_select_path %>",{ id: staff_id },
       function(data){
         //労務費をセット

@@ -1,14 +1,17 @@
-class MaterialMaster < ActiveRecord::Base
+class MaterialMaster < ApplicationRecord
 	paginates_per 200  # 1ページあたり項目表示
 	
-	#has_many :PurchaseDatum
-	belongs_to :PurchaseDatum
-	belongs_to :MakerMaster, :foreign_key => "maker_id"
+	#belongs_to :PurchaseDatum
+	#belongs_to :MakerMaster, :foreign_key => "maker_id"
+	#Rails6対応
+	belongs_to :PurchaseDatum, optional: true
+	belongs_to :MakerMaster, optional: true, :foreign_key => "maker_id"
     
     has_many :PurchaseUnitPrice, :foreign_key => "material_id"  #add201208
     
-    belongs_to :material_category
-    belongs_to :inventory_category
+    #Rails6対応(optional: true)
+    belongs_to :material_category, optional: true
+    belongs_to :inventory_category, optional: true
     
     has_many :UnitMaster
 	
@@ -29,11 +32,14 @@ class MaterialMaster < ActiveRecord::Base
     #field :maker_id
    #validates :maker_id, inclusion: { in: 	1..80 }
     
-	#validates_presence_of  :maker_id
-	#validates_associated :MakerMaster
-	
-	validates :maker_id, presence: true, if: "maker_id.nil?"
-	
+    #validates_presence_of  :maker_id
+    #validates_associated :MakerMaster
+    
+    #validates :maker_id, presence: true, if: "maker_id.nil?"
+    #rails6対応
+    validates :maker_id, presence: true, if: lambda {puts 'maker_id.nil?'}
+    
+
     def add_error_sample
       if maker_id.nil?
         errors[:maker_id] << "＊メーカーは必ず入力して下さい"

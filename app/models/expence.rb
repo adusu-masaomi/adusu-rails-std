@@ -1,3 +1,3 @@
-class Expence < ActiveRecord::Base
+class Expence < ApplicationRecord
   paginates_per 100 # 1ページあたり項目表示
 end

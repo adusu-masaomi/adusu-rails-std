@@ -1,7 +1,9 @@
-class SupplierMaster < ActiveRecord::Base
+class SupplierMaster < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示　
 
-	belongs_to :PurchaseDatum  #--> necessary??
+  #belongs_to :PurchaseDatum  #--> necessary??
+  #rails6対応
+  belongs_to :PurchaseDatum, optional: true  #--> necessary??
   has_many :purchase_unit_prices	
   has_many :purchase_data, :foreign_key => "supplier_id"
   #add220108

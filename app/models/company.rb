@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   MAX_RECORD_COUNT = 1
   
   validate :company_count_must_be_within_limit, on: :create

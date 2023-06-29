@@ -1,3 +1,3 @@
-class PurchaseDivision < ActiveRecord::Base
+class PurchaseDivision < ApplicationRecord
 	has_many :PurchaseDatum
 end

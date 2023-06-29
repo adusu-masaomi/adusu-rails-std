@@ -17,7 +17,7 @@
   <%= f.select :supplier_id_eq, SupplierMaster.all.map{|st| [st.supplier_name, st.id]}, {include_blank: true}, {id: 'supplier_id', style: 'width:220px' , class: "searchableSupplierName" } %>
   
   <%= f.label :purchase_date, '作成日' %>
-  <%= f.text_field :purchase_date_gteq, class:"input-append date datepicker", include_blank: true ,  id: 'purchase_date_start'   %>
+  <%= f.text_field :purchase_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'purchase_date_start', autocomplete: 'off'   %>
   
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartDate()" %>
   
@@ -131,9 +131,11 @@
        <%= link_to "請求一覧(外注)",
             outsourcing_data_path(@purchase_datum, format: "pdf", construction_id: params[:construction_id], move_flag: params[:move_flag], print_type: "3"),
             :class => 'btn  btn-purple300_ftg keep-disp', :target=>["_blank"] %>
+       <!--
        <%= link_to "税理士用",
             outsourcing_data_path(@purchase_datum, format: "pdf", construction_id: params[:construction_id], move_flag: params[:move_flag], print_type: "4"),
             :class => 'btn  btn-bluegrey100_ftg keep-disp', :target=>["_blank"] %>
+       -->
        <%= link_to '新規作成',
             new_outsourcing_datum_path(:new_flag => "0", construction_id: params[:construction_id], purchase_order_id: params[:purchase_order_id], 
             supplier_master_id: params[:supplier_master_id], move_flag: params[:move_flag] ),
@@ -143,7 +145,7 @@
                                    :class => 'btn btn-lime500_rsd keep-disp'  %>-->
 	   <%= link_to t('.back', :default => t("注文一覧へ")), purchase_order_data_path(purchase_order_id: params[:purchase_order_id], 
                     construction_id: params[:construction_id], move_flag: params[:move_flag]), :class => 'btn btn-info'  %>
-       <!--<%= link_to "CSV", purchase_data_path(params.merge(format: 'csv')) ,:class => 'btn btn-default'%>-->
+       <!--<%= link_to "CSV", purchase_data_path(format: "csv" , params: params.to_unsafe_h) ,:class => 'btn btn-default'%>-->
        <td><font size="3">合計金額:<%=number_to_currency(@purchase_data.sumprice,  precision: 0 ) %></font></td>
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <td><font size="2">合計数量(在庫確認用):<%= number_with_delimiter(@purchase_data.sumQuantity + @purchase_data.sumShipQuantity) %></font></td>

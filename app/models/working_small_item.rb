@@ -1,4 +1,4 @@
-class WorkingSmallItem < ActiveRecord::Base
+class WorkingSmallItem < ApplicationRecord
   belongs_to :working_middle_item
   
   #明細（小）フォーム用

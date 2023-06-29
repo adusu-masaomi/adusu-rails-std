@@ -1,4 +1,4 @@
-class PurchaseOrderHistory < ActiveRecord::Base
+class PurchaseOrderHistory < ApplicationRecord
 
     belongs_to :purchase_order_datum
     belongs_to :supplier_master

@@ -1,7 +1,7 @@
-class OutsourcingCost < ActiveRecord::Base
-  belongs_to :construction_datum
-  belongs_to :purchase_order_datum  #upd190930
-  belongs_to :staff
+class OutsourcingCost < ApplicationRecord
+  belongs_to :construction_datum, optional: true
+  belongs_to :purchase_order_datum, optional: true  #upd190930
+  belongs_to :staff, optional: true
   
   attr_accessor :billing_amount_tax
   attr_accessor :payment_total_amount

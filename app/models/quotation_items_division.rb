@@ -1,2 +1,2 @@
-class QuotationItemsDivision < ActiveRecord::Base
+class QuotationItemsDivision < ApplicationRecord
 end

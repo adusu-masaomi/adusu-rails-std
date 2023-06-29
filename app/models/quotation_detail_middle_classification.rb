@@ -1,4 +1,4 @@
-class QuotationDetailMiddleClassification < ActiveRecord::Base
+class QuotationDetailMiddleClassification < ApplicationRecord
 
   #kaminari用設定
   paginates_per 200  # 1ページあたり項目表示

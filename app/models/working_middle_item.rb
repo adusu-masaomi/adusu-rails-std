@@ -1,4 +1,4 @@
-class WorkingMiddleItem < ActiveRecord::Base
+class WorkingMiddleItem < ApplicationRecord
 
    #require "browser"
    #browser = Browser.new("Some User Agent", accept_language: "en-us")

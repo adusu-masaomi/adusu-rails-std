@@ -7,7 +7,11 @@
   <dt><strong><%= model_class.human_attribute_name(:construction_datum_id) %>:</strong></dt>
   <dd><%= @outsourcing_cost.construction_datum.construction_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:staff_id) %>:</strong></dt>
-  <dd><%= @outsourcing_cost.staff.staff_name %></dd>
+  <% if @outsourcing_cost.staff.present? %>
+    <dd><%= @outsourcing_cost.staff.staff_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:labor_cost) %>:</strong></dt>
   <dd><%= @outsourcing_cost.labor_cost %></dd>
   <dt><strong><%= model_class.human_attribute_name(:billing_amount) %>:</strong></dt>

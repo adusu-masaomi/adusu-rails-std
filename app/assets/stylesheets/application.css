@@ -14,9 +14,9 @@
  *= require select2-bootstrap
  *= require typeaheadjs
  *= require jquery-ui
- *= require_self
- *= require sweetalert2
+ *= require jquery.datetimepicker
  *= require_tree .
+ *= require_self
  *= require bootstrap 
  *= require_moment
  *= require typeaheadjs

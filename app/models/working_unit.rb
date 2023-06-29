@@ -1,4 +1,4 @@
-class WorkingUnit < ActiveRecord::Base
+class WorkingUnit < ApplicationRecord
   validates :working_unit_name, presence: true
   
   #工事種別をここで宣言

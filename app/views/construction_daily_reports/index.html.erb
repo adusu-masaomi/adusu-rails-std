@@ -1,10 +1,8 @@
 <script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
-<!--グラフ用-->
-<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 <%- model_class = ConstructionDailyReport -%>
 <% provide(:title, model_class.model_name.human.pluralize.titleize) %>
 <div class="page-header", style="width:1920px">
-  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></font></h1>
+  <h1><font size="5"><%=t '.title', :default => model_class.model_name.human %></font></h1>
   
   <!-- 追加箇所開始 -->
   <%= page_entries_info @construction_daily_reports %>
@@ -26,16 +24,17 @@
   
   </br>
   
-  <%= f.label :update_at, '入力日' %>
-  
+  <!--geeqとなっておりイマイチなので、カット-->
+  <!--<%= f.label :update_at, '入力日' %>-->
   <!--value~の部分は本来いらないが、入力後に日付を消したいために、あえてするVer-->
-  <%= f.text_field :updated_at_gteq, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datepicker", include_blank: true , size: "12", id: 'update_start'   %>
+  <!--<%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datepicker", include_blank: true , size: "12", id: 'update_start'   %>-->
+  <!--<%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datetimepicker", include_blank: true , size: "12", id: 'update_start'   %>-->
   
   <!--restore 220221-->
   <%= f.label :working_date, '作業日' %>
-  <%= f.text_field :working_date_gteq, class:"input-append date datepicker", include_blank: true ,  id: 'working_date_start'   %>
+  <%= f.text_field :working_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'working_date_start', autocomplete: 'off'   %>
   <%= f.label :working_date, '〜' %>
-  <%= f.text_field :working_date_lteq, class:"input-append date datepicker", include_blank: true ,  id: 'working_date_end'   %>
+  <%= f.text_field :working_date_lteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'working_date_end', autocomplete: 'off'   %>
   
   	<div>
         <%= f.submit '検索(集計)', :class => 'btn btn-teal50_rsd' %>
@@ -55,7 +54,7 @@
         <%= link_to t('.back', :default => t("工事一覧へ")), construction_data_path, :class => 'btn btn-warning'  %>
         <!--<%= link_to t('.back', :default => t("工事費集計へ")), construction_costs_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
                                    :class => 'btn btn-lime500_rsd keep-disp'  %>-->
-		<!--<%= link_to "CSV", construction_daily_reports_path(params.merge(format: 'csv')) , 'data-no-turbolink'=>true, :class => 'btn btn-default'%>
+		<!--<%= link_to "CSV", construction_daily_reports_path(format: "csv" , params: params.to_unsafe_h) , 'data-no-turbolink'=>true, :class => 'btn btn-default'%>
         <td><font size="3">合計金額:<%=number_to_currency(@construction_daily_reports.sumprice,  precision: 0 ) %></font></td>-->
 
   	</div>
@@ -124,10 +123,11 @@
 		<!--<% end %> -->
 		
 	    <td><%= @staff[(construction_daily_report.staff_id)-1].staff_name %></td>
-        <td><%= construction_daily_report.start_time_1.to_s(:start_time_1) %></td>
-        <td><%= construction_daily_report.end_time_1.to_s(:end_time_1) %></td>
-        <td><%= construction_daily_report.start_time_2.to_s(:start_time_2) %></td>
-        <td><%= construction_daily_report.end_time_2.to_s(:end_time_2) %></td>
+        <!--<td><%= construction_daily_report.start_time_1.to_s(:start_time_1) %></td>-->
+        <td><%= construction_daily_report.start_time_1.strftime("%H:%M") %></td>
+        <td><%= construction_daily_report.end_time_1.strftime("%H:%M") %></td>
+        <td><%= construction_daily_report.start_time_2.strftime("%H:%M") %></td>
+        <td><%= construction_daily_report.end_time_2.strftime("%H:%M") %></td>
         <td><%= construction_daily_report.working_times %></td>
         <td><%= construction_daily_report.man_month %></td>
         <td><%= construction_daily_report.labor_cost %></td>
