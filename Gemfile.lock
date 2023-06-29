@@ -116,6 +116,7 @@ GEM
       activerecord (>= 3.1.0, < 8)
     erubi (1.12.0)
     execjs (2.8.1)
+    ffi (1.15.5)
     ffi (1.15.5-x64-mingw-ucrt)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
@@ -193,7 +194,10 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.2-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.15.2-x86_64-linux)
+      racc (~> 1.4)
     pdf-core (0.9.0)
+    pg (1.5.3)
     pg (1.5.3-x64-mingw-ucrt)
     pkg-config (1.5.2)
     prawn (2.4.0)
@@ -296,6 +300,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.6.3-x64-mingw-ucrt)
+    sqlite3 (1.6.3-x86_64-linux)
     ssrf_filter (1.1.1)
     thinreports (0.12.1)
       prawn (~> 2.2)
@@ -335,6 +340,7 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   autoprefixer-rails
