@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.12.0",
   "items": [
     {
       "id": "default",
@@ -503,7 +503,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -518,7 +518,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -533,7 +533,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -705,7 +705,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 2,
         "border-style": "solid"
       },
@@ -720,7 +720,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 2,
         "border-style": "solid"
       },
@@ -737,7 +737,7 @@
       "x": 79,
       "y": 117,
       "width": 47.5,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -763,7 +763,7 @@
       "x": 188,
       "y": 117,
       "width": 90.4,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -789,7 +789,7 @@
       "x": 399.7,
       "y": 117,
       "width": 47.5,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -815,7 +815,7 @@
       "x": 519,
       "y": 117,
       "width": 35.1,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -893,7 +893,7 @@
       "x": 45,
       "y": 45,
       "width": 46.1,
-      "height": 16.4,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -919,7 +919,7 @@
       "x": 45,
       "y": 61.5,
       "width": 45.5,
-      "height": 14,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -943,7 +943,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "solid"
       },
@@ -958,7 +958,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "solid"
       },
@@ -973,7 +973,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "solid"
       },
@@ -988,7 +988,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 2,
         "border-style": "solid"
       },
@@ -1287,7 +1287,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -1302,7 +1302,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -1317,7 +1317,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -1332,7 +1332,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },

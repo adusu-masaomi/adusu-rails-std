@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.12.0",
   "items": [
     {
       "id": "",
@@ -54,7 +54,7 @@
             "width": 570,
             "height": 18.8,
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid",
               "fill-color": "none"
@@ -67,7 +67,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -82,7 +82,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -99,7 +99,7 @@
             "x": 288,
             "y": 102.7,
             "width": 49.5,
-            "height": 11.1,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -125,7 +125,7 @@
             "x": 347,
             "y": 102.7,
             "width": 40,
-            "height": 11.1,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -149,7 +149,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -166,7 +166,7 @@
             "x": 178,
             "y": 102.7,
             "width": 20,
-            "height": 11.1,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -190,7 +190,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -205,7 +205,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -222,7 +222,7 @@
             "x": 49,
             "y": 102.7,
             "width": 28.4,
-            "height": 22.2,
+            "height": 28.8,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -249,7 +249,7 @@
             "x": 500,
             "y": 102.7,
             "width": 25.1,
-            "height": 11.5,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -275,7 +275,7 @@
             "x": 447,
             "y": 102.7,
             "width": 40,
-            "height": 11.1,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -301,7 +301,7 @@
             "x": 544,
             "y": 102.7,
             "width": 41.5,
-            "height": 11.1,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -325,7 +325,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -340,7 +340,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -357,7 +357,7 @@
             "x": 403,
             "y": 102.7,
             "width": 27.6,
-            "height": 13.5,
+            "height": 14.4,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -394,7 +394,7 @@
             "width": 570,
             "height": 16,
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid",
               "fill-color": "none"
@@ -511,7 +511,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -526,7 +526,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -541,7 +541,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -588,7 +588,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -639,7 +639,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -718,7 +718,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
@@ -769,7 +769,7 @@
             "display": true,
             "description": "",
             "style": {
-              "border-color": "#ff0000",
+              "border-color": "#000000",
               "border-width": 1,
               "border-style": "solid"
             },
