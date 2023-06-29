@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 #gem 'rake' , '13.0.3'
 
 #Rails6
-gem 'matrix'
+#gem 'matrix'
 gem 'puma'
 
 gem 'rdoc', '6.1.2'
