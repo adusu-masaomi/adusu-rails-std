@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '3.1.4'
+
 #render用
 #gem 'rake' , '13.0.3'
 
