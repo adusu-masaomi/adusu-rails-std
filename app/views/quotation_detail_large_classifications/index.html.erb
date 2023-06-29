@@ -3,7 +3,7 @@
 <%- model_class = QuotationDetailLargeClassification -%>
 <% provide(:title, model_class.model_name.human.pluralize.titleize) %>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 
    <%= search_form_for @q do |f| %>
   <%= f.label :construction_code, '見積Ｎｏ　' %>

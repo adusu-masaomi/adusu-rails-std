@@ -8,11 +8,11 @@
   <!-- kaminari用追加箇所終了 -->
   <%= search_form_for @q, :html => {:style=> 'width:1920px' } do |f| %>
     <%= f.label :stocktake_date, '棚卸日' %>
-    <%= f.text_field :stocktake_date_gteq, class:"input-append date datepicker", include_blank: true ,  
-              id: 'stocktake_date_start'   %>
+    <%= f.text_field :stocktake_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  
+              id: 'stocktake_date_start', autocomplete: 'off'   %>
 	<%= f.label :stocktake_date, '〜' %>
-    <%= f.text_field :stocktake_date_lteq, class:"input-append date datepicker", include_blank: true ,  
-              id: 'stocktake_date_end'   %>
+    <%= f.text_field :stocktake_date_lteq, class:"input-append date datetimepicker", include_blank: true ,  
+              id: 'stocktake_date_end', autocomplete: 'off'   %>
 	<%= f.label :inventory_category, 'カテゴリー：' %>
     <%= f.select :with_material_category_include, InventoryCategory.all.map{|st| [st.name, st.id]}, {include_blank: true}, 
 	      {style: 'width:220px' , class: "searchableCategory" } %></br>
