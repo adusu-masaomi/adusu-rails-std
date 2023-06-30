@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_20_004420) do
+ActiveRecord::Schema.define(version: 2023_06_30_071729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1010,6 +1010,22 @@ ActiveRecord::Schema.define(version: 2023_06_20_004420) do
     t.integer "seq"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "working_specific_small_items", force: :cascade do |t|
+    t.integer "working_specific_middle_item_id"
+    t.integer "working_small_item_id"
+    t.string "working_small_item_code"
+    t.string "working_small_item_name"
+    t.float "unit_price"
+    t.float "rate"
+    t.integer "quantity"
+    t.float "material_price"
+    t.integer "maker_master_id"
+    t.integer "unit_master_id"
+    t.float "labor_productivity_unit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "working_subcategories", id: :serial, force: :cascade do |t|
