@@ -49,4 +49,8 @@ class SupplierMaster < ApplicationRecord
   def csv_column_values
     [id, supplier_name, tel_main, fax_main, email_main, responsible1 ]
   end
+  #ruby 3
+  def self.ransackable_attributes(auth_object = nil)
+    ["account_number", "account_type", "address", "bank_branch_name", "bank_name", "created_at", "email1", "email2", "email3", "email_cc", "email_main", "fax_main", "holder", "id", "outsourcing_flag", "post", "responsible1", "responsible2", "responsible3", "responsible_cc", "responsible_name", "responsible_title", "search_character", "supplier_name", "tel_main", "updated_at"]
+  end
 end

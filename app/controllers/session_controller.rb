@@ -1,5 +1,6 @@
 class SessionController < ApplicationController
-  skip_before_action :user_logged_in?
+  #renderでこけるのでひとまずコメントアウト...(230630)
+  #skip_before_action :user_logged_in?
 
   def index
     @user = User.new

@@ -128,5 +128,11 @@ class MaterialMaster < ApplicationRecord
       #
       material_code
     end
-
+    #ruby3
+    def self.ransackable_attributes(auth_object = nil)
+      ["created_at", "id", "internal_code", "inventory_category_id", "last_unit_price", "last_unit_price_update_at", "list_price", "list_price_quotation", "list_price_update_at", "maker_id", "material_category_id", "material_code", "material_name", "notes", "standard_labor_productivity_unit", "standard_quantity", "standard_rate", "unit_id", "updated_at"]
+    end
+    def self.ransackable_associations(auth_object = nil)
+      ["MakerMaster", "PurchaseDatum", "PurchaseUnitPrice", "UnitMaster", "inventories", "inventory_category", "material_category"]
+    end
 end

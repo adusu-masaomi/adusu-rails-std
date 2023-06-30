@@ -92,4 +92,8 @@ class CustomerMaster < ApplicationRecord
     def csv_column_values
 	  [id, customer_name, post, address, house_number, address2, tel_main, fax_main, responsible1 ]
     end
+    #ruby6
+    def self.ransackable_attributes(auth_object = nil)
+      ["address", "address2", "card_not_flag", "closing_date", "closing_date_division", "contact_id", "contractor_flag", "created_at", "customer_name", "due_date", "due_date_division", "email_main", "fax_main", "honorific_id", "house_number", "id", "payment_bank_id", "post", "public_flag", "responsible1", "responsible2", "search_character", "tel_main", "updated_at"]
+    end
 end
