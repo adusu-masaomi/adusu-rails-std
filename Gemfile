@@ -4,6 +4,7 @@ ruby '3.1.4'
 
 #render用
 #gem 'rake' , '13.0.3'
+gem 'webpacker', github: 'rails/webpacker'
 
 #Rails6
 gem 'matrix'
