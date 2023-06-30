@@ -199,9 +199,15 @@ class PurchaseDatum < ApplicationRecord
 	def supplier_name
 	  #SupplierMaster.where("id = ?", purchase_id).pluck(:supplier_name).flatten.join(" ")
           SupplierMaster.where("id = ?", supplier_id).pluck(:supplier_name).flatten.join(" ") 
-	end
-	def purchase_division_name
-	  PurchaseDivision.where("id = ?", division_id).pluck(:purchase_division_name).flatten.join(" ")
-	end 
-	
+    end
+    def purchase_division_name
+      PurchaseDivision.where("id = ?", division_id).pluck(:purchase_division_name).flatten.join(" ")
+    end 
+    
+    def self.ransackable_attributes(auth_object = nil)
+      ["closing_date", "construction_datum_id", "created_at", "division_id", "id", "inventory_division_id", "list_price", "maker_id", "maker_name", "material_code", "material_id", "material_name", "notes", "outsourcing_invoice_flag", "outsourcing_payment_flag", "payment_date", "payment_due_date", "purchase_amount", "purchase_date", "purchase_header_id", "purchase_id", "purchase_order_datum_id", "purchase_unit_price", "purchase_unit_price2", "quantity", "quantity2", "slip_code", "supplier_id", "unit_id", "unit_price_not_update_flag", "unpaid_payment_date", "updated_at", "working_end_date"]
+    end
+    def self.ransackable_associations(auth_object = nil)
+      ["CustomerMaster", "MakerMaster", "MaterialMaster", "PurchaseDivision", "PurchaseUnitPrice", "SupplierMaster", "construction_datum", "purchase_header", "purchase_order_datum", "unit_master"]
+    end
 end

@@ -16,4 +16,7 @@ class OutsourcingCost < ApplicationRecord
       end
     end
   end
+  def self.ransackable_attributes(auth_object = nil)
+    ["billing_amount", "closing_date", "construction_datum_id", "created_at", "execution_amount", "id", "invoice_code", "labor_cost", "misellaneous_expense", "payment_amount", "payment_date", "payment_due_date", "purchase_amount", "purchase_order_amount", "purchase_order_datum_id", "source_bank_id", "staff_id", "supplier_master_id", "supplies_expense", "unpaid_amount", "unpaid_payment_date", "updated_at", "working_end_date", "working_start_date"]
+  end
 end

@@ -133,5 +133,12 @@ class QuotationDetailLargeClassification < ApplicationRecord
   def self.ransackable_scopes(auth_object=nil)
      [:with_header_id]
   end
- 
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["construction_type", "created_at", "equipment_mounting_flag", "execution_price", "execution_quantity", "execution_unit_price", "id", "labor_cost_flag", "labor_productivity_unit", "labor_productivity_unit_total", "last_line_number", "line_number", "piping_wiring_flag", "quantity", "quotation_header_id", "quotation_items_division_id", "quote_price", "remarks", "updated_at", "working_large_item_id", "working_large_item_name", "working_large_item_short_name", "working_large_specification", "working_middle_item_category_id", "working_middle_item_category_id_call", "working_middle_item_subcategory_id", "working_middle_item_subcategory_id_call", "working_specific_middle_item_id", "working_unit_id", "working_unit_name", "working_unit_price"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["QuotationHeader", "WorkingUnit", "quotation_detail_middle_classifications"]
+  end
+
 end

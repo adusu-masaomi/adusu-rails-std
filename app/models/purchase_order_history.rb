@@ -73,5 +73,9 @@ class PurchaseOrderHistory < ApplicationRecord
 	#	errors[:base] << "数量が未入力の行があります。確認してください。"
 	#  end
 	#end
-
+    
+    #ruby3
+    def self.ransackable_attributes(auth_object = nil)
+      ["created_at", "delivery_place_flag", "id", "mail_sent_flag", "notes", "purchase_order_date", "purchase_order_datum_id", "supplier_master_id", "updated_at"]
+    end
 end

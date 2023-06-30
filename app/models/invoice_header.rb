@@ -86,5 +86,11 @@ class InvoiceHeader < ApplicationRecord
     #[["", 0], ["現金", 1], ["北越", 2], ["さんしん", 3]] 
     [["", 0], ["銀行振込", 1], ["現金", 2], ["その他", 3]] 
   end
-  
+  def self.ransackable_attributes(auth_object = nil)
+    ["address", "address2", "billing_amount", "commission", "construction_datum_id", "construction_house_number", "construction_name", "construction_period", "construction_place", "construction_place2", "created_at", "customer_id", "customer_name", "delivery_slip_code", "deposit_amount", "deposit_complete_flag", "execution_amount", "fax", "final_return_division", "honorific_id", "house_number", "id", "invoice_code", "invoice_date", "invoice_period_end_date", "invoice_period_start_date", "labor_insurance_not_flag", "last_line_number", "payment_date", "payment_method_id", "payment_period", "post", "quotation_code", "remarks", "responsible1", "responsible2", "tel", "updated_at"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["ConstructionDatum", "customer_master"]
+  end
+
 end

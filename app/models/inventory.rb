@@ -52,4 +52,10 @@ class Inventory < ApplicationRecord
       [:with_material_name_include, :with_material_category_include]
       
   end
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "current_history_id", "current_quantity", "current_unit_price", "current_warehousing_date", "id", "image", "inventory_amount", "inventory_quantity", "last_unit_price", "last_warehousing_date", "location_id", "material_master_id", "next_history_id_1", "next_history_id_2", "next_quantity_1", "next_quantity_2", "next_unit_price_1", "next_unit_price_2", "next_warehousing_date_1", "next_warehousing_date_2", "no_stocktake_flag", "supplier_master_id", "unit_master_id", "updated_at", "warehouse_id"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["material_master", "supplier_master", "unit_master"]
+  end
 end

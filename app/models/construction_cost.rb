@@ -76,5 +76,12 @@ class ConstructionCost < ApplicationRecord
 	  CustomerMaster.where("id = ?", construction_datum.customer_id).pluck(:customer_name).flatten.join(" ")
 	 end
    # ここまで
-   
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["constructing_amount", "construction_datum_id", "created_at", "execution_amount", "final_return_division", "id", "labor_cost", "misellaneous_expense", "purchase_amount", "purchase_order_amount", "supplies_expense", "updated_at"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["construction_daily_reports", "construction_datum"]
+  end
+
 end

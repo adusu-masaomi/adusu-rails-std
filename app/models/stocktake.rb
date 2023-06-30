@@ -31,4 +31,10 @@ class Stocktake < ApplicationRecord
   def self.ransackable_scopes(auth_object=nil)
       [ :with_material_category_include]
   end
+  def self.ransackable_attributes(auth_object = nil)
+    ["book_amount", "book_quantity", "created_at", "id", "inventory_id", "inventory_update_flag", "material_master_id", "physical_amount", "physical_quantity", "stocktake_date", "unit_price", "updated_at"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["inventory", "material_master"]
+  end
 end

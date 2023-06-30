@@ -65,5 +65,12 @@ class PurchaseOrderDatum < ApplicationRecord
       [*('A'..'Z')]
 	  #[["A", "A"], ["B", "B"], ["C", "C"], ["D", "D"], ["E", "E"], ["F", "F"], ["G", "G"], 
     end
-	
+    
+    #ruby3用
+    def self.ransackable_associations(auth_object = nil)
+     ["construction_costs", "construction_datum", "orders", "purchase_datum", "purchase_order_histories", "supplier_master", "supplier_responsible"]
+    end
+    def self.ransackable_attributes(auth_object = nil)
+      ["alias_name", "construction_datum_id", "created_at", "id", "mail_sent_flag", "purchase_order_code", "purchase_order_date", "supplier_master_id", "supplier_responsible_id", "updated_at"]
+    end
 end

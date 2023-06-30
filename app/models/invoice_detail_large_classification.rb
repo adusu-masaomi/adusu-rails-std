@@ -85,5 +85,10 @@ class InvoiceDetailLargeClassification < ApplicationRecord
   def self.ransackable_scopes(auth_object=nil)
      [:with_header_id]
   end
-  
+  def self.ransackable_attributes(auth_object = nil)
+    ["construction_type", "created_at", "delivery_slip_header_id", "equipment_mounting_flag", "execution_price", "execution_quantity", "execution_unit_price", "id", "invoice_header_id", "invoice_items_division_id", "invoice_price", "labor_cost_flag", "labor_productivity_unit", "labor_productivity_unit_total", "last_line_number", "line_number", "piping_wiring_flag", "quantity", "remarks", "updated_at", "working_large_item_id", "working_large_item_name", "working_large_item_short_name", "working_large_specification", "working_unit_id", "working_unit_name", "working_unit_price"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["InvoiceHeader", "WorkingUnit", "invoice_detail_middle_classifications"]
+  end
 end

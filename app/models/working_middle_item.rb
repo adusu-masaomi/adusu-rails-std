@@ -66,7 +66,12 @@ class WorkingMiddleItem < ApplicationRecord
       [:with_unit, :with_id]
    end
    
-   
+   def self.ransackable_attributes(auth_object = nil)
+     ["accessory_cost", "created_at", "execution_labor_unit_price", "execution_material_unit_price", "execution_unit_price", "id", "labor_cost_total", "labor_productivity_unit", "labor_productivity_unit_total", "labor_unit_price", "labor_unit_price_standard", "material_cost_total", "material_id", "material_quantity", "material_unit_price", "other_cost", "seq", "updated_at", "working_material_name", "working_middle_item_category_id", "working_middle_item_name", "working_middle_item_short_name", "working_middle_specification", "working_subcategory_id", "working_unit_id", "working_unit_name", "working_unit_price"]
+   end
+   def self.ransackable_associations(auth_object = nil)
+     ["MaterialMaster", "WorkingUnit", "working_category", "working_small_items", "working_subcategory"]
+   end
    #acts_as_list
  
 end

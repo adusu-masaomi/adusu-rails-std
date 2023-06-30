@@ -80,5 +80,11 @@ class QuotationHeader < ApplicationRecord
    def self.ransackable_scopes(auth_object=nil)
        [:with_quotation_construction_id, :with_id]
    end
-     
+   
+   def self.ransackable_attributes(auth_object = nil)
+     ["address", "address2", "category_saved_flag", "category_saved_id", "construction_datum_id", "construction_house_number", "construction_name", "construction_period", "construction_period_date1", "construction_period_date2", "construction_place", "construction_place2", "construction_post", "created_at", "customer_id", "customer_name", "delivery_slip_code", "effective_period", "execution_amount", "fax", "fixed_flag", "honorific_id", "house_number", "id", "invoice_code", "invoice_period_end_date", "invoice_period_start_date", "last_line_number", "net_amount", "not_sum_flag", "post", "quotation_code", "quotation_date", "quotation_header_origin_id", "quote_price", "responsible1", "responsible2", "subcategory_saved_id", "tel", "trading_method", "updated_at"]
+   end
+   def self.ransackable_associations(auth_object = nil)
+     ["ConstructionDatum", "customer_master"]
+   end
 end

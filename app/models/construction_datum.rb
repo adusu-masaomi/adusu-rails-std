@@ -145,4 +145,7 @@ class ConstructionDatum < ApplicationRecord
 	  return ret_id
 	end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["address", "address2", "alias_name", "attention_matter", "billed_flag", "billing_due_date", "calculated_flag", "construction_code", "construction_detail", "construction_end_date", "construction_name", "construction_period_end", "construction_period_start", "construction_start_date", "created_at", "customer_id", "delivery_slip_header_id", "deposit_date", "deposit_due_date", "estimated_amount", "final_amount", "house_number", "id", "latitude", "longitude", "order_flag", "personnel", "post", "quotation_flag", "quotation_header_id", "reception_date", "site_id", "updated_at", "working_safety_matter_id", "working_safety_matter_name"]
+  end
 end

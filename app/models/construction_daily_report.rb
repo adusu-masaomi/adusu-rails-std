@@ -135,4 +135,8 @@ class ConstructionDailyReport < ApplicationRecord
 	#  CustomerMaster.where("id = ?", construction_datum.customer_id).pluck(:customer_name).flatten.join(" ")
 	# end
    # ここまで
+  def self.ransackable_attributes(auth_object = nil)
+    ["construction_datum_id", "created_at", "end_time_1", "end_time_2", "id", "is_no_break_time_1", "is_no_break_time_2", "is_no_break_time_3", "is_one_day_work", "labor_cost", "man_month", "staff_id", "start_time_1", "start_time_2", "updated_at", "working_date", "working_details", "working_times"]
+  end
+
 end

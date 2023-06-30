@@ -18,5 +18,8 @@ class PurchaseUnitPrice < ApplicationRecord
   def self.ransackable_scopes(auth_object=nil)
       [:with_unit]
   end
-
+  #ruby3
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "list_price", "material_id", "supplier_id", "supplier_material_code", "unit_id", "unit_price", "updated_at"]
+  end
 end

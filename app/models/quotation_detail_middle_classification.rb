@@ -140,5 +140,10 @@ class QuotationDetailMiddleClassification < ApplicationRecord
   def self.ransackable_scopes(auth_object=nil)
      [:with_header_id, :with_large_item, :with_large_item_name, :with_large_specification]
   end
-
+  def self.ransackable_attributes(auth_object = nil)
+    ["accessory_cost", "construction_type", "created_at", "equipment_mounting_flag", "execution_price", "execution_quantity", "execution_unit_price", "id", "labor_cost_flag", "labor_cost_total", "labor_productivity_unit", "labor_productivity_unit_total", "labor_unit_price", "line_number", "material_cost_total", "material_id", "material_quantity", "material_unit_price", "other_cost", "piping_wiring_flag", "quantity", "quotation_detail_large_classification_id", "quotation_header_id", "quotation_items_division_id", "quotation_material_name", "quote_price", "remarks", "updated_at", "working_middle_item_category_id", "working_middle_item_category_id_call", "working_middle_item_id", "working_middle_item_name", "working_middle_item_short_name", "working_middle_item_subcategory_id", "working_middle_item_subcategory_id_call", "working_middle_specification", "working_specific_middle_item_id", "working_unit_id", "working_unit_name", "working_unit_price"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["QuotationDetailLargeClassification", "QuotationHeader", "QuotationLargeItem", "WorkingUnit"]
+  end
 end

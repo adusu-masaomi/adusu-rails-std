@@ -78,12 +78,7 @@ class MaterialMaster < ApplicationRecord
    
    
    
-   private
-   def maker_existing
-     errors.add(MakerMaster, :missing) if MakerMaster.blank?
-   end
-   
-   
+   #230630 moved from private for ruby3
    #リスト表示用(CD/名称)
 	def p_material_code_name
       if self.material_code.nil?
@@ -114,7 +109,7 @@ class MaterialMaster < ApplicationRecord
 	  material_code + ':' + material_name 
     end
     
-    #add190206
+    #230630 moved from private for ruby3
     #リスト表示用(CDのみ)
 	def p_material_code
       material_code = "-"
@@ -128,6 +123,13 @@ class MaterialMaster < ApplicationRecord
       #
       material_code
     end
+  
+  private
+   def maker_existing
+     errors.add(MakerMaster, :missing) if MakerMaster.blank?
+   end
+   
+   
     #ruby3
     def self.ransackable_attributes(auth_object = nil)
       ["created_at", "id", "internal_code", "inventory_category_id", "last_unit_price", "last_unit_price_update_at", "list_price", "list_price_quotation", "list_price_update_at", "maker_id", "material_category_id", "material_code", "material_name", "notes", "standard_labor_productivity_unit", "standard_quantity", "standard_rate", "unit_id", "updated_at"]

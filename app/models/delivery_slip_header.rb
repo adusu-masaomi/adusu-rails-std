@@ -90,4 +90,11 @@ class DeliverySlipHeader < ApplicationRecord
         delivery_slip_code + ':' + construction_name 
     end
    
+  def self.ransackable_attributes(auth_object = nil)
+    ["address", "address2", "category_saved_flag", "category_saved_id", "construction_datum_id", "construction_house_number", "construction_name", "construction_period", "construction_period_date1", "construction_period_date2", "construction_place", "construction_place2", "construction_post", "created_at", "customer_id", "customer_name", "delivery_amount", "delivery_slip_code", "delivery_slip_date", "delivery_slip_header_origin_id", "execution_amount", "fax", "final_return_division", "fixed_flag", "honorific_id", "house_number", "id", "invoice_code", "last_line_number", "post", "quotation_code", "responsible1", "responsible2", "subcategory_saved_id", "tel", "updated_at"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["ConstructionDatum", "customer_master"]
+  end
+
 end

@@ -56,5 +56,10 @@ class InventoryHistory < ApplicationRecord
   def self.sumShipQuantity
     where(:inventory_division_id => $INDEX_INVENTORY_SHIPPING).sum(:quantity) * -1
   end
-  
+  def self.ransackable_attributes(auth_object = nil)
+    ["construction_datum_id", "created_at", "current_history_id", "current_quantity", "current_unit_price", "current_warehousing_date", "id", "inventory_date", "inventory_division_id", "inventory_quantity", "material_master_id", "next_history_id_1", "next_quantity_1", "next_unit_price_1", "next_warehousing_date_1", "previous_quantity", "previous_unit_price", "price", "purchase_datum_id", "quantity", "slip_code", "supplier_master_id", "unit_master_id", "unit_price", "updated_at"]
+  end
+  def self.ransackable_associations(auth_object = nil)
+    ["construction_datum", "inventories", "material_master", "supplier_master", "unit_master"]
+  end
 end
