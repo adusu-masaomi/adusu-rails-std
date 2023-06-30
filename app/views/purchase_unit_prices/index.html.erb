@@ -1,5 +1,5 @@
 <%- model_class = PurchaseUnitPrice -%>
-<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<% provide(:title, model_class.model_name.human) %>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
   

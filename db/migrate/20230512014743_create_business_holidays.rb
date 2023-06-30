@@ -1,4 +1,4 @@
-class CreateBusinessHolidays < ActiveRecord::Migration
+class CreateBusinessHolidays < ActiveRecord::Migration[6.1]
   def change
     create_table :business_holidays do |t|
       t.date :working_date

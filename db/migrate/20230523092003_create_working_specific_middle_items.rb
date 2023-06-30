@@ -1,4 +1,4 @@
-class CreateWorkingSpecificMiddleItems < ActiveRecord::Migration
+class CreateWorkingSpecificMiddleItems < ActiveRecord::Migration[6.1]
   def change
     create_table :working_specific_middle_items do |t|
       t.integer :quotation_header_id

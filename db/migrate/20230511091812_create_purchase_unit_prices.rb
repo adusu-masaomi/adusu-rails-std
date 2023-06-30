@@ -1,4 +1,4 @@
-class CreatePurchaseUnitPrices < ActiveRecord::Migration
+class CreatePurchaseUnitPrices < ActiveRecord::Migration[6.1]
   def change
     create_table :purchase_unit_prices do |t|
       t.integer :supplier_id

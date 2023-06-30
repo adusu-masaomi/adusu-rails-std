@@ -1,7 +1,7 @@
 <script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <%- model_class = DeliverySlipDetailMiddleClassification -%>
-<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<% provide(:title, model_class.model_name.human) %>
 <div class="page-header", style="width:1920px" >
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
   

@@ -1,4 +1,4 @@
-class CreatePurchaseDivisions < ActiveRecord::Migration
+class CreatePurchaseDivisions < ActiveRecord::Migration[6.1]
   def change
     create_table :purchase_divisions do |t|
       t.string :purchase_division_name

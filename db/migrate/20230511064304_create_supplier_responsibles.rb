@@ -1,4 +1,4 @@
-class CreateSupplierResponsibles < ActiveRecord::Migration
+class CreateSupplierResponsibles < ActiveRecord::Migration[6.1]
   def change
     create_table :supplier_responsibles do |t|
       t.integer :supplier_master_id

@@ -1,4 +1,4 @@
-class CreateConstructionAttachments < ActiveRecord::Migration
+class CreateConstructionAttachments < ActiveRecord::Migration[6.1]
   def change
     create_table :construction_attachments do |t|
       t.integer :construction_datum_id

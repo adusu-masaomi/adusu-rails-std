@@ -1,4 +1,4 @@
-class CreatePurchaseData < ActiveRecord::Migration
+class CreatePurchaseData < ActiveRecord::Migration[6.1]
   def change
     create_table :purchase_data do |t|
       t.date :purchase_date

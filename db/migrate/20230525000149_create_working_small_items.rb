@@ -1,4 +1,4 @@
-class CreateWorkingSmallItems < ActiveRecord::Migration
+class CreateWorkingSmallItems < ActiveRecord::Migration[6.1]
   def change
     create_table :working_small_items do |t|
       t.integer :working_middle_item_id

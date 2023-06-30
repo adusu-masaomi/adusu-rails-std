@@ -1,7 +1,7 @@
 <script src="/assets/jquery.tablefix.js?body=1" type="text/javascript"></script>
 
 <%- model_class = WorkingUnit -%>
-<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<% provide(:title, model_class.model_name.human) %>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>

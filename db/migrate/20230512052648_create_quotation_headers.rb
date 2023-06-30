@@ -1,4 +1,4 @@
-class CreateQuotationHeaders < ActiveRecord::Migration
+class CreateQuotationHeaders < ActiveRecord::Migration[6.1]
   def change
     create_table :quotation_headers do |t|
       t.string :quotation_code

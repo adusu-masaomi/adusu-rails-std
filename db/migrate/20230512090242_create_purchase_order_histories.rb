@@ -1,4 +1,4 @@
-class CreatePurchaseOrderHistories < ActiveRecord::Migration
+class CreatePurchaseOrderHistories < ActiveRecord::Migration[6.1]
   def change
     create_table :purchase_order_histories do |t|
       t.date :purchase_order_date

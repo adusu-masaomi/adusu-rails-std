@@ -1,4 +1,4 @@
-class CreateQuotationDetailLargeClassifications < ActiveRecord::Migration
+class CreateQuotationDetailLargeClassifications < ActiveRecord::Migration[6.1]
   def change
     create_table :quotation_detail_large_classifications do |t|
       t.integer :quotation_header_id

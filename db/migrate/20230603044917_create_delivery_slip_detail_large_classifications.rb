@@ -1,4 +1,4 @@
-class CreateDeliverySlipDetailLargeClassifications < ActiveRecord::Migration
+class CreateDeliverySlipDetailLargeClassifications < ActiveRecord::Migration[6.1]
   def change
     create_table :delivery_slip_detail_large_classifications do |t|
       t.integer :delivery_slip_header_id

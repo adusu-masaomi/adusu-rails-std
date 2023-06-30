@@ -1,4 +1,4 @@
-class CreateInventoryHistories < ActiveRecord::Migration
+class CreateInventoryHistories < ActiveRecord::Migration[6.1]
   def change
     create_table :inventory_histories do |t|
       t.date :inventory_date

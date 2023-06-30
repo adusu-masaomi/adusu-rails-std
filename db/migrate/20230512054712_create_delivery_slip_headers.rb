@@ -1,4 +1,4 @@
-class CreateDeliverySlipHeaders < ActiveRecord::Migration
+class CreateDeliverySlipHeaders < ActiveRecord::Migration[6.1]
   def change
     create_table :delivery_slip_headers do |t|
       t.string :delivery_slip_code

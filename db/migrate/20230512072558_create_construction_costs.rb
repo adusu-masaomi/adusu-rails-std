@@ -1,4 +1,4 @@
-class CreateConstructionCosts < ActiveRecord::Migration
+class CreateConstructionCosts < ActiveRecord::Migration[6.1]
   def change
     create_table :construction_costs do |t|
       t.integer :construction_datum_id

@@ -1,4 +1,4 @@
-class CreateConstructionData < ActiveRecord::Migration
+class CreateConstructionData < ActiveRecord::Migration[6.1]
   def change
     create_table :construction_data do |t|
       t.string :construction_code

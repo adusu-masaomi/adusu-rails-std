@@ -1,4 +1,4 @@
-class CreateUnitMasters < ActiveRecord::Migration
+class CreateUnitMasters < ActiveRecord::Migration[6.1]
   def change
     create_table :unit_masters do |t|
       t.string :unit_name

@@ -1,4 +1,4 @@
-class CreateInvoiceHeaders < ActiveRecord::Migration
+class CreateInvoiceHeaders < ActiveRecord::Migration[6.1]
   def change
     create_table :invoice_headers do |t|
       t.string :invoice_code

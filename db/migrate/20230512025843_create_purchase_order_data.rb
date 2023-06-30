@@ -1,4 +1,4 @@
-class CreatePurchaseOrderData < ActiveRecord::Migration
+class CreatePurchaseOrderData < ActiveRecord::Migration[6.1]
   def change
     create_table :purchase_order_data do |t|
       t.string :purchase_order_code

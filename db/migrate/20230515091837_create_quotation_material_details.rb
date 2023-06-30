@@ -1,4 +1,4 @@
-class CreateQuotationMaterialDetails < ActiveRecord::Migration
+class CreateQuotationMaterialDetails < ActiveRecord::Migration[6.1]
   def change
     create_table :quotation_material_details do |t|
       t.integer :quotation_material_header_id

@@ -1,4 +1,4 @@
-class CreateStocktakes < ActiveRecord::Migration
+class CreateStocktakes < ActiveRecord::Migration[6.1]
   def change
     create_table :stocktakes do |t|
       t.date :stocktake_date

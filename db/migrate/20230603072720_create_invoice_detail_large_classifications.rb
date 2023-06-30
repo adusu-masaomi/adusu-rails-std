@@ -1,4 +1,4 @@
-class CreateInvoiceDetailLargeClassifications < ActiveRecord::Migration
+class CreateInvoiceDetailLargeClassifications < ActiveRecord::Migration[6.1]
   def change
     create_table :invoice_detail_large_classifications do |t|
       t.integer :invoice_header_id

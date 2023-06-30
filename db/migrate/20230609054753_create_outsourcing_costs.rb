@@ -1,4 +1,4 @@
-class CreateOutsourcingCosts < ActiveRecord::Migration
+class CreateOutsourcingCosts < ActiveRecord::Migration[6.1]
   def change
     create_table :outsourcing_costs do |t|
       t.string :invoice_code

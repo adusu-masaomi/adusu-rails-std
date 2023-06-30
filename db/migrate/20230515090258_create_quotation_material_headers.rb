@@ -1,4 +1,4 @@
-class CreateQuotationMaterialHeaders < ActiveRecord::Migration
+class CreateQuotationMaterialHeaders < ActiveRecord::Migration[6.1]
   def change
     create_table :quotation_material_headers do |t|
       t.string :quotation_code

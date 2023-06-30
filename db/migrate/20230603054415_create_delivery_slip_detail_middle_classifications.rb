@@ -1,4 +1,4 @@
-class CreateDeliverySlipDetailMiddleClassifications < ActiveRecord::Migration
+class CreateDeliverySlipDetailMiddleClassifications < ActiveRecord::Migration[6.1]
   def change
     create_table :delivery_slip_detail_middle_classifications do |t|
       t.integer :delivery_slip_header_id

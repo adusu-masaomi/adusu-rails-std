@@ -1,4 +1,4 @@
-class CreateWorkingMiddleItems < ActiveRecord::Migration
+class CreateWorkingMiddleItems < ActiveRecord::Migration[6.1]
   def change
     create_table :working_middle_items do |t|
       t.string :working_middle_item_name

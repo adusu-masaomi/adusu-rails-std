@@ -1,4 +1,4 @@
-class CreateMaterialMasters < ActiveRecord::Migration
+class CreateMaterialMasters < ActiveRecord::Migration[6.1]
   def change
     create_table :material_masters do |t|
       t.string :material_code
