@@ -517,7 +517,9 @@ class PurchaseDataController < ApplicationController
 	 
 	  #資材Mも更新
       update_params_list_price_and_maker
-	  @purchase_datum.update_attributes(material_masters_params)
+	  #@purchase_datum.update_attributes(material_masters_params)
+    #rails6対応 230701
+    @purchase_datum.update(material_masters_params)
 	else
 	  #資材マスターのみへの更新
 	  #手入力のマスター反映(資材マスターのみ)

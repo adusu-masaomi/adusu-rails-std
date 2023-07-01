@@ -338,47 +338,106 @@ class ConstructionDailyReportsController < ApplicationController
     working_time = WorkingTime.first
     
     #勤務時間を取得
-    @working_time_start_time = time_to_seconds(working_time.working_time_start_time.hour,
+    if working_time.present?
+      @working_time_start_time = time_to_seconds(working_time.working_time_start_time.hour,
                                                working_time.working_time_start_time.min)
-    #@working_time_end_time = working_time.working_time_end_time
-    @working_time_end_time = time_to_seconds(working_time.working_time_end_time.hour,
+    else                                         
+      @working_time_start_time = 0  #デフォルト時間必要か??
+    end
+    
+    if working_time.present?
+      @working_time_end_time = time_to_seconds(working_time.working_time_end_time.hour,
                                                working_time.working_time_end_time.min)
+    else                                         
+      @working_time_end_time = 0
+    end
     
     #working_time = working_time_end_time - working_time_start_time
     
     #休憩時間を取得
-    @break_time_1_start_time = time_to_seconds(working_time.break_time_1_start_time.hour,
+    if working_time.present?
+      @break_time_1_start_time = time_to_seconds(working_time.break_time_1_start_time.hour,
                                                working_time.break_time_1_start_time.min)
-    @break_time_1_end_time = time_to_seconds(working_time.break_time_1_end_time.hour,
-                                               working_time.break_time_1_end_time.min)
-    #
-    @break_time_2_start_time = time_to_seconds(working_time.break_time_2_start_time.hour,
-                                               working_time.break_time_2_start_time.min)
-    @break_time_2_end_time = time_to_seconds(working_time.break_time_2_end_time.hour,
-                                               working_time.break_time_2_end_time.min)
-    #
-    @break_time_3_start_time = time_to_seconds(working_time.break_time_3_start_time.hour,
-                                               working_time.break_time_3_start_time.min)
-    @break_time_3_end_time = time_to_seconds(working_time.break_time_3_end_time.hour,
-                                               working_time.break_time_3_end_time.min)
+    else                                         
+      @break_time_1_start_time = 0
+    end
     
+    if working_time.present?
+      @break_time_1_end_time = time_to_seconds(working_time.break_time_1_end_time.hour,
+                                               working_time.break_time_1_end_time.min)
+    else                                         
+      @break_time_1_end_time = 0
+    end
+    #
+    if working_time.present?
+      @break_time_2_start_time = time_to_seconds(working_time.break_time_2_start_time.hour,
+                                               working_time.break_time_2_start_time.min)
+    else                                         
+      @break_time_2_start_time = 0
+    end
+    
+    if working_time.present?
+      @break_time_2_end_time = time_to_seconds(working_time.break_time_2_end_time.hour,
+                                               working_time.break_time_2_end_time.min)
+    else                                         
+      @break_time_2_end_time = 0
+    end
+    #
+    
+    if working_time.present?
+      @break_time_3_start_time = time_to_seconds(working_time.break_time_3_start_time.hour,
+                                               working_time.break_time_3_start_time.min)
+    else                                         
+      @break_time_3_start_time = 0
+    end
+    
+    if working_time.present?
+      @break_time_3_end_time = time_to_seconds(working_time.break_time_3_end_time.hour,
+                                               working_time.break_time_3_end_time.min)
+    else                                         
+      @break_time_3_end_time = 0
+    end
     #早出開始時間
-    @overtime_early_start_time = time_to_seconds(working_time.overtime_early_start_time.hour,
+    if working_time.present?
+      @overtime_early_start_time = time_to_seconds(working_time.overtime_early_start_time.hour,
                                                  working_time.overtime_early_start_time.min)
+    else                                           
+      @overtime_early_start_time = 0
+    end
     #早出終了時間
-    @overtime_early_end_time = time_to_seconds(working_time.overtime_early_end_time.hour,
+    if working_time.present?
+      @overtime_early_end_time = time_to_seconds(working_time.overtime_early_end_time.hour,
                                                working_time.overtime_early_end_time.min)
+    else                                         
+      @overtime_early_end_time = 0
+    end
     #
     #残業時間
-    @overtime_start_time = time_to_seconds(working_time.overtime_start_time.hour,
+    if working_time.present?
+      @overtime_start_time = time_to_seconds(working_time.overtime_start_time.hour,
                                                working_time.overtime_start_time.min)
-    @overtime_end_time = time_to_seconds(working_time.overtime_end_time.hour,
+    else                                         
+      @overtime_start_time = 0
+    end
+    if working_time.present?
+      @overtime_end_time = time_to_seconds(working_time.overtime_end_time.hour,
                                                working_time.overtime_end_time.min)
+    else                                         
+      @overtime_end_time = 0
+    end
     #深夜残業時間
-    @overtime_midnight_start_time = time_to_seconds(working_time.overtime_midnight_start_time.hour,
+    if working_time.present?
+      @overtime_midnight_start_time = time_to_seconds(working_time.overtime_midnight_start_time.hour,
                                                working_time.overtime_midnight_start_time.min)
-    @overtime_midnight_end_time = time_to_seconds(working_time.overtime_midnight_end_time.hour,
+    else                                         
+      @overtime_midnight_start_time = 0
+    end
+    if working_time.present?
+      @overtime_midnight_end_time = time_to_seconds(working_time.overtime_midnight_end_time.hour,
                                                working_time.overtime_midnight_end_time.min)
+    else                                         
+      @overtime_midnight_end_time = 0
+    end
     #
     
     #１日の就業時間を計算

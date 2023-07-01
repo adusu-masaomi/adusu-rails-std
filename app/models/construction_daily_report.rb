@@ -1,4 +1,8 @@
 class ConstructionDailyReport < ApplicationRecord
+  
+  #demo版対応
+  MAX_RECORD_COUNT = 5
+  
   paginates_per 200  # 1ページあたり項目表示
   
   #belongs_to :construction_datum, :touch => :construction_start_date
@@ -66,6 +70,9 @@ class ConstructionDailyReport < ApplicationRecord
   #作業日＆時間の重複登録防止
   validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
   
+  #demo版対応
+  validate :construction_daily_count_must_be_within_limit, on: :create
+  
   #入力チェック(日またがりで計算がおかしくなるのを防止)
   # ↑ 計算異常を修正したので下記は未使用にした
   #validate :time_too_large
@@ -82,6 +89,11 @@ class ConstructionDailyReport < ApplicationRecord
   end
 
   
+  #demo版対応
+  def construction_daily_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionDailyReport.count >= MAX_RECORD_COUNT
+  end
+    
    #入力チェック用
    def time_too_large
      #22:00~4:00のように入力すると計算がおかしくなるため、２行に入力させるため警告する

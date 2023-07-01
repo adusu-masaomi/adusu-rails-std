@@ -1,6 +1,9 @@
 class SupplierMaster < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示　
-
+  
+  #demo版対応
+  MAX_RECORD_COUNT = 6
+  
   #belongs_to :PurchaseDatum  #--> necessary??
   #rails6対応
   belongs_to :PurchaseDatum, optional: true  #--> necessary??
@@ -18,8 +21,15 @@ class SupplierMaster < ApplicationRecord
     [["普通", 0], ["当座", 1]] 
   end
   
-	#バリデーション
+  #バリデーション
   validates :supplier_name, presence: true
+  #demo版対応
+  validate :supplier_count_must_be_within_limit, on: :create
+  
+  #demo版対応
+  def supplier_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if SupplierMaster.count >= MAX_RECORD_COUNT
+  end
   
   # validates :customer_id, presence: true, if: "customer_id.nil?"
   def self.to_csv(options = {})

@@ -1,6 +1,9 @@
 class PurchaseDatum < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示　
     
+    #demo版対応
+    MAX_RECORD_COUNT = 5
+    
     #rails6対応(optional: true)
     belongs_to :unit_master , optional: true, :foreign_key => "unit_id"
     belongs_to :MakerMaster , optional: true, :foreign_key => "maker_id"
@@ -12,10 +15,10 @@ class PurchaseDatum < ApplicationRecord
     accepts_nested_attributes_for :PurchaseUnitPrice, update_only: true
 
     belongs_to :purchase_order_datum , optional: true, :class_name => 'PurchaseOrderDatum',  :foreign_key => "purchase_order_datum_id"
-	belongs_to :construction_datum, optional: true
-	belongs_to :SupplierMaster, optional: true, :foreign_key => "supplier_id"
-	belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
-	belongs_to :PurchaseDivision, optional: true, :foreign_key => "division_id"
+    belongs_to :construction_datum, optional: true
+    belongs_to :SupplierMaster, optional: true, :foreign_key => "supplier_id"
+    belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
+    belongs_to :PurchaseDivision, optional: true, :foreign_key => "division_id"
     belongs_to :purchase_header , optional: true
     
     #has_many :SupplierMaster,  :foreign_key => "supplier_id"
@@ -27,8 +30,8 @@ class PurchaseDatum < ApplicationRecord
     #単価M更新切り分け用
     #attr_accessor :check_unit
     #仕入先品番選択用
-	attr_accessor :supplier_material_code
-	attr_accessor :supplier_id_hide
+    attr_accessor :supplier_material_code
+    attr_accessor :supplier_id_hide
     attr_accessor :unit_price_hide
     attr_accessor :supplier_material_code
     
@@ -63,12 +66,19 @@ class PurchaseDatum < ApplicationRecord
     validates :purchase_order_datum_id, presence:true
     validates_numericality_of :purchase_amount, :only_integer => true, :allow_nil => false
     validate :purchase_order_code_check   
-	validate :check_complete    
+    validate :check_complete    
+    #demo版対応
+    validate :purchase_count_must_be_within_limit, on: :create
     
     #add210628
     VALID_HALF_REGEX = /\A[a-z0-9]+\z/i
     validates :slip_code, format: { with: VALID_HALF_REGEX }, allow_blank: true
     #
+    
+    #demo版対応
+    def purchase_count_must_be_within_limit
+      errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if PurchaseDatum.count >= MAX_RECORD_COUNT
+    end
     
     def purchase_order_code_check
 	#注文番号のチェック（既に集計済みなら除外する）

@@ -1,6 +1,9 @@
 class CustomerMaster < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 
+    #demo版対応
+    MAX_RECORD_COUNT = 6
+  
     #締め日区分
     def self.closing_division 
       [["指定日(通常)", 0], ["月末", 1]]
@@ -23,13 +26,16 @@ class CustomerMaster < ApplicationRecord
     
     validates :closing_date, presence: true, numericality: :integer
     validates :due_date, presence: true, numericality: :integer
-	
+
+    #demo版対応
+    validate :customer_count_must_be_within_limit, on: :create
+    
     ##add180123
     #住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
     ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
     ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
-	ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
-	ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
+    ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
+    ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
    
     validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
     validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
@@ -46,7 +52,11 @@ class CustomerMaster < ApplicationRecord
       end
     end
     ##add end 
-	
+    #demo版対応
+    def customer_count_must_be_within_limit
+      errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if CustomerMaster.count >= MAX_RECORD_COUNT
+    end
+  
 	#現状、利用価値が少ないのでチェックしないものとする・・・
 	#add 171002
 	#validates :search_character, presence: true, length: { maximum: 1 } , :format => {:with => /^[ぁ-んー－]+$/, :multiline => true, :message =>'はひらがなで入力して下さい。'} 

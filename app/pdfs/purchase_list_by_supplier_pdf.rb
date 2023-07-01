@@ -18,7 +18,12 @@ class PurchaseListBySupplierPDF
 
         #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum| 
         
-        $purchase_data.joins(:purchase_order_datum).order("purchase_date, purchase_order_code, id").each do |purchase_datum| 
+        #$purchase_data.joins(:purchase_order_datum).order("purchase_date, purchase_order_code, id").each do |purchase_datum|
+        #rails6対応
+        $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").
+          order("purchase_data.purchase_date, purchase_order_data.purchase_order_code, purchase_data.id").each do |purchase_datum| 
+        
+          
         #ソート順は仕入日、注文ナンバーの順とする。
 		
         #---見出し---
@@ -125,11 +130,22 @@ class PurchaseListBySupplierPDF
 					   if purchase_datum.inventory_division_id.present? && InventoryHistory.inventory_division[purchase_datum.inventory_division_id.to_i][1] == 0
 					     division_name = InventoryHistory.inventory_division[purchase_datum.inventory_division_id.to_i][0]
 					   else
-					     division_name = purchase_datum.PurchaseDivision.purchase_division_name
+               #upd230701
+               if purchase_datum.PurchaseDivision.present?
+					       division_name = purchase_datum.PurchaseDivision.purchase_division_name
+					     else
+                 division_name = ""
+               end
 					   end
 					   #
 					   
-                       
+             if purchase_datum.unit_master.present?
+               unit_name = purchase_datum.unit_master.unit_name
+             else
+               unit_name = "-"
+             end
+                 
+                 
 			           row.values purchase_date: purchase_datum.purchase_date,
                                   construction_code: construction_code,
 								  construction_name: construction_name,
@@ -139,7 +155,7 @@ class PurchaseListBySupplierPDF
                                   material_name: material_name,
 								  maker_name: purchase_datum.maker_name,
                                   quantity: quantity,
-                                  unit_name: purchase_datum.unit_master.unit_name,
+                                  unit_name: unit_name,
 								  purchase_unit_price: unit_price,
 								  purchase_amount: purchase_amount,
                                   list_price: list_price,

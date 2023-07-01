@@ -159,7 +159,9 @@ class PurchaseListPDF
 					   if purchase_datum.inventory_division_id.present? && InventoryHistory.inventory_division[purchase_datum.inventory_division_id.to_i][1] == 0
 					     division_name = InventoryHistory.inventory_division[purchase_datum.inventory_division_id.to_i][0]
 					   else
-					     division_name = purchase_datum.PurchaseDivision.purchase_division_name
+               if purchase_datum.PurchaseDivision.present?  #add230701
+					       division_name = purchase_datum.PurchaseDivision.purchase_division_name
+					     end 
 					   end
 					   #
 					   
@@ -171,13 +173,18 @@ class PurchaseListPDF
                        end
                        #
                        
+                       if purchase_datum.unit_master.present?
+                         unit_name = purchase_datum.unit_master.unit_name
+                       else
+                         unit_name = "-"
+                       end
 			           row.values purchase_date: purchase_datum.purchase_date,
                                   purchase_order_code: purchase_datum.purchase_order_datum.purchase_order_code,
 					              material_code: material_code,
                                   material_name: material_name,
 								  maker_name: purchase_datum.maker_name,
                                   quantity: quantity,
-                                  unit_name: purchase_datum.unit_master.unit_name,
+                                  unit_name: unit_name,
 								  purchase_unit_price: unit_price,
 								  purchase_amount: purchase_amount,
                                   list_price: list_price,

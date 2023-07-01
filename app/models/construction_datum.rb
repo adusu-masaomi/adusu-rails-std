@@ -1,5 +1,9 @@
 class ConstructionDatum < ApplicationRecord
-	#kaminari用設定
+  
+  #demo版対応
+  MAX_RECORD_COUNT = 5
+  
+  #kaminari用設定
     paginates_per 200  # 1ページあたり項目表示
     #paginates_per 100   # 1ページあたり項目表示   #upd210707 読み込み遅いので100件にした
 
@@ -30,6 +34,8 @@ class ConstructionDatum < ApplicationRecord
 	validates :customer_id, presence: true
     validates :construction_code, presence: true, uniqueness: true
 	validates :alias_name, presence: true
+  #demo版対応
+  validate :construction_count_must_be_within_limit, on: :create
     
 	#住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
     ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
@@ -51,6 +57,11 @@ class ConstructionDatum < ApplicationRecord
       if address.present? && address.match(/[0-9０-９]+$/)  #upd211005
         errors.add :address, ADDRESS_ERROR_MESSAGE_4
       end
+    end
+    
+    #demo版対応
+    def construction_count_must_be_within_limit
+      errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionDatum.count >= MAX_RECORD_COUNT
     end
     
     #緯度経度の自動登録
