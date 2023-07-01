@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :working_times
   resources :companies
@@ -20,7 +21,12 @@ Rails.application.routes.draw do
   resources :task_contents
   resources :tasks
   
-  #add180110
+  #add230701 ログイン用
+  get    '/login',   to: 'sessions#new'
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+  #
+  
   scope '/api' do
     get "/data", :to => "tasks#data"
     
@@ -32,7 +38,6 @@ Rails.application.routes.draw do
     put "/link/:id", :to => "links#update"
     delete "/link/:id", :to => "links#delete"
   end
-  #add end
   
   resources :schedules
   resources :working_categories
@@ -143,12 +148,19 @@ Rails.application.routes.draw do
   resources :supplier_masters do
     get :autocomplete_supplier_master_supplier_name, :on => :collection
   end
-
-  resources :session, path: "login", only: [:index, :create] do
+  
+  #rails6
+  resources :users, path: "login", only: [:index, :create] do
     collection do
-      delete  '/', to: "session#delete"
+      delete  '/', to: "sessions#delete"
     end
   end
+
+  #resources :session, path: "login", only: [:index, :create] do
+  #  collection do
+  #    delete  '/', to: "session#delete"
+  #  end
+  #end
    
   #get "construction_data/edit2" => 'construction_data#edit2'
   #
@@ -634,6 +646,7 @@ Rails.application.routes.draw do
   
   # 保留
   # ExcelReport::Application.routes.draw do
+  get 'sessions/new'
   resources :working_times
   resources :companies
   resources :monthly_balances

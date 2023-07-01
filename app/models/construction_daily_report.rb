@@ -138,5 +138,8 @@ class ConstructionDailyReport < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["construction_datum_id", "created_at", "end_time_1", "end_time_2", "id", "is_no_break_time_1", "is_no_break_time_2", "is_no_break_time_3", "is_one_day_work", "labor_cost", "man_month", "staff_id", "start_time_1", "start_time_2", "updated_at", "working_date", "working_details", "working_times"]
   end
+  def self.ransackable_associations(auth_object = nil)
+    ["Staff", "construction_datum"]
+  end
 
 end

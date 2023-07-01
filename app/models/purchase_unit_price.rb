@@ -22,4 +22,7 @@ class PurchaseUnitPrice < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "id", "list_price", "material_id", "supplier_id", "supplier_material_code", "unit_id", "unit_price", "updated_at"]
   end
+  def self.ransackable_associations(auth_object = nil)
+    ["MaterialMaster", "SupplierMaster", "UnitMaster"]
+  end
 end

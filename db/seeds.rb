@@ -10,23 +10,26 @@ require "csv"
 
 #資材マスターの定価を更新する
 
-require 'date'
-update_date = '2017-10-01'.to_date  #カタログの更新日とする
+#require 'date'
+#update_date = '2017-10-01'.to_date  #カタログの更新日とする
 
 #日時型の場合
 #require 'time'
 #update_time = "2017-10-01 00:00:00 +0900"  #カタログの更新日とする
 #update_time_to_time = Time.parse(update_time)
 
-CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
- 
- @material_master = MaterialMaster.where(material_code:  row[0]).first
- 
- if @material_master.present?
-   material_params = {list_price: row[1].to_i, list_price_update_at: update_date }
-   @material_master.update(material_params)
- end 
+#ユーザーの初期データ
+CSV.foreach('db/user.csv') do |row|
+  User.create(:name => row[0], :email => row[1], :password => row[2], :password_digest => row[3] )
 end
+
+#CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
+# @material_master = MaterialMaster.where(material_code:  row[0]).first
+# if @material_master.present?
+#   material_params = {list_price: row[1].to_i, list_price_update_at: update_date }
+#   @material_master.update(material_params)
+# end 
+#end
 
 #del180329
 #CSV.foreach('db/contact.csv') do |row|

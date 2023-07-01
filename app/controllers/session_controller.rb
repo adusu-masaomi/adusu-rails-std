@@ -1,4 +1,7 @@
 class SessionController < ApplicationController
+  
+  #rails4用、230701現在未使用。
+  
   #renderでこけるのでひとまずコメントアウト...(230630)
   #skip_before_action :user_logged_in?
 

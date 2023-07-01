@@ -2,8 +2,12 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
-
+  
+  #ログイン(rails6用)
+  include SessionsHelper
+  #before_action :logged_in_user, only:[:edit, :update, :destroy]
+  before_action :logged_in_user, only:[:index, :edit, :update, :destroy]
+  
   ### ここから追加(ログイン) ###
   #before_action :user_logged_in? #ログインチェックの事前認証
 
@@ -464,4 +468,13 @@ class ApplicationController < ActionController::Base
   #銀行支店
   $A_BANK_BRANSH_ID_SANSHIN_MAIN = 19
   $A_BANK_BRANSH_ID_SANSHIN_TSUKANOME = 21
+  
+  #rails6ログイン用
+  private
+   # ログイン済みユーザーかどうか確認
+    def logged_in_user
+      unless logged_in?
+        redirect_to login_url
+      end
+    end
 end
