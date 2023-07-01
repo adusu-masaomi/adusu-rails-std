@@ -19,9 +19,16 @@ require "csv"
 #update_time_to_time = Time.parse(update_time)
 
 #ユーザーの初期データ
-CSV.foreach('db/user.csv') do |row|
-  User.create(:name => row[0], :email => row[1], :password => row[2], :password_digest => row[3] )
-end
+User.create!(
+   name: 'adusu',
+   email: 'adusu-info@eos.ocn.ne.jp',
+   password: 'adusu63325', 
+   password_digest: '$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC'
+)
+
+#CSV.foreach('db/user.csv') do |row|
+#  User.create(:name => row[0], :email => row[1], :password => row[2], :password_digest => row[3] )
+#end
 
 #CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
 # @material_master = MaterialMaster.where(material_code:  row[0]).first
