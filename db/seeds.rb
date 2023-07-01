@@ -26,9 +26,9 @@ require "csv"
 #   password_digest: '$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC'
 #)
 
-CSV.foreach('db/maker.csv') do |row|
- MakerMaster.create(:maker_name => row[0])
-end
+#CSV.foreach('db/maker.csv') do |row|
+# MakerMaster.create(:maker_name => row[0])
+#end
 
 
 #CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
