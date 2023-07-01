@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.19
--- Dumped by pg_dump version 11.19
+-- Dumped from database version 11.20
+-- Dumped by pg_dump version 11.20
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -55,6 +55,20 @@ ALTER TABLE public.affiliations_id_seq OWNER TO adusu;
 
 ALTER SEQUENCE public.affiliations_id_seq OWNED BY public.affiliations.id;
 
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: adusu
+--
+
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO adusu;
 
 --
 -- Name: business_holidays; Type: TABLE; Schema: public; Owner: adusu
@@ -3029,6 +3043,14 @@ COPY public.affiliations (id, affiliation_name, created_at, updated_at) FROM std
 
 
 --
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: adusu
+--
+
+COPY public.ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+\.
+
+
+--
 -- Data for Name: business_holidays; Type: TABLE DATA; Schema: public; Owner: adusu
 --
 
@@ -3078,7 +3100,7 @@ COPY public.construction_costs (id, construction_datum_id, purchase_amount, supp
 --
 
 COPY public.construction_daily_reports (id, working_date, construction_datum_id, staff_id, start_time_1, end_time_1, start_time_2, end_time_2, working_times, man_month, labor_cost, working_details, is_one_day_work, is_no_break_time_1, is_no_break_time_2, is_no_break_time_3, created_at, updated_at) FROM stdin;
-1	2023-06-23	2	1	08:00:00	17:00:00	00:00:00	00:00:00	27000	1.0	11332	配線等	0	0	\N	\N	2023-06-23 14:52:56.140775	2023-06-23 14:55:04.750762
+1	2023-06-23	2	1	08:00:00	17:00:00	00:00:00	00:00:00	27000	1.0	11332	配線等	0	0	0	0	2023-06-23 14:52:56.140775	2023-07-01 11:49:53.525165
 \.
 
 
@@ -3278,8 +3300,8 @@ COPY public.outsourcing_costs (id, invoice_code, purchase_order_datum_id, constr
 --
 
 COPY public.purchase_data (id, purchase_date, slip_code, purchase_order_datum_id, construction_datum_id, material_id, material_code, material_name, maker_id, maker_name, quantity, quantity2, unit_id, purchase_unit_price, purchase_unit_price2, purchase_amount, list_price, purchase_id, division_id, supplier_id, inventory_division_id, unit_price_not_update_flag, outsourcing_invoice_flag, outsourcing_payment_flag, purchase_header_id, working_end_date, closing_date, payment_due_date, payment_date, unpaid_payment_date, notes, created_at, updated_at) FROM stdin;
-9	2023-06-24		3	2	2	ZN10011	ZN10011	2	パーナ	20.00	\N	2	100.00	\N	2000	200	\N	1	2	\N	0	\N	\N	\N	\N	\N	\N	\N	\N		2023-06-24 17:31:47.609699	2023-06-24 17:31:47.609699
 10	2023-06-24		4	1	1	<手入力用>	外注費	1	-	1.00	\N	\N	10000.00	\N	10000	\N	\N	\N	3	\N	0	0	\N	\N	\N	\N	\N	\N	\N		2023-06-24 17:41:33.536436	2023-06-24 17:41:33.536436
+9	2023-06-24		3	2	2	ZN10011	ZN10011	2	パーナ	20.00	\N	2	100.00	\N	2000	200	\N	1	2	\N	0	0	\N	\N	\N	\N	\N	\N	\N		2023-06-24 17:31:47.609699	2023-07-01 11:51:25.239542
 \.
 
 
@@ -3533,6 +3555,7 @@ COPY public.unit_masters (id, unit_name, created_at, updated_at) FROM stdin;
 --
 
 COPY public.users (id, name, email, password_digest, created_at, updated_at) FROM stdin;
+5	adusu	adusu-info@eos.ocn.ne.jp	$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC	2023-07-01 13:51:28.778385	2023-07-01 13:51:28.778385
 \.
 
 
@@ -3914,7 +3937,7 @@ SELECT pg_catalog.setval('public.unit_masters_id_seq', 2, true);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 5, true);
 
 
 --
@@ -3986,6 +4009,14 @@ SELECT pg_catalog.setval('public.working_units_id_seq', 2, true);
 
 ALTER TABLE ONLY public.affiliations
     ADD CONSTRAINT affiliations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: adusu
+--
+
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
 --

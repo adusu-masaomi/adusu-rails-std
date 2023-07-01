@@ -18,17 +18,18 @@ require "csv"
 #update_time = "2017-10-01 00:00:00 +0900"  #カタログの更新日とする
 #update_time_to_time = Time.parse(update_time)
 
-#ユーザーの初期データ
-User.create!(
-   name: 'adusu',
-   email: 'adusu-info@eos.ocn.ne.jp',
-   password: 'adusu63325', 
-   password_digest: '$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC'
-)
+#ユーザーの初期データ(初回アップロード用に使用--消さない事)
+#User.create!(
+#   name: 'adusu',
+#   email: 'adusu-info@eos.ocn.ne.jp',
+#   password: 'adusu63325', 
+#   password_digest: '$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC'
+#)
 
-#CSV.foreach('db/user.csv') do |row|
-#  User.create(:name => row[0], :email => row[1], :password => row[2], :password_digest => row[3] )
-#end
+CSV.foreach('db/maker.csv') do |row|
+ MakerMaster.create(:maker_name => row[0])
+end
+
 
 #CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
 # @material_master = MaterialMaster.where(material_code:  row[0]).first
