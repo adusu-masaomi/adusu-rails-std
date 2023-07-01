@@ -1,5 +1,5 @@
 class ChangeDataPaymentDateToInvoiceHeader < ActiveRecord::Migration[6.1]
   def change
-    change_column :invoice_headers, :payment_date, :date
+    drop_table :invoice_headers
   end
 end
