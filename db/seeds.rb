@@ -18,6 +18,9 @@ require "csv"
 #update_time = "2017-10-01 00:00:00 +0900"  #カタログの更新日とする
 #update_time_to_time = Time.parse(update_time)
 
+######################
+#renderの初期データ用　消さない事 適宜、コメントアウトする
+
 #ユーザーの初期データ(初回アップロード用に使用--消さない事)
 #User.create!(
 #   name: 'adusu',
@@ -32,35 +35,36 @@ require "csv"
 #end
 
 #render
-CSV.foreach('db/supplier_masters.csv') do |row|
-  SupplierMaster.create(:supplier_name => row[0], :tel_main => row[1])
-end
+#CSV.foreach('db/supplier_masters.csv') do |row|
+#  SupplierMaster.create(:supplier_name => row[0], :tel_main => row[1])
+#end
 
 #render
-CSV.foreach('db/customer_masters.csv') do |row|
-  #CustomerMaster.create(:customer_name => row[0], :post => row[1], :address => row[2], :house_number => row[3], :tel_main => row[4])
-  CustomerMaster.create(:customer_name => row[0], :tel_main => row[2])
-end
+#得意先Mはバリデーションで引っかかるので使用しない(保留...)
+##CSV.foreach('db/customer_masters.csv') do |row|
+##  #CustomerMaster.create(:customer_name => row[0], :post => row[1], :address => row[2], :house_number => row[3], :tel_main => row[4])
+##  CustomerMaster.create(:customer_name => row[0], :tel_main => row[2])
+##end
 
 #render
-CSV.foreach('db/material_masters.csv') do |row|
-  MaterialMaster.create(:material_code => row[0], :material_name => row[1], :maker_id => row[2], :unit_id => row[3], :list_price => row[4], :list_price_quotation => row[5])
-end
+#CSV.foreach('db/material_masters.csv') do |row|
+#  MaterialMaster.create(:material_code => row[0], :material_name => row[1], :maker_id => row[2], :unit_id => row[3], :list_price => row[4], :list_price_quotation => row[5])
+#end
 
 #render
-CSV.foreach('db/material_categories.csv') do |row|
-  MaterialCategory.create(:name => row[0])
-end
+#CSV.foreach('db/material_categories.csv') do |row|
+#  MaterialCategory.create(:name => row[0])
+#end
 
 #render
-CSV.foreach('db/inventory_categories.csv') do |row|
-  InventoryCategory.create(:name => row[0])
-end
+#CSV.foreach('db/inventory_categories.csv') do |row|
+#  InventoryCategory.create(:name => row[0])
+#end
 
 #render
-CSV.foreach('db/supplier_responsibles.csv') do |row|
-  SupplierResponsible.create(:supplier_master_id => row[0], :responsible_name => row[1])
-end
+#CSV.foreach('db/supplier_responsibles.csv') do |row|
+#  SupplierResponsible.create(:supplier_master_id => row[0], :responsible_name => row[1])
+#end
 
 ######################
 
