@@ -62,6 +62,24 @@ CSV.foreach('db/supplier_responsibles.csv') do |row|
   SupplierResponsible.create(:supplier_master_id => row[0], :responsible_name => row[1])
 end
 
+######################
+
+#render
+CSV.foreach('db/unit_masters.csv') do |row|
+  UnitMaster.create(:unit_name => row[0])
+end
+
+#render
+CSV.foreach('db/purchase_divisions.csv') do |row|
+  PurchaseDivision.create(:purchase_division_name => row[0], :purchase_division_long_name => row[1])
+end
+
+#render
+CSV.foreach('db/staffs.csv') do |row|
+  Staff.create(:staff_name => row[0], :furigana => row[1], :affiliation_id => row[2])
+end
+
+
 #CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
 # @material_master = MaterialMaster.where(material_code:  row[0]).first
 # if @material_master.present?
@@ -75,9 +93,4 @@ end
 # Contact.create(:name => row[0], :company_name => row[1], :affiliation => row[2], :department => row[3], :post => row[4], :address => row[5], 
 # :tel => row[6], :fax => row[7], :email => row[8], :url => row[9], :partner_division_id => row[10].to_i )
 #end
-
-
-# CSV.foreach('db/purchase_price.csv') do |row|
-# PurchaseUnitPrice.create(:supplier_id => row[0], :material_id => row[1], :supplier_material_code => row[2], :unit_price => row[3].to_i, :unit_id => row[4] )
-# end
 
