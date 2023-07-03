@@ -95,7 +95,7 @@ end
 #render
 CSV.foreach('db/working_times.csv') do |row|
   Company.create(:working_time_start_time => row[0], :working_time_end_time => row[1], :overtime_start_time => row[2], :overtime_end_time => row[3], 
-                 :overtime_early_start_time => row[4] ,overtime_early_end_time => row[5], :overtime_midnight_start_time => row[6], :overtime_midnight_end_time => row[7], 
+                 :overtime_early_start_time => row[4] ,:overtime_early_end_time => row[5], :overtime_midnight_start_time => row[6], :overtime_midnight_end_time => row[7], 
                  :break_time_1_start_time => row[8], :break_time_1_end_time => row[9], :break_time_2_start_time => row[10], :break_time_2_end_time => row[11], 
                  :break_time_3_start_time => row[12], :break_time_3_end_time => row[13])
 end
