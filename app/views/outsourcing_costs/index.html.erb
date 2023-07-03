@@ -79,7 +79,11 @@
         <% end %>
         
         <% if @due_date >= Date.new(2019,10,1) %>
-          <td><%= number_to_currency(outsourcing_cost.labor_cost * $consumption_tax_include_per_ten, :precision => 0 ) %></td>
+          <% if outsourcing_cost.labor_cost.present? %>
+            <td><%= number_to_currency(outsourcing_cost.labor_cost * $consumption_tax_include_per_ten, :precision => 0 ) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
         <% else %>
           <td><%= number_to_currency(outsourcing_cost.labor_cost * $consumption_tax_include, :precision => 0 ) %></td>
         <% end %>

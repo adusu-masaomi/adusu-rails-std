@@ -29,7 +29,11 @@
   <dd><%= @inventory.inventory_amount %></dd>
   
   <dt><strong><%= model_class.human_attribute_name(:supplier_name) %>:</strong></dt>
-  <dd><%= @inventory.supplier_master.supplier_name %></dd>
+  <% if @inventory.supplier_master.present? %>
+    <dd><%= @inventory.supplier_master.supplier_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   
   <dt><strong>現在在庫数:</strong></dt>
   <dd><%= @inventory.current_quantity %></dd>

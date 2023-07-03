@@ -1,6 +1,8 @@
 class PurchaseOrderDatum < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
-
+    #demo
+    MAX_RECORD_COUNT = 5
+    
     belongs_to :construction_datum, optional: true
     accepts_nested_attributes_for :construction_datum, update_only: true
     
@@ -43,7 +45,15 @@ class PurchaseOrderDatum < ApplicationRecord
     validates :purchase_order_code, presence: true, uniqueness: true
     validate :check_supplier   #add210727
     
+    #demo版対応
+    validate :purchase_order_count_must_be_within_limit, on: :create
+    
     #validates :purchase_order_code, uniqueness: {message: ",工事IDが同じ組み合わせのレコードが既に存在します。", scope: [:construction_datum_id]} 
+    
+    #demo版対応
+    def purchase_order_count_must_be_within_limit
+      errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if PurchaseOrderDatum.count >= MAX_RECORD_COUNT
+    end
     
     #add210727
     def check_supplier

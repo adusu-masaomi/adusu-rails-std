@@ -1,6 +1,9 @@
 class InventoryHistory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
+  #demo
+  MAX_RECORD_COUNT = 5
+  
   belongs_to :construction_datum, optional: true
   belongs_to :material_master, optional: true
   belongs_to :unit_master, optional: true

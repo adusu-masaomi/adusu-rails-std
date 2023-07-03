@@ -1,4 +1,7 @@
 class OutsourcingCost < ApplicationRecord
+  #demo
+  MAX_RECORD_COUNT = 5
+  
   belongs_to :construction_datum, optional: true
   belongs_to :purchase_order_datum, optional: true  #upd190930
   belongs_to :staff, optional: true
@@ -9,6 +12,13 @@ class OutsourcingCost < ApplicationRecord
   #add19425
   #支払日入力有で、支払金額が入力されていなければ警告する
   validate :check_payment_amount
+  #demo版対応
+  validate :outsourcing_cost_count_must_be_within_limit, on: :create
+  
+  #demo版対応
+  def outsourcing_cost_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if OutsourcingCost.count >= MAX_RECORD_COUNT
+  end
   def check_payment_amount
     if payment_date.present?
       if payment_amount.nil? || payment_amount == 0

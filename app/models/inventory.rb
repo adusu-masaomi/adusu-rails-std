@@ -1,5 +1,7 @@
 class Inventory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
+  #demo
+  MAX_RECORD_COUNT = 5
   
   belongs_to :material_master, optional: true
   belongs_to :unit_master, optional: true
@@ -18,12 +20,14 @@ class Inventory < ApplicationRecord
   validates_numericality_of :current_quantity, :only_float => true, :allow_nil => false      #upd180608 int to float
   validates_numericality_of :current_unit_price, :allow_nil => false
   validates_numericality_of :last_unit_price, :allow_nil => false
+  validates :supplier_master_id, presence: true  #add230703
   #
+  #demo版対応
+  validate :inventory_count_must_be_within_limit, on: :create
   
   #add171027
   #活動フラグ判定用追加
   attr_accessor :action_flag
-  
   
   scope :with_material_name_include, -> inventory_material_name {
     if inventory_material_name.present? 
@@ -47,7 +51,11 @@ class Inventory < ApplicationRecord
   #  [["エアコン部材", 0], ["配線器具", 1], ["ケーブル", 2], ["照明器具", 3], ["アンテナ", 4], ["分電盤", 5], ["ドアホン", 6], ["アース棒", 7], 
   #  ["開閉器", 8] ]
   #end
-  
+  #demo版対応
+  def inventory_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if Inventory.count >= MAX_RECORD_COUNT
+  end
+    
   def self.ransackable_scopes(auth_object=nil)
       [:with_material_name_include, :with_material_category_include]
       

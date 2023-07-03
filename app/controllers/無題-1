@@ -1,1 +1,0 @@
-User.create(name: "adusu", email: "adusu-info@eos.ocn.ne.jp", password: "adusu63325", password_confirmation: "adusu63325")
