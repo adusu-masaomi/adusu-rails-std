@@ -44,14 +44,16 @@ class CustomerMaster < ApplicationRecord
     #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
     validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
    
+    #demo版は抹消
     #住所に数値が混じっていた場合も禁止する
-    validate  :address_regex
-    def address_regex
-      if address.match(/[0-9０-９]+$/)
-        errors.add :address, ADDRESS_ERROR_MESSAGE_4
-      end
-    end
+    #validate  :address_regex
+    #def address_regex
+    #  if address.match(/[0-9０-９]+$/)
+    #    errors.add :address, ADDRESS_ERROR_MESSAGE_4
+    #  end
+    #end
     ##add end 
+    
     #demo版対応
     def customer_count_must_be_within_limit
       errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if CustomerMaster.count >= MAX_RECORD_COUNT
