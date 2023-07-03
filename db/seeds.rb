@@ -38,7 +38,8 @@ end
 
 #render
 CSV.foreach('db/customer_masters.csv') do |row|
-  CustomerMaster.create(:customer_name => row[0], :post => row[1], :address => row[2], :house_number => row[3], :tel_main => row[4])
+  #CustomerMaster.create(:customer_name => row[0], :post => row[1], :address => row[2], :house_number => row[3], :tel_main => row[4])
+  CustomerMaster.create(:customer_name => row[0], :tel_main => row[2])
 end
 
 #render
