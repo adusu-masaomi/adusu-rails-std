@@ -33,7 +33,7 @@ require "csv"
 
 #render
 CSV.foreach('db/supplier_masters.csv') do |row|
-  SupplierMaster.create(:supplier_name => row[0], :slip_code => row[1])
+  SupplierMaster.create(:supplier_name => row[0], :tel_main => row[1])
 end
 
 #render
