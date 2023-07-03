@@ -66,23 +66,27 @@ require "csv"
 #  SupplierResponsible.create(:supplier_master_id => row[0], :responsible_name => row[1])
 #end
 
+#render
+#CSV.foreach('db/unit_masters.csv') do |row|
+#  UnitMaster.create(:unit_name => row[0])
+#end
+
+#render
+#CSV.foreach('db/purchase_divisions.csv') do |row|
+#  PurchaseDivision.create(:purchase_division_name => row[0], :purchase_division_long_name => row[1])
+#end
+
+#render
+#CSV.foreach('db/staffs.csv') do |row|
+#  Staff.create(:staff_name => row[0], :furigana => row[1], :affiliation_id => row[2])
+#end
+
+#render
+CSV.foreach('db/affiliations.csv') do |row|
+  Affiliation.create(:affiliation_name => row[0])
+end
+
 ######################
-
-#render
-CSV.foreach('db/unit_masters.csv') do |row|
-  UnitMaster.create(:unit_name => row[0])
-end
-
-#render
-CSV.foreach('db/purchase_divisions.csv') do |row|
-  PurchaseDivision.create(:purchase_division_name => row[0], :purchase_division_long_name => row[1])
-end
-
-#render
-CSV.foreach('db/staffs.csv') do |row|
-  Staff.create(:staff_name => row[0], :furigana => row[1], :affiliation_id => row[2])
-end
-
 
 #CSV.foreach('db/material_list_price_update_since_201710.csv') do |row|
 # @material_master = MaterialMaster.where(material_code:  row[0]).first
