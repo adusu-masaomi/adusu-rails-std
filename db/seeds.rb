@@ -32,32 +32,32 @@ require "csv"
 #end
 
 #render
-CSV.foreach('db/supplier_masters.csv') do |row|
+CSV.foreach('db/supplier_masters.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   SupplierMaster.create(:supplier_name => row[0], :slip_code => row[1])
 end
 
 #render
-CSV.foreach('db/customer_masters.csv') do |row|
+CSV.foreach('db/customer_masters.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   CustomerMaster.create(:customer_name => row[0], :post => row[1], :address => row[2], :house_number => row[3], :tel_main => row[4])
 end
 
 #render
-CSV.foreach('db/material_masters.csv') do |row|
+CSV.foreach('db/material_masters.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   MaterialMaster.create(:material_code => row[0], :material_name => row[1], :maker_id => row[2], :unit_id => row[3], :list_price => row[4], :list_price_quotation => row[5])
 end
 
 #render
-CSV.foreach('db/material_categories.csv') do |row|
+CSV.foreach('db/material_categories.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   MaterialCategory.create(:name => row[0])
 end
 
 #render
-CSV.foreach('db/inventory_categories.csv') do |row|
+CSV.foreach('db/inventory_categories.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   InventoryCategory.create(:name => row[0])
 end
 
 #render
-CSV.foreach('db/supplier_responsibles.csv') do |row|
+CSV.foreach('db/supplier_responsibles.csv', encoding: ‘Shift_JIS:UTF-8’) do |row|
   SupplierResponsible.create(:supplier_master_id => row[0], :responsible_name => row[1])
 end
 
