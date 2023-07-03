@@ -29,6 +29,7 @@
   <%= f.label :material_code, '品番：：' %>
   <!--<%= f.select :with_material_code, MaterialMaster.all.map{|st| [st.material_code, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableMaterialCode" } %>-->
   <%= f.select :with_material_code, InventoryHistory.group(:id, :material_master_id).all.map{|st| [st.material_master.material_code, st.material_master.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableMaterialCode" } %>
+
   <%= f.label :material_code, '　品番(キーワード)：' %>
   <%= f.text_field :with_material_code_include, include_blank: true , id: 'material_code' %>
   <%= f.label :material_code, '品名：' %>
@@ -49,8 +50,12 @@
 	   
 	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <% if  @inventory_histories.last.present? %>
-         <td><font size="3"><b>合計数量:<%= number_with_delimiter(@inventory_histories.sumQuantity + @inventory_histories.sumShipQuantity) +
+         <% if @inventory_histories.last.unit_master.present? %>
+           <td><font size="3"><b>合計数量:<%= number_with_delimiter(@inventory_histories.sumQuantity + @inventory_histories.sumShipQuantity) +
                   @inventory_histories.last.unit_master.unit_name %></b></font></td>
+         <% else %>
+           <td>-</td>
+         <% end %>
        <% else %>
          <td>-</td>
        <% end %>
@@ -132,21 +137,44 @@
             <td style = <%= bold %> ><font color = <%= color %>  > - </font></td>
             <td style = <%= bold %> ><font color = <%= color %>  > - </font></td>
         <% end %>
-        
-        <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.material_code %></font></td>
-		<td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.material_name %></font></td>
-        <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.MakerMaster.maker_name %></font></td>
+        <% if inventory_history.material_master.present? %>
+          <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.material_code %></font></td>
+		<% else %>
+          <td>-</td>
+        <% end %>
+		<% if inventory_history.material_master.present? %>
+		  <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.material_name %></font></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
+        <% if inventory_history.material_master.present? %>
+          <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.MakerMaster.maker_name %></font></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.quantity %></font></td>
 		<% if inventory_history.inventories.present? %>
 		  <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.inventories.pluck("inventory_quantity")[0] %></font></td>
 		<% else %>
 		  <td style = <%= bold %> ><font color = <%= color %>  >-</font></td>
 		<% end %>
-        <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.unit_master.unit_name %></font></td>
+		<% if inventory_history.unit_master.present? %>
+          <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.unit_master.unit_name %></font></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         <td style = <%= bold %> ><font color = <%= color %>  ><%= number_to_currency(inventory_history.unit_price, precision: 2) %></font></td>
         <td style = <%= bold %> ><font color = <%= color %>  ><%= number_to_currency(inventory_history.price, precision: 0) %></font></td>
-        <td style = <%= bold %> ><font color = <%= color %>  ><%= number_to_currency(inventory_history.material_master.list_price, precision: 0) %></font></td>
-        <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.supplier_master.supplier_name %></font></td>
+        <% if inventory_history.material_master.present? %>
+          <td style = <%= bold %> ><font color = <%= color %>  ><%= number_to_currency(inventory_history.material_master.list_price, precision: 0) %></font></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
+        <% if inventory_history.supplier_master.present? %>
+          <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.supplier_master.supplier_name %></font></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         <td style = <%= bold %> ><font color = <%= color %>  ><%= InventoryHistory.inventory_division[inventory_history.inventory_division_id][0] %></font></td>
         <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.slip_code %></font></td>
         <td><%=l inventory_history.created_at %></td>
