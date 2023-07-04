@@ -103,7 +103,7 @@ require "csv"
 
 #render
 CSV.foreach('db/construction_data.csv') do |row|
-  ConstructionDatum.create(:construction_code => row[0], :construction_name => row[1], :alies_name => row[2], :reception_date => row[3], 
+  ConstructionDatum.create(:construction_code => row[0], :construction_name => row[1], :alias_name => row[2], :reception_date => row[3], 
                  :customer_id => row[4] ,:construction_start_date => row[5], :construction_start_date => row[6], :construction_period_start => row[7], 
                  :construction_period_end => row[8])
 end
