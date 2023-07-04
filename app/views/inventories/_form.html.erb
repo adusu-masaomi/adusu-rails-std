@@ -18,9 +18,11 @@
   <%= f.label :品名, {:class => "my-custom-class-l"}  %></br>
   <%= f.collection_select :material_master_id, MaterialMaster.all,  :id, :p_material_code_name,  
       {:prompt => "どれか一つを選択して下さい",:selected => @inventory.material_master_id} , 
-      {id:'material_master_id', :class => "searchableSelect2_1" }  %>
+      {id:'material_master_id', :class => "searchableSelect2_1" , style: 'width:420px !important;'}  %>
   
+  <!--標準版はカット
   <%= f.file_field :image %>
+  -->
   
   <%= f.input :inventory_quantity, label_html:{style: 'color: #E60091'}, input_html:{ id: "inventory_quantity", style: 'font-weight: bold;' ,
                                                                           :tabindex=>"1", :onfocusout => "copyQuantity()"} %>
@@ -33,7 +35,7 @@
   <%= f.label :仕入業者, {:class => "my-custom-class-l"}  %></br>
   <%= f.collection_select :supplier_master_id, SupplierMaster.all,  :id, :supplier_name,  
       {:prompt => "どれか一つを選択して下さい"} , 
-      {id:'supplier_master_id', :class => "searchableSelect2_3" }  %>
+      {id:'supplier_master_id', :class => "searchableSelect2_3", style: 'width:420px !important;' }  %>
 	  
   <%= f.input :current_history_id , { :readonly => true} %>
   <%= f.input :current_warehousing_date, :include_blank => true, input_html:{ :tabindex=>"6"} %>

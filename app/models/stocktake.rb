@@ -4,8 +4,8 @@ class Stocktake < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 5
 
-  belongs_to :material_master
-  belongs_to :inventory
+  belongs_to :material_master, optional: true
+  belongs_to :inventory, optional: true
   
   #ajax用
   attr_accessor :unit_price_hide

@@ -26,11 +26,13 @@
 	  <%= link_to "在庫データよりコピー",
             stocktakes_path(update_flag: "2", q: params[:q] ? params[:q].permit! : nil ),
             :class => 'btn btn-purple300_rsd' , :data => {:confirm => "在庫データからそのまま\n棚卸データへ全コピーします。\n(日付・カテゴリーで選択・集計\nされていることを確認して\nください。)\n本当に実行しますか？？"} %>
-			
-	  <%= link_to "棚卸表(画像付)",
+      
+      <!--標準版はカット
+      <%= link_to "棚卸表(画像付)",
             stocktakes_path(@stocktake, format: "pdf", :print_flag => "1" ),
             :class => 'btn btn-lightgreen500_ftg' , :target=>["_blank"] %>
-      <%= link_to "棚卸表",
+      -->
+      <%= link_to "　　　棚卸表　　　",
             stocktakes_path(@stocktake, format: "pdf", :print_flag => "2" ),
             :class => 'btn btn-lightblue200_ftg' , :target=>["_blank"] %>
 	    <%= link_to "在庫データへ一括更新",
