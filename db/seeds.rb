@@ -110,7 +110,7 @@ require "csv"
 
 #在庫データ
 CSV.foreach('db/inventories.csv') do |row|
-  ConstructionDatum.create(:warehouse_id => row[0], :location_id => row[1], :material_master_id => row[2], :inventory_quantity => row[3], 
+  Inventory.create(:warehouse_id => row[0], :location_id => row[1], :material_master_id => row[2], :inventory_quantity => row[3], 
                  :unit_master_id => row[4] ,:inventory_amount => row[5], :supplier_master_id => row[6], :current_quantity => row[7], 
                  :current_unit_price => row[8], :last_unit_price => row[9])
 end
