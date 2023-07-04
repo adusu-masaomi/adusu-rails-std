@@ -1,5 +1,9 @@
 class InvoiceHeader < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
+
+  #demo版対応
+  MAX_RECORD_COUNT = 5
+
   belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
    
   belongs_to :customer_master, :foreign_key => "customer_id"
@@ -12,6 +16,15 @@ class InvoiceHeader < ApplicationRecord
   #validates :invoice_code, presence: true, uniqueness: true
   #請求書コードはユニークのチェックのみ。nullチェックはコピーに失敗するため除外。
   validates :invoice_code, presence:true, uniqueness: true
+
+  #demo版対応
+  validate :invoice_header_matter_must_be_within_limit, on: :create
+
+  #demo版対応
+  def invoice_header_matter_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if InvoiceHeader.count >= MAX_RECORD_COUNT
+  end
+ 
 
   #住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
   ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
@@ -28,6 +41,7 @@ class InvoiceHeader < ApplicationRecord
    
   #住所に数値が混じっていた場合も禁止する
   validate  :address_regex
+
   def address_regex
     if address.match(/[0-9０-９]+$/)
       errors.add :address, ADDRESS_ERROR_MESSAGE_4

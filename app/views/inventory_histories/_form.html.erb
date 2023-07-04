@@ -1,4 +1,18 @@
 <%= simple_form_for @inventory_history, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @inventory_history.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@inventory_history.errors.count, "error") %> prohibited this supplier_master from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @inventory_history.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <%= f.input :inventory_date , input_html:{:tabindex=>"0"} %>
   <%= f.label :construction_name , {:class => "my-custom-class-l"} %></br>
   <%= f.collection_select :construction_datum_id, ConstructionDatum.all, :id, :p_cd_name,  {:include_blank => true} , {id:'construction_datum_id', :tabindex => "1", 

@@ -1,6 +1,9 @@
 class PurchaseUnitPrice < ApplicationRecord
   self.primary_keys = :supplier_id, :material_id
 
+  #demo版対応
+  MAX_RECORD_COUNT = 6
+
   #belongs_to :supplier_masters, :foreign_key => "supplier_id"
   belongs_to :SupplierMaster, :foreign_key => "supplier_id"
 
@@ -12,6 +15,13 @@ class PurchaseUnitPrice < ApplicationRecord
   belongs_to :UnitMaster, :foreign_key => "unit_id"
   
   validates :supplier_id, uniqueness: {message: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
+  #demo版対応
+  validate :purchase_unit_price_count_must_be_within_limit, on: :create
+
+  #demo版対応
+  def purchase_unit_price_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if PurchaseUnitPrice.count >= MAX_RECORD_COUNT
+  end
 
   scope :with_unit, -> {joins(:UnitMaster)}
    

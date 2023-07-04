@@ -1,4 +1,18 @@
 <%= simple_form_for @staff, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @staff.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@staff.errors.count, "error") %> prohibited this supplier_master from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @staff.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <%= f.input :staff_name %>
   <%= f.input :furigana %>
   <%= f.label :所属, {:class => "my-custom-class-l"}  %></br>

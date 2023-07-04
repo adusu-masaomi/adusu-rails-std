@@ -1,4 +1,18 @@
 <%= simple_form_for @supplier_responsible, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @supplier_responsible.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@supplier_responsible.errors.count, "error") %> prohibited this supplier_master from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @supplier_responsible.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <!--<%= f.input :supplier_master_id %>-->
   <%= f.label :仕入業者 , {:class => "my-custom-class-l"} %></br>
   <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {:prompt => "どれか一つを選択して下さい"},

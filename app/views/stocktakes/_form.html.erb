@@ -1,4 +1,18 @@
 <%= simple_form_for @stocktake, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @stocktake.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@stocktake.errors.count, "error") %> prohibited this supplier_master from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @stocktake.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <%= f.input :stocktake_date, input_html:{ :tabindex=>"0"} %>
   <!--<%= f.input :material_master_id, input_html:{ :tabindex=>"1"} %>-->
   <%= f.label :material_name , {:class => "my-custom-class-l"} %></br>

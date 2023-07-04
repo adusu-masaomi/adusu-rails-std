@@ -1,5 +1,8 @@
 class ConstructionCost < ApplicationRecord
 
+  #demo版対応
+  MAX_RECORD_COUNT = 5
+
   belongs_to :construction_datum, optional: true, :touch => :construction_start_date
   accepts_nested_attributes_for :construction_datum
   has_one :construction_daily_reports
@@ -29,6 +32,14 @@ class ConstructionCost < ApplicationRecord
   
   #バリデーション
   validates :construction_datum_id, uniqueness: true # 値がユニークであれば検証成功
+
+  #demo版対応
+  validate :construction_cost_must_be_within_limit, on: :create
+
+  #demo版対応
+  def construction_cost_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionCost.count >= MAX_RECORD_COUNT
+  end
   
   scope :with_construction, -> (construction_costs_construction_datum_id=1) { joins(:construction_datum).where("construction_data.id = ?", construction_costs_construction_datum_id )}
   

@@ -1,6 +1,9 @@
 class Stocktake < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
-  
+
+  #demo版対応
+  MAX_RECORD_COUNT = 5
+
   belongs_to :material_master
   belongs_to :inventory
   
@@ -15,16 +18,24 @@ class Stocktake < ApplicationRecord
   
   #棚卸日＆アイテムの重複登録防止。
   validates :stocktake_date,  presence: true, uniqueness: { scope: [:material_master_id] }
+
+  #demo版対応
+  validate :stocktak_count_must_be_within_limit, on: :create
+
+  #demo版対応
+  def stocktak_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if Stocktake.count >= MAX_RECORD_COUNT
+  end
   
- scope :with_material_category_include, -> (inventory_material_category=1) {
+  scope :with_material_category_include, -> (inventory_material_category=1) {
     
-    category_id = inventory_material_category.to_i 
+  category_id = inventory_material_category.to_i 
 	
-    #del220126
-    #idが１以上でないと呼び出されないため、viewで１をプラスしているので、ここでマイナスしてあげる。
-    #category_id -= 1
+  #del220126
+  #idが１以上でないと呼び出されないため、viewで１をプラスしているので、ここでマイナスしてあげる。
+  #category_id -= 1
 	 
-    joins(:inventory).joins(:material_master).where("material_masters.inventory_category_id = ?", category_id )
+  joins(:inventory).joins(:material_master).where("material_masters.inventory_category_id = ?", category_id )
 	
   }
   

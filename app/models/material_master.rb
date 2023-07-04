@@ -1,6 +1,9 @@
 class MaterialMaster < ApplicationRecord
 	paginates_per 200  # 1ページあたり項目表示
-	
+	#demo版対応
+  MAX_RECORD_COUNT = 6
+
+
 	#belongs_to :PurchaseDatum
 	#belongs_to :MakerMaster, :foreign_key => "maker_id"
 	#Rails6対応
@@ -23,7 +26,6 @@ class MaterialMaster < ApplicationRecord
 	#validate :add_error_sample
     
 	validates :material_code, presence: true, uniqueness: true
-	
 	#validates :maker_id, presence: true
 	#validates :MakerMaster, presence: true, if: -> { maker_id.present? }
 		
@@ -38,7 +40,13 @@ class MaterialMaster < ApplicationRecord
     #validates :maker_id, presence: true, if: "maker_id.nil?"
     #rails6対応
     validates :maker_id, presence: true, if: lambda {puts 'maker_id.nil?'}
-    
+    #demo版対応
+    validate :material_master_count_must_be_within_limit, on: :create
+
+    #demo版対応
+    def material_master_count_must_be_within_limit
+      errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if MaterialMaster.count >= MAX_RECORD_COUNT
+    end
 
     def add_error_sample
       if maker_id.nil?
@@ -72,8 +80,8 @@ class MaterialMaster < ApplicationRecord
    
    
    def self.ransackable_scopes(auth_object=nil)
-       [:with_maker, :with_category, :with_supplier_material_code]
-       #[:with_maker, :with_category]
+      [:with_maker, :with_category, :with_supplier_material_code]
+      #[:with_maker, :with_category]
    end
    
    

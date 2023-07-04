@@ -87,17 +87,25 @@ require "csv"
 #end
 
 #render
-CSV.foreach('db/companies.csv') do |row|
-  Company.create(:name => row[0], :representative_title => row[1], :representative_name => row[2], :post => row[3], :address => row[4] ,
-                 :house_number => row[5], :tel => row[6], :fax => row[7], :invoice_number => row[8] )
-end
+#CSV.foreach('db/companies.csv') do |row|
+#  Company.create(:name => row[0], :representative_title => row[1], :representative_name => row[2], :post => row[3], :address => row[4] ,
+#                 :house_number => row[5], :tel => row[6], :fax => row[7], :invoice_number => row[8] )
+#end
 
 #render
-CSV.foreach('db/working_times.csv') do |row|
-  WorkingTime.create(:working_time_start_time => row[0], :working_time_end_time => row[1], :overtime_start_time => row[2], :overtime_end_time => row[3], 
-                 :overtime_early_start_time => row[4] ,:overtime_early_end_time => row[5], :overtime_midnight_start_time => row[6], :overtime_midnight_end_time => row[7], 
-                 :break_time_1_start_time => row[8], :break_time_1_end_time => row[9], :break_time_2_start_time => row[10], :break_time_2_end_time => row[11], 
-                 :break_time_3_start_time => row[12], :break_time_3_end_time => row[13])
+#CSV.foreach('db/working_times.csv') do |row|
+#  WorkingTime.create(:working_time_start_time => row[0], :working_time_end_time => row[1], :overtime_start_time => row[2], :overtime_end_time => row[3], 
+#                 :overtime_early_start_time => row[4] ,:overtime_early_end_time => row[5], :overtime_midnight_start_time => row[6], :overtime_midnight_end_time => row[7], 
+#                 :break_time_1_start_time => row[8], :break_time_1_end_time => row[9], :break_time_2_start_time => row[10], :break_time_2_end_time => row[11], 
+#                 :break_time_3_start_time => row[12], :break_time_3_end_time => row[13])
+#end
+
+
+#render
+CSV.foreach('db/construction_data.csv') do |row|
+  ConstructionDatum.create(:construction_code => row[0], :construction_name => row[1], :alies_name => row[2], :reception_date => row[3], 
+                 :customer_id => row[4] ,:construction_start_date => row[5], :construction_start_date => row[6], :construction_period_start => row[7], 
+                 :construction_period_end => row[8])
 end
 
 ######################

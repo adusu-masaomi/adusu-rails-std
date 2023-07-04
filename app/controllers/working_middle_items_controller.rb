@@ -436,7 +436,13 @@ class WorkingMiddleItemsController < ApplicationController
       elsif action_flag == "create"
       #新規ボタン押下の場合
         @working_middle_item = WorkingMiddleItem.new(working_middle_item_params) 
+        #binding.pry
+        
         status = @working_middle_item.save
+        #status = @working_middle_item.save!
+               
+        #upd230704
+        #status = WorkingMiddleItem.create(working_middle_item_params) 
       end
     end 
 	 

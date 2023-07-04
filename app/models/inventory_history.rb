@@ -1,13 +1,21 @@
 class InventoryHistory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
-  #demo
+  #demo版対応
   MAX_RECORD_COUNT = 5
   
   belongs_to :construction_datum, optional: true
   belongs_to :material_master, optional: true
   belongs_to :unit_master, optional: true
   belongs_to :supplier_master, optional: true
+
+  #demo版対応
+  validate :maker_master_count_must_be_within_limit, on: :create
+
+  #demo版対応
+  def maker_master_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if MakerMaster.count >= MAX_RECORD_COUNT
+  end
   
   has_many :inventories, through: :material_master
   
