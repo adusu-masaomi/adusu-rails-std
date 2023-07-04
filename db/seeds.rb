@@ -76,9 +76,9 @@ require "csv"
 #  PurchaseDivision.create(:purchase_division_name => row[0], :purchase_division_long_name => row[1])
 #end
 
-#render
+#社員
 #CSV.foreach('db/staffs.csv') do |row|
-#  Staff.create(:staff_name => row[0], :furigana => row[1], :affiliation_id => row[2])
+#  Staff.create(:staff_name => row[0], :furigana => row[1], :affiliation_id => row[2], :daily_pay => row[3])
 #end
 
 #render
@@ -101,12 +101,21 @@ require "csv"
 #end
 
 
-#render
-CSV.foreach('db/construction_data.csv') do |row|
-  ConstructionDatum.create(:construction_code => row[0], :construction_name => row[1], :alias_name => row[2], :reception_date => row[3], 
-                 :customer_id => row[4] ,:construction_start_date => row[5], :construction_start_date => row[6], :construction_period_start => row[7], 
-                 :construction_period_end => row[8])
+#工事データ
+#CSV.foreach('db/construction_data.csv') do |row|
+#  ConstructionDatum.create(:construction_code => row[0], :construction_name => row[1], :alias_name => row[2], :reception_date => row[3], 
+#                 :customer_id => row[4] ,:construction_start_date => row[5], :construction_start_date => row[6], :construction_period_start => row[7], 
+#                 :construction_period_end => row[8])
+#end
+
+#在庫データ
+CSV.foreach('db/inventories.csv') do |row|
+  ConstructionDatum.create(:warehouse_id => row[0], :location_id => row[1], :material_master_id => row[2], :inventory_quantity => row[3], 
+                 :unit_master_id => row[4] ,:inventory_amount => row[5], :supplier_master_id => row[6], :current_quantity => row[7], 
+                 :current_unit_price => row[8], :last_unit_price => row[9])
 end
+
+
 
 ######################
 

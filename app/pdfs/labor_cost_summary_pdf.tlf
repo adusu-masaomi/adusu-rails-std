@@ -2,6 +2,294 @@
   "version": "0.12.0",
   "items": [
     {
+      "id": "default3",
+      "type": "list",
+      "display": true,
+      "description": "",
+      "x": 400,
+      "y": 130,
+      "width": 180,
+      "height": 645,
+      "header": {
+        "enabled": true,
+        "height": 20.4,
+        "translate": {
+          "x": -6.7,
+          "y": -13.8
+        },
+        "items": []
+      },
+      "detail": {
+        "height": 15.3,
+        "translate": {
+          "x": -6.7,
+          "y": -19.9
+        },
+        "items": [
+          {
+            "id": "working_date_3",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 410.2,
+            "y": 173.9,
+            "width": 44,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "truncate",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          },
+          {
+            "id": "man_month_3",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 468.7,
+            "y": 173.9,
+            "width": 46.5,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "truncate",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          },
+          {
+            "id": "labor_cost_3",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 526.7,
+            "y": 173.9,
+            "width": 55,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "truncate",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          }
+        ]
+      },
+      "page-footer": {
+        "enabled": true,
+        "height": 10.2,
+        "translate": {
+          "x": -6.7,
+          "y": -31.1
+        },
+        "items": []
+      },
+      "footer": {
+        "enabled": true,
+        "height": 8,
+        "translate": {
+          "x": -6.7,
+          "y": -40.8
+        },
+        "items": []
+      },
+      "content-height": 624.6,
+      "auto-page-break": false
+    },
+    {
+      "id": "default2",
+      "type": "list",
+      "display": true,
+      "description": "",
+      "x": 220,
+      "y": 130,
+      "width": 180,
+      "height": 645,
+      "header": {
+        "enabled": true,
+        "height": 20.4,
+        "translate": {
+          "x": -9.8,
+          "y": 0.6
+        },
+        "items": []
+      },
+      "detail": {
+        "height": 15.3,
+        "translate": {
+          "x": -9.8,
+          "y": -15.7
+        },
+        "items": [
+          {
+            "id": "working_date_2",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 234,
+            "y": 169.7,
+            "width": 44,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "fit",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          },
+          {
+            "id": "man_month_2",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 292.8,
+            "y": 169.7,
+            "width": 46.5,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "truncate",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          },
+          {
+            "id": "labor_cost_2",
+            "type": "text-block",
+            "display": true,
+            "description": "",
+            "x": 349.8,
+            "y": 169.7,
+            "width": 55,
+            "height": 11.1,
+            "style": {
+              "font-family": [
+                "IPAPGothic"
+              ],
+              "font-size": 10,
+              "color": "#000000",
+              "text-align": "center",
+              "vertical-align": "top",
+              "line-height": "",
+              "line-height-ratio": "",
+              "letter-spacing": "",
+              "font-style": [],
+              "overflow": "truncate",
+              "word-wrap": "none"
+            },
+            "reference-id": "",
+            "value": "",
+            "multiple-line": false,
+            "format": {
+              "base": "",
+              "type": ""
+            }
+          }
+        ]
+      },
+      "page-footer": {
+        "enabled": true,
+        "height": 10.2,
+        "translate": {
+          "x": -9.8,
+          "y": -37.1
+        },
+        "items": []
+      },
+      "footer": {
+        "enabled": true,
+        "height": 8,
+        "translate": {
+          "x": -9.8,
+          "y": -54.5
+        },
+        "items": []
+      },
+      "content-height": 624.6,
+      "auto-page-break": false
+    },
+    {
       "id": "default",
       "type": "list",
       "display": true,
@@ -150,7 +438,7 @@
       "type": "text",
       "display": true,
       "description": "",
-      "x": 45,
+      "x": 40,
       "y": 90,
       "width": 119,
       "height": 19,
@@ -674,7 +962,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -689,7 +977,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -704,7 +992,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -734,7 +1022,7 @@
       "display": true,
       "description": "",
       "style": {
-        "border-color": "#ff0000",
+        "border-color": "#000000",
         "border-width": 1,
         "border-style": "dashed"
       },
@@ -1304,294 +1592,6 @@
         "base": "",
         "type": ""
       }
-    },
-    {
-      "id": "default2",
-      "type": "list",
-      "display": true,
-      "description": "",
-      "x": 220,
-      "y": 130,
-      "width": 180,
-      "height": 645,
-      "header": {
-        "enabled": true,
-        "height": 20.4,
-        "translate": {
-          "x": -9.8,
-          "y": 0.6
-        },
-        "items": []
-      },
-      "detail": {
-        "height": 15.3,
-        "translate": {
-          "x": -9.8,
-          "y": -15.7
-        },
-        "items": [
-          {
-            "id": "working_date_2",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 234,
-            "y": 169.7,
-            "width": 44,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "fit",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          },
-          {
-            "id": "man_month_2",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 292.8,
-            "y": 169.7,
-            "width": 46.5,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "truncate",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          },
-          {
-            "id": "labor_cost_2",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 349.8,
-            "y": 169.7,
-            "width": 55,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "truncate",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          }
-        ]
-      },
-      "page-footer": {
-        "enabled": true,
-        "height": 10.2,
-        "translate": {
-          "x": -9.8,
-          "y": -37.1
-        },
-        "items": []
-      },
-      "footer": {
-        "enabled": true,
-        "height": 8,
-        "translate": {
-          "x": -9.8,
-          "y": -54.5
-        },
-        "items": []
-      },
-      "content-height": 624.6,
-      "auto-page-break": false
-    },
-    {
-      "id": "default3",
-      "type": "list",
-      "display": true,
-      "description": "",
-      "x": 400,
-      "y": 130,
-      "width": 180,
-      "height": 645,
-      "header": {
-        "enabled": true,
-        "height": 20.4,
-        "translate": {
-          "x": -6.7,
-          "y": -13.8
-        },
-        "items": []
-      },
-      "detail": {
-        "height": 15.3,
-        "translate": {
-          "x": -6.7,
-          "y": -19.9
-        },
-        "items": [
-          {
-            "id": "working_date_3",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 410.2,
-            "y": 173.9,
-            "width": 44,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "truncate",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          },
-          {
-            "id": "man_month_3",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 468.7,
-            "y": 173.9,
-            "width": 46.5,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "truncate",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          },
-          {
-            "id": "labor_cost_3",
-            "type": "text-block",
-            "display": true,
-            "description": "",
-            "x": 526.7,
-            "y": 173.9,
-            "width": 55,
-            "height": 11.1,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 10,
-              "color": "#000000",
-              "text-align": "center",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": [],
-              "overflow": "truncate",
-              "word-wrap": "none"
-            },
-            "reference-id": "",
-            "value": "",
-            "multiple-line": false,
-            "format": {
-              "base": "",
-              "type": ""
-            }
-          }
-        ]
-      },
-      "page-footer": {
-        "enabled": true,
-        "height": 10.2,
-        "translate": {
-          "x": -6.7,
-          "y": -31.1
-        },
-        "items": []
-      },
-      "footer": {
-        "enabled": true,
-        "height": 8,
-        "translate": {
-          "x": -6.7,
-          "y": -40.8
-        },
-        "items": []
-      },
-      "content-height": 624.6,
-      "auto-page-break": false
     }
   ],
   "state": {

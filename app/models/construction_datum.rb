@@ -1,7 +1,7 @@
 class ConstructionDatum < ApplicationRecord
   
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 6
   
   #kaminari用設定
     paginates_per 200  # 1ページあたり項目表示

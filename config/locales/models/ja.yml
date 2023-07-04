@@ -62,13 +62,13 @@ ja:
     attention_matter: 留意事項
     billed_flag: 請求済
     working_safety_matter_name: 安全事項名
-    staff_name: 社員名
+    staff_name: 作業員名
     furigana: ふりがな
     affiliation_id: 所属
     hourly_wage: 時給
     daily_pay: 日給
     working_date: 作業日
-    staff_id: 社員
+    staff_id: 作業員
     start_time_1: 開始時間1
     end_time_1: 終了時間1
     start_time_2: 開始時間2
@@ -169,7 +169,7 @@ ja:
        unit_master: 単位マスター
        purchase_division: 仕入区分マスター
        construction_datum: 工事データ
-       staff: 社員マスター
+       staff: 作業員マスター
        construction_daily_report: 労務データ
        outsourcing_cost: 外注費データ
        affiliation: 所属マスター

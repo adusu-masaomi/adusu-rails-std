@@ -20,7 +20,9 @@ module Adusu
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 	
 	config.i18n.default_locale = :ja 
-	
+  
+  #rails6対応　submitが２回押せない為
+  config.action_view.automatically_disable_submit_tag = false 
 	# Do not swallow errors in after_commit/after_rollback callbacks.
     #config.active_record.raise_in_transactional_callbacks = true
      
