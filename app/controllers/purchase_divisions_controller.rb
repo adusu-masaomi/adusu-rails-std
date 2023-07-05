@@ -27,7 +27,7 @@ class PurchaseDivisionsController < ApplicationController
     @purchase_division = PurchaseDivision.new(purchase_division_params)
     
     #応急処置!!!
-    @purchase_division.id = 1
+    @purchase_division.id = 4
     
     respond_to do |format|
       if @purchase_division.save
