@@ -118,13 +118,19 @@ require "csv"
 #見積～納品用
 
 #作業単位
-CSV.foreach('db/working_units.csv') do |row|
-  WorkingUnit.create(:working_unit_name => row[0], :seq => row[1])
-end
+#CSV.foreach('db/working_units.csv') do |row|
+#  WorkingUnit.create(:working_unit_name => row[0], :seq => row[1])
+#end
 
 #作業カテゴリ
-CSV.foreach('db/working_categories.csv') do |row|
-  WorkingCategory.create(:category_name => row[0])
+#CSV.foreach('db/working_categories.csv') do |row|
+#  WorkingCategory.create(:category_name => row[0])
+#end
+
+#作業明細
+CSV.foreach('db/working_middle_items.csv') do |row|
+  WorkingMiddleItem.create(:working_middle_item_name => row[0], :working_middle_item_category_id => row[1],
+                           :working_unit_id => row[2], :working_unit_name => row[3] )
 end
 
 ######################
