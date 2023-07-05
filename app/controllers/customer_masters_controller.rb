@@ -127,9 +127,14 @@ class CustomerMastersController < ApplicationController
   # DELETE /customer_masters/1
   # DELETE /customer_masters/1.json
   def destroy
-    @customer_master.destroy
+    #@customer_master.destroy
+    check =  @customer_master.destroy
     respond_to do |format|
-      format.html { redirect_to customer_masters_url, notice: 'Customer master was successfully destroyed.' }
+      if check
+        format.html { redirect_to customer_masters_url, notice: 'Customer master was successfully destroyed.' }
+      else
+        format.html { redirect_to customer_masters_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

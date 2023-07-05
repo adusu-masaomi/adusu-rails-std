@@ -65,6 +65,8 @@ class PurchaseListPDF
 		 
 		    @flag = "1"
 		   
+		   #binding.pry
+		   
 		   #@construction_data = ConstructionDatum.find(purchase_datum.construction_datum_id)
 		   if $construction_flag == true
 		     report.page.item(:construction_code).value(purchase_datum.construction_datum.construction_code)

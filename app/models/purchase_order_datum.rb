@@ -3,6 +3,8 @@ class PurchaseOrderDatum < ApplicationRecord
     #demo
     MAX_RECORD_COUNT = 5
     
+    before_destroy :ensure_id
+    
     belongs_to :construction_datum, optional: true
     accepts_nested_attributes_for :construction_datum, update_only: true
     
@@ -53,6 +55,14 @@ class PurchaseOrderDatum < ApplicationRecord
     #demo版対応
     def purchase_order_count_must_be_within_limit
       errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if PurchaseOrderDatum.count >= MAX_RECORD_COUNT
+    end
+    
+    #特定のIDは削除できないようにする
+    def ensure_id
+      return true if "#{id}".to_i > 1  #id1は削除できないように
+      errors.add(:base, "Cannot delete booking with payments")
+      throw :abort  #Rails6
+      return false
     end
     
     #add210727

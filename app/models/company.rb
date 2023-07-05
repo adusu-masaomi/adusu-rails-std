@@ -18,6 +18,7 @@ class Company < ApplicationRecord
     errors.add(:base, "Cannot delete booking with payments")
     #errors.add_to_base "The school must have at least one administrator"
     # or errors.add_to_base in Rails 2
+    throw :abort
     return false
     # Rails 5
     #throw(:abort)

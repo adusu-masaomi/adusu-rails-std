@@ -11,6 +11,7 @@ class WorkingTime < ApplicationRecord
     return true if WorkingTime.count > 1
     #エラーメッセージはコントローラ側で作成
     errors.add(:base, "Cannot delete booking with payments")
+    throw :abort  #Rails6
     return false
   end
   

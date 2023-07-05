@@ -109,13 +109,23 @@ require "csv"
 #end
 
 #在庫データ
-CSV.foreach('db/inventories.csv') do |row|
-  Inventory.create(:warehouse_id => row[0], :location_id => row[1], :material_master_id => row[2], :inventory_quantity => row[3], 
-                 :unit_master_id => row[4] ,:inventory_amount => row[5], :supplier_master_id => row[6], :current_quantity => row[7], 
-                 :current_unit_price => row[8], :last_unit_price => row[9])
+#CSV.foreach('db/inventories.csv') do |row|
+#  Inventory.create(:warehouse_id => row[0], :location_id => row[1], :material_master_id => row[2], :inventory_quantity => row[3], 
+#                 :unit_master_id => row[4] ,:inventory_amount => row[5], :supplier_master_id => row[6], :current_quantity => row[7], 
+#                 :current_unit_price => row[8], :last_unit_price => row[9])
+#end
+
+#見積～納品用
+
+#作業単位
+CSV.foreach('db/working_units.csv') do |row|
+  WorkingUnit.create(:working_unit_name => row[0], :seq => row[1])
 end
 
-
+#作業カテゴリ
+CSV.foreach('db/working_categories.csv') do |row|
+  WorkingCategory.create(:category_name => row[0])
+end
 
 ######################
 

@@ -54,9 +54,14 @@ class UnitMastersController < ApplicationController
   # DELETE /unit_masters/1
   # DELETE /unit_masters/1.json
   def destroy
-    @unit_master.destroy
+    #@unit_master.destroy
+    check = @unit_master.destroy
     respond_to do |format|
-      format.html { redirect_to unit_masters_url, notice: 'Unit master was successfully destroyed.' }
+      if check
+        format.html { redirect_to unit_masters_url, notice: 'Unit master was successfully destroyed.' }
+      else
+        format.html { redirect_to unit_masters_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

@@ -163,10 +163,11 @@ class InvoiceHeadersController < ApplicationController
         #入金ファイルの完了フラグを更新
         #set_deposit
         
-        #add200127
+        
+        #標準版はカット
         #資金繰データ(会計)を更新
-        @set_cash_flow = SetCashFlow.new
-        @set_cash_flow.set_cash_flow_detail_actual_prepare(@invoice_header)
+        #@set_cash_flow = SetCashFlow.new
+        #@set_cash_flow.set_cash_flow_detail_actual_prepare(@invoice_header)
         #
         
         format.html { redirect_to @invoice_header, notice: 'Invoice header was successfully updated.' }

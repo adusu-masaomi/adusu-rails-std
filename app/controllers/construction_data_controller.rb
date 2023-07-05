@@ -569,9 +569,13 @@ class ConstructionDataController < ApplicationController
   # DELETE /construction_data/1
   # DELETE /construction_data/1.json
   def destroy
-    @construction_datum.destroy
+    check = @construction_datum.destroy
     respond_to do |format|
-      format.html { redirect_to construction_data_url, notice: 'Construction datum was successfully destroyed.' }
+      if check
+        format.html { redirect_to construction_data_url, notice: 'Construction datum was successfully destroyed.' }
+      else
+        format.html { redirect_to construction_data_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

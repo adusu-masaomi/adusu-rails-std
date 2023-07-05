@@ -59,9 +59,13 @@ class MakerMastersController < ApplicationController
   # DELETE /maker_masters/1
   # DELETE /maker_masters/1.json
   def destroy
-    @maker_master.destroy
+    check = @maker_master.destroy
     respond_to do |format|
-      format.html { redirect_to maker_masters_url, notice: 'Maker master was successfully destroyed.' }
+      if check
+        format.html { redirect_to maker_masters_url, notice: 'Maker master was successfully destroyed.' }
+      else
+        format.html { redirect_to maker_masters_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

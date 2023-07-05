@@ -1,8 +1,10 @@
 class SupplierMaster < ApplicationRecord
-  paginates_per 200  # 1ページあたり項目表示　
-  
   #demo版対応
   MAX_RECORD_COUNT = 6
+  
+  paginates_per 200  # 1ページあたり項目表示　
+
+  before_destroy :ensure_id
   
   #belongs_to :PurchaseDatum  #--> necessary??
   #rails6対応
@@ -59,6 +61,15 @@ class SupplierMaster < ApplicationRecord
   def csv_column_values
     [id, supplier_name, tel_main, fax_main, email_main, responsible1 ]
   end
+  
+  #特定のIDは削除できないようにする
+  def ensure_id
+    return true if "#{id}".to_i > 2  #id1,2は削除できないように
+    errors.add(:base, "Cannot delete booking with payments")
+    throw :abort  #Rails6
+    return false
+  end
+  
   #ruby 3
   def self.ransackable_attributes(auth_object = nil)
     ["account_number", "account_type", "address", "bank_branch_name", "bank_name", "created_at", "email1", "email2", "email3", "email_cc", "email_main", "fax_main", "holder", "id", "outsourcing_flag", "post", "responsible1", "responsible2", "responsible3", "responsible_cc", "responsible_name", "responsible_title", "search_character", "supplier_name", "tel_main", "updated_at"]

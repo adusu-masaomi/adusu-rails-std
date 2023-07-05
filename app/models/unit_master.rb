@@ -2,7 +2,9 @@ class UnitMaster < ApplicationRecord
 
   #demo版対応
   MAX_RECORD_COUNT = 6
-
+  
+  before_destroy :ensure_id
+  
   #バリデーション
   validates :unit_name, presence: true, uniqueness: true
   
@@ -13,7 +15,14 @@ class UnitMaster < ApplicationRecord
   def unit_master_price_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if UnitMaster.count >= MAX_RECORD_COUNT
   end
-
+  
+  #特定のIDは削除できないようにする
+  def ensure_id
+    return true if "#{id}".to_i > 1  #id1は削除できないように
+    errors.add(:base, "Cannot delete booking with payments")
+    throw :abort  #Rails6
+    return false
+  end
 
   #即時に取り出せるよう配列化
   #これだとIDが削除された場合にNG...使わないこと(220518)

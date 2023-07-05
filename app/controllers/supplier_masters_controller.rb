@@ -107,9 +107,13 @@ class SupplierMastersController < ApplicationController
   # DELETE /supplier_masters/1
   # DELETE /supplier_masters/1.json
   def destroy
-    @supplier_master.destroy
+    check = @supplier_master.destroy
     respond_to do |format|
-      format.html { redirect_to supplier_masters_url, notice: 'Supplier master was successfully destroyed.' }
+      if check
+        format.html { redirect_to supplier_masters_url, notice: 'Supplier master was successfully destroyed.' }
+      else
+        format.html { redirect_to supplier_masters_url, notice: '指定したIDはシステムで使用する為、削除できません' }
+      end
       format.json { head :no_content }
     end
   end

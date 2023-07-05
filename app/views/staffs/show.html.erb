@@ -9,9 +9,16 @@
   <dt><strong><%= model_class.human_attribute_name(:furigana) %>:</strong></dt>
   <dd><%= @staff.furigana %></dd>
   <dt><strong><%= model_class.human_attribute_name(:affiliation_id) %>:</strong></dt>
-  <dd><%= @staff.affiliation_id %></dd>
+  <!--<dd><%= @staff.affiliation_id %></dd>-->
+  <% if @staff.affiliation.present? %>
+    <dd><%= @staff.affiliation.affiliation_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
+  <!--
   <dt><strong><%= model_class.human_attribute_name(:hourly_wage) %>:</strong></dt>
   <dd><%= @staff.hourly_wage %></dd>
+  -->
   <dt><strong><%= model_class.human_attribute_name(:daily_pay) %>:</strong></dt>
   <dd><%= @staff.daily_pay %></dd>
 </dl>

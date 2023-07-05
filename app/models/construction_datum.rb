@@ -1,45 +1,46 @@
 class ConstructionDatum < ApplicationRecord
   
+  before_destroy :ensure_id
+  
   #demo版対応
   MAX_RECORD_COUNT = 6
   
   #kaminari用設定
-    paginates_per 200  # 1ページあたり項目表示
-    #paginates_per 100   # 1ページあたり項目表示   #upd210707 読み込み遅いので100件にした
+  paginates_per 200  # 1ページあたり項目表示
+  #paginates_per 100   # 1ページあたり項目表示   #upd210707 読み込み遅いので100件にした
 
-    belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
-    accepts_nested_attributes_for :CustomerMaster 
-    belongs_to :PurchaseDivisionMaster, optional: true
-    belongs_to :site, optional: true    #add190124
-    has_many :purchase_order_datum
+  belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
+  accepts_nested_attributes_for :CustomerMaster 
+  belongs_to :PurchaseDivisionMaster, optional: true
+  belongs_to :site, optional: true    #add190124
+  has_many :purchase_order_datum
 	has_many :construction_daily_reports
-	#Del190930
-    #has_many :construction_costs, :foreign_key => "construction_datum_id"
 	has_many :construction_attachments, dependent: :destroy
-    accepts_nested_attributes_for :construction_attachments, allow_destroy: true
-    #
-    #dd190131
-    #has_one :quotation_header
+  accepts_nested_attributes_for :construction_attachments, allow_destroy: true
+  #
    
-	#発行日用
-    attr_accessor :issue_date
-	#作業日・作業者（指示書発行一時用）
-	attr_accessor :working_date
-	attr_accessor :staff_id
+  #発行日用
+  attr_accessor :issue_date
+  #作業日・作業者（指示書発行一時用）
+  attr_accessor :working_date
+  attr_accessor :staff_id
 	
-    #add200114
-    attr_accessor :deposit_due_date_hide
+  #add200114
+  attr_accessor :deposit_due_date_hide
     
-	#バリデーション
-	validates :customer_id, presence: true
-    validates :construction_code, presence: true, uniqueness: true
+  #バリデーション
+  validates :customer_id, presence: true
+  validates :construction_code, presence: true, uniqueness: true
 	validates :alias_name, presence: true
+  
+  
+  
   #demo版対応
   validate :construction_count_must_be_within_limit, on: :create
     
-	#住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
-    ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
-    ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
+  #住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
+  ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
+  ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
 	ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
 	ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
    
@@ -155,7 +156,15 @@ class ConstructionDatum < ApplicationRecord
 	  
 	  return ret_id
 	end
-
+  
+  #特定のIDは削除できないようにする
+  def ensure_id
+    return true if "#{id}".to_i > 1  #idが1のみ削除できないように
+    errors.add(:base, "Cannot delete booking with payments")
+    throw :abort  #Rails6
+    return false
+  end
+  
   def self.ransackable_attributes(auth_object = nil)
     ["address", "address2", "alias_name", "attention_matter", "billed_flag", "billing_due_date", "calculated_flag", "construction_code", "construction_detail", "construction_end_date", "construction_name", "construction_period_end", "construction_period_start", "construction_start_date", "created_at", "customer_id", "delivery_slip_header_id", "deposit_date", "deposit_due_date", "estimated_amount", "final_amount", "house_number", "id", "latitude", "longitude", "order_flag", "personnel", "post", "quotation_flag", "quotation_header_id", "reception_date", "site_id", "updated_at", "working_safety_matter_id", "working_safety_matter_name"]
   end

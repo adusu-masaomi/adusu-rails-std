@@ -454,11 +454,14 @@ class PurchaseOrderDataController < ApplicationController
   def destroy
     reset_last_number
   
-    @purchase_order_datum.destroy
+    check = @purchase_order_datum.destroy
     respond_to do |format|
       #format.html { redirect_to purchase_order_data_url, notice: 'Purchase order datum was successfully destroyed.' }
-	  format.html {redirect_to purchase_order_data_path( :construction_id => params[:construction_id], :move_flag => params[:move_flag])}
-	  
+      if check
+        format.html {redirect_to purchase_order_data_path( :construction_id => params[:construction_id], :move_flag => params[:move_flag])}
+      else
+        format.html { redirect_to purchase_order_data_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

@@ -5,16 +5,20 @@ class PurchaseUnitPrice < ApplicationRecord
   MAX_RECORD_COUNT = 6
 
   #belongs_to :supplier_masters, :foreign_key => "supplier_id"
-  belongs_to :SupplierMaster, :foreign_key => "supplier_id"
+  belongs_to :SupplierMaster, optional: true, :foreign_key => "supplier_id"
 
   #has_many :material_masters
   #belongs_to :material_masters
-  belongs_to :MaterialMaster, :foreign_key => "material_id"
+  belongs_to :MaterialMaster, optional: true, :foreign_key => "material_id"
 
   #has_many :unit_masters, :foreign_key => "unit_id"
-  belongs_to :UnitMaster, :foreign_key => "unit_id"
+  belongs_to :UnitMaster, optional: true, :foreign_key => "unit_id"
   
-  validates :supplier_id, uniqueness: {message: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
+  #validates :supplier_id, uniqueness: {: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
+  validates :supplier_id, presence: true, uniqueness: {message: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
+  validates :material_id, presence: true
+  validates :unit_id, presence: true
+  
   #demo版対応
   validate :purchase_unit_price_count_must_be_within_limit, on: :create
 

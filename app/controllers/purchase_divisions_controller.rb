@@ -27,7 +27,7 @@ class PurchaseDivisionsController < ApplicationController
     @purchase_division = PurchaseDivision.new(purchase_division_params)
     
     #応急処置!!!
-    @purchase_division.id = 4
+    #@purchase_division.id = 4
     
     respond_to do |format|
       if @purchase_division.save
@@ -57,9 +57,14 @@ class PurchaseDivisionsController < ApplicationController
   # DELETE /purchase_divisions/1
   # DELETE /purchase_divisions/1.json
   def destroy
-    @purchase_division.destroy
+    check = @purchase_division.destroy
+    
     respond_to do |format|
-      format.html { redirect_to purchase_divisions_url, notice: 'Purchase division was successfully destroyed.' }
+      if check 
+        format.html { redirect_to purchase_divisions_url, notice: 'Purchase division was successfully destroyed.' }
+      else
+        format.html { redirect_to purchase_divisions_url, notice: '指定したIDはシステムで使用する為、削除できません' }
+      end
       format.json { head :no_content }
     end
   end
