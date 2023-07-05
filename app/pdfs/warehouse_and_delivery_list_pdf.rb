@@ -126,7 +126,11 @@ class WarehouseAndDeliveryListPDF
              if second.to_i > 0
                quantity = sprintf("%.2f", inventory_history.quantity)
              else
-               quantity = sprintf("%.0f", inventory_history.quantity)
+               if inventory_history.quantity.present?
+                 quantity = sprintf("%.0f", inventory_history.quantity)
+               else
+                 quantity = 0
+               end
              end
              #
 					   

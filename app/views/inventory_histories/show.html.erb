@@ -7,19 +7,35 @@
   <dt><strong><%= model_class.human_attribute_name(:inventory_date) %>:</strong></dt>
   <dd><%= @inventory_history.inventory_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:construction_name) %>:</strong></dt>
-  <dd><%= @inventory_history.construction_datum.construction_name %></dd>
+  <% if @inventory_history.construction_datum.present? %>
+    <dd><%= @inventory_history.construction_datum.construction_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:material_name) %>:</strong></dt>
-  <dd><%= @inventory_history.material_master.material_name %></dd>
+  <% if @inventory_history.material_master.present? %>
+    <dd><%= @inventory_history.material_master.material_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:quantity) %>:</strong></dt>
   <dd><%= @inventory_history.quantity %></dd>
   <dt><strong><%= model_class.human_attribute_name(:unit_id) %>:</strong></dt>
-  <dd><%= @inventory_history.unit_master.unit_name %></dd>
+  <% if @inventory_history.unit_master.present? %>
+    <dd><%= @inventory_history.unit_master.unit_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:unit_price) %>:</strong></dt>
   <dd><%= number_to_currency(@inventory_history.unit_price, precision: 2) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:price) %>:</strong></dt>
   <dd><%= number_to_currency(@inventory_history.price, precision: 0) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:supplier_master_id) %>:</strong></dt>
-  <dd><%= @inventory_history.supplier_master.supplier_name %></dd>
+  <% if @inventory_history.supplier_master.present? %>
+    <dd><%= @inventory_history.supplier_master.supplier_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:inventory_division_id) %>:</strong></dt>
   <dd><%= InventoryHistory.inventory_division[@inventory_history.inventory_division_id][0] %></dd>
   <dt><strong><%= model_class.human_attribute_name(:slip_code) %>:</strong></dt>

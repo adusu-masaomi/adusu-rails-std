@@ -60,7 +60,11 @@
   <dt><strong>伝票番号</strong></dt>
   <dd><%= @purchase_datum.slip_code %></dd>
   <dt><strong>仕入区分</strong></dt>
-  <dd><%= @purchase_divisions[(@purchase_datum.division_id)-1].purchase_division_name %></dd>
+  <% if @purchase_datum.division_id.present? %>
+    <dd><%= @purchase_divisions[(@purchase_datum.division_id)-1].purchase_division_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong>入出庫区分</strong></dt>
   <% if @purchase_datum.inventory_division_id.present? %>
   <dd><%= InventoryHistory.inventory_division[@purchase_datum.inventory_division_id][0] %></dd>

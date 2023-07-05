@@ -25,7 +25,10 @@ class PurchaseDivisionsController < ApplicationController
   # POST /purchase_divisions.json
   def create
     @purchase_division = PurchaseDivision.new(purchase_division_params)
-
+    
+    #応急処置!!!
+    @purchase_division.id = 1
+    
     respond_to do |format|
       if @purchase_division.save
         format.html { redirect_to @purchase_division, notice: 'Purchase division was successfully created.' }

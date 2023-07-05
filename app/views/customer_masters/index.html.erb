@@ -3,7 +3,7 @@
 <%= javascript_include_tag 'jquery.tablefix' %>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <%- model_class = CustomerMaster -%>
-<% provide(:title, model_class.model_name.human.pluralize.titleize) %>
+<% provide(:title, model_class.model_name.human) %>
 <div class="page-header", style="width:1920px">
   <h1><font size="5"><%=t '.title', :default => model_class.model_name.human %></font></h1>
   <!-- 追加箇所開始 -->
@@ -76,7 +76,7 @@
       <th></th>
 	  <th><%= model_class.human_attribute_name(:responsible1) %></th>
       <th><%= model_class.human_attribute_name(:responsible2) %></th>
-      <th><%= model_class.human_attribute_name(:card_not_flag) %></th>
+      <!--標準版はカット<th><%= model_class.human_attribute_name(:card_not_flag) %></th>-->
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -134,7 +134,8 @@
 		<td><%= customer_master.responsible1 %></td>
         <td><%= customer_master.responsible2 %></td>
         
-        <td><%= check_box("", "", {checked: check_if_true(customer_master.card_not_flag) , :multiple => true, :style => "margin-left: 16px;",  :disabled => true}, "true", "false") %></td>
+        <!--<td><%= check_box("", "", {checked: check_if_true(customer_master.card_not_flag) , :multiple => true, :style => "margin-left: 16px;",  :disabled => true}, 
+        "true", "false") %></td>-->
         
         <td><%=l customer_master.created_at.in_time_zone('Tokyo') %></td>
         <td>

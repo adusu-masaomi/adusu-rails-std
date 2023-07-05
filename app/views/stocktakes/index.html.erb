@@ -90,8 +90,13 @@
       <tr>
         <td><%= link_to stocktake.id, stocktake_path(stocktake) %></td>
         <td><%= stocktake.stocktake_date %></td>
-        <td><%= stocktake.material_master.material_code %></td>
-        <td><%= stocktake.material_master.material_name %></td>
+        <% if stocktake.material_master.present? %>
+          <td><%= stocktake.material_master.material_code %></td>
+          <td><%= stocktake.material_master.material_name %></td>
+        <% else %>
+          <td>-</td>
+          <td>-</td>
+        <% end %>
         <td><%= stocktake.physical_quantity %></td>
         <td><%= stocktake.unit_price %></td>
         <% if stocktake.inventory.present? %>

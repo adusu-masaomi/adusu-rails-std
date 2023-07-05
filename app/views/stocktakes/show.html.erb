@@ -7,9 +7,17 @@
   <dt><strong><%= model_class.human_attribute_name(:stocktake_date) %>:</strong></dt>
   <dd><%= @stocktake.stocktake_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:material_code) %>:</strong></dt>
-  <dd><%= @stocktake.material_master.material_code %></dd>
+  <% if @stocktake.material_master.present? %>
+    <dd><%= @stocktake.material_master.material_code %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:material_name) %>:</strong></dt>
-  <dd><%= @stocktake.material_master.material_name %></dd>
+  <% if @stocktake.material_master.present? %>
+    <dd><%= @stocktake.material_master.material_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:physical_quantity) %>:</strong></dt>
   <dd><%= @stocktake.physical_quantity %></dd>
   <dt><strong><%= model_class.human_attribute_name(:unit_price) %>:</strong></dt>

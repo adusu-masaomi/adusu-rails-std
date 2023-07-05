@@ -9,6 +9,12 @@ class InventoryHistory < ApplicationRecord
   belongs_to :unit_master, optional: true
   belongs_to :supplier_master, optional: true
 
+  #バリデーション
+  validates :construction_datum_id, presence: true
+  validates :material_master_id, presence: true
+  validates :unit_master_id, presence: true
+  validates :supplier_master_id, presence: true
+  
   #demo版対応
   validate :maker_master_count_must_be_within_limit, on: :create
 
