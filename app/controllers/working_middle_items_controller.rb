@@ -635,9 +635,13 @@ class WorkingMiddleItemsController < ApplicationController
   
     destroy_small_items  #小分類マスターを削除
 	
-    @working_middle_item.destroy
+    check = @working_middle_item.destroy
     respond_to do |format|
-      format.html { redirect_to working_middle_items_url, notice: 'Working middle item was successfully destroyed.' }
+      if check
+        format.html { redirect_to working_middle_items_url, notice: 'Working middle item was successfully destroyed.' }
+      else
+        format.html { redirect_to working_middle_items_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

@@ -48,6 +48,8 @@
   <%= f.label :outsourcing_flag, "外注の場合チェックを入れる", {style: 'color: blue', :tabindex=>"13"} %>
   </br>
   
+  <font color="red">===以下は外注の場合のみ登録してください。===</font>
+  
   <%= f.input :post, hint: "＊数値のみ（ハイフンなし）で入力して下さい。" , 
       input_html:{id:"post", :tabindex=>"13", :onchange => "formatPost()",  :onKeyUp => "AjaxZip3.zip2addr(this,'','addressX','addressX');" } %>
   <%= f.input :address , input_html:{:tabindex=>"14", name:"addressX"} %>

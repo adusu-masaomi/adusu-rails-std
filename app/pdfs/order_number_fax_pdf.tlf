@@ -9,7 +9,7 @@
       "x": 110,
       "y": 129,
       "width": 189,
-      "height": 19,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -32,10 +32,10 @@
       "type": "text",
       "display": true,
       "description": "",
-      "x": 320,
+      "x": 340,
       "y": 84,
       "width": 17,
-      "height": 17,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -87,7 +87,7 @@
       "x": 110,
       "y": 210,
       "width": 96,
-      "height": 19,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -236,7 +236,7 @@
       "description": "",
       "x": 274.6,
       "y": 84,
-      "width": 43.9,
+      "width": 62.3,
       "height": 15,
       "style": {
         "font-family": [
@@ -250,7 +250,7 @@
         "line-height-ratio": "",
         "letter-spacing": "",
         "font-style": [],
-        "overflow": "truncate",
+        "overflow": "fit",
         "word-wrap": "none"
       },
       "reference-id": "",
@@ -262,38 +262,12 @@
       }
     },
     {
-      "id": "",
-      "type": "text",
-      "display": true,
-      "description": "",
-      "x": 110,
-      "y": 303,
-      "width": 372,
-      "height": 20,
-      "style": {
-        "font-family": [
-          "IPAPGothic"
-        ],
-        "font-size": 14,
-        "color": "#000000",
-        "text-align": "left",
-        "vertical-align": "top",
-        "line-height": "",
-        "line-height-ratio": "",
-        "letter-spacing": "",
-        "font-style": []
-      },
-      "texts": [
-        "※ｅメールの調子が悪いため、臨時でＦＡＸさせていただきます。"
-      ]
-    },
-    {
       "id": "company_name",
       "type": "text-block",
       "display": true,
       "description": "",
       "x": 365.9,
-      "y": 355,
+      "y": 295,
       "width": 174,
       "height": 14.8,
       "style": {

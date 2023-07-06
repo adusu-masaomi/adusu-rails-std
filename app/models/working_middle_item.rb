@@ -2,7 +2,9 @@ class WorkingMiddleItem < ApplicationRecord
 
   #demo版対応
   MAX_RECORD_COUNT = 5
-
+  
+  before_destroy :ensure_id
+  
   #require "browser"
   #browser = Browser.new("Some User Agent", accept_language: "en-us")
   #paginates_per 200  # 1ページあたり項目表示
@@ -61,7 +63,13 @@ class WorkingMiddleItem < ApplicationRecord
   def working_middle_item_matter_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if WorkingMiddleItem.count >= MAX_RECORD_COUNT
   end
-   
+  #特定のIDは削除できないようにする
+  def ensure_id
+    return true if "#{id}".to_i > 1  #id1は削除できないように
+    errors.add(:base, "Cannot delete booking with payments")
+    throw :abort  #Rails6
+    return false
+  end
   scope :with_material, -> {joins(:MaterialMaster)}
   scope :with_unit, -> {joins(:WorkingUnit)}
   scope :with_category, -> {joins(:working_category)}

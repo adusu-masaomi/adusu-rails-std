@@ -635,38 +635,12 @@
       },
       "footer": {
         "enabled": true,
-        "height": 95,
+        "height": 71,
         "translate": {
           "x": -18,
           "y": -178.8
         },
         "items": [
-          {
-            "id": "",
-            "type": "text",
-            "display": true,
-            "description": "",
-            "x": 101,
-            "y": 529.4,
-            "width": 398,
-            "height": 25,
-            "style": {
-              "font-family": [
-                "IPAPGothic"
-              ],
-              "font-size": 12,
-              "color": "#000000",
-              "text-align": "left",
-              "vertical-align": "top",
-              "line-height": "",
-              "line-height-ratio": "",
-              "letter-spacing": "",
-              "font-style": []
-            },
-            "texts": [
-              "※ｅメールの調子が悪いため、臨時でＦＡＸさせていただきます。"
-            ]
-          },
           {
             "id": "",
             "type": "text",
@@ -704,7 +678,7 @@
       "display": true,
       "description": "",
       "x": 390,
-      "y": 390.6,
+      "y": 355,
       "width": 146,
       "height": 12.9,
       "style": {

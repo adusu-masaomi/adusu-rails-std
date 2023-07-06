@@ -66,9 +66,14 @@ class WorkingUnitsController < ApplicationController
   # DELETE /working_units/1
   # DELETE /working_units/1.json
   def destroy
-    @working_unit.destroy
+    #@working_unit.destroy
+    check = @working_unit.destroy
     respond_to do |format|
-      format.html { redirect_to working_units_url, notice: 'Working unit was successfully destroyed.' }
+      if check
+        format.html { redirect_to working_units_url, notice: 'Working unit was successfully destroyed.' }
+      else
+        format.html { redirect_to working_units_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end

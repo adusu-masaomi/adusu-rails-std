@@ -686,10 +686,16 @@ class PurchaseOrderHistoriesController < ApplicationController
             #品名・メーカーを登録or変更した場合は、商品マスターへ反映させる。
             materials = MaterialMaster.where(:id => @material_master.id).first
             if materials.present?
-              materials.update_attributes!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
+              #materials.update_attributes!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
+              #                             :list_price => item[:list_price], 
+              #                             :notes => item[:notes], :material_category_id => item[:material_category_id],
+              #                             :unit_id => item[:unit_master_id])
+              #Rails6
+              materials.update!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
                                            :list_price => item[:list_price], 
                                            :notes => item[:notes], :material_category_id => item[:material_category_id],
                                            :unit_id => item[:unit_master_id])
+              
             end 
           end
 

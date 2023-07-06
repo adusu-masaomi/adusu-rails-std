@@ -23,7 +23,7 @@ class QuotationFaxPDF
       header.item(:supplier_responsible_name).value(responsible)
       #注文番号
       header.item(:quotation_code).value(quotation_material_header.quotation_code)
-	  #工事名
+	    #工事名
       header.item(:construction_name).value(quotation_material_header.construction_datum.construction_name)
     end
     
@@ -62,7 +62,11 @@ class QuotationFaxPDF
         end 
       end
     end
-    	
+    
+    #会社名(標準版仕様)
+    company = Company.first
+    report.page.item(:company_name).value(company.name)
+    
     # ThinReports::Reportを返す
     return report
 		

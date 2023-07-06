@@ -75,9 +75,14 @@ class WorkingCategoriesController < ApplicationController
   # DELETE /working_categories/1
   # DELETE /working_categories/1.json
   def destroy
-    @working_category.destroy
+    #@working_category.destroy
+    check = @working_category.destroy
     respond_to do |format|
-      format.html { redirect_to working_categories_url, notice: 'Working category was successfully destroyed.' }
+      if check
+        format.html { redirect_to working_categories_url, notice: 'Working category was successfully destroyed.' }
+      else
+        format.html { redirect_to working_categories_url, notice: '指定したIDはシステムで使用する為、削除できません。' }
+      end
       format.json { head :no_content }
     end
   end
