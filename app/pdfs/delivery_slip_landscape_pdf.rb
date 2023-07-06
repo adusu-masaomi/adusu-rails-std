@@ -306,7 +306,9 @@ class DeliverySlipLandscapePDF
     end	   #do end
 	   
     #実行金額(計)
-    @report.page.item(:execution_amount).value(@delivery_slip_headers.execution_amount)
+    if @delivery_slip_headers.present? && @delivery_slip_headers.execution_amount.present?  #add230706
+      @report.page.item(:execution_amount).value(@delivery_slip_headers.execution_amount)
+    end
     #歩掛(計)→不要？？
     #@report.page.item(:labor_amount).value(@@labor_amount )
     #歩掛計(計)

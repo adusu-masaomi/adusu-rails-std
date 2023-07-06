@@ -159,25 +159,38 @@ class LaborCostSummaryPDF
       when 1
         #社員１
         ###社長
-        @man_month_1 += construction_daily_report.man_month
-        @labor_cost_1 += construction_daily_report.labor_cost
+        if construction_daily_report.man_month.present?
+          @man_month_1 += construction_daily_report.man_month
+        end
+        if construction_daily_report.labor_cost.present?
+          @labor_cost_1 += construction_daily_report.labor_cost
+        end
       when 2 then
         #社員２
         ###岡戸
-        @man_month_2 += construction_daily_report.man_month
-        @labor_cost_2 += construction_daily_report.labor_cost
+        if construction_daily_report.man_month.present?
+          @man_month_2 += construction_daily_report.man_month
+        end
+        if construction_daily_report.labor_cost.present?
+          @labor_cost_2 += construction_daily_report.labor_cost
+        end
       when 3 then
         #社員３
         ###村山
-        @man_month_3 += construction_daily_report.man_month
-        @labor_cost_3 += construction_daily_report.labor_cost
+        if construction_daily_report.man_month.present?
+          @man_month_3 += construction_daily_report.man_month
+        end
+        if construction_daily_report.labor_cost.present?
+          @labor_cost_3 += construction_daily_report.labor_cost
+        end
       end
         
       #総計をカウント（３人以外は、ないものとする）
       #binding.pry
       
-      @labor_cost_total += construction_daily_report.labor_cost
-		
+      if construction_daily_report.labor_cost.present?
+        @labor_cost_total += construction_daily_report.labor_cost
+      end
       #日付を変数代入
       @working_date = construction_daily_report.working_date
       #サブルーチン用に社員IDをセットする

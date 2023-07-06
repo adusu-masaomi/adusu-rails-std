@@ -75,8 +75,13 @@ class EstimationSheetLandscapePDF
         if ConstructionDatum.where(:id => @quotation_headers.construction_datum_id).exists?
           @construction_data = ConstructionDatum.find(@quotation_headers.construction_datum_id)
         end
-           
-        @customer_masters = CustomerMaster.find(@quotation_headers.customer_id)
+        
+        #@customer_masters = CustomerMaster.find(@quotation_headers.customer_id)
+        #upd230706
+        @customer_masters = nil
+        if CustomerMaster.where(:id => @quotation_headers.customer_id).exists?
+          @customer_masters = CustomerMaster.find(@quotation_headers.customer_id)
+        end
                
         #郵便番号
         #@report.page.item(:post).value(@quotation_headers.post) 
@@ -128,8 +133,9 @@ class EstimationSheetLandscapePDF
         end
            
         #顧客CD
-        @report.page.item(:customer_code).value(@customer_masters.id)
-           
+        if @customer_masters.present?
+          @report.page.item(:customer_code).value(@customer_masters.id)
+        end
         #見積日付
         @report.page.item(:quotation_date2).value(@gengou) 
            
@@ -155,8 +161,9 @@ class EstimationSheetLandscapePDF
         @report.page.item(:fax).value(@quotation_headers.fax) 
            
         #得意先名
-        @report.page.item(:customer_name2).value(@quotation_headers.customer_master.customer_name) 
-         
+        if @quotation_headers.customer_master.present?  #add230706
+          @report.page.item(:customer_name2).value(@quotation_headers.customer_master.customer_name) 
+        end
         #件名
         @report.page.item(:construction_name2).value(@quotation_headers.construction_name) 
            
@@ -316,7 +323,9 @@ class EstimationSheetLandscapePDF
     end	   #end do
        
     #実行金額(計)
-    @report.page.item(:execution_amount).value(@quotation_headers.execution_amount)
+    if @quotation_headers.present? && @quotation_headers.execution_amount.present?  #add230706
+      @report.page.item(:execution_amount).value(@quotation_headers.execution_amount)
+    end
     #歩掛(計)→不要？？
     #@report.page.item(:labor_amount).value(@@labor_amount )
     #歩掛計(計)

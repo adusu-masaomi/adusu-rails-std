@@ -1,16 +1,7 @@
-<%= simple_form_for(@working_small_item) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :working_middle_item_id %>
-    <%= f.input :working_small_item_code %>
-    <%= f.input :working_small_item_name %>
-    <%= f.input :unit_price %>
-    <%= f.input :quantity %>
-    <%= f.input :labor_productivity_unit %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+<%= simple_form_for @working_safety_matter, :html => { :class => 'well form-horizontal' } do |f| %>
+  <%= f.input :working_safety_matter_name %>
+  
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                working_safety_matters_path, :class => 'btn btn-default' %>
 <% end %>
