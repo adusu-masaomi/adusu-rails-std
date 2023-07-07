@@ -1320,7 +1320,7 @@
       "description": "",
       "x": 250,
       "y": 340.9,
-      "width": 55.5,
+      "width": 59.1,
       "height": 12.3,
       "style": {
         "font-family": [
@@ -2602,7 +2602,7 @@
         "line-height-ratio": "",
         "letter-spacing": "",
         "font-style": [],
-        "overflow": "truncate",
+        "overflow": "fit",
         "word-wrap": "none"
       },
       "reference-id": "",

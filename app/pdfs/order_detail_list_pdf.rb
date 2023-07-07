@@ -22,8 +22,15 @@ class OrderDetailListPDF
     @order_price_subtotal = 0
     @order_price_total = 0
     
-    $orders.joins({:purchase_order_history => :purchase_order_datum}).order("purchase_order_histories.purchase_order_datum_id,
-                                                     purchase_order_histories.purchase_order_date, id").each do |orders|  
+    
+    #psql対応
+    $orders.joins({:purchase_order_history => :purchase_order_datum}).select("orders.*, purchase_order_histories.*").
+                                                     order("purchase_order_histories.purchase_order_datum_id,
+                                                     purchase_order_histories.purchase_order_date, orders.id").each do |orders| 
+      
+    
+    #$orders.joins({:purchase_order_history => :purchase_order_datum}).order("purchase_order_histories.purchase_order_datum_id,
+    #                                                 purchase_order_histories.purchase_order_date, id").each do |orders|  
     #---見出し---
       page_count = report.page_count.to_s + "頁"
       report.page.item(:pageno).value(page_count)

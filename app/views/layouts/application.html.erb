@@ -214,7 +214,7 @@ body > .container {
 	         adusu-denki.mydns.jp</a> All Rights Reserved.
 	 </p>-->
          <!--<%= link_to "　　ログアウト", session_index_path, method: :delete %>-->
-         <%= link_to "　　ログアウト", logout_path, method: :delete %>
+         <%= link_to "　　ログアウト", logout_path, method: :delete, data: { confirm: "ログアウトします。よろしいですか？" } %>
       </footer>
           
     </div> <!-- /container -->

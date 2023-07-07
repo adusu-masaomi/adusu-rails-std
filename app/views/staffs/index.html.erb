@@ -22,7 +22,7 @@
         <td><%= link_to staff.id, staff_path(staff) %></td>
         <td><%= staff.staff_name %></td>
         <td><%= staff.furigana %></td>
-        <% if staff.affiliation_id.present? %>
+        <% if staff.affiliation_id.present? && @affiliation[(staff.affiliation_id)-1].present? %>
           <td><%= @affiliation[(staff.affiliation_id)-1].affiliation_name %></td>
         <% else %>
           <td>-</td>
