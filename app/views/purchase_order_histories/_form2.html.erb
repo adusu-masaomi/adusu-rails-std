@@ -174,7 +174,7 @@
         -->
         
         
-        <%= f.button_tag "登録", :type => 'button', name: "upd", :class => "btn btn-primary", 
+        <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
                :onclick => "submitAfterValidation(0)" %>
         
         <!--add200427-->
@@ -193,9 +193,10 @@
          <%= f.button_tag( '注文書', :type => 'button', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitPurchaseOrder()") %>
          
+         <!--
          <%= f.button_tag( 'ＦＡＸ', :type => 'button', :class => "btn btn-lime500_ftg" , 
              form: {target: '_blank'},  :onclick => "submitFax()") %>
-             
+         -->
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません（動作不安定により）-->
 		 
@@ -303,6 +304,7 @@
 	   });
 	  
      $(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
+	   
 	   //rails6
 	   //init_select2(".searchableSelect1_1", 1);
 	   
@@ -430,6 +432,15 @@ gTop = 0;
 
 gTrigger = false;
 
+
+  //$(window).bind('page:change', function() {
+ //   $('form').on('cocoon:before-insert', function(e, added_user) {
+ //     debugger;
+ //     //added_user.select2();
+ //     field = $(added_user).find(".searchableSelect1_1")
+ //     init_select2(field, 1);  
+ //   });
+  //});
 
 $('form').on('cocoon:after-insert', function() {
   /* apply select2 styling */ 
@@ -880,7 +891,8 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
     //}
     
 	if (after_check == true){
-      if (window.confirm('実行しますか？')) {
+      //if (window.confirm('実行しますか？')) {
+      if (window.confirm('登録しますか？')) {
 	      reset_value();
          
          if (flag == 0){
@@ -929,6 +941,7 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
 
  function submitPurchaseOrder()
  {
+   if (window.confirm('注文書を発行しますか？')) {
     document.getElementById("format").value = "pdf";
     //注文書フラグをセット
     document.getElementById("print_type").value = "purchase_order";
@@ -945,6 +958,9 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
     document.forms[0].target="_blank";  //add220615
     document.forms[0].submit();
     return true;
+   }else{
+     return false;
+   }
  }
  
 //仕入先別メアドのセット

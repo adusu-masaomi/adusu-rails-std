@@ -2,11 +2,11 @@ class QuotationMaterialDetail < ApplicationRecord
 
   belongs_to :quotation_material_header
   
-  belongs_to :maker_master, :foreign_key => "maker_id"
-  belongs_to :unit_master
+  belongs_to :maker_master, optional: true, :foreign_key => "maker_id"
+  belongs_to :unit_master, optional: true
   
   #add200129
-  belongs_to :material_master,  :foreign_key => "material_id"
+  belongs_to :material_master, optional: true, :foreign_key => "material_id"
   
   #メーカーID用
   attr_accessor :maker_id_hide

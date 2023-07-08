@@ -17,3 +17,5 @@
 
 //require('jquery') //jQeryに依存しているため、ないと動かないです
 //import "cocoon"   //cocoonを動かすための記述
+//$(".searchableSelect1_1").select2({ theme: "classic" });
+//import "cocoon"   //cocoonを動かすための記述

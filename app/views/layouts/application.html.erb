@@ -417,12 +417,16 @@ body > .container {
     $('[tabindex=' + nextIndex + ']').focus();
   }
   
+  
+  
   //add170725 ロード時間短縮のため、ここに追記。
   $(".searchableSelect2_1").select2({ theme: "classic" });
   $(".searchableSelect2_2").select2({ theme: "classic" });
   $(".searchableSelect2_3").select2({ theme: "classic" });
   //明細フォーム用追加(次のコントロール移動をここに記述すると正常動作しないため、初期設定の宣言のみ行う）
   $(".searchableSelect1_1").select2({ theme: "classic" });
+  //init_select2(".searchableSelect1_1", 4);
+  
   $(".searchableSelect1_2").select2({ theme: "classic" });
   $(".searchableSelect1_3").select2({ theme: "classic" });
   //

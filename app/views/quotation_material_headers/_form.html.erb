@@ -129,31 +129,44 @@
    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
+   
    <!--メール送信フラグ-->
    <%= f.check_box :quotation_email_flag_1, :id => "quotation_email_flag_1", :class => "quotation_email_flag_1" %>
    
    <!--フラグ１-->
-   <%= f.label :quotation_email_flag_1, '見積Email　　　', { style: 'color:green'}  %>
-   
+   <!--<%= f.label :quotation_email_flag_1, '見積Email　　　', { style: 'color:green'}  %>-->
+       <%= f.label :quotation_email_flag_1, '見積依頼済　　', { style: 'color:green'}  %>
+       
    <!--スペース用-->
+   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <!--フラグ２-->
    <%= f.check_box :quotation_email_flag_2,  :id => "quotation_email_flag_2", :class => "quotation_email_flag_2" %>
-   <%= f.label :quotation_email_flag_2, '見積Email　　　', { style: 'color:green'}  %>
+   <!--<%= f.label :quotation_email_flag_2, '見積Email　　　', { style: 'color:green'}  %>-->
+   <%= f.label :quotation_email_flag_2, '見積依頼済　　', { style: 'color:green'}  %>
    
    <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
+   &nbsp;&nbsp;&nbsp;&nbsp;
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
    <!--フラグ３-->
    <%= f.check_box :quotation_email_flag_3,  :id => "quotation_email_flag_3", :class => "quotation_email_flag_2" %>
-   <%= f.label :quotation_email_flag_3, '見積Email　　　', { style: 'color:green'}  %>
-
+   <!--<%= f.label :quotation_email_flag_3, '見積Email　　　', { style: 'color:green'}  %>-->
+   <%= f.label :quotation_email_flag_3, '見積依頼済　　', { style: 'color:green'}  %>
+   
    </br>
 
    <!--注文フラグ-->
-   <font color = "red">↑メール送信を行う場合は、必ず依頼先を選択してください。</font>
+
+   <!--<font color = "red">↑メール送信を行う場合は、必ず依頼先を選択してください。</font>-->
+   <!--標準版はカットし以下にスペース-->
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <!---->
    
    <!--スペース用-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -166,22 +179,27 @@
    
    <!--フラグ１-->
    <%= f.check_box :order_email_flag_1,  :id => "order_email_flag_1" %>
-   <%= f.label :order_email_flag_1, '注文Email　　　', { style: 'color:brown'}  %>
+   <!--<%= f.label :order_email_flag_1, '注文Email　　　', { style: 'color:brown'}  %>-->
+       <%= f.label :order_email_flag_1, '注文済　　　　', { style: 'color:brown'}  %>
    
    <!--スペース用-->
+   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
    <!--フラグ２-->
    <%= f.check_box :order_email_flag_2,  :id => "order_email_flag_2" %>
-   <%= f.label :order_email_flag_2, '注文Email', { style: 'color:brown'}  %>
+   <!--<%= f.label :order_email_flag_2, '注文Email', { style: 'color:brown'}  %>-->
+   <%= f.label :order_email_flag_2, '注文済　　　　', { style: 'color:brown'}  %>
    
    <!--スペース用-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
    <!--フラグ３-->
    <%= f.check_box :order_email_flag_3,  :id => "order_email_flag_3" %>
-   <%= f.label :order_email_flag_3, '注文Email　　　', { style: 'color:brown'}  %>
+   <!--<%= f.label :order_email_flag_3, '注文Email　　　', { style: 'color:brown'}  %>-->
+   <%= f.label :order_email_flag_3, '注文済　　　　', { style: 'color:brown'}  %>
    
    </br>
    <!-- -->
@@ -201,7 +219,7 @@
    
    <%= button_tag "　価格を再判定　", type: 'button', :class => 'btn btn-deeppurple500_rsd btn-xs', onclick: "checkBidAll()" %>
    
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;
    <!-- -->
    
    <!--フラグ１-->
@@ -210,14 +228,14 @@
    
    <!--スペース用-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;
    <!--フラグ２-->
    <%= f.check_box :all_bid_flag_2,  :id => "all_bid_flag_2", :class => "all_bid_flag_2", :onchange => "setSupplierAll(this)" %>
    <%= f.label :all_bid_flag_2, '全て落札　　　', { style: 'color:red'}  %>
    
    <!--スペース用-->
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;
+   &nbsp;
    <!--フラグ３-->
    <%= f.check_box :all_bid_flag_3,  :id => "all_bid_flag_3", :class => "all_bid_flag_3", :onchange => "setSupplierAll(this)" %>
    <%= f.label :all_bid_flag_3, '全て落札　　　', { style: 'color:red'}  %>
@@ -262,17 +280,23 @@
                   :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
 		<% end %>
 	   
-    <!--<%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
-               id: "mail_sent_button", name: "send", :onclick => "submitAfterValidationEmailorPdf(1)" %>-->
+    <!--標準版はカット
     <%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
                id: "mail_sent_button", :name => 'send', :onclick => "submitAfterValidationEmailorPdf(1)" %>
                
     <%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lightBlue100_ftg" ,
                  formtarget: "_blank", :onclick => "return submitAfterValidation(5)" ) %>
-        
+    -->
+    
     <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
                :onclick => "submitAfterValidation(2)" %>
 		
+		<%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
+             formtarget: "_blank" , :onclick => "return submitAfterValidation(7)") %>
+             
+     <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
+             formtarget: "_blank" , :onclick => "return submitAfterValidation(8)") %>
+     
 		<!-- -->
 		<%= f.button_tag( '見積比較表', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" ,
                  formtarget: "_blank", :onclick => "return submitAfterValidation(4)" ) %>
@@ -280,33 +304,34 @@
 		<!--スペース空ける（誤送信ないように -->
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         
+        <!-- 標準版はカット
         <span id="filter" >
-		    <!--<%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
-               id: "mail_sent_button2", name: "sendOrder", :onclick => "submitAfterValidationEmailorPdf(3)" %>-->
-        <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
+		    <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
                id: "mail_sent_button2", :name => 'sendOrder', :onclick => "submitAfterValidationEmailorPdf(3)" %>
         
         <%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-pink100_ftg" ,
                  formtarget: "_blank", :onclick => "return submitAfterValidation(6)" ) %>
         </span>
-	    
+	      -->
+        
         <!--空ボタン-->
+        <!--標準版はカット
         <span id="empty_button" >
-          <!--<%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
-               id: "mail_sent_button2", name: "sendOrder" %>-->
           <%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
                id: "mail_sent_button2", name: "sendOrder" %>
-          <!-- 200428 -->
           <%= f.button_tag "　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
                id: "mail_sent_button2", name: "sendOrder" %>
         </span>
+        -->
          
          <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません-->
 	    
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 <!--&nbsp;&nbsp;&nbsp;-->
      
 		 <!--見積金額合計（１〜３）-->
@@ -324,11 +349,14 @@
          
      <!-- -->
      
+     <!--
      <%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
              formtarget: "_blank" , :onclick => "return submitAfterValidation(7)") %>
              
      <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitAfterValidation(8)") %>
+     
+     -->
      
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -336,10 +364,11 @@
 		 <!---->
 		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <!--add180919-->
+         
+         <!--標準版はカット
          <%= f.check_box :force_order_flag, :id => "force_order_flag", :onclick => "changeDispOrderButton(this)" %>
          <%= f.label :force_order_flag, '見積なしで注文', { style: 'color:grey'}  %>
-         
+         -->
          <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
              
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -347,9 +376,13 @@
 		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		 
-     <!-- 200428del -->
-     <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-		 
+     <!--標準版対応-->
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;&nbsp;
+     
 		 <!--注文金額合計（１〜３）-->
 		 <%= f.input :total_order_price_1 , label:"注文金額計１", label_html: { style: 'color:black;' }, 
                      input_html:{ id:"total_order_price_1", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,1)" } %>
@@ -432,6 +465,14 @@
 	   $(".searchableId3").select2({ theme: "classic", allowClear: true , placeholder: "" });
 	   
 	   //商品ID-商品CD
+     //$(".searchableSelect1_1").select2({ theme: "classic", tags: true });  //test
+     //rails6対応
+     //field = $(inserted_item).find(".searchableSelect1_1")
+     //init_select2(field, 4);
+     //debugger;
+     //init_select2(".searchableSelect1_1", 4);   
+     
+     
 	   $( ".searchableSelect1_1" ).on("select2:close", function (e) {
 		 //次のコントロールへフォーカスを移す
 		 var control_name = $(this)[0].name;
@@ -533,7 +574,42 @@
      //担当Email
      $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
   });  
-
+  
+  function init_select2(selector, type){
+    if (type == 1){
+      $(selector).select2({
+        theme: "classic",
+        placeholder: MESSAGE_LIST,
+        allowClear: true
+      });
+    }else if (type == 2){
+      $(selector).select2({
+        theme: "classic",
+        tags: true
+      });
+    }else if (type == 3){
+      $(selector).select2({
+        theme: "classic",
+        placeholder: MESSAGE_LIST,
+        allowClear: true,
+        tags: true
+      });
+    }else if (type == 4){
+      //
+      $(selector).select2({
+        theme: "classic"
+      });
+    }else if (type == 5){
+      //分類用
+      $(selector).select2({
+        theme: "classic",
+        placeholder: "-",
+        allowClear: true,
+        tags: true
+      });
+    }
+  
+  };
 
   gSelectedIndex = 0;
   gMaterial_id = 0;
@@ -541,6 +617,18 @@
   gControl_id = 0;
   gTop = 0;
 
+  //明細フォーム新規追加時の制御
+  //$(document).bind('cocoon:before-insert', function(e,inserted_item) {
+    
+    
+  //init_select2("searchableSelect1_1", 4); 
+  //$('form').on('cocoon:after-insert', function(e,inserted_item) {
+  //  /* apply select2 styling */ 
+  //  //rails6対応
+  //   field = $(inserted_item).find(".searchableSelect1_1")
+  //   init_select2(field, 4);   
+  //});
+  
   //明細フォーム新規追加時の制御
   $(document).bind('cocoon:after-insert', function(e,inserted_item) {
    
@@ -578,8 +666,12 @@
    
        //明細フォーム用(追加時のみ、ここが使用されるらしい。)
 	   //検索可能なリストボックス(品名の場合)
-       $(".searchableSelect1_1").select2({ theme: "classic" });
+     //$(".searchableSelect1_1").select2({ theme: "classic" });
+     //rails6対応
+     field = $(inserted_item).find(".searchableSelect1_1")
+     init_select2(field, 4);   
     
+      
 	   $( ".searchableSelect1_1" ).change(function(e) {
          
 		 gMaterial_id = $(this).val();
@@ -621,9 +713,10 @@
 	   });
 	    
 	   //メーカー
-       //$(".searchableSelect1_3").select2({ theme: "classic" });
-       //upd180411
-       $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
+     $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
+     //rails6対応
+     field = $(inserted_item).find(".searchableSelect1_3")
+     init_select2(field, 2);   
        
      $( ".searchableSelect1_3" ).on("select2:close", function (e) {
 		 //次のコントロールへフォーカスを移す
@@ -632,9 +725,12 @@
 	   });
 	   
      //分類
-     //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-"});
-     //add201212
-     $(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+     //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+     //rails6対応
+     field = $(inserted_item).find(".searchableSelect1_4")
+     init_select2(field, 5);   
+     
+     
      $( ".searchableSelect1_4" ).change(function(e) {
        obj = $(this);
 		   //分類からアイテム抽出する
@@ -802,6 +898,7 @@
 	   message = "見積依頼をメールしますか？"
 	 }else if (flag == 2){
 	   message = "登録のみ行いますか？"
+     //message = "登録しますか？"
 	 }else if (flag == FLAG_ORDER_EMAIL){
 	   message = "注文依頼をメールしますか？"
 	 }else if (flag == 4){
@@ -814,8 +911,16 @@
    }else if (flag == 6){
      document.getElementById("sent_flag").value = 6;  //add200428
 	   message = "注文依頼をＦＡＸしますか？"
+   }else if (flag == 7){
+     //標準版仕様
+     document.getElementById("sent_flag").value = 7;  //add200428
+	   message = "見積依頼書を発行しますか？"
+   }else if (flag == 8){
+     //標準版仕様
+     document.getElementById("sent_flag").value = 8;  //add200428
+	   message = "注文書を発行しますか？"
  	 }else{
-     //それ以外(見積依頼書等)
+     //それ以外
      messageFlag = false;
      document.getElementById("sent_flag").value = flag;
    }

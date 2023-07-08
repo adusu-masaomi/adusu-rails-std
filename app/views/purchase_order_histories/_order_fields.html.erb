@@ -14,15 +14,20 @@
   -->
   </br>
   <!--マスター類はあらかじめセットされた変数から取得-->
+  <!--<%= f.collection_select :material_id, @material_masters.all, :id, :p_material_code_name, {:selected => f.object.material_id || 1} , 
+      {class: "searchableSelect1_1 form-control" , id: "material_id" , style: 'width:650px' } %>-->
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"material_id"]は削除)-->
   <%= f.collection_select :material_id, @material_masters.all, :id, :p_material_code_name, {:selected => f.object.material_id || 1} , 
-      {class: "searchableSelect1_1 form-control" , id: "material_id" , style: 'width:650px' } %>
+      {class: "searchableSelect1_1 form-control" , style: 'width:650px' } %>
   
   <%= f.label :数量, {style: 'width:28px'}  %>
   <%= f.text_field :quantity, size:10, id: "quantity" , :tabindex=>"2" , :onkeyup => "changePrice(event, this)" %>
   
   <td>&nbsp;&nbsp;</td>
-    <%= f.collection_select :unit_master_id, @unit_masters.all, :id, :unit_name, {:selected => f.object.unit_master_id || 3} , 
-        { id: "unit_master_id", class: "searchableSelect1_2" , style: 'width:50px' } %>
+  
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"unit_master_id"]は削除)-->
+  <%= f.collection_select :unit_master_id, @unit_masters.all, :id, :unit_name, {:selected => f.object.unit_master_id || 3} , 
+        { class: "searchableSelect1_2" , style: 'width:50px' } %>
   
   <!--Activemail使えないためカット
   <%= f.select :mail_sent_flag, Order.mail_flag, {:include_blank => true}, 
@@ -46,8 +51,10 @@
   <!--upd 180215-->
   <%= f.label :品番, {style: 'width:28px'}  %>
   &nbsp;
+  
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"material_code << f.options[:child_index].to_s"]は削除)-->
   <%= f.collection_select :material_code, MaterialMaster.all, :material_code, :material_code, {:include_blank => true} , 
-    {class: "searchInsertMaterial" , id: "material_code" << f.options[:child_index].to_s ,
+    {class: "searchInsertMaterial form-control" , 
                    style: 'width:180px;ime-mode:inactive' } %>
     
   
@@ -55,8 +62,9 @@
   
   <!--スペース-->
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <%= f.collection_select :maker_id, @maker_masters.all, :id, :maker_name, {:selected => f.object.maker_id || 1} , 
-      {class: "searchableSelect1_3 form-control" , id: "maker_id" , style: 'width:200px;margin-left:-20px', :tabindex => "3" } %>
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"maker_id"]は削除)-->
+ <%= f.collection_select :maker_id, @maker_masters.all, :id, :maker_name, {:selected => f.object.maker_id || 1} , 
+      {class: "searchableSelect1_3 form-control" , style: 'width:200px;margin-left:-20px;', :tabindex => "3" } %>
   
   <%= f.input :list_price,  input_html:{ id: "list_price", style: 'width:90px;' , :tabindex=>"4" } %>
   
@@ -69,8 +77,9 @@
   
   <!--スペース-->
   &nbsp;&nbsp;&nbsp;&nbsp;
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"material_category_id"]は削除)-->
   <%= f.collection_select :material_category_id, @material_categories.all, :id, :name, {:include_blank => true, :selected => f.object.material_category_id || nil} , 
-      {class: "searchableSelect1_4 form-control" , id: "material_category_id" , style: 'width:200px;margin-left:-20px', :tabindex => "6" } %>
+      {class: "searchableSelect1_4 form-control" , style: 'width:200px;margin-left:-20px', :tabindex => "6" } %>
   
   <%= f.input :order_unit_price,  input_html:{ id: "order_unit_price", style: 'width:100px;' , :tabindex=>"7" ,
                                                :onkeyup => "changePriceByUnit(event, this)" } %>

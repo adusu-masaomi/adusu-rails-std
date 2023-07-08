@@ -884,7 +884,11 @@ class QuotationMaterialHeadersController < ApplicationController
     @attachment = nil
     
     if check 
+      
+            
       if params[:format] == "pdf"
+        
+        
         #注文書の発行
         #save_only_flag = false
         #global set
@@ -910,8 +914,10 @@ class QuotationMaterialHeadersController < ApplicationController
 	   
         if $seq_exists > 0
           #昇順になっている場合は、本来の降順にしておく。
-	        #$detail_parameters = Hash[detail_parameters.sort.reverse]
-          @detail_parameters = Hash[detail_parameters.sort.reverse]
+	        #@detail_parameters = Hash[detail_parameters.sort.reverse]
+          #rails6対応
+          @detail_parameters = detail_parameters.to_unsafe_h.sort.reverse.to_h
+          
         else
 	        #$detail_parameters = detail_parameters
           @detail_parameters = detail_parameters
@@ -919,6 +925,18 @@ class QuotationMaterialHeadersController < ApplicationController
         #
         
         if !mail_flag
+          
+          #標準版仕様---送信フラグをセット
+          if request_type == 1
+            set_quotation_mail_flag_for_comparison  #ヘッダへ送信フラグセット
+          elsif request_type == 2
+            set_order_mail_flag_for_comparison
+          end
+          
+          set_mail_sent_flag
+          
+          #
+          
           format.pdf do
             #report = PurchaseOrderAndEstimatePDF.create @purchase_order
             #report = PurchaseOrderAndEstimatePDF.create @quotation_material
@@ -932,7 +950,9 @@ class QuotationMaterialHeadersController < ApplicationController
               filename:  "estimate_request.pdf",
               type:        "application/pdf",
               disposition: "inline")
-          end
+          end  
+         
+          
         else
         #メール送信し添付する場合
           
@@ -1184,7 +1204,21 @@ class QuotationMaterialHeadersController < ApplicationController
   
   #レコード毎にメール送信済みフラグをセットする
   def set_mail_sent_flag
-    if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
+    
+    #標準版対応
+    sent_flag = 0
+    case params[:quotation_material_header][:sent_flag]
+    when "1", "2"
+      sent_flag = params[:quotation_material_header][:sent_flag].to_i
+    when "7", "8"
+      #見積・注文書もフラグをつける
+      sent_flag = params[:quotation_material_header][:sent_flag].to_i - 6
+    end
+    //
+    
+    
+    #if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
+    if sent_flag == 1 || sent_flag == 2
       if params[:quotation_material_header][:quotation_material_details_attributes].present?
         
         params[:quotation_material_header][:quotation_material_details_attributes].values.each do |item|
@@ -1194,10 +1228,12 @@ class QuotationMaterialHeadersController < ApplicationController
           case @supplier
           when 1
           #仕入先１の場合
-            if params[:quotation_material_header][:sent_flag] == "1"
+            #if params[:quotation_material_header][:sent_flag] == "1"
+            if sent_flag == 1
               #見積依頼時
               item[:quotation_email_flag_1] = 1
-            elsif params[:quotation_material_header][:sent_flag] == "2"
+            #elsif params[:quotation_material_header][:sent_flag] == "2"
+            elsif sent_flag == 2
               #注文依頼時
               if item[:bid_flag_1] == "1"  #落札されている？
                 item[:order_email_flag_1] = 1
@@ -1205,10 +1241,12 @@ class QuotationMaterialHeadersController < ApplicationController
             end
           when 2
           #仕入先２の場合
-            if params[:quotation_material_header][:sent_flag] == "1"
+            #if params[:quotation_material_header][:sent_flag] == "1"
+            if sent_flag == 1
             #見積依頼時
               item[:quotation_email_flag_2] = 1
-            elsif params[:quotation_material_header][:sent_flag] == "2"
+            #elsif params[:quotation_material_header][:sent_flag] == "2"
+            elsif sent_flag == 2
             #注文依頼時
               if item[:bid_flag_2] == "1"  #落札されている？
                 item[:order_email_flag_2] = 1
@@ -1216,10 +1254,12 @@ class QuotationMaterialHeadersController < ApplicationController
             end
           when 3
             #仕入先３の場合
-            if params[:quotation_material_header][:sent_flag] == "1"
+            #if params[:quotation_material_header][:sent_flag] == "1"
+            if sent_flag == 1
             #見積依頼時
               item[:quotation_email_flag_3] = 1
-            elsif params[:quotation_material_header][:sent_flag] == "2"
+            #elsif params[:quotation_material_header][:sent_flag] == "2"
+            elsif sent_flag == 2
             #注文依頼時
               if item[:bid_flag_3] == "1"  #落札されている？
                 item[:order_email_flag_3] = 1

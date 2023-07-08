@@ -44,8 +44,10 @@
   <!--<%= f.collection_select :material_id, @material_masters.all, :id, :p_material_code_name, {:selected => f.object.material_id || 1} , 
   {class: "searchableSelect1_1 form-control" , id: "material_id" , name:"material_id[]",  style: 'width:650px' } %>-->
   
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!-->
   <%= f.collection_select :material_id, @material_masters.all, :id, :p_material_code_name, {:selected => f.object.material_id || 1} , 
-  {class: "searchableSelect1_1 form-control" , id: "material_id" ,  style: 'width:650px' } %>
+  {class: "searchableSelect1_1 form-control" , style: 'width:650px' } %>
+  
   
   <%= f.label :数量, {style: 'width:28px'}  %>
   <%= f.text_field :quantity, id: "quantity" ,  size:10,  :tabindex=>"2" , :onkeydown => "checkBytesQuantity(event, this)"  %>
@@ -94,9 +96,10 @@
   &nbsp;&nbsp;&nbsp;&nbsp;
   <!--<%= f.collection_select :maker_id, @maker_masters.all, :id, :maker_name, {:selected => f.object.maker_id || 1} , 
       {class: "searchableSelect1_3 form-control" , id: "maker_id" , name:"maker_id[]",  style: 'width:200px;margin-left:-20px', :tabindex => "3" } %>-->
-	  
+	 
+	<!--idを入れるとRails6でselect2が正常動作しないので注意!!(idは削除)-->
   <%= f.collection_select :maker_id, @maker_masters.all, :id, :maker_name, {:selected => f.object.maker_id || 1} , 
-      {class: "searchableSelect1_3 form-control" , id: "maker_id" ,  style: 'width:200px;margin-left:-20px', :tabindex => "3" } %>
+      {class: "searchableSelect1_3 form-control" , style: 'width:200px;margin-left:-20px', :tabindex => "3" } %>
   
   <!--<%= f.input :list_price,  input_html:{ id: "list_price", name: "list_price[]", style: 'width:100px' , :tabindex=>"4" } %>-->
   <%= f.input :list_price, input_html:{ id: "list_price", style: 'width:100px' , :type=>"text", :tabindex=>"4" , :onkeydown => "checkBytesListPrice(event)" } %>
@@ -133,17 +136,19 @@
   <% else %>
     <% @material_category_id = nil %>
   <% end %>
+  
+  <!--idを入れるとRails6でselect2が正常動作しないので注意!!([id:"material_category_id"]は削除)-->
   <%= f.collection_select :material_category_id, MaterialCategory.all, :id, :name,
       {:include_blank => true, :selected => @material_category_id} , 
-      {class: "searchableSelect1_4 form-control" , id:"material_category_id", 
-             style: 'width:200px;margin-left:-20px'} %>
+      {class: "searchableSelect1_4 form-control" , style: 'width:200px;margin-left:-20px'} %>
   
   <!--メール送信フラグ  -->
   <!-- (200129, -45)  -->
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   
-  <%= f.label :mail_sent_flag, 'メール送信フラグ：', { style: 'font-size:8px'} %>
+  <!--<%= f.label :mail_sent_flag, 'メール送信フラグ：', { style: 'font-size:8px'} %>-->
+      <%= f.label :mail_sent_flag, '　　　依頼状況：', { style: 'font-size:8px'} %>
   
   &nbsp;
   
@@ -186,11 +191,8 @@
   
   //$(document).ready(function(){
   //$(document).on('turbolinks:load', function(){
-  
-      
-	  
-	  
- //});  
+    //
+	//});  
   
   //選択した行のインデックスを取得
   function getSelectedChildIndex(id){
@@ -949,6 +951,10 @@
     
   }
   
+  
+  //test
+  //init_select2(".searchableSelect1_1", 2);
+  //test end
   
   //数量が全角になっていたら半角に変換する
   //add180120
