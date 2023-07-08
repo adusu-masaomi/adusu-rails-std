@@ -53,8 +53,12 @@
   
    <!--<%= f.input :purchase_order_date , label:"注文日", label_html: { style: 'color:blue;' }, input_html:{ id:"purchase_order_date", :value => f.object.purchase_order_date || Date.today , style: 'width:220px'},as: :date_picker %>-->
    <!--upd180821 海外時間になっていたので修正-->
-   <%= f.input :purchase_order_date , label:"注文日", label_html: { style: 'color:blue;' }, 
-        input_html:{ id:"purchase_order_date", :value => f.object.purchase_order_date || Time.now.in_time_zone('Tokyo').to_date , style: 'width:220px'},as: :date_picker %>
+   
+   <!--<%= f.input :purchase_order_date , label:"注文日", label_html: { style: 'color:blue;' }, 
+        input_html:{ id:"purchase_order_date", :value => f.object.purchase_order_date || Time.now.in_time_zone('Tokyo').to_date , style: 'width:220px'},as: :date_picker %>-->
+   <%= f.input :purchase_order_date , label:"注文日", label_html: { style: 'color:blue;' }, as: :string,
+        input_html:{ id:"purchase_order_date", :value => f.object.purchase_order_date || Time.now.in_time_zone('Tokyo').to_date , class:"datetimepicker", 
+                     style: 'width:120px'} %>
    
    <!--<%= f.hidden_field :mail_sent_flag, input_html:{id: "mail_sent_flag"} %>-->
    <%= f.input :mail_sent_flag, input_html:{id: "mail_sent_flag"}, as: :hidden %>
@@ -65,6 +69,9 @@
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
    <!---->
    <%= link_to '新規／データ呼出', { id: params[:id] , construction_id: params[:construction_id], move_flag: params[:move_flag] }, 
                                  :onclick=> "dispDiv()", :class => 'btn btn-warning'  %>
@@ -89,10 +96,12 @@
    
    <!--コンボに変更-->
    <%= f.label :担当者　：, {:style => "color:blue"} %>
-   <%= f.collection_select :responsible, @supplier_responsible, :id, :responsible_name, {:include_blank => true, 
+   <% if @supplier_responsible.present? %>
+     <%= f.collection_select :responsible, @supplier_responsible, :id, :responsible_name, {:include_blank => true, 
                  :selected => @purchase_order_history.purchase_order_datum.supplier_responsible_id}, 
                  {id:"supplier_responsible_id", class: "searchableResponsible" , style: 'width:200px', :tabindex=>"8"
                  } %>
+   <% end %>
    <!-- -->
    
    <!--
@@ -101,10 +110,12 @@
    
    <!-- コンボに変更 -->
    <%= f.label :Email：, {:style => "color:blue"} %>
+   <% if @supplier_responsible.present? %>
    <%= f.collection_select :email_responsible, @supplier_responsible, :id, :responsible_email, {:include_blank => true,
                  :selected => @purchase_order_history.purchase_order_datum.supplier_responsible_id}, 
                  {id:"supplier_responsible_email", class: "searchableEmail" , style: 'width:420px', :tabindex=>"9"
                  } %>
+   <% end %>
    <!-- -->
    
    <%= f.label :納品場所, {style: 'color:blue'} %>
@@ -155,17 +166,15 @@
 	  <div id="filter" > 
 	    <%= link_to_add_association 'アイテム追加' ,  f, :orders  ,   :class => 'btn btn-success',  :data => { association_insertion_method: "after" } %> 
 	   
-        <!--<%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
-               id: "mail_sent_button", name: "send", :onclick => "submitAfterValidationEmail()" %>-->
+	      <!--標準版はActiveMailが使えないのでカット....-->
+        <!--
         <%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
                id: "mail_sent_button", :value => 'pdf', :name => 'format', 
                :onclick => "submitAfterValidationEmail()" %>
-               
-        <!--<%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
-               id: "mail_sent_button",  :value => 'pdf', :name => 'format', 
-              :onclick => "submitAfterValidationEmail()" %>-->
+        -->
         
-        <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
+        
+        <%= f.button_tag "登録", :type => 'button', name: "upd", :class => "btn btn-primary", 
                :onclick => "submitAfterValidation(0)" %>
         
         <!--add200427-->
@@ -176,9 +185,6 @@
         <!--<%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" , 
              formtarget: "_blank" , :onclick => "submitFax()") %>-->
         
-        <%= f.button_tag( 'ＦＡＸ', :type => 'button', :class => "btn btn-lime500_ftg" , 
-             form: {target: '_blank'},  :onclick => "submitFax()") %>
-        
         <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
         
         <!--<%= f.button_tag( '注文書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
@@ -187,6 +193,9 @@
          <%= f.button_tag( '注文書', :type => 'button', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitPurchaseOrder()") %>
          
+         <%= f.button_tag( 'ＦＡＸ', :type => 'button', :class => "btn btn-lime500_ftg" , 
+             form: {target: '_blank'},  :onclick => "submitFax()") %>
+             
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません（動作不安定により）-->
 		 
@@ -293,7 +302,10 @@
 		 }
 	   });
 	  
-       $(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
+     $(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
+	   //rails6
+	   //init_select2(".searchableSelect1_1", 1);
+	   
 	   //資材リスト操作後処理(既に登録済み)
 	   $( ".searchableSelect1_1" ).on("select2:open", function (e) {
 	       //一旦ここでY座標を取得
@@ -418,9 +430,60 @@ gTop = 0;
 
 gTrigger = false;
 
+
+$('form').on('cocoon:after-insert', function() {
+  /* apply select2 styling */ 
+  //$(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
+  //field = $(inserted_item).find(".searchableSelect1_1")
+  //init_select2(".searchableSelect1_1", 1);
+    
+  //debugger;
+})
+
+function init_select2(selector, type){
+  if (type == 1){
+    $(selector).select2({
+      theme: "classic",
+      placeholder: MESSAGE_LIST,
+      allowClear: true
+    });
+  }else if (type == 2){
+    $(selector).select2({
+      theme: "classic",
+      tags: true
+    });
+  }else if (type == 3){
+    $(selector).select2({
+      theme: "classic",
+      placeholder: MESSAGE_LIST,
+      allowClear: true,
+      tags: true
+    });
+  }else if (type == 4){
+    //単位用
+    $(selector).select2({
+      theme: "classic"
+    });
+  }else if (type == 5){
+    //分類用
+    $(selector).select2({
+      theme: "classic",
+      placeholder: "-",
+      allowClear: true,
+      tags: true
+    });
+  }
+  
+};
+
+
+//init_select2(".searchableSelect1_1", 2);
+
 //明細フォーム新規追加時の制御
 //※更新時は、上記の"document.loadで発生するので、同様に直す！"
 $(document).bind('cocoon:after-insert', function(e,inserted_item) {
+   
+    //debugger;
    
     //連番をセットする
     $.get("<%= purchase_order_historiez_set_sequence_path %>",
@@ -433,7 +496,11 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
     ///////
     //明細フォーム用(追加時のみ、ここが使用されるらしい。)
 	//検索可能なリストボックス(品名の場合)
-    $(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
+    //rails6対応
+    field = $(inserted_item).find(".searchableSelect1_1")
+    init_select2(field, 1);   
+    //
+    //$(".searchableSelect1_1").select2({ theme: "classic", allowClear: true , placeholder: MESSAGE_LIST  });
     
 	 $( ".searchableSelect1_1" ).change(function(e) {
      //$('.searchableSelect1_1').on("select2:close", function (e) {
@@ -481,7 +548,11 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
 	   });
 	   
    //単位
-       $(".searchableSelect1_2").select2({ theme: "classic" });
+    //$(".searchableSelect1_2").select2({ theme: "classic" });
+    //rails6対応
+    field = $(inserted_item).find(".searchableSelect1_2")
+    init_select2(field, 4);   
+    
        
 	 //単位操作後の処理(新規追加時)
 	   $( ".searchableSelect1_2" ).on("select2:open", function (e) {
@@ -514,8 +585,10 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
        
 	   
 	   //メーカー(新規追加時)
-       //$(".searchableSelect1_3").select2({ theme: "classic" });
-       $(".searchableSelect1_3").select2({ theme: "classic", tags: true, allowClear: true , placeholder: MESSAGE_LIST});
+     //$(".searchableSelect1_3").select2({ theme: "classic", tags: true, allowClear: true , placeholder: MESSAGE_LIST});
+	   //Rails6対応
+	   field = $(inserted_item).find(".searchableSelect1_3")
+     init_select2(field, 3);
 	   
 	   //メーカー操作後の処理(新規追加時)
 	   $( ".searchableSelect1_3" ).on("select2:open", function (e) {
@@ -538,8 +611,12 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
 	   });
        
        //
-       //$(".searchInsertMaterial").select2({ theme: "classic", tags: true, allowClear: true , placeholder: MESSAGE_LIST });
-       $(".searchInsertMaterial").select2({ theme: "classic", tags: true });
+       //$(".searchInsertMaterial").select2({ theme: "classic", tags: true });
+       //rails6対応
+       field = $(inserted_item).find(".searchInsertMaterial")
+       init_select2(field, 2);   
+    
+       
        $(".searchInsertMaterial").change(function(e) {
           searchItemCode(this);
        });
@@ -561,7 +638,11 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
        //
        //add190226
        //分類
-       $(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+       //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+       //rails6対応
+       field = $(inserted_item).find(".searchableSelect1_4")
+       init_select2(field, 5);   
+       
        $( ".searchableSelect1_4" ).change(function(e) {
          obj = $(this);
 		 //分類からアイテム抽出する
@@ -938,6 +1019,8 @@ function dispDiv() {
      
      //del230508
      setTimeout("reloadDiv()", 5000);
+     //test
+     //setTimeout("reloadDiv()", 10000);
      //setTimeout("reloadDiv()", 30000);
        
 	   //setTimeout(reloadDiv(), 30000);  

@@ -9,7 +9,9 @@
   <!--<%= f.input :purchase_order_history_id,  input_html:{ id: "purchase_order_history_id" }, as: :hidden %>-->
   <%= f.label :品番選択, {style: 'width:770px'}  %>
   <%= f.label :単位, {style: 'width:50px;margin-left:-85px;'}  %>
+  <!--
   <%= f.label :メール送信フラグ, {style: 'width:120px;margin-left:-5px;'}  %>
+  -->
   </br>
   <!--マスター類はあらかじめセットされた変数から取得-->
   <%= f.collection_select :material_id, @material_masters.all, :id, :p_material_code_name, {:selected => f.object.material_id || 1} , 
@@ -22,8 +24,15 @@
     <%= f.collection_select :unit_master_id, @unit_masters.all, :id, :unit_name, {:selected => f.object.unit_master_id || 3} , 
         { id: "unit_master_id", class: "searchableSelect1_2" , style: 'width:50px' } %>
   
+  <!--Activemail使えないためカット
   <%= f.select :mail_sent_flag, Order.mail_flag, {:include_blank => true}, 
        {id:'mail_sent_flag', :class => "my-custom-class", style: 'width:120px;margin-left:0px;font-size:16px;font-weight:bold;color:red;' } %>
+  -->
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
   
   <!--以下スペースあり-->
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

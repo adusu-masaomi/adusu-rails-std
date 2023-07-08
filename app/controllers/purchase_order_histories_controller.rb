@@ -298,7 +298,8 @@ class PurchaseOrderHistoriesController < ApplicationController
       #ここは直で仕入先ID取るべきかも?
       @supplier_responsible = SupplierResponsible.where(:supplier_master_id => 
       @purchase_order_history.purchase_order_datum.supplier_master.id)
-
+      
+      
     end
 
     def get_max_seq
@@ -329,30 +330,57 @@ class PurchaseOrderHistoriesController < ApplicationController
       #@seq = 0
 
       flag_nil = false
-
+      
+      #binding.pry
+      
       if $purchase_order_history.nil?
         flag_nil = true
       else
+        #ここがおかしい？？？(230707)
         if $purchase_order_history .purchase_order_datum_id != params[:id].to_i
           flag_nil = true
         end
       end
+
+      #binding.pry
 
       #ここでは例外的に、newをする
       if flag_nil == true
 
         @purchase_order_history = PurchaseOrderHistory.new
         #NoデータのIDと工事IDをセット。
-        if params[:id].present?
-          @purchase_order_data  = PurchaseOrderDatum.find(params[:id])
-        else
+        
+        #binding.pry
+        
+        if $id.present?
           @purchase_order_data  = PurchaseOrderDatum.find($id)
+        elsif params[:purchase_order_history].present? && 
+              params[:purchase_order_history][:purchase_order_datum_id].present?
+          @purchase_order_data  = PurchaseOrderDatum.find(params[:purchase_order_history][:purchase_order_datum_id])
+        elsif params[:id].present?
+          #予期せぬID??
+          #@purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+          #upd230707
+          if PurchaseOrderDatum.where(:id => params[:id]).exists?
+            @purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+          end
         end
-
-        @purchase_order_history.purchase_order_datum_id = @purchase_order_data.id
-        #デフォルトの仕入業者をセット
-        @purchase_order_history.supplier_master_id = @purchase_order_data.supplier_master_id
-
+        #if params[:id].present?
+        #  #↑変なIDが来る？？
+        #  #@purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+        #  #upd230707
+        #  if PurchaseOrderDatum.where(:id => params[:id]).exists?
+        #    @purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+        #  end
+        #else
+        #  @purchase_order_data  = PurchaseOrderDatum.find($id)
+        #end
+        
+        if @purchase_order_data.present?
+          @purchase_order_history.purchase_order_datum_id = @purchase_order_data.id
+          #デフォルトの仕入業者をセット
+          @purchase_order_history.supplier_master_id = @purchase_order_data.supplier_master_id
+        end
         #リロード用（注文業者をセット）
         if @purchase_order_history.supplier_master_id.blank?   #addd170914
           if $supplier_master_id.present?
@@ -364,8 +392,10 @@ class PurchaseOrderHistoriesController < ApplicationController
           @purchase_order_history.purchase_order_date = $purchase_order_date
         end
         #add170721
-        @supplier_master = SupplierMaster.find(@purchase_order_data.supplier_master_id)
-      else
+        if @purchase_order_data.present?
+          @supplier_master = SupplierMaster.find(@purchase_order_data.supplier_master_id)
+        end
+     else
 
         @purchase_order_history = $purchase_order_history 
         #@purchase_order_history = @purchase_order_history_saved  
@@ -376,10 +406,18 @@ class PurchaseOrderHistoriesController < ApplicationController
         #add170719 呼び出さない不具合対応
         #@purchase_order_history.orders.build
         #@purchase_order_history.build_orders
+        
+        #restore 230708
+        #if @purchase_order_history.orders.blank?
+        #  @purchase_order_history.orders.build
+        #end
+        
         #@purchase_order_history.assign_attributes(purchase_order_history_params)
 
       end
-
+      
+      #binding.pry
+      
       if @purchase_order_history.present?
 
         #kaminariは更新でうまくいかないので一旦保留・・・
@@ -457,31 +495,36 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     #既存のデータを取得する(日付・仕入先指定後。)
     def get_data
-    #
-    $purchase_order_history = PurchaseOrderHistory.find_by(purchase_order_datum_id: params[:purchase_order_datum_id], 
-    purchase_order_date: params[:purchase_order_date] , supplier_master_id: params[:supplier_master_id])
+      #
+      $purchase_order_history = PurchaseOrderHistory.find_by(purchase_order_datum_id: params[:purchase_order_datum_id], 
+      purchase_order_date: params[:purchase_order_date] , supplier_master_id: params[:supplier_master_id])
+      #
+      
+      
+      #idが乱立するケースがあるようだ......
+      #binding.pry
+      
+      $delivery_place_flag = nil
+      #session変数がajaxと上手く連携できないため、ここだけやむなくglobalを使う
+      #session[:delivery_place_flag] = nil
 
-    #
+      if $purchase_order_history.nil?
+        $purchase_order_date = params[:purchase_order_date]
+        $supplier_master_id = params[:supplier_master_id]
+        $delivery_place_flag = params[:delivery_place_flag]
+        #session[:delivery_place_flag] = params[:delivery_place_flag]
+      else 
+        $purchase_order_date = nil
+        $supplier_master_id = nil
+      end
 
-    $delivery_place_flag = nil
-    #session変数がajaxと上手く連携できないため、ここだけやむなくglobalを使う
-    #session[:delivery_place_flag] = nil
-
-    if $purchase_order_history.nil?
-      $purchase_order_date = params[:purchase_order_date]
-      $supplier_master_id = params[:supplier_master_id]
-      $delivery_place_flag = params[:delivery_place_flag]
-      #session[:delivery_place_flag] = params[:delivery_place_flag]
-    else 
-      $purchase_order_date = nil
-      $supplier_master_id = nil
     end
-
-  end
 
   # POST /purchase_order_histories
   # POST /purchase_order_histories.json
   def create
+
+    #binding.pry
 
     $id = params[:purchase_order_history][:purchase_order_datum_id]
 
@@ -494,6 +537,7 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     #メール送信済みフラグをセット
     #set_mail_sent_flag
+    #binding.pry
 
     respond_to do |format|
       #if PurchaseOrderHistory.create(purchase_order_history_params)
@@ -542,11 +586,19 @@ class PurchaseOrderHistoriesController < ApplicationController
     #パラーメータ補完する
     set_params_complement
 
+    #binding.pry
+
     respond_to do |format|
 
       #format.html
-
-      if @purchase_order_history.update(purchase_order_history_params)
+      
+      #format.any ##???
+      format.any { render json: purchase_order_history_params}
+      
+      @purchase_order_history.attributes = purchase_order_history_params
+      #@quotation_headers.save(:validate => false)
+      if @purchase_order_history.save!
+      #if @purchase_order_history.update(purchase_order_history_params)
 
         #臨時FAX用
         #save_only_flag = true
@@ -560,9 +612,6 @@ class PurchaseOrderHistoriesController < ApplicationController
 
         #メール送信の場合
         if params[:purchase_order_history][:sent_flag] == "1"
-
-          #redirect_to purchase_order_data_path(
-          # :construction_id => params[:construction_id] , :move_flag => params[:move_flag] ) and return
 
           redirect_to request.referer, alert: "Successfully sending message"  #ここでalertを適当に入れないと下部のflashメッセージが出ない。
           flash[:notice] = "メールを送信しました。"

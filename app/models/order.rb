@@ -4,12 +4,12 @@ class Order < ApplicationRecord
   #upd220107
   paginates_per 100  # 1ページあたり項目表示
   
-  belongs_to :material_master,  :foreign_key => "material_id"
-  belongs_to :unit_master
+  belongs_to :material_master, optional: true, :foreign_key => "material_id"
+  belongs_to :unit_master, optional: true
   belongs_to :purchase_order_history
-  belongs_to :purchase_order_datum
+  belongs_to :purchase_order_datum, optional: true
   
-  belongs_to :maker_master, :foreign_key => "maker_id"
+  belongs_to :maker_master,optional: true, :foreign_key => "maker_id"
   
   #this is not work well.
   #validates :quantity, numericality: {

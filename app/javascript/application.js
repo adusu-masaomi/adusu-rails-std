@@ -13,3 +13,7 @@
 //
 // const images = require.context('./images', true)
 // const imagePath = (name) => images(name, true)
+
+
+//require('jquery') //jQeryに依存しているため、ないと動かないです
+//import "cocoon"   //cocoonを動かすための記述
