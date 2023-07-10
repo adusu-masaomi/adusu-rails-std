@@ -175,7 +175,9 @@ class PurchaseDataController < ApplicationController
     #
         
 
-	@purchase_data = @q.result(distinct: true)
+    #@purchase_data = @q.result(distinct: true)
+    #Rails6
+    @purchase_data = @q.result
 	
     #add180324
     ###
@@ -217,8 +219,20 @@ class PurchaseDataController < ApplicationController
     end
     
 	#kaminari用設定。
-    if !single_record
+  if !single_record
+      #binding.pry
       @purchase_data = @purchase_data.page(params[:page])
+      
+      #@purchase_data = @purchase_data.joins(:construction_datum).page(params[:page])
+      #@purchase_data = @purchase_data.joins(:construction_datum).joins(:CustomerMaster).page(params[:page])
+      
+      #@purchase_data = @purchase_data.joins(:CustomerMaster).page(params[:page])
+      
+      #@purchase_data.includes(:construction_datum).includes(:CustomerMaster).page(params[:page])
+      
+      #User.includes(:task).order('tasks.created_at', :name).page(params[:page])
+      #@purchase_data = @purchase_data.includes(:task).page(params[:page])
+      
 	else
       #最安値の場合。一件だけ表示
       @purchase_data = @purchase_data.page(params[:page]).limit(1)
@@ -1197,6 +1211,7 @@ class PurchaseDataController < ApplicationController
         @purchase_date = @purchase_data.purchase_date
     end
     
+    ##影響ない？未確認...(標準版)
     case supplier_id
     when 37  #村山電気
       staff_id = 3

@@ -113,7 +113,11 @@
   <div class="col-lg-6" , style="margin-left : -15px">
     <%= f.input :quantity , label: "数量" , input_html:{ id: "quantity", style: 'width:220px;' , :tabindex=>"12" , :onfocusout => "calcMoney(this.form)" } %>
   </div>
+  
+  <!--標準版はカット
   <%= f.input :quantity2 , label: "数量(在庫時)" , input_html:{ id: "quantity2", :tabindex=>"20", style: 'width:100px;' } %>
+  -->
+  </br></br></br></br></br>
   
   <!--<%= link_to (button_tag "ボタン", type: 'button'), {:onclick => "calcMoney(this.form)"} %></br>-->
   <%= f.label :単位, {:class => "my-custom-class-l"}  %></br>
@@ -122,12 +126,18 @@
   <div class="col-lg-6" , style="margin-left : -15px">
     <%= f.input :purchase_unit_price, label: "仕入単価", input_html:{id:"purchase_unit_price", :tabindex=>"14" ,  style: 'width:220px;' , :onfocusout => "calcMoney(this.form)" } %>
   </div>
-  <%= f.input :purchase_unit_price2, label: "単価２(在庫時)", input_html:{id:"purchase_unit_price2", :tabindex=>"21", style: 'width:100px;' } %>
   
+  <!--標準版はカット
+  <%= f.input :purchase_unit_price2, label: "単価２(在庫時)", input_html:{id:"purchase_unit_price2", :tabindex=>"21", style: 'width:100px;' } %>
+  -->
+  </br></br></br></br></br>
+  
+  <!--標準版はカット
   <div class="col-lg-6" , style="margin-left : -15px">
     <%= f.check_box :price_disp_flag, {id:"price_disp_flag", :class => "price_disp_flag"}, '1', '0' %>
     <%= f.label_tag :price_disp_flag, '単価/金額を表示(在庫時)' %> 
   </div>
+  -->
   
   <%= f.check_box :unit_price_not_update_flag, {id:"unit_price_not_update_flag" }, '1', '0' %>
   <%= f.label_tag :unit_price_not_update_flag, '単価マスタを更新しない場合はチェック', {id:"label_unit_price_not_update_flag"} %> 
@@ -530,9 +540,10 @@
        var index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
        
        $(".searchableSupplier").val(index).trigger("change"); 
+       
+       //標準版仕様---非表示にしない
        //単価・金額(非表示)
-       //add200701
-       visibleOffOnShipping(false);
+       //visibleOffOnShipping(false);
        //
        
 	   //かつ、在庫マスターの単価を持ってくる！！
@@ -591,10 +602,11 @@
        var index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
        $(".searchableSupplier").val(index).trigger("change"); 
        
-       visibleOffOnShipping(false);
+       //標準版仕様---非表示にはしない
+       //visibleOffOnShipping(false);
        
        //かつ、在庫マスターの単価を持ってくる！！
-	   getInventoryUnitPricesAndSupplier();
+       getInventoryUnitPricesAndSupplier();
        
        //add200701
        //出庫時の単価の計算
@@ -643,8 +655,11 @@
             if (obj == ""){
               alert('在庫登録されてないか、在庫がありません。単価を確認後\n入力して下さい。');
               visibleOffOnShipping(true);  //単価表示させる
+            //}
+              
             }else{
-              visibleOffOnShipping(false);  //単価(非表示)
+              //標準版は非表示にしない
+              //  visibleOffOnShipping(false);  //単価(非表示)
               
               //金額のあった場合は、金額計算させる
               //add200707

@@ -400,7 +400,8 @@ class ApplicationController < ActionController::Base
   
   #仕入区分
   $INDEX_DIVISION_PURCHASE = 1    #仕入 add180324
-  $INDEX_DIVISION_SHIPPING = 5    #出庫 
+  #$INDEX_DIVISION_SHIPPING = 5    #出庫
+  $INDEX_DIVISION_SHIPPING = 4    #出庫  標準版仕様
   
   #在庫の区分
   $INDEX_INVENTORY_STOCK = 0       #入庫

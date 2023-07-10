@@ -300,6 +300,8 @@ class InventoriesController < ApplicationController
     #warehouse_id = 1
     #location_id = 1
     
+    binding.pry
+    
     #@inventory = Inventory.where(material_master_id: @inventory_history.material_master_id, warehouse_id: warehouse_id, 
     #                          location_id: location_id ).first
      
