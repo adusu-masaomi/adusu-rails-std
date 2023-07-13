@@ -1,6 +1,6 @@
 <%- model_class = WorkingSubcategory -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 
    <%= search_form_for @q do |f| %>
     <%= f.label :working_category_id, 'カテゴリー(主)：：' %>

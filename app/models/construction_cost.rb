@@ -34,7 +34,8 @@ class ConstructionCost < ApplicationRecord
   validates :construction_datum_id, uniqueness: true # 値がユニークであれば検証成功
 
   #demo版対応
-  validate :construction_cost_must_be_within_limit, on: :create
+  #ここは解除中(230711)
+  #validate :construction_cost_must_be_within_limit, on: :create
 
   #demo版対応
   def construction_cost_must_be_within_limit

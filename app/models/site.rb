@@ -2,7 +2,9 @@ class Site < ApplicationRecord
 
   #demo版対応
   MAX_RECORD_COUNT = 5
-
+  
+  paginates_per 200  # 1ページあたり項目表示
+  
   #demo版対応
   validate :site_matter_must_be_within_limit, on: :create
 

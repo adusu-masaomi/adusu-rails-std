@@ -191,11 +191,12 @@ class InvoiceHeadersController < ApplicationController
       format.json { head :no_content }
     end
 	
+    #標準版は抹消
     #資金繰りのデータも削除 (add200127)
-    args = ["DELETE FROM account_cash_flow_detail_actual where invoice_header_id = ?" , 
-                                    @invoice_header_id]
-    sql = ActiveRecord::Base.send(:sanitize_sql_array, args)
-    result_params = ActiveRecord::Base.connection.execute(sql)
+    #args = ["DELETE FROM account_cash_flow_detail_actual where invoice_header_id = ?" , 
+    #                                @invoice_header_id]
+    #sql = ActiveRecord::Base.send(:sanitize_sql_array, args)
+    #result_params = ActiveRecord::Base.connection.execute(sql)
     #add end    
     
     #内訳も消す
@@ -204,10 +205,10 @@ class InvoiceHeadersController < ApplicationController
     #明細も消す
     InvoiceDetailMiddleClassification.where(invoice_header_id: @invoice_header_id).destroy_all
     
-    #add230125
+    #標準版は抹消
     #入金・日次入出金ファイルをここで抹消
-    destroy_deposit
-    delete_daily_cash_flow
+    #destroy_deposit
+    #delete_daily_cash_flow
   end
   
   #入金ファイルを抹消

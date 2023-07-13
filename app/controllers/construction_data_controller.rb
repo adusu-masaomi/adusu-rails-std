@@ -280,7 +280,6 @@ class ConstructionDataController < ApplicationController
         #OneDrive用のディレクトリを作る
         #makeDocumentsFolder
         
-        
         #工事費集計表データも空で作成(データ存在しない場合のみ)
         #add170330
         construction_cost = ConstructionCost.where(:construction_datum_id => @construction_datum.id).first
@@ -290,6 +289,7 @@ class ConstructionDataController < ApplicationController
 
             @construction_cost = ConstructionCost.create(construction_cost_params)
         end
+                
         #
         if document_flag = false
           format.html { redirect_to @construction_datum, notice: 'Construction datum was successfully updated.' }
@@ -459,7 +459,7 @@ class ConstructionDataController < ApplicationController
   
     numeric = false
     @site = nil
-  
+    
     if isNumeric(params[:construction_datum][:site_id])
       numeric = true
       #@site = Site.find(params[:construction_datum][:site_id])
@@ -472,8 +472,9 @@ class ConstructionDataController < ApplicationController
     
     if @site.nil?
       
-      #if numeric == false
-      if numeric == false && params[:construction_datum][:site_id] != ""
+      #if numeric == false && params[:construction_datum][:site_id] != ""
+      #upd230711
+      if numeric == false && params[:construction_datum][:site_id].present?
       #文字の場合(コード入力はないものとする)
         site_params = {name: params[:construction_datum][:site_id], post: params[:construction_datum][:post], 
                        address: params[:construction_datum][:address], house_number: params[:construction_datum][:house_number],

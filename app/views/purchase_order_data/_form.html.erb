@@ -46,10 +46,12 @@
   </br></br></br></br>
   <!-- -->
   
+  <!--標準版はカット
   <%= f.input :search_character, label:"検索頭文字(半角アルファベット入力で検索／頭文字は仕入先マスターで設定可)", input_html:{ id:"search_character" , style: 'width:50px', :tabindex=>"6", :onkeyup => "getSupplier()" } %>
+  -->
   
   <%= f.label :仕入先 , {:class => "my-custom-class-l"} %></br>
-  <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {}, {id:"supplier_master_id", class: "searchableSupplier" , style: 'width:430px', :tabindex=>"7"} %></br></br>
+  <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {}, {id:"supplier_master_id", class: "searchableSupplier" , style: 'width:430px', :tabindex=>"6"} %></br></br>
   
   <% if @supplier_responsibles.blank? %>
      <% @supplier_responsibles = SupplierResponsible.all %>
@@ -60,7 +62,7 @@
     <!--<%= f.collection_select :supplier_responsible_id, SupplierResponsible.all, :id, :responsible_name, {:include_blank => true}, 
                  {id:"supplier_responsible_id", class: "searchableResponsible" , style: 'width:220px', :tabindex=>"8"} %>-->
     <%= f.collection_select :supplier_responsible_id, @supplier_responsibles, :id, :responsible_name, {:include_blank => true}, 
-                 {id:"supplier_responsible_id", class: "searchableResponsible" , style: 'width:220px', :tabindex=>"8"} %>
+                 {id:"supplier_responsible_id", class: "searchableResponsible" , style: 'width:220px', :tabindex=>"7"} %>
   </div>
   
   <div class="col-lg-3", style="margin-left : -60px">
@@ -73,7 +75,7 @@
     
     
     <%= k.collection_select :responsible_email, @supplier_responsible_emails, :id, :responsible_email, {:include_blank => true}, 
-                 {id:"supplier_responsible_email", class: "searchableEmail" , style: 'width:420px', :tabindex=>"9"} %>
+                 {id:"supplier_responsible_email", class: "searchableEmail" , style: 'width:420px', :tabindex=>"8"} %>
   <% end %>
   </div>
   </br>
@@ -90,9 +92,10 @@
     <!--   <%= m.input :alias_name, label:"通称" , input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>-->
     <%= m.input :alias_name, label:"通称" , as: :hidden  %>
   <% end %>
-  <%= f.input :alias_name, label:"通称／備考（メール送信しない場合は”備考”としても登録ができます。）" , 
-           input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"10"}  %>
-  
+  <!--<%= f.input :alias_name, label:"通称／備考（メール送信しない場合は”備考”としても登録ができます。）" , 
+           input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>-->
+  <%= f.input :alias_name, label:"通称" , 
+           input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>
   
   <!--標準版はカット
   <%= f.check_box :mail_sent_flag,  { :id => "mail_sent_flag",  :class => "mail_sent_flag"} , '1', '0' %> 
@@ -116,8 +119,10 @@
   
   <%= f.submit '登録', name: "upd", class: "btn btn-success" %>
   
+  <!--<%= button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" , 
+             formtarget: "_blank", :onclick => "submitAfterValidation()") %>-->
   <%= button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" , 
-             formtarget: "_blank" ) %>
+             formtarget: "_blank", :onclick => "return submitAfterValidation()") %>
              
   <!--<%= button_tag( 'ＦＡＸ', format: "pdf",  :value => 'pdf', :name => 'order_number_fax', :class => "btn btn-lime500_ftg" , 
              formtarget: "_blank" ) %>-->
@@ -150,7 +155,7 @@
          setEmail();
        });  
 	   $( ".searchableSupplier" ).on("select2:close", function (e) {
-	     $('[tabindex=8]').focus(); 
+	     $('[tabindex=7]').focus(); 
 	   });
 	   
        $(".searchableResponsible").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
@@ -164,7 +169,7 @@
            getEmail()
        });
        $( ".searchableResponsible" ).on("select2:close", function (e) {
-	     $('[tabindex=9]').focus(); 
+	     $('[tabindex=8]').focus(); 
 	   });
        //Email
        $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
@@ -174,16 +179,15 @@
 		   //setMaterialExtractByCategory(obj);
        });
        $( ".searchableEmail" ).on("select2:close", function (e) {
-	     $('[tabindex=10]').focus(); 
+	     $('[tabindex=9]').focus(); 
 	   });
        
        //メール送信ボタンをデフォルトで使用不可にさせるか否かの判定
-       //var flag = document.getElementById("mail_sent_flag").value;
-	   //if (flag == 1) {
        
-       if (document.getElementById("mail_sent_flag").checked) {
-	     document.getElementById("mail_sent_button").disabled = true;
-	   } 
+      //標準版はActiveMail使えないので削除
+      //if (document.getElementById("mail_sent_flag").checked) {
+	    // document.getElementById("mail_sent_button").disabled = true;
+	    //} 
 	   
 	   //メール送信のチェックを解除した場合に、送信ボタンを復活させる。
 	   $('.mail_sent_flag').on('change', function(){
@@ -213,6 +217,24 @@
     getEmail()
   } 
 
+  function checkBeforeSubmit(){
+    supplier_id = $('.searchableSupplier').val();
+    if (supplier_id == "" || supplier_id == "1"){
+      window.confirm('仕入先を登録してください。');
+      return false;
+    }
+    return true;
+  }
+  //標準版対応
+  function submitAfterValidation() {
+    if (checkBeforeSubmit() == true){
+      //document.forms[0].target = "_blank";  
+      //document.forms[0].submit();
+      return true;
+    }else{
+      return false;
+    }
+  }
   function checkAutoOutSourcing() {
     obj = document.getElementById("purchase_order_code").value;
 	if (obj != ""){

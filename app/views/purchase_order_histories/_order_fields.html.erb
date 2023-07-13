@@ -192,8 +192,12 @@
 	//item = document.getElementsByName("material_id[]");
 	
 	quantity = document.querySelectorAll("#quantity");
-	item = document.querySelectorAll("#material_id");
 	
+	//item = document.querySelectorAll("#material_id");
+	//Rails6対応
+	item = $('.searchableSelect1_1')
+  
+	///debugger;
 	
 	//var message = "";
 	
@@ -201,9 +205,8 @@
 	    if (quantity[i].value == undefined || quantity[i].value == 0){
 	      //debugger;
 		  itemName = item[i].options[item[i].selectedIndex].innerText;
-		  
 		  window.confirm(itemName + 'の数量を入力してください。');
-		  //message = message + itemName + 'の数量を入力してください。';
+      //window.confirm('数量を入力してください。');
 		  
 		  ok_flag = false;
 	    }

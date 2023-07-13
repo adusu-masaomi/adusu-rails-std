@@ -608,9 +608,10 @@
 	quantity = document.querySelectorAll("#quantity");
 	destroy = document.getElementsByName("_destroy[]");
 	
-	//item = document.getElementsByName("material_id[]");
-	item = document.querySelectorAll("#material_id");
-	
+	//item = document.querySelectorAll("#material_id");
+	//Rails6対応
+	item = $('.searchableSelect1_1')
+  
 	//var message = "";
 	
 	for (var i = 0; i < quantity.length ; i ++) {

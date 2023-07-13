@@ -90,11 +90,13 @@
                                              name: "construction_datum[deposit_due_date_hide][]"}, as: :hidden %>
   
   </div>
+  <!--</br></br></br></br></br></br></br>-->
   </br></br></br></br></br></br></br>
   
+  <!--標準版はカット
   <%= f.input :deposit_date, :include_blank => true, start_year: Date.today.year - 1,
                   end_year: Date.today.year + 3, input_html:{:readonly=>true} %>
-  <!--add end-->
+  -->
   
   <%= f.check_box :order_flag %> 
   <%= f.label :order_flag, "受注済", {style: 'color: purple', :tabindex=>"18"} %>

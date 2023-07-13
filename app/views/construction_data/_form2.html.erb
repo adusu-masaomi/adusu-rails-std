@@ -21,9 +21,9 @@
   <%= f.input :working_date, label: "作業日" , input_html:{ id:"working_date", style: 'width:100px;', :tabindex=>"5" }, as: :date %>
   </div>
   <div style="margin-left : -0px; margin-top : 30px; ">
-  <%= f.label :作業者, {:class => "my-custom-class-l", :style => "margin-top: -5px;"}  %></br>
-  <%= f.collection_select :staff_id, Staff.all, :id, :staff_name, {:prompt => "作業者を選択して下さい" } ,
-         {id:"staff_id", class: "my-custom-class" , style: 'width:250px;margin-top: 0px;' }  %>
+  <%= f.label :作業責任者, {:class => "my-custom-class-l", :style => "margin-top: -5px;"}  %></br>
+  <%= f.collection_select :staff_id, Staff.all, :id, :staff_name, {:prompt => "作業責任者を選択して下さい" } ,
+         {id:"staff_id", class: "my-custom-class" , style: 'width:280px;margin-top: 0px;' }  %>
   </br></br>
   </div></br>
   

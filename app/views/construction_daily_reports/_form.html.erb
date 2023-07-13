@@ -33,7 +33,7 @@
            {id:"construction_datum_id",  class: "searchableConstructionCode" , style: 'width:400px', :tabindex=>"1" } %>
   <% end %>
   </br>
-  <%= f.label :社員, {:class => "my-custom-class-l"}  %></br>
+  <%= f.label :作業員, {:class => "my-custom-class-l"}  %></br>
   <%= f.collection_select :staff_id, Staff.all, :id, :staff_name, {:prompt => "どれか一つを選択して下さい" } , {id:"staff_id", class: "my-custom-class" , 
       :tabindex=>"2", :onchange=> "getDailyPay(this.form)" }  %>
   <%= f.collection_select :daily_pay, Staff.all, :id, :daily_pay, {:selected => @construction_daily_report.staff_id} , { id:"daily_pay" , :readonly => true } %>
