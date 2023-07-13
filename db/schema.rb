@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_01_001330) do
+ActiveRecord::Schema.define(version: 2023_07_13_041500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,10 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.string "email"
     t.string "invoice_number"
     t.integer "estimate_labor_cost"
+    t.string "responsible_order"
+    t.string "responsible_estimate"
+    t.string "responsible_invoice"
+    t.string "responsible_delivery"
     t.string "bank_name_1"
     t.string "bank_branch_name_1"
     t.integer "account_type_1"
@@ -97,9 +101,13 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.time "start_time_2"
     t.time "end_time_2"
     t.integer "working_times"
-    t.decimal "man_month", precision: 6, scale: 3
+    t.decimal "man_month"
     t.integer "labor_cost"
     t.string "working_details"
+    t.integer "is_one_day_work"
+    t.integer "is_no_break_time_1"
+    t.integer "is_no_break_time_2"
+    t.integer "is_no_break_time_3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -455,7 +463,7 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.integer "deposit_amount"
     t.integer "payment_method_id"
     t.integer "commission"
-    t.integer "payment_date"
+    t.date "payment_date"
     t.integer "labor_insurance_not_flag"
     t.integer "last_line_number"
     t.string "remarks"
@@ -928,12 +936,12 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "working_categories", id: :serial, force: :cascade do |t|
@@ -994,12 +1002,13 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "working_specific_middle_items", id: :serial, force: :cascade do |t|
+  create_table "working_specific_middle_items", force: :cascade do |t|
     t.integer "quotation_header_id"
     t.integer "delivery_slip_header_id"
     t.string "working_middle_item_name"
     t.string "working_middle_item_short_name"
     t.integer "working_middle_item_category_id"
+    t.integer "working_subcategory_id"
     t.string "working_middle_specification"
     t.integer "working_unit_id"
     t.string "working_unit_name"
@@ -1016,11 +1025,11 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.float "labor_productivity_unit_total"
     t.integer "material_cost_total"
     t.integer "seq"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "working_specific_small_items", force: :cascade do |t|
+  create_table "working_specific_small_items", id: :serial, force: :cascade do |t|
     t.integer "working_specific_middle_item_id"
     t.integer "working_small_item_id"
     t.string "working_small_item_code"
@@ -1032,8 +1041,8 @@ ActiveRecord::Schema.define(version: 2023_07_01_001330) do
     t.integer "maker_master_id"
     t.integer "unit_master_id"
     t.float "labor_productivity_unit"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "working_subcategories", id: :serial, force: :cascade do |t|
