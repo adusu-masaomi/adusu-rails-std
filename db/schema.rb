@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_13_041500) do
+ActiveRecord::Schema.define(version: 2023_07_14_013849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2023_07_13_041500) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "companies", id: :serial, force: :cascade do |t|
+  create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "representative_title"
     t.string "representative_name"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 2023_07_13_041500) do
     t.string "fax"
     t.string "email"
     t.string "invoice_number"
+    t.float "estimate_material_cost_rate"
+    t.integer "estimate_execution_labor_cost"
     t.integer "estimate_labor_cost"
     t.string "responsible_order"
     t.string "responsible_estimate"
@@ -60,8 +62,8 @@ ActiveRecord::Schema.define(version: 2023_07_13_041500) do
     t.integer "account_type_3"
     t.string "account_number_3"
     t.string "holder_3"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "constants", id: :serial, force: :cascade do |t|
