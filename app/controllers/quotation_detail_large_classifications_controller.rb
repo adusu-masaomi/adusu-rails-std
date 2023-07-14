@@ -433,6 +433,8 @@ class QuotationDetailLargeClassificationsController < ApplicationController
   #作業明細マスターの更新
   def update_working_middle_item
   
+    #binding.pry
+  
     if params[:quotation_detail_large_classification][:working_large_item_id] == "1"
       if params[:quotation_detail_large_classification][:master_insert_flag] == "true"  
         @check_item = WorkingMiddleItem.find_by(working_middle_item_name: params[:quotation_detail_large_classification][:working_large_item_name] , 

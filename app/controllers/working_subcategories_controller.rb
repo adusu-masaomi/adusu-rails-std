@@ -18,7 +18,9 @@ class WorkingSubcategoriesController < ApplicationController
       if query.nil?
         query = {"working_category_id_eq"=> working_cartegory_id}
       else
-        query.store("working_category_id_eq", working_cartegory_id)
+        #query.store("working_category_id_eq", working_cartegory_id)
+        #Rails6
+        query = query.merge(working_category_id_eq: working_cartegory_id)
       end
     end
     #####
@@ -35,7 +37,9 @@ class WorkingSubcategoriesController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	
-    @working_subcategories  = @q.result(distinct: true)
+    #@working_subcategories  = @q.result(distinct: true)
+    #Rails6
+    @working_subcategories  = @q.result
     
   end
 

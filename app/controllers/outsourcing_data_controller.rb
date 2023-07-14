@@ -159,9 +159,10 @@ class OutsourcingDataController < ApplicationController
     end
     #
 
-    @purchase_data = @q.result(distinct: true)
-    
-    #
+    #@purchase_data = @q.result(distinct: true)
+    #Rails6
+    @purchase_data = @q.result
+
     #仕入区分のみで検索をした場合は、"入庫"は除外する(在庫区分がヌルの場合のみ検索)。納品書チェックしたい場合等。
     if params[:q].present? && 
        params[:q][:division_id_eq] == $INDEX_DIVISION_PURCHASE.to_s && params[:q][:inventory_division_id_eq] == ""

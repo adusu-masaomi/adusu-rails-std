@@ -24,7 +24,10 @@ class CustomerMastersController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	
-    @customer_masters  = @q.result(distinct: true)
+    #@customer_masters  = @q.result(distinct: true)
+    #Rails6
+    @customer_masters  = @q.result
+
     @customer_masters  = @customer_masters.page(params[:page])
     
     

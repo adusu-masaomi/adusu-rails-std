@@ -28,7 +28,8 @@
 <%= link_to "一覧へ",
             invoice_headers_path(),
             :class => 'btn btn-info keep-disp' %>
-<%= link_to "請求書(提出用)PDF",
+<!--請求書(提出用)PDFをリネーム-->
+<%= link_to "　　請求書PDF　　",
             invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "1", format: "pdf"),
             :class => 'btn btn-indigo500_ftg keep-disp' , :target=>["_blank"] %>
 <!--

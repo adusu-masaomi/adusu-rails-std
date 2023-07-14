@@ -22,7 +22,9 @@ class InventoryHistoriesController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	
-    @inventory_histories  = @q.result(distinct: true)
+    #@inventory_histories  = @q.result(distinct: true)
+    #Rails6
+    @inventory_histories  = @q.result
     
     #kaminari用設定
     @inventory_histories  = @inventory_histories.page(params[:page])

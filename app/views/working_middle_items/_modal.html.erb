@@ -76,7 +76,8 @@
         
         <%= f.input :working_middle_item_name, input_html:{:tabindex=> "6", style: 'width:500px' } %>
         <%= f.input :working_middle_specification, input_html:{:tabindex=>"7", style: 'width:500px' } %>
-        <%= f.label :"単位" , {:class => "my-custom-class-l"} %></br>
+        <!--<%= f.label :"単位" , {:class => "my-custom-class-l"} %>-->
+        </br>
         
 		<div class="col-md-5" , style="margin-left : -15px;margin-top : 0px">
 		<%= f.collection_select :working_unit_id, WorkingUnit.all, :id, :working_unit_name, 

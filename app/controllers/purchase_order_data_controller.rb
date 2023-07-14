@@ -67,7 +67,10 @@ class PurchaseOrderDataController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 		
-    @purchase_order_data  = @q.result(distinct: true)
+    #@purchase_order_data  = @q.result(distinct: true)
+    #Rails6
+    @purchase_order_data  = @q.result
+
     @purchase_order_data  = @purchase_order_data.page(params[:page])
 
     @construction_data = ConstructionDatum.all

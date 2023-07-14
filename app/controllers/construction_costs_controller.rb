@@ -32,8 +32,10 @@ class ConstructionCostsController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     ###
     
-    @construction_costs = @q.result(distinct: true)
-    
+    #@construction_costs = @q.result(distinct: true)
+    #Rails6
+    @construction_costs = @q.result
+
 	$construction_costs = @construction_costs
     
    respond_to do |format|

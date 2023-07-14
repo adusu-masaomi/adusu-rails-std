@@ -1,8 +1,8 @@
 class WorkingSpecificMiddleItem < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 
-   belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
-   belongs_to :MaterialMaster, :foreign_key => "material_id"
+   belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
+   belongs_to :MaterialMaster, optional: true, :foreign_key => "material_id"
    
    has_many :working_specific_small_items
    accepts_nested_attributes_for :working_specific_small_items, allow_destroy: true

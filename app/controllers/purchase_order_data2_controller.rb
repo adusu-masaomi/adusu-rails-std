@@ -12,7 +12,10 @@ class PurchaseOrderData2Controller < ApplicationController
     # @purchase_order_data = PurchaseOrderDatum.page(params[:page])
     
     @q = PurchaseOrderDatum.ransack(params[:q])   
-    @purchase_order_data  = @q.result(distinct: true)
+    #@purchase_order_data  = @q.result(distinct: true)
+    #Rails6
+    @purchase_order_data  = @q.result
+
     @purchase_order_data  = @purchase_order_data.page(params[:page])
 
 

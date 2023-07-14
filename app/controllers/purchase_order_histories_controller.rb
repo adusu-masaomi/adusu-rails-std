@@ -38,7 +38,10 @@ class PurchaseOrderHistoriesController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     ###
 
-    @purchase_order_data  = @q.result(distinct: true)
+    #@purchase_order_data  = @q.result(distinct: true)
+    #Rilas6
+    @purchase_order_data  = @q.result
+
     @purchase_order_data  = @purchase_order_data.page(params[:page])
 
     #del210827 ここは通らない???
@@ -108,7 +111,10 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     #@q = $orders.ransack(params[:q])
     @q = @orders.ransack(params[:q])
-    @orders  = @q.result(distinct: true)
+    #@orders  = @q.result(distinct: true)
+    #Rails6
+    @orders  = @q.result
+
     @orders  = @orders.page(params[:page])
 
   end
@@ -187,7 +193,10 @@ class PurchaseOrderHistoriesController < ApplicationController
       @supplier = SupplierMaster.joins(:purchase_order_data).where('purchase_order_data.construction_datum_id = ?', construction_datum_id)
       #
 
-      @orders  = @q.result(distinct: true)
+      #@orders  = @q.result(distinct: true)
+      #Rails6
+      @orders  = @q.result
+
       @orders  = @orders.page(params[:page])
 
       #global set

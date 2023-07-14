@@ -23,5 +23,7 @@ class PurchaseDivision < ApplicationRecord
     # Rails 5
     #throw :abort
   end
-  
+  def self.ransackable_attributes(auth_object = nil)
+   ["created_at", "id", "purchase_division_long_name", "purchase_division_name", "updated_at"]
+  end
 end

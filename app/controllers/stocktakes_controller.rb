@@ -22,8 +22,10 @@ class StocktakesController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	
-    @stocktakes  = @q.result(distinct: true)
-    
+    #@stocktakes  = @q.result(distinct: true)
+    #Rails6
+    @stocktakes  = @q.result
+
     #kaminari用設定
     @stocktakes  = @stocktakes.page(params[:page])
 	  #

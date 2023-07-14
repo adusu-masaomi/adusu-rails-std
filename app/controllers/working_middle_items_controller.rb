@@ -31,10 +31,14 @@ class WorkingMiddleItemsController < ApplicationController
         
       if cookies[:recent_search_history_wmi].present? && query.present?
         if eval(cookies[:recent_search_history_wmi].to_s)["working_category_id_eq"].present?
-          query.store("working_category_id_eq", eval(cookies[:recent_search_history_wmi].to_s)["working_category_id_eq"])
+          #query.store("working_category_id_eq", eval(cookies[:recent_search_history_wmi].to_s)["working_category_id_eq"])
+          #Rails6
+          query = query.merge(working_category_id_eq: eval(cookies[:recent_search_history_wmi].to_s)["working_category_id_eq"])
         end
         if eval(cookies[:recent_search_history_wmi].to_s)["working_subcategory_id_eq"].present?
-          query.store("working_subcategory_id_eq", eval(cookies[:recent_search_history_wmi].to_s)["working_subcategory_id_eq"])
+          #query.store("working_subcategory_id_eq", eval(cookies[:recent_search_history_wmi].to_s)["working_subcategory_id_eq"])
+          #Rails6
+          query = query.merge(working_subcategory_id_eq: eval(cookies[:recent_search_history_wmi].to_s)["working_subcategory_id_eq"])
         end
       end
     end

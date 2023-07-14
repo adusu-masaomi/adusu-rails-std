@@ -66,8 +66,10 @@ class ConstructionDailyReportsController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	 
-    @construction_daily_reports = @q.result(distinct: true)
-     
+    #@construction_daily_reports = @q.result(distinct: true)
+    #Rails6
+    @construction_daily_reports = @q.result
+    
     #グラフ用データとして一旦保持
     #@chart_data = @construction_daily_reports
 	 

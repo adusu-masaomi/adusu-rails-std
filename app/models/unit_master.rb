@@ -39,5 +39,9 @@ class UnitMaster < ApplicationRecord
       return ""
     end
   end
-   
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "unit_name", "updated_at"]
+  end
+
 end

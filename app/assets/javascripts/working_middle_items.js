@@ -68,3 +68,6 @@ function calcWorkingMiddleItemMaterialUnitPrice()
     //   calcOtherCost(f);
     //}  
   }
+  
+
+  
