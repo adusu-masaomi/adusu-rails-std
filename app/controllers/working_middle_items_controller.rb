@@ -187,10 +187,17 @@ class WorkingMiddleItemsController < ApplicationController
     end
     #
     
+    #binding.pry
+    
     #労務単価の初期値をセットする
     #@working_middle_item.labor_unit_price_standard ||= $LABOR_COST
-    @working_middle_item.labor_unit_price_standard ||= get_labor_cost_standard
-  
+    #@working_middle_item.labor_unit_price_standard ||= get_labor_cost_standard
+    get_labor_cost_standard
+    @working_middle_item.labor_unit_price_standard = @execution_labor_cost  #標準労務単価＝実行労務単価
+    #
+    @working_middle_item.estimate_material_cost_rate = @material_cost_rate
+    @working_middle_item.estimate_labor_cost = @labor_cost
+    #
   end
 
   # GET /working_middle_items/1/edit
@@ -202,7 +209,14 @@ class WorkingMiddleItemsController < ApplicationController
     if @working_middle_item.labor_unit_price_standard.blank?
     
       #@working_middle_item.labor_unit_price_standard = $LABOR_COST
-      @working_middle_item.labor_unit_price_standard = get_labor_cost_standard
+      get_labor_cost_standard
+      @working_middle_item.labor_unit_price_standard = @execution_labor_cost  #標準労務単価＝実行労務単価
+      
+      #
+      @working_middle_item.estimate_material_cost_rate = @material_cost_rate
+      @working_middle_item.estimate_labor_cost = @labor_cost
+      #
+      #binding.pry
     end
   
   end
@@ -211,12 +225,20 @@ class WorkingMiddleItemsController < ApplicationController
   def get_labor_cost_standard
     company = Company.first
     if company.present?
-      labor_cost = company.estimate_labor_cost
+      #labor_cost = company.estimate_labor_cost
+      @execution_labor_cost = company.estimate_execution_labor_cost
+      @labor_cost = company.estimate_labor_cost
+      @material_cost_rate = company.estimate_material_cost_rate
+      #@labor_      
     else
-      labor_cost = $LABOR_COST  #ここは基本通らない
+      @execution_labor_cost = $LABOR_COST  #ここは基本通らない
+      #ここも通らないはず..
+      @labor_cost = 10000
+      @material_cost = 1.25  #(ここに来たか?)判別できるようにあえて数値変える
+      #
     end
     
-    return labor_cost
+    #return labor_cost
   end
 
   # POST /working_middle_items

@@ -86,7 +86,12 @@
         <%= f.input :execution_unit_price, input_html:{id:"execution_unit_price", style: 'width:500px', :tabindex=>"15" }  %>
         <!--単価-->
         <%= f.input :working_unit_price, input_html:{id:"working_unit_price", style: 'width:500px', :tabindex=>"16" }   %>
-		
+       
+       <!--標準版用-->
+       <%= f.input :estimate_material_cost_rate, input_html:{id:'estimate_material_cost_rate'}, as: :hidden  %>
+       <%= f.input :estimate_labor_cost, input_html:{id:'estimate_labor_cost'}, as: :hidden  %>
+       <!-- -->
+     
 		<!-- ajax用 -->
         <%= f.input :material_id_hide, input_html:{id:'material_id_hide'}, as: :hidden  %>
 		<%= f.input :material_code_hide, input_html:{id:'material_code_hide'}, as: :hidden  %>
@@ -100,6 +105,9 @@
         <%= f.input :unit_master_id_hide, input_html:{id:'unit_master_id_hide'}, as: :hidden  %>
         <%= f.collection_select :working_subcategory_select_hide, WorkingSubcategory.order('seq').all, :id, :name,  {} , 
             {id:"working_subcategory_select_hide",  hidden: true  } %>
+        
+        <%= f.input :list_price_color_hide, input_html:{id:'list_price_color_hide'}, as: :hidden  %>
+        <%= f.input :rate_hide, input_html:{id:'rate_hide'}, as: :hidden  %>
         <!--add end-->
         
 		<!--共通マスターを更新するか否かのフラグ-->

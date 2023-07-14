@@ -123,6 +123,11 @@
         <!--単価-->
         <%= f.input :working_unit_price, input_html:{id:"working_unit_price", style: 'width:400px', :tabindex=>"16" }   %>
 		
+     <!--標準版用-->
+     <%= f.input :estimate_material_cost_rate, input_html:{id:'estimate_material_cost_rate'}, as: :hidden  %>
+     <%= f.input :estimate_labor_cost, input_html:{id:'estimate_labor_cost'}, as: :hidden  %>
+     <!-- -->
+		
 		<!-- ajax用 -->
 		<%= f.input :material_id_hide, input_html:{id:'material_id_hide'}, as: :hidden  %>
         <%= f.input :material_code_hide, input_html:{id:'material_code_hide'}, as: :hidden  %>

@@ -227,10 +227,18 @@ function calcWorkingSmallItemMaterialPrice(child_index,quantity,unit_price){
 //function calcMaterialUnitPrice()
 function calcWorkingMiddleItemMaterialUnitPrice()
 {
+   //標準版対応(230714)
+   var material_cost_rate = 1.35; //(デフォルト)
+   
+   if (document.getElementById("estimate_material_cost_rate").value != ""){
+     material_cost_rate = parseFloat(document.getElementById("estimate_material_cost_rate").value);
+   }
+   //
+    
    var obj = document.getElementById("execution_material_unit_price").value;
-   var num = obj * 1.35;
-   //num = floatFormat( num, 4 ) ;
-   //upd180316
+   //var num = obj * 1.35;
+   var num = obj * material_cost_rate;
+   
    num = Math.round(num);   //整数四捨五入とする
    document.getElementById("material_unit_price").value = num;
    var obj2 = document.getElementById("labor_productivity_unit").value;
@@ -264,14 +272,22 @@ function calcWorkingMiddleItemMaterialUnitPrice()
       //num = obj * 11000;
       num = obj * labor_unit_price_standard;  //標準版対応
       
-      
       //num = obj * 12100;   //upd200108
       //upd180316
       num = Math.round(num);   //整数四捨五入とする
       document.getElementById("execution_labor_unit_price").value = num;
+      
       //労務単価
-      num = obj * 15000;
-      //upd180316
+      //標準版対応(230714)
+      var labor_unit_price = 15000; //(デフォルト)
+      if (document.getElementById("estimate_labor_cost").value != ""){
+        labor_unit_price = parseInt(document.getElementById("estimate_labor_cost").value);
+      }
+      //
+      
+      //num = obj * 15000;
+      num = obj * labor_unit_price;
+      
       num = Math.round(num);   //整数四捨五入とする
       document.getElementById("labor_unit_price").value = num;
       

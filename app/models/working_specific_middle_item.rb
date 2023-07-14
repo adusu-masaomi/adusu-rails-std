@@ -52,6 +52,15 @@ class WorkingSpecificMiddleItem < ApplicationRecord
    attr_accessor :working_middle_item_id_select_hide
    attr_accessor :working_middle_item_short_name_select_hide
    
+   #標準版対応
+   attr_accessor :estimate_material_cost_rate
+   attr_accessor :estimate_labor_cost
+   
+   #
+   attr_accessor :list_price_color_hide 
+   attr_accessor :rate_hide   #add180726
+   #
+   
    #validation 
    #add171117
    validates :working_middle_item_name, presence: true

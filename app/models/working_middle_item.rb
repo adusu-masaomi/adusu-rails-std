@@ -37,7 +37,12 @@ class WorkingMiddleItem < ApplicationRecord
   attr_accessor :material_cost_total
   attr_accessor :labor_productivity_unit_sum
   attr_accessor :labor_cost
-   
+  
+  #標準版対応
+  attr_accessor :estimate_material_cost_rate
+  attr_accessor :estimate_labor_cost
+  #
+  
   #
   attr_accessor :master_insert_flag
   #活動フラグ判定用

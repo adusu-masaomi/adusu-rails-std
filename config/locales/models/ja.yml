@@ -217,6 +217,8 @@ ja:
          representative_title: 代表肩書
          representative_name: 代表名
          invoice_number: インボイス番号
+         estimate_material_cost_rate: 見積用材料費掛率
+         estimate_execution_labor_cost: 見積用実行労務単価
          estimate_labor_cost: 見積用労務単価
          address: 住所１
          address2: 住所２

@@ -88,11 +88,11 @@ require "csv"
 
 #render
 #会社
-CSV.foreach('db/companies.csv') do |row|
-  Company.create(:name => row[0], :representative_title => row[1], :representative_name => row[2], :post => row[3], :address => row[4] ,
-                 :house_number => row[5], :tel => row[6], :fax => row[7], :invoice_number => row[8], :estimate_material_cost_rate => row[9],
-                 :estimate_execution_labor_cost => row[10], :estimate_labor_cost => row[11] )
-end
+#CSV.foreach('db/companies.csv') do |row|
+#  Company.create(:name => row[0], :representative_title => row[1], :representative_name => row[2], :post => row[3], :address => row[4] ,
+#                 :house_number => row[5], :tel => row[6], :fax => row[7], :invoice_number => row[8], :estimate_material_cost_rate => row[9],
+#                 :estimate_execution_labor_cost => row[10], :estimate_labor_cost => row[11] )
+#end
 
 #render
 #CSV.foreach('db/working_times.csv') do |row|

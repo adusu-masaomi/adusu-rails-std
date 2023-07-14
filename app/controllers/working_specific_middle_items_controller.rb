@@ -16,22 +16,34 @@ class WorkingSpecificMiddleItemsController < ApplicationController
   def new
     @working_specific_middle_item = WorkingSpecificMiddleItem.new
 	
-	#作成中！！！！！171113
-	#呼び出した場合
-	if $working_specific_middle_item.present?
-	  @working_specific_middle_item = $working_specific_middle_item
-	  
-	  $working_specific_middle_item = nil
-	end
+    #作成中！！！！！171113
+    #呼び出した場合
+    if $working_specific_middle_item.present?
+      @working_specific_middle_item = $working_specific_middle_item
+      $working_specific_middle_item = nil
+    end
 	
-	#労務単価の初期値をセットする
-	@working_specific_middle_item.labor_unit_price_standard ||= $LABOR_COST
+    #労務単価の初期値をセットする
+    get_labor_cost_standard
+    #@working_specific_middle_item.labor_unit_price_standard ||= $LABOR_COST
+    @working_specific_middle_item.labor_unit_price_standard = @execution_labor_cost  #標準労務単価＝実行労務単価
+    @working_specific_middle_item.estimate_material_cost_rate = @material_cost_rate
+    @working_specific_middle_item.estimate_labor_cost = @labor_cost
+    #
+    
   end
 
   # GET /working_specific_middle_items/1/edit
   def edit
     #労務単価の初期値をセットする
-	@working_specific_middle_item.labor_unit_price_standard ||= $LABOR_COST
+    #@working_specific_middle_item.labor_unit_price_standard ||= $LABOR_COST
+    #労務単価の初期値をセットする
+    get_labor_cost_standard
+    #@working_specific_middle_item.labor_unit_price_standard ||= $LABOR_COST
+    @working_specific_middle_item.labor_unit_price_standard = @execution_labor_cost  #標準労務単価＝実行労務単価
+    @working_specific_middle_item.estimate_material_cost_rate = @material_cost_rate
+    @working_specific_middle_item.estimate_labor_cost = @labor_cost
+    #
   end
 
   # POST /working_specific_middle_items
@@ -139,6 +151,26 @@ class WorkingSpecificMiddleItemsController < ApplicationController
     end
   end
 
+  
+   #標準仕様---労務単価の初期値を取得
+  def get_labor_cost_standard
+    company = Company.first
+    if company.present?
+      #labor_cost = company.estimate_labor_cost
+      @execution_labor_cost = company.estimate_execution_labor_cost
+      @labor_cost = company.estimate_labor_cost
+      @material_cost_rate = company.estimate_material_cost_rate
+      #@labor_      
+    else
+      @execution_labor_cost = $LABOR_COST  #ここは基本通らない
+      #ここも通らないはず..
+      @labor_cost = 10000
+      @material_cost = 1.25  #(ここに来たか?)判別できるようにあえて数値変える
+      #
+    end
+    
+    #return labor_cost
+  end
   
   #共通マスターへのパラメータをセット
   #def set_master_common_parameters

@@ -84,7 +84,7 @@
 		
         <%= f.input :working_middle_item_name, label_html:{ style: "margin-left : -0px" }, input_html:{:tabindex=> "7", style: 'width:500px' } %>
         <%= f.input :working_middle_specification, input_html:{:tabindex=>"8", style: 'width:500px' } %>
-        <%= f.label :"単位" , {:class => "my-custom-class-l"} %></br>
+        <!--<%= f.label :"単位" , {:class => "my-custom-class-l"} %>--></br>
         
 		<div class="col-md-5" , style="margin-left : -15px;margin-top : 0px">
 		<%= f.collection_select :working_unit_id, WorkingUnit.all, :id, :working_unit_name, 
@@ -123,7 +123,13 @@
         <%= f.input :execution_unit_price, input_html:{id:"execution_unit_price", style: 'width:500px', :tabindex=>"16" }  %>
         <!--単価-->
         <%= f.input :working_unit_price, input_html:{id:"working_unit_price", style: 'width:500px', :tabindex=>"17" }   %>
-		
+     
+     
+     <!--標準版用-->
+     <%= f.input :estimate_material_cost_rate, input_html:{id:'estimate_material_cost_rate'}, as: :hidden  %>
+     <%= f.input :estimate_labor_cost, input_html:{id:'estimate_labor_cost'}, as: :hidden  %>
+     <!-- -->
+     
 		<!-- ajax用 -->
         <%= f.input :material_id_hide, input_html:{id:'material_id_hide'}, as: :hidden  %>
         <%= f.input :material_code_hide, input_html:{id:'material_code_hide'}, as: :hidden  %>
@@ -138,6 +144,7 @@
             {id:"working_subcategory_select_hide",  hidden: true  } %>
         <!--add180331-->
         <%= f.input :list_price_color_hide, input_html:{id:'list_price_color_hide'}, as: :hidden  %>
+        <%= f.input :rate_hide, input_html:{id:'rate_hide'}, as: :hidden  %>
         
 		<!--コントローラ側に画面遷移用のパラメータを渡すためのタグ。--> 
        <%= f.hidden_field_tag(:move_flag, params[:move_flag], {id: "move_flag"}) %>

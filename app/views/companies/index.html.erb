@@ -60,6 +60,9 @@
 </table>
 
 <!--新規ボタンも使用不可に-->
+<!--<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_company_path,
+            :class => 'btn btn-primary', disabled: true %>-->
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_company_path,
-            :class => 'btn btn-primary', disabled: true %>
+            :class => 'btn btn-primary' %>
