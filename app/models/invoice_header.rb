@@ -2,7 +2,7 @@ class InvoiceHeader < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
 
   belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
    
@@ -18,10 +18,10 @@ class InvoiceHeader < ApplicationRecord
   validates :invoice_code, presence:true, uniqueness: true
 
   #demo版対応
-  validate :invoice_header_matter_must_be_within_limit, on: :create
+  validate :invoice_header_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def invoice_header_matter_must_be_within_limit
+  def invoice_header_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if InvoiceHeader.count >= MAX_RECORD_COUNT
   end
  

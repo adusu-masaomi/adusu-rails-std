@@ -453,8 +453,10 @@ class LaborCostSummaryPDF
   
   def self.setRow()
     
-    @tmp_working_date = "#{@working_date.strftime('%m')}／#{@working_date.strftime('%d')}"
-      
+    if @working_date.present?  #add230715
+      @tmp_working_date = "#{@working_date.strftime('%m')}／#{@working_date.strftime('%d')}"
+    end
+    
     #0なら非表示にする
     #id=1
     if @man_month_1 == 0

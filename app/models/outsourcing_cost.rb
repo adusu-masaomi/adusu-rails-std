@@ -1,6 +1,6 @@
 class OutsourcingCost < ApplicationRecord
   #demo
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   belongs_to :construction_datum, optional: true
   belongs_to :purchase_order_datum, optional: true  #upd190930

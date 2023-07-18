@@ -2,7 +2,17 @@ class InvoiceDetailLargeClassification < ApplicationRecord
   belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
   belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
   
+  #demo版対応
+  MAX_RECORD_COUNT = 10
+  
   has_many :invoice_detail_middle_classifications
+  #demo版対応---保留中
+  #validate :invoice_detail_large_classification_count_must_be_within_limit, on: :create
+
+  #demo版対応
+  def invoice_detail_large_classification_count_must_be_within_limit
+    errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if InvoiceDetailLargeClassification.count >= MAX_RECORD_COUNT
+  end
 
   def self.choices 
     [["項目", 1], ["備考", 2]] 

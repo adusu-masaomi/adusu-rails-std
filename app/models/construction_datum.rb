@@ -3,7 +3,7 @@ class ConstructionDatum < ApplicationRecord
   before_destroy :ensure_id
   
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
   
   #kaminari用設定
   paginates_per 200  # 1ページあたり項目表示

@@ -3,7 +3,7 @@ class SupplierResponsible < ApplicationRecord
   has_many :purchase_order_datum
 
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
 
   #demo版対応
   validate :supplier_responsible_count_must_be_within_limit, on: :create

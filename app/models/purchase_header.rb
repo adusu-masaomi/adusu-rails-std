@@ -2,7 +2,7 @@ class PurchaseHeader < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   #demo版対応
   validate :purchase_header_count_must_be_within_limit, on: :create

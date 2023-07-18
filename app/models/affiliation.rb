@@ -1,7 +1,7 @@
 class Affiliation < ApplicationRecord
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
 
   #demo版対応
   validate :affiliation_count_must_be_within_limit, on: :create

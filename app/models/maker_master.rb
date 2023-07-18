@@ -1,7 +1,7 @@
 class MakerMaster < ApplicationRecord
   paginates_per 100  # 1ページあたり項目表示(index.html)
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
   
   before_destroy :ensure_id
 

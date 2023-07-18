@@ -2,7 +2,7 @@ class PurchaseUnitPrice < ApplicationRecord
   self.primary_keys = :supplier_id, :material_id
 
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
 
   #belongs_to :supplier_masters, :foreign_key => "supplier_id"
   belongs_to :SupplierMaster, optional: true, :foreign_key => "supplier_id"

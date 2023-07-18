@@ -2,7 +2,7 @@ class Stocktake < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
 
   belongs_to :material_master, optional: true
   belongs_to :inventory, optional: true
@@ -22,10 +22,10 @@ class Stocktake < ApplicationRecord
   validates :stocktake_date,  presence: true, uniqueness: { scope: [:material_master_id] }
 
   #demo版対応
-  validate :stocktak_count_must_be_within_limit, on: :create
+  validate :stocktake_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def stocktak_count_must_be_within_limit
+  def stocktake_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if Stocktake.count >= MAX_RECORD_COUNT
   end
   

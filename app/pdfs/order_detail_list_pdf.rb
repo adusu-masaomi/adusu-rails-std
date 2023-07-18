@@ -107,12 +107,19 @@ class OrderDetailListPDF
         if orders.delivery_complete_flag.present? && Order.delivery_complete_check_list[orders.delivery_complete_flag][1] == 1
           delivery_complete_flag = Order.delivery_complete_check_list[orders.delivery_complete_flag][0]
         end 
-                       
+        
+        #Null対応(230715)
+        maker_name = nil
+        if orders.material_master.present? && orders.material_master.MakerMaster.present?
+          maker_name = orders.material_master.MakerMaster.maker_name
+        end
+        #
+        
         row.values purchase_order_date: orders.purchase_order_history.purchase_order_date,
                                   purchase_order_code: orders.purchase_order_history.purchase_order_datum.purchase_order_code,
                                   material_code: material_code,
                                   material_name: material_name,
-                                  maker_name: orders.material_master.MakerMaster.maker_name,
+                                  maker_name: maker_name,
                                   quantity: quantity,
                                   unit_name: orders.unit_master.unit_name,
                                   order_unit_price: unit_price,

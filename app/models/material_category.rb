@@ -1,6 +1,6 @@
 class MaterialCategory < ApplicationRecord
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
 
   #demo版対応
   validate :material_category_count_must_be_within_limit, on: :create

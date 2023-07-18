@@ -1,14 +1,14 @@
 class MaterialMaster < ApplicationRecord
-	paginates_per 200  # 1ページあたり項目表示
-	#demo版対応
-  MAX_RECORD_COUNT = 6
+  paginates_per 200  # 1ページあたり項目表示
+  #demo版対応
+  MAX_RECORD_COUNT = 11
 
 
-	#belongs_to :PurchaseDatum
-	#belongs_to :MakerMaster, :foreign_key => "maker_id"
-	#Rails6対応
-	belongs_to :PurchaseDatum, optional: true
-	belongs_to :MakerMaster, optional: true, :foreign_key => "maker_id"
+  #belongs_to :PurchaseDatum
+  #belongs_to :MakerMaster, :foreign_key => "maker_id"
+  #Rails6対応
+  belongs_to :PurchaseDatum, optional: true
+  belongs_to :MakerMaster, optional: true, :foreign_key => "maker_id"
     
     has_many :PurchaseUnitPrice, :foreign_key => "material_id"  #add201208
     
@@ -17,20 +17,20 @@ class MaterialMaster < ApplicationRecord
     belongs_to :inventory_category, optional: true
     
     has_many :UnitMaster
-	
-	has_many :inventories
-	
-	#バリデーション
-	#validates :maker_id, presence: true
-	#validates :material_code, presence: true
-	#validate :add_error_sample
+  
+  has_many :inventories
+
+  #バリデーション
+  #validates :maker_id, presence: true
+  #validates :material_code, presence: true
+  #validate :add_error_sample
     
-	validates :material_code, presence: true, uniqueness: true
-	#validates :maker_id, presence: true
-	#validates :MakerMaster, presence: true, if: -> { maker_id.present? }
-		
-	
-	#validates_presence_of :maker
+  validates :material_code, presence: true, uniqueness: true
+  #validates :maker_id, presence: true
+  #validates :MakerMaster, presence: true, if: -> { maker_id.present? }
+  
+  
+  #validates_presence_of :maker
     #field :maker_id
    #validates :maker_id, inclusion: { in: 	1..80 }
     
@@ -39,7 +39,9 @@ class MaterialMaster < ApplicationRecord
     
     #validates :maker_id, presence: true, if: "maker_id.nil?"
     #rails6対応
-    validates :maker_id, presence: true, if: lambda {puts 'maker_id.nil?'}
+    #validates :maker_id, presence: true, if: lambda {puts 'maker_id.nil?'}
+    validates :maker_id, presence: true
+    
     #demo版対応
     validate :material_master_count_must_be_within_limit, on: :create
 
@@ -88,7 +90,7 @@ class MaterialMaster < ApplicationRecord
    
    #230630 moved from private for ruby3
    #リスト表示用(CD/名称)
-	def p_material_code_name
+  def p_material_code_name
       if self.material_code.nil?
         material_code = "-"
       else 
@@ -111,15 +113,15 @@ class MaterialMaster < ApplicationRecord
       #  maker_name = self.MakerMaster.maker_name
       #end    	
       
-	  #material_code + ':' + material_name + ':' + maker_name  
-	  #上記だと著しく遅くなる・・・
-	  
-	  material_code + ':' + material_name 
+    #material_code + ':' + material_name + ':' + maker_name  
+    #上記だと著しく遅くなる・・・
+    
+    material_code + ':' + material_name 
     end
     
     #230630 moved from private for ruby3
     #リスト表示用(CDのみ)
-	def p_material_code
+  def p_material_code
       material_code = "-"
       if !self.material_code.nil?
         material_code = self.material_code

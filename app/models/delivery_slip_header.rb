@@ -3,7 +3,7 @@ class DeliverySlipHeader < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   belongs_to :ConstructionDatum, optional: true, :foreign_key => "construction_datum_id"
    
@@ -18,10 +18,10 @@ class DeliverySlipHeader < ApplicationRecord
   validates :delivery_slip_code, presence:true, uniqueness: true
 
   #demo版対応
-  validate :delivery_slip_header_matter_must_be_within_limit, on: :create
+  validate :delivery_slip_header_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def delivery_slip_header_matter_must_be_within_limit
+  def delivery_slip_header_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if DeliverySlipHeader.count >= MAX_RECORD_COUNT
   end
 

@@ -1,7 +1,7 @@
 class ConstructionDailyReport < ApplicationRecord
   
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   paginates_per 200  # 1ページあたり項目表示
   
@@ -71,7 +71,7 @@ class ConstructionDailyReport < ApplicationRecord
   validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
   
   #demo版対応
-  validate :construction_daily_count_must_be_within_limit, on: :create
+  validate :construction_daily_report_count_must_be_within_limit, on: :create
   
   #入力チェック(日またがりで計算がおかしくなるのを防止)
   # ↑ 計算異常を修正したので下記は未使用にした
@@ -90,7 +90,7 @@ class ConstructionDailyReport < ApplicationRecord
 
   
   #demo版対応
-  def construction_daily_count_must_be_within_limit
+  def construction_daily_report_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionDailyReport.count >= MAX_RECORD_COUNT
   end
     

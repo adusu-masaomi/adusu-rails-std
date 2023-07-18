@@ -2,7 +2,7 @@ class QuotationHeader < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
 
   belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
    
@@ -23,10 +23,10 @@ class QuotationHeader < ApplicationRecord
   validates :quotation_code, presence:true, uniqueness: true
 
   #demo版対応
-  validate :quotation_header_matter_must_be_within_limit, on: :create
+  validate :quotation_header_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def quotation_header_matter_must_be_within_limit
+  def quotation_header_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if QuotationHeader.count >= MAX_RECORD_COUNT
   end
 

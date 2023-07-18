@@ -149,7 +149,7 @@
         <% else %>
           <td>-</td>
         <% end %>
-        <% if inventory_history.material_master.present? %>
+        <% if inventory_history.material_master.present? && inventory_history.material_master.MakerMaster.present? %>
           <td style = <%= bold %> ><font color = <%= color %>  ><%= inventory_history.material_master.MakerMaster.maker_name %></font></td>
         <% else %>
           <td>-</td>

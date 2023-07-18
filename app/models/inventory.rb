@@ -1,7 +1,7 @@
 class Inventory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   #demo
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   belongs_to :material_master, optional: true
   belongs_to :unit_master, optional: true
@@ -21,6 +21,9 @@ class Inventory < ApplicationRecord
   validates_numericality_of :current_unit_price, :allow_nil => false
   validates_numericality_of :last_unit_price, :allow_nil => false
   validates :supplier_master_id, presence: true  #add230703
+  
+  validates :material_master_id, presence: true
+  
   #
   #demo版対応
   validate :inventory_count_must_be_within_limit, on: :create

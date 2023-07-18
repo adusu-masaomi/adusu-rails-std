@@ -1,7 +1,7 @@
 class UnitMaster < ApplicationRecord
 
   #demo版対応
-  MAX_RECORD_COUNT = 6
+  MAX_RECORD_COUNT = 11
   
   before_destroy :ensure_id
   
@@ -9,10 +9,10 @@ class UnitMaster < ApplicationRecord
   validates :unit_name, presence: true, uniqueness: true
   
   #demo版対応
-  validate :unit_master_price_count_must_be_within_limit, on: :create
+  validate :unit_master_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def unit_master_price_count_must_be_within_limit
+  def unit_master_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if UnitMaster.count >= MAX_RECORD_COUNT
   end
   

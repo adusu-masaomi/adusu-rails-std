@@ -2,7 +2,7 @@ class CustomerMaster < ApplicationRecord
     paginates_per 200  # 1ページあたり項目表示
 
     #demo版対応
-    MAX_RECORD_COUNT = 6
+    MAX_RECORD_COUNT = 11
     
     before_destroy :ensure_id
     

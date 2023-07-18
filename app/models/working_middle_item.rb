@@ -62,10 +62,11 @@ class WorkingMiddleItem < ApplicationRecord
   validates :working_middle_item_name, presence: true
 
   #demo版対応
-  validate :working_middle_item_matter_must_be_within_limit, on: :create
+  #validate :working_middle_item_matter_must_be_within_limit, on: :create
+  validate :working_middle_item_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def working_middle_item_matter_must_be_within_limit
+  def working_middle_item_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if WorkingMiddleItem.count >= MAX_RECORD_COUNT
   end
   #特定のIDは削除できないようにする

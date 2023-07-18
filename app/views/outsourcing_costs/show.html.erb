@@ -6,7 +6,11 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:construction_datum_id) %>:</strong></dt>
-  <dd><%= @outsourcing_cost.construction_datum.construction_name %></dd>
+  <%if @outsourcing_cost.construction_datum.present? %>
+    <dd><%= @outsourcing_cost.construction_datum.construction_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:staff_id) %>:</strong></dt>
   <% if @outsourcing_cost.staff.present? %>
     <dd><%= @outsourcing_cost.staff.staff_name %></dd>

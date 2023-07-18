@@ -102,7 +102,7 @@ class ConstructionDailyReportsController < ApplicationController
           
           #労務費集計表
           #縦型PDF（外注のいない場合）
-        report = LaborCostSummaryPDF.create @construction_daily_reports
+          report = LaborCostSummaryPDF.create @construction_daily_reports
             
           #if confirm_outsourcing == false
             #縦型PDF（外注のいない場合）

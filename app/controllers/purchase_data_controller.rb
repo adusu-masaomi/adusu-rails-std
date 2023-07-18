@@ -829,6 +829,13 @@ class PurchaseDataController < ApplicationController
   
   #仕入先単価マスターへの新規追加又は更新
   def create_or_update_purchase_unit_prices
+    
+    #upd230718
+    if params[:purchase_datum][:material_id] == "" 
+      return
+    end
+    
+    
     @purchase_unit_prices = PurchaseUnitPrice.where(["supplier_id = ? and material_id = ?", 
     params[:purchase_datum][:supplier_id], params[:purchase_datum][:material_id] ]).first
 
