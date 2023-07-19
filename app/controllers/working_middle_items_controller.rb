@@ -276,9 +276,10 @@ class WorkingMiddleItemsController < ApplicationController
             @working_middle_item = WorkingMiddleItem.new(working_middle_item_params) 
             
             #test!!
-            @working_middle_item.id = 1
+            #@working_middle_item.id = 1
             
-            status = @working_middle_item.save
+            #status = @working_middle_item.save
+            status = @working_middle_item.save!
           elsif action_flag == "edit"
             #更新の場合
             if @working_middle_item.present?
