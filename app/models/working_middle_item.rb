@@ -3,7 +3,8 @@ class WorkingMiddleItem < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 5
   
-  before_destroy :ensure_id
+  #test del
+  #before_destroy :ensure_id
   
   #require "browser"
   #browser = Browser.new("Some User Agent", accept_language: "en-us")

@@ -274,6 +274,10 @@ class WorkingMiddleItemsController < ApplicationController
           if action_flag == "new"
             #新規の場合
             @working_middle_item = WorkingMiddleItem.new(working_middle_item_params) 
+            
+            #test!!
+            @working_middle_item.id = 1
+            
             status = @working_middle_item.save
           elsif action_flag == "edit"
             #更新の場合
