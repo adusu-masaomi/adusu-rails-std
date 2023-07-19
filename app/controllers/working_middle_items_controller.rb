@@ -465,8 +465,8 @@ class WorkingMiddleItemsController < ApplicationController
       #更新ボタン押下の場合
         status = @working_middle_item.update(working_middle_item_params)
         
-        #test!!
-        WorkingMiddleItem.where(id: 2).update_all(id: 1)
+        #test!! IDを強制的に1にする
+        #WorkingMiddleItem.where(id: 2).update_all(id: 1)
         
       elsif action_flag == "create"
       #新規ボタン押下の場合
