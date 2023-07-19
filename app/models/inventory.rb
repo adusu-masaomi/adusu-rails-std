@@ -33,19 +33,19 @@ class Inventory < ApplicationRecord
   attr_accessor :action_flag
   
   scope :with_material_name_include, -> inventory_material_name {
-    if inventory_material_name.present? 
-      joins(:material_master).where("material_masters.material_name like ?", '%' + inventory_material_name + '%' )
-    end
+  if inventory_material_name.present? 
+    joins(:material_master).where("material_masters.material_name like ?", '%' + inventory_material_name + '%' )
+  end
   }
   scope :with_material_category_include, -> (inventory_material_category=1) {
     
-    category_id = inventory_material_category.to_i 
+  category_id = inventory_material_category.to_i 
 
-    #220126抹消
-    #idが１以上でないと呼び出されないため、viewで１をプラスしているので、ここでマイナスしてあげる。
-    #category_id -= 1
+  #220126抹消
+  #idが１以上でないと呼び出されないため、viewで１をプラスしているので、ここでマイナスしてあげる。
+  #category_id -= 1
 	 
-    joins(:material_master).where("material_masters.inventory_category_id = ?", category_id )
+  joins(:material_master).where("material_masters.inventory_category_id = ?", category_id )
   }
   
   #del220126(マスター化)

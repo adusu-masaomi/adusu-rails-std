@@ -83,70 +83,67 @@ class ConstructionDailyReport < ApplicationRecord
 
  # scope :with_staff, -> (construction_daily_reports_staff_id=1) { joins(:Staffs).where("Staffs.id = ?", construction_daily_reports_staff_id )}
 
-
   def self.ransackable_scopes(auth_object=nil)
-  		[:with_construction]
+    [:with_construction]
   end
-
   
   #demo版対応
   def construction_daily_report_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionDailyReport.count >= MAX_RECORD_COUNT
   end
     
-   #入力チェック用
-   def time_too_large
-     #22:00~4:00のように入力すると計算がおかしくなるため、２行に入力させるため警告する
-     if end_time_1.to_s(:time) != "00:00"
-       if start_time_1 > end_time_1
-         errors.add(:time1, ": 日またがりの場合は、０時以降を時間２へ入力してくだい。")
-       end
-     end
-   end
-   
-   #労務費合計
-   def self.sumprice  
-    	sum(:labor_cost)
-    	#User.sumでもかまいません
-    	#カラム名(フィールド名)は大文字使ってもいいですが、普通小文字の方がよいです
-   end
-   #作業時間合計
-   def self.sumtimes  
-    	sum = sum(:working_times)
-		if sum.present?
-		  sum = sum / 3600
-		end
-    	#User.sumでもかまいません
-    	#カラム名(フィールド名)は大文字使ってもいいですが、普通小文字の方がよいです
-   end
-
-    #以下、全てcsv用
-   def self.to_csv(options = {})
-      CSV.generate do |csv|
-        csv << ["working_date", "staff_id",  "man_month", "labor_cost", "construction_code", "construction_name" ]
-		all.order('working_date').each do |construction_daily_reports|
-          csv << construction_daily_reports.csv_column_values
-		end
-          #this doesnt work
-          #csv.sort_by{ |csv_column_values| csv_column_values[1]}
+  #入力チェック用
+  def time_too_large
+    #22:00~4:00のように入力すると計算がおかしくなるため、２行に入力させるため警告する
+    if end_time_1.to_s(:time) != "00:00"
+      if start_time_1 > end_time_1
+        errors.add(:time1, ": 日またがりの場合は、０時以降を時間２へ入力してくだい。")
       end
-      
     end
-	
-	def csv_column_headers
-	  ["working_date", "staff_id",  "man_month", "labor_cost", "construction_code", "construction_name" ]
-	end
-	def csv_column_values
-      # [working_date.strftime("%Y/%m/%d") , staff_id, man_month, labor_cost,   construction_datum.construction_code, construction_datum.construction_name ]
-	  [working_date.strftime("%m/%d") , staff_id, man_month, labor_cost,   construction_datum.construction_code, construction_datum.construction_name ]
+  end
+   
+  #労務費合計
+  def self.sumprice  
+    sum(:labor_cost)
+    #User.sumでもかまいません
+    #カラム名(フィールド名)は大文字使ってもいいですが、普通小文字の方がよいです
+  end
+  #作業時間合計
+  def self.sumtimes  
+    sum = sum(:working_times)
+    if sum.present?
+      sum = sum / 3600
     end
-	# def material_code
-	#   MaterialMaster.where("id = ?", material_id).pluck(:material_code).flatten.join(" ")
-	# end
-	# def customer_name
-	#  CustomerMaster.where("id = ?", construction_datum.customer_id).pluck(:customer_name).flatten.join(" ")
-	# end
-   # ここまで
+    #User.sumでもかまいません
+    #カラム名(フィールド名)は大文字使ってもいいですが、普通小文字の方がよいです
+  end
+
+  #以下、全てcsv用
+  def self.to_csv(options = {})
+    CSV.generate do |csv|
+      csv << ["working_date", "staff_id",  "man_month", "labor_cost", "construction_code", "construction_name" ]
+      all.order('working_date').each do |construction_daily_reports|
+        csv << construction_daily_reports.csv_column_values
+      end
+      #this doesnt work
+      #csv.sort_by{ |csv_column_values| csv_column_values[1]}
+    end
+  end
+  
+  def csv_column_headers
+    ["working_date", "staff_id",  "man_month", "labor_cost", "construction_code", "construction_name" ]
+  end
+  def csv_column_values
+    # [working_date.strftime("%Y/%m/%d") , staff_id, man_month, labor_cost,   construction_datum.construction_code, construction_datum.construction_name ]
+    [working_date.strftime("%m/%d") , staff_id, man_month, labor_cost,   construction_datum.construction_code, construction_datum.construction_name ]
+  end
+  # def material_code
+  #   MaterialMaster.where("id = ?", material_id).pluck(:material_code).flatten.join(" ")
+  # end
+  # def customer_name
+  #  CustomerMaster.where("id = ?", construction_datum.customer_id).pluck(:customer_name).flatten.join(" ")
+  # end
+  # ここまで
   def self.ransackable_attributes(auth_object = nil)
     ["construction_datum_id", "created_at", "end_time_1", "end_time_2", "id", "is_no_break_time_1", "is_no_break_time_2", "is_no_break_time_3", "is_one_day_work", "labor_cost", "man_month", "staff_id", "start_time_1", "start_time_2", "updated_at", "working_date", "working_details", "working_times"]
   end

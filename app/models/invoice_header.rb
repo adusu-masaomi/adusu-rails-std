@@ -73,20 +73,20 @@ class InvoiceHeader < ApplicationRecord
    
   #入金有無のチェック
   scope :with_deposit, -> deposit_flag { 
-    if deposit_flag.present?
-      if deposit_flag == "unpaid"
-        #where("deposit_amount is NULL or deposit_amount = ?", 0)
-        where("payment_date is NULL")
-      elsif deposit_flag == "paid"
-        #where("deposit_amount > ?", 0)
-        where("payment_date is not NULL")
-      end
+  if deposit_flag.present?
+    if deposit_flag == "unpaid"
+      #where("deposit_amount is NULL or deposit_amount = ?", 0)
+      where("payment_date is NULL")
+    elsif deposit_flag == "paid"
+      #where("deposit_amount > ?", 0)
+      where("payment_date is not NULL")
     end
+  end
   }
    
-   def self.ransackable_scopes(auth_object=nil)
-       [:with_id, :with_constractor, :with_deposit]
-   end
+  def self.ransackable_scopes(auth_object=nil)
+    [:with_id, :with_constractor, :with_deposit]
+  end
  	
   #入金フラグ
   #ex.値に0~1だとransack側のバグで認識できないため、文字にする

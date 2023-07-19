@@ -464,10 +464,13 @@ class WorkingMiddleItemsController < ApplicationController
       if action_flag == "update"
       #更新ボタン押下の場合
         status = @working_middle_item.update(working_middle_item_params)
+        
+        #test!!
+        WorkingMiddleItem.where(id: 2).update_all(id: 1)
+        
       elsif action_flag == "create"
       #新規ボタン押下の場合
         @working_middle_item = WorkingMiddleItem.new(working_middle_item_params) 
-        #binding.pry
         
         status = @working_middle_item.save
         #status = @working_middle_item.save!

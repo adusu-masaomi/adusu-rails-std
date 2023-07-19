@@ -980,43 +980,46 @@ class PurchaseOrderHistoriesController < ApplicationController
       $mail_flag = 0
 
       #送信済み・削除判定が必要なので現在のパラメータをセット
-      #現在未使用?(230509)
       $order_parameters = params[:purchase_order_history][:orders_attributes]
-
-      if params[:purchase_order_history][:sent_flag] != "1" 
-        format.pdf do
-          report = PurchaseOrderPDF.create @purchase_order
+      
+      #if $order_parameters.present?  #add230719
+      
+        if params[:purchase_order_history][:sent_flag] != "1" 
+          format.pdf do
+            report = PurchaseOrderPDF.create @purchase_order
+            #report = PurchaseOrderAndEstimatePDF.create @purchase_order
+            # ブラウザでPDFを表示する
+            # disposition: "inline" によりダウンロードではなく表示させている
+            send_data(
+            report.generate,
+            filename:  "purchase_order.pdf",
+            type:        "application/pdf",
+            disposition: "inline")
+          end
+        else
+          #メール送信し添付する場合
+          $mail_flag = 1
+          #PDFを作成
           #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-          # ブラウザでPDFを表示する
-          # disposition: "inline" によりダウンロードではなく表示させている
-          send_data(
-          report.generate,
-          filename:  "purchase_order.pdf",
-          type:        "application/pdf",
-          disposition: "inline")
+          report = PurchaseOrderPDF.create @purchase_order
+
+          # PDFファイルのバイナリデータを生成する
+          #$attachment = report.generate
+          #upd230509
+          @attachment = report.generate
+
+          # ダウンロードは必要なし。又ここでsend_dataするとredirectができない為、抹消
+          # send_data(
+          # @file,
+          # filename:  "purchase_order.pdf",
+          # type:        "application/pdf",
+          # disposition: "attachment")
+
         end
-      else
-        #メール送信し添付する場合
-        $mail_flag = 1
-        #PDFを作成
-        #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-        report = PurchaseOrderPDF.create @purchase_order
-
-        # PDFファイルのバイナリデータを生成する
-        #$attachment = report.generate
-        #upd230509
-        @attachment = report.generate
-
-        # ダウンロードは必要なし。又ここでsend_dataするとredirectができない為、抹消
-        # send_data(
-        # @file,
-        # filename:  "purchase_order.pdf",
-        # type:        "application/pdf",
-        # disposition: "attachment")
-
-      end
       #pdf
-
+      #else
+      #  format.any
+      #end
     end
   end
 

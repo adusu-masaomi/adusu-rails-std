@@ -9,11 +9,11 @@ class ConstructionCost < ApplicationRecord
   #belongs_to :purchase_order_datum
   
   def self.final_division 
-     [["−", 0], ["Ａ", 1], ["Ｂ", 2], ["Ｃ", 3], ["Ｄ", 4], ["-", 5], ["-", 6], ["-", 7], ["-", 8], ["Ｚ", 9]]
+    [["−", 0], ["Ａ", 1], ["Ｂ", 2], ["Ｃ", 3], ["Ｄ", 4], ["-", 5], ["-", 6], ["-", 7], ["-", 8], ["Ｚ", 9]]
   end
   
   def self.final_division_with_explain 
-     [["- 通常", 0], ["Ａ-手間のみの作業", 1], ["Ｂ-一般に売ったもの", 2], ["Ｃ-業者に売ったもの", 3], ["Ｄ-レンタル", 4]]
+    [["- 通常", 0], ["Ａ-手間のみの作業", 1], ["Ｂ-一般に売ったもの", 2], ["Ｃ-業者に売ったもの", 3], ["Ｄ-レンタル", 4]]
   end
   
   #労務費(日報)
@@ -35,10 +35,10 @@ class ConstructionCost < ApplicationRecord
 
   #demo版対応
   #ここは解除中(230711)
-  #validate :construction_cost_must_be_within_limit, on: :create
+  #validate :construction_cost_count_must_be_within_limit, on: :create
 
   #demo版対応
-  def construction_cost_must_be_within_limit
+  def construction_cost_count_must_be_within_limit
     errors.add(:base, "デモ版は#{MAX_RECORD_COUNT}件しか登録できません") if ConstructionCost.count >= MAX_RECORD_COUNT
   end
   
@@ -59,15 +59,15 @@ class ConstructionCost < ApplicationRecord
   #                                                   (construction_datum_id=1){joins(:purchase_order_data).where("construction_data.customer_id = ?", construction_datum_customer_id )}
   
   
-   #以下、全てcsv用
-   def self.to_csv(options = {})
-      CSV.generate do |csv|
-        csv << ["construction_code", "customer_name", "construction_name",  "construction_end_date", "supplies_expense", "labor_cost", "misellaneous_expense" , "constructing_amount" , "purchase_order_amount"]
-		all.each do |construction_costs|
-          csv << construction_costs.csv_column_values
-		end
-      end
+  #以下、全てcsv用
+  def self.to_csv(options = {})
+    CSV.generate do |csv|
+      csv << ["construction_code", "customer_name", "construction_name",  "construction_end_date", "supplies_expense", "labor_cost", "misellaneous_expense" , "constructing_amount" , "purchase_order_amount"]
+		  all.each do |construction_costs|
+        csv << construction_costs.csv_column_values
+		  end
     end
+  end
 	
 	#なぜか代入できないので保留
 	# def csv_column_headers
@@ -75,19 +75,19 @@ class ConstructionCost < ApplicationRecord
 	# end
 	def csv_column_values
 	  [construction_datum.construction_code, customer_name, construction_datum.construction_name, construction_datum.construction_end_date, supplies_expense, labor_cost, misellaneous_expense, constructing_amount, purchase_order_amount ]
-    end
+  end
 	
 	#def purchase_order_amount_custom
 	#  str=purchase_order_amount
-    #  str.gsub!('"', '')
-    #  puts str
+  #  str.gsub!('"', '')
+  #  puts str
 	#  purchase_order_amount_custom = str
 	#end
 	
-	 def customer_name
+	def customer_name
 	  CustomerMaster.where("id = ?", construction_datum.customer_id).pluck(:customer_name).flatten.join(" ")
-	 end
-   # ここまで
+	end
+  # ここまで
   
   def self.ransackable_attributes(auth_object = nil)
     ["constructing_amount", "construction_datum_id", "created_at", "execution_amount", "final_return_division", "id", "labor_cost", "misellaneous_expense", "purchase_amount", "purchase_order_amount", "supplies_expense", "updated_at"]

@@ -95,8 +95,12 @@ class PurchaseListBySupplierPDF
 					   #品番
 					   if purchase_datum.material_code == "＜手入力用＞"
 					     material_code = "-"
-					   else 
-					     material_code = purchase_datum.MaterialMaster.material_code
+					 else 
+               if purchase_datum.MaterialMaster.present?  #add230719
+					       material_code = purchase_datum.MaterialMaster.material_code
+					     else
+                 material_code = "-"
+               end
 					   end
 					   #
 					   

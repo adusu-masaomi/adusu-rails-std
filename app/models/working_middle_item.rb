@@ -1,7 +1,7 @@
 class WorkingMiddleItem < ApplicationRecord
 
   #demo版対応
-  MAX_RECORD_COUNT = 5
+  MAX_RECORD_COUNT = 10
   
   #test del
   before_destroy :ensure_id

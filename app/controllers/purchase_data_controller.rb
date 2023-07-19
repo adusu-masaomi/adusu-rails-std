@@ -786,8 +786,9 @@ class PurchaseDataController < ApplicationController
   
   #資材マスターの分類を更新
   def update_material_category
-    
-    if params[:purchase_datum][:MaterialMaster_attributes][:material_category_id].to_i > 0
+    #binding.pry
+    if params[:purchase_datum][:MaterialMaster_attributes].present? && 
+       params[:purchase_datum][:MaterialMaster_attributes][:material_category_id].to_i > 0
         if params[:purchase_datum][:material_id].to_i > 1
             #手入力の場合の資材IDは、別ファンクション(add_manual_input_except_unit_price)で更新されている。
             @material = MaterialMaster.find(params[:purchase_datum][:material_id])

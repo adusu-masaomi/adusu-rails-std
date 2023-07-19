@@ -7,6 +7,11 @@ class PurchaseOrderPDF
   def self.create purchase_order
   #注文書PDF発行
   
+    #add230719
+    #if $order_parameters.blank?
+    #  return
+    #end
+  
     #新元号対応
     require "date"
     @d_heisei_limit = Date.parse("2019/5/1")
@@ -34,18 +39,20 @@ class PurchaseOrderPDF
     
     pre_page_count = 1
     last_page_count = 1
-    $order_parameters.values.each do 
-      cnt += 1
-      cnt2 += 1
+    
+    if $order_parameters.present? #add230719
+      $order_parameters.values.each do 
+        cnt += 1
+        cnt2 += 1
       
-      #if cnt > 19  #maxの行数 - 1
-      if cnt >= MAX_LINE  #maxの行数 - 1
-        pre_page_count += 1
-        cnt = 0
+        #if cnt > 19  #maxの行数 - 1
+        if cnt >= MAX_LINE  #maxの行数 - 1
+          pre_page_count += 1
+          cnt = 0
+        end
       end
-      
+      last_page_count = pre_page_count
     end
-    last_page_count = pre_page_count
     #
     
     #タイトル
@@ -146,78 +153,76 @@ class PurchaseOrderPDF
     
     #明細
     #注文でループ
-    $order_parameters.values.each_with_index.reverse_each do |item, index|
-      
-      
-      #出力判定
-      check = false
-      if $mail_flag == 0
-      #帳票の場合
-        #if item[:_destroy] != "true"
-        if item[:_destroy] != "true" && item[:_destroy] != "1"
-          check = true
-        end
-      else
-      #メール送信の場合
-        #if item[:_destroy] != "true" && item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
-        if item[:_destroy] != "true" && item[:_destroy] != "1" && 
+    if $order_parameters.present? #add230719
+      $order_parameters.values.each_with_index.reverse_each do |item, index|
+              #出力判定
+        check = false
+        if $mail_flag == 0
+        #帳票の場合
+          #if item[:_destroy] != "true"
+          if item[:_destroy] != "true" && item[:_destroy] != "1"
+            check = true
+          end
+        else
+        #メール送信の場合
+          #if item[:_destroy] != "true" && item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
+          if item[:_destroy] != "true" && item[:_destroy] != "1" && 
             item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
-          check = true
+            check = true
+          end
         end
-      end
-      ##
+        ##
       
-      if check
-      #if item[:_destroy] != "true" && item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"  
+        if check
+        #if item[:_destroy] != "true" && item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"  
         
-        report.list(:default).add_row do |row|
+          report.list(:default).add_row do |row|
           
-          #品名(備考有無により表示切り分け)
-          material_name = ""
-          #material_name2 = ""
-          notes = ""
+            #品名(備考有無により表示切り分け)
+            material_name = ""
+            #material_name2 = ""
+            notes = ""
           
-          material_name = item[:material_name]
+            material_name = item[:material_name]
           
-          #備考(資材単位)
-          if item[:notes].present?
-            #material_name2 = item[:material_name]
-            notes = "※" + item[:notes]
-          end
+            #備考(資材単位)
+            if item[:notes].present?
+              #material_name2 = item[:material_name]
+              notes = "※" + item[:notes]
+            end
           
-          #定価
-          @num = item[:list_price].to_i
-          formatNum()
-          list_price = @num
-          #needed??
-          str_list_price = ""
-          if item[:list_price].to_i > 0
-            str_list_price = "定価" + list_price
-          end
-          #
-          #注文単価
-          @num = item[:order_unit_price].to_i
+            #定価
+            @num = item[:list_price].to_i
+            formatNum()
+            list_price = @num
+            #needed??
+            str_list_price = ""
+            if item[:list_price].to_i > 0
+              str_list_price = "定価" + list_price
+            end
+            #
+            #注文単価
+            @num = item[:order_unit_price].to_i
           
-          #単価が存在しない場合のフラグ
-          if @num == 0
-            exist_no_price = true
-          end
-          #
+            #単価が存在しない場合のフラグ
+            if @num == 0
+              exist_no_price = true
+            end
+            #
           
-          formatNum()
-          unit_price = @num
+            formatNum()
+            unit_price = @num
           
+            #@num = item[:list_price].to_i #定価
+            #金額
+            amount = item[:quantity] * item[:order_unit_price].to_i
+            @num = amount
+            formatNum()
+            str_amount = @num
           
-          #@num = item[:list_price].to_i #定価
-          #金額
-          amount = item[:quantity] * item[:order_unit_price].to_i
-          @num = amount
-          formatNum()
-          str_amount = @num
+            subtotal += amount
           
-          subtotal += amount
-          
-          row.values material_code: item[:material_code],
+            row.values material_code: item[:material_code],
 		                 material_name: material_name,
                      material_note: notes,
                      list_price: str_list_price,
@@ -229,74 +234,74 @@ class PurchaseOrderPDF
                      unit_price: unit_price,
                      amount: str_amount
           
-        end 
+          end  #do end
       
         
-        #ページ番号
-        #(２ページ以上の場合のみ表示)
-        if last_page_count > 1
-          page_count = report.page_count.to_s + "/" + last_page_count.to_s
-          report.page.item(:page_no).value(page_count)
-        end
-        #
-        
-        #合計
-        #(最終ページにのみ表示)
-        if report.page_count >= last_page_count
-        #  report.page.item(:page_no).value(page_count)
-          
-          #復活もありえるので残しておく
-          report.page.item(:lbl_subtotal).visible(true)
-          #消費税(増税時要対応)
-          #taxlabel = "消費税" + ($consumption_tax_only_per_ten * 100).to_i.to_s + "%"
-          #report.page.item(:lbl_tax).value(taxlabel)
-          #report.page.item(:lbl_total).visible(true)
-          #
-          
-          ##小計〜合計
-          
-          #合計
-          @num = subtotal
-          formatNum()
-          str_subtotal = @num
-          
-          #復活もありえるので残しておく
-          #消費税
-          #tax = subtotal * $consumption_tax_only_per_ten
-          #@num = tax
-          #formatNum()
-          #str_tax = @num
-          #合計(小数点四捨五入--仕入業者に合わせている)
-          #total = subtotal * $consumption_tax_include_per_ten
-          #@num = total
-          #formatNum()
-          #str_total = @num
-          ##
-          
-          #単価が抜けているものがあれば合計は非表示にする
-          if !exist_no_price
-            report.page.item(:subtotal).value(str_subtotal)
-          else
-            report.page.item(:subtotal).visible(false)
+          #ページ番号
+          #(２ページ以上の場合のみ表示)
+          if last_page_count > 1
+            page_count = report.page_count.to_s + "/" + last_page_count.to_s
+            report.page.item(:page_no).value(page_count)
           end
-          
-          #復活もありえるので残しておく
-          #report.page.item(:tax).value(str_tax)
-          #report.page.item(:total).value(str_total)
           #
-          report.page.item(:lbl_tax).value("")
-          report.page.item(:lbl_total).visible(false)
-        else
-          #最終ページ以外は非表示に
-          report.page.item(:lbl_subtotal).visible(false)
-          report.page.item(:lbl_tax).value("")
-          report.page.item(:lbl_total).visible(false)
-        end
-      
-      end  #check sent
         
-    end	#do end
+          #合計
+          #(最終ページにのみ表示)
+          if report.page_count >= last_page_count
+          #  report.page.item(:page_no).value(page_count)
+            
+            #復活もありえるので残しておく
+            report.page.item(:lbl_subtotal).visible(true)
+            #消費税(増税時要対応)
+            #taxlabel = "消費税" + ($consumption_tax_only_per_ten * 100).to_i.to_s + "%"
+            #report.page.item(:lbl_tax).value(taxlabel)
+            #report.page.item(:lbl_total).visible(true)
+            #
+          
+            ##小計〜合計
+          
+            #合計
+            @num = subtotal
+            formatNum()
+            str_subtotal = @num
+          
+            #復活もありえるので残しておく
+            #消費税
+            #tax = subtotal * $consumption_tax_only_per_ten
+            #@num = tax
+            #formatNum()
+            #str_tax = @num
+            #合計(小数点四捨五入--仕入業者に合わせている)
+            #total = subtotal * $consumption_tax_include_per_ten
+            #@num = total
+            #formatNum()
+            #str_total = @num
+            ##
+          
+            #単価が抜けているものがあれば合計は非表示にする
+            if !exist_no_price
+              report.page.item(:subtotal).value(str_subtotal)
+            else
+              report.page.item(:subtotal).visible(false)
+            end
+          
+            #復活もありえるので残しておく
+            #report.page.item(:tax).value(str_tax)
+            #report.page.item(:total).value(str_total)
+            #
+            report.page.item(:lbl_tax).value("")
+            report.page.item(:lbl_total).visible(false)
+          else
+            #最終ページ以外は非表示に
+            report.page.item(:lbl_subtotal).visible(false)
+            report.page.item(:lbl_tax).value("")
+            report.page.item(:lbl_total).visible(false)
+          end
       
+        end  #check sent
+        
+      end	#do end
+    end #$order_parameters.present? #add230719
     
     # ThinReports::Reportを返す
     return report
