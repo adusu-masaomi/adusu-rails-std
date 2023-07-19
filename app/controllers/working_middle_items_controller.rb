@@ -686,7 +686,8 @@ class WorkingMiddleItemsController < ApplicationController
     
     new_record = @working_middle_item.deep_clone include: :working_small_items
     
-    status = new_record.save
+    #status = new_record.save
+    status = new_record.save!   #test
      
     respond_to do |format|
       if status == true
