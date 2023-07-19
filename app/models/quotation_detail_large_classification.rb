@@ -48,16 +48,18 @@ class QuotationDetailLargeClassification < ApplicationRecord
     #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:quote_price)
     
     #工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:quote_price)
-    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).pluck(:quote_price).sum
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:quote_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(quote_price: nil).sum(&:quote_price)
   end
   #金額合計(実行)
   def self.sumpriceExecution  
     #工事種別が通常かまたは値引の場合のみ合算。
     #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
-	
 	#工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price: nil).sum(&:execution_price)
     #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).pluck(:execution_price).sum
   end
   
@@ -71,7 +73,9 @@ class QuotationDetailLargeClassification < ApplicationRecord
     #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total)
     
     #工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total)
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total)
 	
   end
   
