@@ -1,4 +1,5 @@
 <!-- upd200421 並びをseqから作成日時順に変更。 -->
+<%if @working_middle_items.present? %>
 <% @working_middle_items.each do |working_middle_item| %>
      <tr id="<%= working_middle_item.id%>">
 	  
@@ -67,5 +68,5 @@
 	  
       </tr>
 <% end %>
-	 
+<% end %> 
 	

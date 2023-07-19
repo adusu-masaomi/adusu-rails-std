@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_14_013849) do
+ActiveRecord::Schema.define(version: 2023_07_19_040151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -953,7 +953,7 @@ ActiveRecord::Schema.define(version: 2023_07_14_013849) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "working_middle_items", id: :serial, force: :cascade do |t|
+  create_table "working_middle_items", force: :cascade do |t|
     t.string "working_middle_item_name"
     t.string "working_middle_item_short_name"
     t.integer "working_middle_item_category_id"
@@ -961,25 +961,25 @@ ActiveRecord::Schema.define(version: 2023_07_14_013849) do
     t.string "working_middle_specification"
     t.integer "working_unit_id"
     t.string "working_unit_name"
-    t.decimal "working_unit_price", precision: 11, scale: 2
+    t.float "working_unit_price"
     t.integer "execution_unit_price"
     t.integer "material_id"
     t.string "working_material_name"
-    t.decimal "execution_material_unit_price", precision: 11, scale: 2
-    t.decimal "material_unit_price", precision: 11, scale: 2
-    t.decimal "execution_labor_unit_price", precision: 11, scale: 2
-    t.decimal "labor_unit_price", precision: 11, scale: 2
+    t.float "execution_material_unit_price"
+    t.float "material_unit_price"
+    t.float "execution_labor_unit_price"
+    t.float "labor_unit_price"
     t.integer "labor_unit_price_standard"
-    t.decimal "labor_productivity_unit", precision: 11, scale: 4
-    t.decimal "labor_productivity_unit_total", precision: 11, scale: 4
+    t.float "labor_productivity_unit"
+    t.float "labor_productivity_unit_total"
     t.integer "material_quantity"
     t.integer "accessory_cost"
     t.integer "material_cost_total"
     t.integer "labor_cost_total"
     t.integer "other_cost"
     t.integer "seq"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "working_safety_matters", id: :serial, force: :cascade do |t|
