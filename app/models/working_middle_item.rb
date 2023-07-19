@@ -63,8 +63,8 @@ class WorkingMiddleItem < ApplicationRecord
   validates :working_middle_item_name, presence: true
 
   #demo版対応
-  #validate :working_middle_item_matter_must_be_within_limit, on: :create
-  validate :working_middle_item_count_must_be_within_limit, on: :create
+  #ひとまず保留
+  #validate :working_middle_item_count_must_be_within_limit, on: :create
 
   #demo版対応
   def working_middle_item_count_must_be_within_limit

@@ -1,5 +1,6 @@
 class WorkingSmallItem < ApplicationRecord
-  belongs_to :working_middle_item
+  #belongs_to :working_middle_item
+  belongs_to :working_middle_item, optional: true
   
   #明細（小）フォーム用
   #attr_accessor :material_price  フィールド化180201
