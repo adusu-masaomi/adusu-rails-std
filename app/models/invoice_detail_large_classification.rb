@@ -8,6 +8,8 @@ class InvoiceDetailLargeClassification < ApplicationRecord
   has_many :invoice_detail_middle_classifications
   #demo版対応---保留中
   #validate :invoice_detail_large_classification_count_must_be_within_limit, on: :create
+  
+  #validates :working_large_item_name, numericality: { in: 2..10000 }
 
   #demo版対応
   def invoice_detail_large_classification_count_must_be_within_limit

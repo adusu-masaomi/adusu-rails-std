@@ -1131,7 +1131,9 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
     @success_flag = true
   
     #見出しデータのコピー
-    @delivery_slip_header = DeliverySlipHeader.find(params[:delivery_slip_header_id])
+    #@delivery_slip_header = DeliverySlipHeader.find(params[:delivery_slip_header_id])
+    #upd230720
+    @delivery_slip_header = DeliverySlipHeader.where(id: params[:delivery_slip_header_id]).first
 
     if @delivery_slip_header.present? 
       if @delivery_slip_header.delivery_slip_code.present?

@@ -177,7 +177,11 @@ class PurchaseListForOutsourcingPDF
         if purchase_datum.material_code == "＜手入力用＞"
           material_code = "-"
         else 
-          material_code = purchase_datum.MaterialMaster.material_code
+          if purchase_datum.MaterialMaster.present?
+            material_code = purchase_datum.MaterialMaster.material_code
+          else
+            material_code = "-"
+          end
         end
         #
         

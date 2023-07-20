@@ -1375,7 +1375,9 @@ class OutsourcingDataController < ApplicationController
     
     require "date"
     
-    construction = ConstructionDatum.find(@construction_datum_id)
+    #construction = ConstructionDatum.find(@construction_datum_id)
+    #upd230720
+    construction = ConstructionDatum.where(id: @construction_datum_id).first
     
     customer = nil
     if construction.present?

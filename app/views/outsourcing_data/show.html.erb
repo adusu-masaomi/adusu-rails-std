@@ -9,7 +9,7 @@
   <dt><strong>作成日</strong></dt>
   <dd><%= @purchase_datum.purchase_date %></dd>
   <dt><font color=red><b>注文Ｎｏ</strong></b></font></dt>
-  <% if @purchase_datum.purchase_order_datum.purchase_order_code.present? %>
+  <% if @purchase_datum.purchase_order_datum.present? && @purchase_datum.purchase_order_datum.purchase_order_code.present? %>
     <dd><font color=red><b><%= @purchase_datum.purchase_order_datum.purchase_order_code %></b></font></dd>
   <% else %>
     <dd>-</dd>
@@ -29,7 +29,7 @@
   <dt><strong>品名</strong></dt>
   <dd><%= @purchase_datum.material_name %></dd>
   <dt><strong>分類</strong></dt>
-  <% if @purchase_datum.MaterialMaster.material_category.present? %>
+  <% if @purchase_datum.MaterialMaster.present? && @purchase_datum.MaterialMaster.material_category.present? %>
     <dd><%= @purchase_datum.MaterialMaster.material_category.name %></dd>
   <% else %>
     <dd>-</dd>

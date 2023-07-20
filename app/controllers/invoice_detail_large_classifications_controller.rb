@@ -1077,7 +1077,9 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
     @success_flag = true
 	 
     #見出しデータのコピー
-    @invoice_header = InvoiceHeader.find(params[:invoice_header_id])
+    #@invoice_header = InvoiceHeader.find(params[:invoice_header_id])
+    #upd230720
+    @invoice_header = InvoiceHeader.where(id: params[:invoice_header_id]).first
 	 
     if @invoice_header.present?
       if @invoice_header.invoice_code.present?
