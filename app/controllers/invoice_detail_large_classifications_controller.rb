@@ -359,8 +359,12 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
     
     $public_flag = false
     
-    invoice_header = InvoiceHeader.find(params[:invoice_header_id])
-    if invoice_header.customer_master.present? #標準版仕様--
+    #invoice_header = InvoiceHeader.find(params[:invoice_header_id])
+    #upd230720
+    invoice_header = InvoiceHeader.where(id: params[:invoice_header_id]).first
+    
+    #if invoice_header.customer_master.present? #標準版仕様--
+    if invoice_header.present? && invoice_header.customer_master.present? #標準版仕様--
       if invoice_header.customer_master.public_flag == 1
         $public_flag = true
       end

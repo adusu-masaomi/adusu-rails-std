@@ -1,6 +1,6 @@
 class QuotationDetailLargeClassification < ApplicationRecord
   belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   has_many :quotation_detail_middle_classifications
 
   def self.choices 
@@ -60,7 +60,7 @@ class QuotationDetailLargeClassification < ApplicationRecord
     #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
     #Rails6対応 upd230719 ↑これだとdistinctされてしまう
     where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price: nil).sum(&:execution_price)
-    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).pluck(:execution_price).sum
+ 
   end
   
   #合計(歩掛り)

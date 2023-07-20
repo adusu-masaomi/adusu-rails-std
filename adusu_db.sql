@@ -112,7 +112,7 @@ ALTER SEQUENCE public.business_holidays_id_seq OWNED BY public.business_holidays
 --
 
 CREATE TABLE public.companies (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     name character varying,
     representative_title character varying,
     representative_name character varying,
@@ -124,6 +124,8 @@ CREATE TABLE public.companies (
     fax character varying,
     email character varying,
     invoice_number character varying,
+    estimate_material_cost_rate double precision,
+    estimate_execution_labor_cost integer,
     estimate_labor_cost integer,
     responsible_order character varying,
     responsible_estimate character varying,
@@ -144,8 +146,8 @@ CREATE TABLE public.companies (
     account_type_3 integer,
     account_number_3 character varying,
     holder_3 character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -156,7 +158,6 @@ ALTER TABLE public.companies OWNER TO adusu;
 --
 
 CREATE SEQUENCE public.companies_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -2306,7 +2307,7 @@ ALTER SEQUENCE public.working_categories_id_seq OWNED BY public.working_categori
 --
 
 CREATE TABLE public.working_middle_items (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     working_middle_item_name character varying,
     working_middle_item_short_name character varying,
     working_middle_item_category_id integer,
@@ -2314,25 +2315,25 @@ CREATE TABLE public.working_middle_items (
     working_middle_specification character varying,
     working_unit_id integer,
     working_unit_name character varying,
-    working_unit_price numeric(11,2),
+    working_unit_price double precision,
     execution_unit_price integer,
     material_id integer,
     working_material_name character varying,
-    execution_material_unit_price numeric(11,2),
-    material_unit_price numeric(11,2),
-    execution_labor_unit_price numeric(11,2),
-    labor_unit_price numeric(11,2),
+    execution_material_unit_price double precision,
+    material_unit_price double precision,
+    execution_labor_unit_price double precision,
+    labor_unit_price double precision,
     labor_unit_price_standard integer,
-    labor_productivity_unit numeric(11,4),
-    labor_productivity_unit_total numeric(11,4),
+    labor_productivity_unit double precision,
+    labor_productivity_unit_total double precision,
     material_quantity integer,
     accessory_cost integer,
     material_cost_total integer,
     labor_cost_total integer,
     other_cost integer,
     seq integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -2343,7 +2344,6 @@ ALTER TABLE public.working_middle_items OWNER TO adusu;
 --
 
 CREATE SEQUENCE public.working_middle_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -2447,12 +2447,13 @@ ALTER SEQUENCE public.working_small_items_id_seq OWNED BY public.working_small_i
 --
 
 CREATE TABLE public.working_specific_middle_items (
-    id integer NOT NULL,
+    id bigint NOT NULL,
     quotation_header_id integer,
     delivery_slip_header_id integer,
     working_middle_item_name character varying,
     working_middle_item_short_name character varying,
     working_middle_item_category_id integer,
+    working_subcategory_id integer,
     working_middle_specification character varying,
     working_unit_id integer,
     working_unit_name character varying,
@@ -2469,8 +2470,8 @@ CREATE TABLE public.working_specific_middle_items (
     labor_productivity_unit_total double precision,
     material_cost_total integer,
     seq integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -2481,7 +2482,6 @@ ALTER TABLE public.working_specific_middle_items OWNER TO adusu;
 --
 
 CREATE SEQUENCE public.working_specific_middle_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -3038,7 +3038,6 @@ ALTER TABLE ONLY public.working_units ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 COPY public.affiliations (id, affiliation_name, created_at, updated_at) FROM stdin;
-1	工事部	2023-05-11 15:06:55.807397	2023-05-11 15:06:55.807397
 \.
 
 
@@ -3047,6 +3046,7 @@ COPY public.affiliations (id, affiliation_name, created_at, updated_at) FROM std
 --
 
 COPY public.ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2023-07-13 13:16:11.855029	2023-07-13 13:16:11.855029
 \.
 
 
@@ -3062,8 +3062,8 @@ COPY public.business_holidays (id, working_date, holiday_flag, created_at, updat
 -- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: adusu
 --
 
-COPY public.companies (id, name, representative_title, representative_name, post, address, house_number, address2, tel, fax, email, invoice_number, estimate_labor_cost, responsible_order, responsible_estimate, responsible_invoice, responsible_delivery, bank_name_1, bank_branch_name_1, account_type_1, account_number_1, holder_1, bank_name_2, bank_branch_name_2, account_type_2, account_number_2, holder_2, bank_name_3, bank_branch_name_3, account_type_3, account_number_3, holder_3, created_at, updated_at) FROM stdin;
-1	株式会社デモサンプル	代表取締役	デモ　太郎	〒120-0001	東京都足立区白金サンプル町	\N		9999-88-7777	8888-77-6666		TX-1111-8888-9999	10000	サンプル次郎	\N	\N	\N	アールバンク銀行	ペーペー支店	0	8888888	カ）サンプル	さんさん信用金庫	本店	0	7777777	カ）サンプル	ＵＦＯ銀行	東京中央支店	0	1234567	カ　サンプル	2023-06-24 13:24:32.023941	2023-06-24 13:35:39.14678
+COPY public.companies (id, name, representative_title, representative_name, post, address, house_number, address2, tel, fax, email, invoice_number, estimate_material_cost_rate, estimate_execution_labor_cost, estimate_labor_cost, responsible_order, responsible_estimate, responsible_invoice, responsible_delivery, bank_name_1, bank_branch_name_1, account_type_1, account_number_1, holder_1, bank_name_2, bank_branch_name_2, account_type_2, account_number_2, holder_2, bank_name_3, bank_branch_name_3, account_type_3, account_number_3, holder_3, created_at, updated_at) FROM stdin;
+1	株式会社デモサンプル	代表取締役	デモ太郎	〒163-8001	東京都新宿区西新宿2-8-1	\N		9999-88-7777	8888-77-6666			1.35000000000000009	10000	15000	サンプル太郎	\N	\N	\N	アールバンク銀行	ペーペー銀行	0	88888888	カ）アンプル	さんさん信用金庫	本店	0	7777777	カ）サンプル	ＵＦＯ銀行	東京中央支店	0	1234567	カ　サンプル	2023-07-14 11:01:09.048729	2023-07-15 16:18:59.732544
 \.
 
 
@@ -3072,7 +3072,7 @@ COPY public.companies (id, name, representative_title, representative_name, post
 --
 
 COPY public.constants (id, purchase_order_last_header_code, created_at, updated_at) FROM stdin;
-1	A2301	2023-06-24 16:07:13.752305	2023-06-24 17:40:59.168392
+1	A2306	2023-06-24 16:07:13.752305	2023-07-10 15:47:30.047076
 \.
 
 
@@ -3090,8 +3090,11 @@ COPY public.construction_attachments (id, construction_datum_id, title, attachme
 
 COPY public.construction_costs (id, construction_datum_id, purchase_amount, supplies_expense, labor_cost, misellaneous_expense, execution_amount, constructing_amount, purchase_order_amount, final_return_division, created_at, updated_at) FROM stdin;
 1	1	0	\N	\N	\N	0	\N		\N	2023-05-12 16:32:22.923508	2023-05-12 16:32:22.923508
-2	2	0	\N	\N	\N	0	\N		\N	2023-05-23 10:19:25.62166	2023-05-23 10:19:25.62166
 3	3	0	\N	\N	\N	0	\N		\N	2023-06-24 16:51:56.536284	2023-06-24 16:51:56.536284
+5	5	0	\N	\N	\N	0	\N		\N	2023-07-01 16:45:11.112013	2023-07-01 16:45:11.112013
+2	2	2100	\N	\N	\N	2100	\N	仕入材料,株式会社サンプルA,A2301,2100	\N	2023-05-23 10:19:25.62166	2023-07-11 18:38:17.005919
+6	6	0	\N	\N	\N	0	\N		\N	2023-07-11 18:59:32.855056	2023-07-11 18:59:32.855056
+7	4	0	\N	\N	\N	0	\N		\N	2023-07-15 16:05:58.61378	2023-07-15 16:05:58.61378
 \.
 
 
@@ -3101,6 +3104,9 @@ COPY public.construction_costs (id, construction_datum_id, purchase_amount, supp
 
 COPY public.construction_daily_reports (id, working_date, construction_datum_id, staff_id, start_time_1, end_time_1, start_time_2, end_time_2, working_times, man_month, labor_cost, working_details, is_one_day_work, is_no_break_time_1, is_no_break_time_2, is_no_break_time_3, created_at, updated_at) FROM stdin;
 1	2023-06-23	2	1	08:00:00	17:00:00	00:00:00	00:00:00	27000	1.0	11332	配線等	0	0	0	0	2023-06-23 14:52:56.140775	2023-07-01 11:49:53.525165
+2	2023-06-24	2	2	08:00:00	12:00:00	00:00:00	00:00:00	12600	0.467	7472	配線等	0	0	0	0	2023-07-01 17:52:00.429419	2023-07-01 17:52:00.429419
+3	2023-06-24	3	3	08:00:00	17:00:00	00:00:00	00:00:00	25200	0.933	13995	打合せ	0	0	0	0	2023-07-01 17:58:02.77522	2023-07-01 17:58:02.77522
+4	2023-07-25	3	4	08:00:00	16:00:00	00:00:00	00:00:00	21600	0.8	10400	打合せ	0	0	0	0	2023-07-01 17:58:28.230935	2023-07-01 17:58:28.230935
 \.
 
 
@@ -3109,9 +3115,10 @@ COPY public.construction_daily_reports (id, working_date, construction_datum_id,
 --
 
 COPY public.construction_data (id, construction_code, construction_name, alias_name, reception_date, customer_id, personnel, site_id, construction_start_date, construction_end_date, construction_period_start, construction_period_end, post, address, house_number, address2, latitude, longitude, construction_detail, attention_matter, working_safety_matter_id, working_safety_matter_name, estimated_amount, final_amount, billing_due_date, deposit_due_date, deposit_date, quotation_header_id, delivery_slip_header_id, billed_flag, calculated_flag, order_flag, quotation_flag, created_at, updated_at) FROM stdin;
-2	20230002	Bサンプル工事	Bサンプル工事	2023-05-23	2		\N	2023-05-23	2023-06-23	2023-01-01	2023-01-01					\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	1	2023-05-23 10:19:25.367732	2023-06-23 14:53:01.954711
-3	20230003	Cサンプル工事	Cサンプル工事	2023-06-24	5		\N	2023-06-24	2000-01-01	2023-01-01	2023-01-01					\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	\N	2023-06-24 16:51:56.391937	2023-06-24 16:51:56.565424
-1	20230001	Ａサンプル工事	Ａサンプル工事	2023-05-12	1		\N	2023-05-12	2023-05-17	2023-01-01	2023-01-01					\N	\N	配線工事		\N		\N	\N	\N	\N	\N	\N	\N	0	1	0	1	2023-05-12 15:43:51.040247	2023-06-26 09:22:07.898228
+1	-	-	-	2023-07-01	1		\N	2023-07-01	2000-01-01	2023-01-01	2023-01-01					\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	0	2023-07-01 16:45:11.093592	2023-07-12 14:30:00.222016
+4	20230004	Cサンプル工事	Cサンプル工事	2023-07-01	5		\N	2023-07-15	2023-07-26	2023-01-01	2023-01-01					\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	\N	2023-07-01 16:44:44.714748	2023-07-15 16:05:58.629229
+2	20230002	Aサンプル工事	Aサン工事	2023-05-23	2	試験太郎	\N	2023-07-11	2023-06-24	2023-01-01	2023-01-01	〒955-0013	新潟県三条市井栗	1丁目		\N	\N	飲食店工事	壁・床等傷つけないように注意	\N	脚立からの転落に注意	\N	\N	\N	\N	\N	\N	\N	0	0	0	1	2023-05-23 10:19:25.367732	2023-07-15 17:30:04.028649
+3	20230003	Bサンプル工事	Bサンプル工事	2023-06-24	5		\N	2023-06-24	2023-07-25	2023-01-01	2023-01-01					\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	\N	2023-06-24 16:51:56.391937	2023-07-05 13:31:56.345206
 \.
 
 
@@ -3120,10 +3127,20 @@ COPY public.construction_data (id, construction_code, construction_name, alias_n
 --
 
 COPY public.contacts (id, name, search_character, company_name, affiliation, department, post, address, tel, fax, email, url, partner_division_id, created_at, updated_at) FROM stdin;
-1			株式会社サンプル得意先Ａ	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-05-11 17:53:57.155652	2023-05-11 17:53:57.155652
 2			株式会社サンプル得意先B	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-05-23 10:19:50.04715	2023-05-23 10:19:50.04715
 3			株式会社サンプル得意先C	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-06-07 13:36:09.096025	2023-06-07 13:36:09.096025
 4			株式会社サンプル得意先Ｄ	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-06-07 13:36:27.755897	2023-06-07 13:36:27.755897
+5			株式会社サンプル得意先E	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:09:47.806967	2023-07-01 16:09:47.806967
+6			株式会社サンプル得意先D	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:18:18.641978	2023-07-01 16:18:18.641978
+1			＜手入力用＞	\N	\N						\N	1	2023-05-11 17:53:57.155652	2023-07-01 16:19:56.855081
+7			株式会社サンプル得意先A	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:20:24.955282	2023-07-01 16:20:24.955282
+8			株式会社サンプル得意先B	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:20:40.187493	2023-07-01 16:20:40.187493
+9			株式会社サンプル得意先C	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:21:06.478977	2023-07-01 16:21:06.478977
+10			株式会社サンプル得意先D	\N	\N	〒955-0013	新潟県三条市東三条	0120-11-1111			\N	1	2023-07-01 16:21:18.063724	2023-07-01 16:21:18.063724
+11			株式会社サンプル得意先E	\N	\N						\N	1	2023-07-01 16:21:34.575191	2023-07-01 16:21:34.575191
+12			株式会社サンプル得意先F	\N	\N						\N	1	2023-07-01 16:21:44.77293	2023-07-01 16:21:44.77293
+13			株式会社サンプル得意先F	\N	\N						\N	1	2023-07-01 16:52:38.311185	2023-07-01 16:52:38.311185
+14			株式会社サンプルｃ	\N	\N						\N	1	2023-07-03 08:28:24.426276	2023-07-03 08:28:24.426276
 \.
 
 
@@ -3132,11 +3149,11 @@ COPY public.contacts (id, name, search_character, company_name, affiliation, dep
 --
 
 COPY public.customer_masters (id, customer_name, search_character, post, address, house_number, address2, tel_main, fax_main, email_main, closing_date, closing_date_division, due_date, due_date_division, honorific_id, responsible1, responsible2, contact_id, payment_bank_id, card_not_flag, contractor_flag, public_flag, created_at, updated_at) FROM stdin;
-2	株式会社サンプル得意先B		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-05-20 17:35:59.957922	2023-05-23 10:19:49.788421
-5	株式会社サンプル得意先C		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-06-03 16:03:47.02586	2023-06-07 13:36:08.899406
-6	株式会社サンプル得意先Ｄ		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-06-03 16:06:19.405301	2023-06-07 13:36:27.701337
-1	株式会社サンプル得意先Ａ		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	\N			1	1	0	1	0	2023-05-11 17:54:04.139601	2023-06-13 08:44:11.646471
-8	株式会社サンプル得意先Ａ	\N	〒955-0013	新潟県三条市東三条	1番地		0120-11-1111		\N	0	\N	0	\N	0			\N	\N	\N	\N	\N	2023-06-23 16:10:13.603308	2023-06-23 16:10:13.603308
+1	＜手入力用＞									0	0	0	0	\N			1	1	0	0	0	2023-05-11 17:54:04.139601	2023-07-01 16:19:56.837125
+5	株式会社サンプル得意先B		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-06-03 16:03:47.02586	2023-07-01 16:20:40.179118
+6	株式会社サンプル得意先C		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-06-03 16:06:19.405301	2023-07-01 16:21:06.465656
+8	株式会社サンプル得意先D		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	\N	\N	0	\N	2023-06-23 16:10:13.603308	2023-07-01 16:21:18.051488
+2	株式会社サンプル得意先A		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			0	0	0	0	0			\N	1	0	0	0	2023-05-20 17:35:59.957922	2023-07-12 16:03:30.177495
 \.
 
 
@@ -3183,7 +3200,12 @@ COPY public.delivery_slip_headers (id, delivery_slip_code, quotation_code, invoi
 --
 
 COPY public.inventories (id, warehouse_id, location_id, material_master_id, inventory_quantity, unit_master_id, inventory_amount, supplier_master_id, current_history_id, current_warehousing_date, current_quantity, current_unit_price, last_warehousing_date, last_unit_price, next_history_id_1, next_warehousing_date_1, next_quantity_1, next_unit_price_1, next_history_id_2, next_warehousing_date_2, next_quantity_2, next_unit_price_2, no_stocktake_flag, image, created_at, updated_at) FROM stdin;
-1	1	1	2	10.00	2	500	2	\N	\N	10.00	50.00	\N	50.00	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	2023-06-06 17:27:38.033877	2023-06-06 17:27:38.033877
+3	1	1	4	10.00	2	500	2	\N	\N	10.00	50.00	\N	50.00	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	2023-07-03 09:39:08.344842	2023-07-03 09:39:08.344842
+2	1	1	3	13.00	1	1500	4	\N	\N	10.00	150.00	2023-07-18	\N	15	2023-07-18	3.00	\N	15	2023-07-18	3.00	\N	0	\N	2023-07-03 09:36:46.416037	2023-07-18 14:28:53.417857
+6	1	1	1	5.00	2	500	4	\N	\N	5.00	100.00	\N	100.00	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-18 15:07:17.104976	2023-07-18 15:07:42.081261
+7	1	1	12	5.00	2	0	4	\N	\N	5.00	150.00	\N	100.00	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-18 16:56:27.562389	2023-07-18 16:56:27.562389
+4	1	1	1	80.00	2	8000	4	\N	\N	80.00	100.00	\N	100.00	\N	\N	\N	\N	\N	\N	\N	\N	0	\N	2023-07-03 09:41:01.828312	2023-07-18 17:31:36.365434
+1	1	1	2	8.00	2	800	4	7	2023-07-10	8.00	100.00	2023-07-18	100.00	0	\N	0.00	\N	0	\N	0.00	\N	0	\N	2023-06-06 17:27:38.033877	2023-07-19 15:33:50.63388
 \.
 
 
@@ -3202,6 +3224,8 @@ COPY public.inventory_categories (id, name, seq, created_at, updated_at) FROM st
 --
 
 COPY public.inventory_histories (id, inventory_date, inventory_division_id, construction_datum_id, material_master_id, quantity, inventory_quantity, unit_master_id, unit_price, price, supplier_master_id, slip_code, purchase_datum_id, previous_quantity, previous_unit_price, current_quantity, current_unit_price, current_history_id, current_warehousing_date, next_quantity_1, next_unit_price_1, next_history_id_1, next_warehousing_date_1, created_at, updated_at) FROM stdin;
+17	2023-07-18	0	2	2	-1.00	8	2	100.00	-100	4		27	\N	\N	-1.00	100.00	7	2023-07-10	0.00	\N	\N	\N	2023-07-19 15:33:50.625177	2023-07-19 15:33:50.64189
+18	2023-07-04	2	978	2	-2.00	\N	2	50.00	-100	4	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-20 08:55:46.331706	2023-07-20 08:55:46.331706
 \.
 
 
@@ -3216,6 +3240,7 @@ COPY public.invoice_detail_large_classifications (id, invoice_header_id, invoice
 12	2	1	1	小計	1		8	1.00	1.00	1	<手入力>	\N	2200	\N	1760	\N	0.000	\N	\N	\N	1	\N	\N	\N	2023-06-17 09:52:42.603648	2023-06-17 09:52:42.603648
 2	2	1	1	配線工事	1		1	1.00	1.00	2	箇所	\N	200	\N	160	0.000	0.000	3		\N	0	0	0	0	2023-06-16 16:35:07.283798	2023-06-17 15:15:36.511867
 13	3	1	2	配線Ａ	1		1	1.00	1.00	2	箇所	100	100	80	80	\N	\N	\N	\N	\N	0	\N	\N	\N	2023-06-26 09:29:42.845377	2023-06-26 09:29:42.845377
+15	4	1	1	※入力してください※	1		1	1.00	1.00	1	式	\N	150	\N	120	0.000	0.000	3		\N	0	0	0	0	2023-07-12 14:09:51.301319	2023-07-12 14:09:51.301319
 \.
 
 
@@ -3228,6 +3253,8 @@ COPY public.invoice_detail_middle_classifications (id, invoice_header_id, invoic
 3	2	2	1	1	配線テスト１	1	1		1.00	1.00	2	箇所	100	100	80	80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N		0	0	0	0	2023-06-16 16:35:27.721612	2023-06-16 16:35:27.721612
 4	2	2	\N	1	配線テスト２	1	2		1.00	1.00	2	箇所	100	100	80	80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	0	0	0	2023-06-17 15:15:15.094377	2023-06-17 15:15:15.094377
 5	2	2	\N	1	小計	1	3		1.00	1.00	2	箇所	\N	200	\N	160	\N	\N	\N	\N	\N	0.000	\N	\N	\N	\N	\N	\N	1	0	0	0	2023-06-17 15:15:36.441411	2023-06-17 15:15:36.441411
+6	4	15	1	1	配線	1	2	配線テスト	1.00	1.00	2	箇所	100	100	80	80	\N	\N	\N	\N	0.000	0.000	\N	\N	\N	\N	\N		0	0	0	0	2023-07-12 14:09:51.356813	2023-07-12 14:09:51.356813
+7	4	15	1	1	配線テスト２	1	3		1.00	1.00	2	箇所	50	50	40	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N		0	0	0	0	2023-07-12 14:09:51.374233	2023-07-12 14:09:51.374233
 \.
 
 
@@ -3236,7 +3263,7 @@ COPY public.invoice_detail_middle_classifications (id, invoice_header_id, invoic
 --
 
 COPY public.invoice_headers (id, invoice_code, quotation_code, delivery_slip_code, invoice_date, construction_datum_id, construction_name, customer_id, customer_name, honorific_id, responsible1, responsible2, post, address, house_number, address2, tel, fax, construction_period, construction_place, construction_house_number, construction_place2, payment_period, invoice_period_start_date, invoice_period_end_date, billing_amount, execution_amount, deposit_amount, payment_method_id, commission, payment_date, labor_insurance_not_flag, last_line_number, remarks, final_return_division, deposit_complete_flag, created_at, updated_at) FROM stdin;
-3	2023010101			\N	1	サンプル工事	8	株式会社サンプル得意先Ａ	0			〒955-0013	新潟県三条市東三条	1番地		0120-11-1111		\N	\N	\N	\N		\N	\N	100	80	\N	0	\N	\N	0	1		0	0	2023-06-23 16:10:13.860195	2023-06-26 09:29:56.517327
+3	2023010101			\N	1	サンプル工事	2	株式会社サンプル得意先A	0			〒955-0013	新潟県三条市東三条	1番地		0120-11-1111		\N	\N	\N	\N		\N	\N	100	80	\N	0	\N	\N	0	1		0	0	2023-06-23 16:10:13.860195	2023-07-05 14:13:16.340237
 \.
 
 
@@ -3246,7 +3273,8 @@ COPY public.invoice_headers (id, invoice_code, quotation_code, delivery_slip_cod
 
 COPY public.maker_masters (id, maker_name, created_at, updated_at) FROM stdin;
 1	-	2023-05-12 08:58:23.913475	2023-05-15 18:31:06.394751
-2	パーナ	2023-05-15 18:30:47.147357	2023-05-15 18:31:14.130954
+4	PAST	2023-07-05 15:57:07.90495	2023-07-05 15:57:07.90495
+5	パーナ	2023-07-15 17:25:39.642049	2023-07-15 17:25:39.642049
 \.
 
 
@@ -3257,6 +3285,8 @@ COPY public.maker_masters (id, maker_name, created_at, updated_at) FROM stdin;
 COPY public.material_categories (id, name, seq, created_at, updated_at) FROM stdin;
 1	照明器具	\N	2023-05-12 09:09:29.77533	2023-05-12 09:09:29.77533
 2	配線器具	\N	2023-05-12 09:10:59.504923	2023-05-12 09:10:59.504923
+3	\N	\N	2023-07-07 18:36:07.846066	2023-07-07 18:36:07.846066
+4	\N	\N	2023-07-07 18:36:11.747362	2023-07-07 18:36:11.747362
 \.
 
 
@@ -3266,7 +3296,11 @@ COPY public.material_categories (id, name, seq, created_at, updated_at) FROM std
 
 COPY public.material_masters (id, material_code, internal_code, material_name, maker_id, unit_id, list_price, list_price_quotation, standard_quantity, standard_labor_productivity_unit, standard_rate, last_unit_price, last_unit_price_update_at, inventory_category_id, material_category_id, list_price_update_at, notes, created_at, updated_at) FROM stdin;
 1	<手入力用>		<手入力用>	1	1	\N	\N	\N	\N	\N	14928.00	2023-06-01	\N	\N	\N		2023-05-12 09:33:00.551371	2023-06-10 11:42:18.692968
-2	ZN10011		ZN10011	2	2	200	200	\N	\N	0.5000	100.00	2023-06-24	\N	2	\N		2023-05-15 18:29:50.831334	2023-06-24 17:31:47.602064
+7	WWF202	\N	WWFケーブル2.0mm-2C	4	4	\N	\N	\N	\N	\N	\N	2000-01-01	\N	\N	\N		2023-07-13 15:28:21.513473	2023-07-13 15:28:52.632301
+3	ZN1002		サンプル２	2	2	151	151	\N	\N	0.0000	\N	2023-07-18	\N	2	\N		2023-07-01 16:33:53.546762	2023-07-18 13:48:43.410907
+8	vvv	\N		\N	\N	\N	\N	\N	\N	\N	\N	2000-01-01	\N	\N	\N		2023-07-18 13:54:13.105766	2023-07-18 13:54:13.105766
+4	ZN1003			1	2	150	\N	\N	\N	\N	\N	2000-01-01	\N	2	\N		2023-07-03 09:33:39.136199	2023-07-18 16:43:19.78414
+2	ZN1001		サンプル１	5	2	200	200	\N	\N	0.5000	100.00	2023-07-18	2	2	\N		2023-05-15 18:29:50.831334	2023-07-19 15:33:50.489542
 \.
 
 
@@ -3275,11 +3309,37 @@ COPY public.material_masters (id, material_code, internal_code, material_name, m
 --
 
 COPY public.orders (id, purchase_order_history_id, material_id, material_code, material_name, maker_id, maker_name, quantity, unit_master_id, list_price, order_unit_price, order_price, material_category_id, mail_sent_flag, delivery_complete_flag, sequential_id, created_at, updated_at) FROM stdin;
-1	1	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	\N	1	2023-06-12 17:50:27.535941	2023-06-12 17:50:27.535941
-2	2	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	\N	1	2023-06-12 17:55:31.549748	2023-06-12 17:55:31.549748
-3	3	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	\N	1	2023-06-12 17:56:01.284337	2023-06-12 17:56:01.284337
-53	4	2	ZN10011	ZN10011	2	\N	10	2	200	0.00	0	2	\N	\N	1	2023-06-24 13:56:30.185721	2023-06-24 13:56:30.185721
-54	5	2	ZN10011	ZN10011	2	パーナ	10	2	200	300.00	3000	\N	1	\N	1	2023-06-24 15:34:43.043768	2023-06-24 15:34:43.043768
+106	37	3	ZN1002	サンプル２	2	\N	3	2	151	\N	\N	2	\N	0	3	2023-07-08 16:36:09.13389	2023-07-15 15:55:33.131128
+112	6	4	ZN1003	サンプル３	2	\N	2	2	150	\N	\N	2	\N	0	1	2023-07-10 16:01:14.893588	2023-07-15 15:55:33.156465
+113	6	5	ZN1004	サンプル４	2	\N	0	2	230	\N	\N	2	\N	0	2	2023-07-10 16:01:14.914179	2023-07-15 15:55:33.169649
+114	6	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	3	2023-07-10 16:01:14.930788	2023-07-15 15:55:33.184341
+1	1	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	0	1	2023-06-12 17:50:27.535941	2023-07-15 15:55:32.803088
+2	2	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	0	1	2023-06-12 17:55:31.549748	2023-07-15 15:55:32.816706
+3	3	2	ZN10011	ZN10011	2	\N	1	2	200	\N	\N	2	\N	0	1	2023-06-12 17:56:01.284337	2023-07-15 15:55:32.829017
+53	4	2	ZN10011	ZN10011	2	\N	10	2	200	0.00	0	2	\N	0	1	2023-06-24 13:56:30.185721	2023-07-15 15:55:32.843235
+54	5	2	ZN10011	ZN10011	2	パーナ	10	2	200	300.00	3000	\N	1	0	1	2023-06-24 15:34:43.043768	2023-07-15 15:55:32.859931
+64	15	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:31:36.119761	2023-07-15 15:55:32.876424
+65	16	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:31:44.126182	2023-07-15 15:55:32.893895
+66	17	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:32:01.42436	2023-07-15 15:55:32.90732
+67	18	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:39:15.792809	2023-07-15 15:55:32.918831
+68	19	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:39:24.795139	2023-07-15 15:55:32.927301
+69	20	2	ZN1001	ZN10011	2	\N	5	2	200	0.00	0	2	\N	0	1	2023-07-07 17:41:15.312006	2023-07-15 15:55:32.938149
+71	22	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:48:06.699138	2023-07-15 15:55:32.947716
+72	23	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:48:12.477558	2023-07-15 15:55:32.95856
+73	24	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:48:16.384748	2023-07-15 15:55:32.971755
+74	25	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:48:27.256297	2023-07-15 15:55:32.98145
+75	26	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:48:39.229464	2023-07-15 15:55:32.992272
+76	27	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:49:02.847349	2023-07-15 15:55:33.004083
+77	28	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:49:14.856587	2023-07-15 15:55:33.019283
+78	29	2	ZN1001	ZN10011	2	\N	2	2	200	0.00	0	2	\N	0	1	2023-07-07 17:50:28.755454	2023-07-15 15:55:33.029063
+79	30	6	ZN1005	サンプル５	2	\N	5	2	250	\N	\N	4	\N	0	1	2023-07-07 18:39:33.770172	2023-07-15 15:55:33.044124
+80	31	5	ZN1004	サンプル４	2	\N	2	2	230	\N	\N	2	\N	0	1	2023-07-07 18:39:47.498468	2023-07-15 15:55:33.056183
+81	31	6	ZN1005	サンプル５	2	\N	5	2	250	\N	\N	4	\N	0	2	2023-07-07 18:39:47.512328	2023-07-15 15:55:33.066622
+82	32	5	ZN1004	サンプル４	2	\N	2	2	230	\N	\N	2	\N	0	1	2023-07-07 18:40:40.048299	2023-07-15 15:55:33.077973
+83	32	6	ZN1005	サンプル５	2	\N	5	2	250	\N	\N	4	\N	0	2	2023-07-07 18:40:40.065983	2023-07-15 15:55:33.091336
+84	33	6	ZN1005	サンプル５	2	\N	2	2	250	\N	\N	4	\N	0	1	2023-07-07 18:46:57.106272	2023-07-15 15:55:33.102777
+104	37	5	ZN1004	サンプル４	2	\N	5	2	230	\N	\N	2	\N	0	1	2023-07-08 16:36:09.103273	2023-07-15 15:55:33.111405
+105	37	4	ZN1003	サンプル３	2	\N	3	2	150	\N	\N	2	\N	0	2	2023-07-08 16:36:09.120281	2023-07-15 15:55:33.122879
 \.
 
 
@@ -3291,7 +3351,7 @@ COPY public.outsourcing_costs (id, invoice_code, purchase_order_datum_id, constr
 1	2023051501	1	1	\N	4	\N	2023-05-15	\N	\N	0	\N	\N	1000	\N	\N	\N	\N	\N	\N	\N	\N	2023-06-09 16:03:06.043419	2023-06-09 16:03:06.043419
 2	2023060101	2	2	\N	4	\N	2023-06-01	\N	\N	14928	\N	\N	14928	\N	\N	\N	\N	\N	\N	\N	\N	2023-06-10 08:13:00.256029	2023-06-10 08:20:56.951163
 3	2023060101	2	2	\N	3	\N	2023-06-01	\N	\N	0	\N	\N	14928	\N	\N	\N	\N	\N	\N	\N	\N	2023-06-10 11:42:18.650338	2023-06-10 11:42:18.650338
-4	2023/06/24	4	1	\N	3	\N	\N	\N	\N	0	\N	\N	10000	\N	\N	\N	\N	\N	\N	\N	\N	2023-06-24 17:41:33.44206	2023-06-24 17:41:33.44206
+4	2023/07/03	4	1	\N	3	\N	\N	\N	\N	0	\N	\N	200	\N	\N	\N	\N	\N	\N	\N	\N	2023-06-24 17:41:33.44206	2023-07-03 09:18:17.740349
 \.
 
 
@@ -3300,8 +3360,10 @@ COPY public.outsourcing_costs (id, invoice_code, purchase_order_datum_id, constr
 --
 
 COPY public.purchase_data (id, purchase_date, slip_code, purchase_order_datum_id, construction_datum_id, material_id, material_code, material_name, maker_id, maker_name, quantity, quantity2, unit_id, purchase_unit_price, purchase_unit_price2, purchase_amount, list_price, purchase_id, division_id, supplier_id, inventory_division_id, unit_price_not_update_flag, outsourcing_invoice_flag, outsourcing_payment_flag, purchase_header_id, working_end_date, closing_date, payment_due_date, payment_date, unpaid_payment_date, notes, created_at, updated_at) FROM stdin;
-10	2023-06-24		4	1	1	<手入力用>	外注費	1	-	1.00	\N	\N	10000.00	\N	10000	\N	\N	\N	3	\N	0	0	\N	\N	\N	\N	\N	\N	\N		2023-06-24 17:41:33.536436	2023-06-24 17:41:33.536436
-9	2023-06-24		3	2	2	ZN10011	ZN10011	2	パーナ	20.00	\N	2	100.00	\N	2000	200	\N	1	2	\N	0	0	\N	\N	\N	\N	\N	\N	\N		2023-06-24 17:31:47.609699	2023-07-01 11:51:25.239542
+31	2023-07-18		4	2	3	ZN1002	サンプル２	1	-	\N	\N	1	\N	\N	0	151	\N	1	4	0	0	\N	\N	\N	\N	\N	\N	\N	\N		2023-07-18 14:28:19.679865	2023-07-19 15:21:03.183817
+10	2023-06-24	2	4	1	1	<手入力用>	外注費	1	-	1.00	\N	1	10000.00	\N	10000	\N	\N	1	3	\N	0	0	\N	2	\N	\N	\N	\N	\N		2023-06-24 17:41:33.536436	2023-07-03 08:54:48.310839
+27	2023-07-18		4	2	2	ZN1001	サンプル１	5	パーナ	-1.00	\N	2	100.00	\N	-100	200	\N	1	4	0	0	\N	\N	\N	\N	\N	\N	\N	\N		2023-07-18 12:01:49.931268	2023-07-19 15:33:50.519102
+25	2023-07-18		4	2	2	ZN1001	サンプル１	5	パーナ	3.00	\N	2	100.00	\N	300	200	\N	3	4	\N	0	\N	\N	\N	\N	\N	\N	\N	\N		2023-07-18 11:59:46.131354	2023-07-18 11:59:46.131354
 \.
 
 
@@ -3310,7 +3372,10 @@ COPY public.purchase_data (id, purchase_date, slip_code, purchase_order_datum_id
 --
 
 COPY public.purchase_divisions (id, purchase_division_name, purchase_division_long_name, created_at, updated_at) FROM stdin;
-1	仕入	仕入材料	2023-05-12 09:56:37.271065	2023-05-12 09:56:37.271065
+2	外注	外注費	2023-07-05 11:00:28.555174	2023-07-05 11:00:28.555174
+3	入庫	入庫	2023-07-05 11:00:41.070803	2023-07-05 11:00:41.070803
+4	出庫	出庫	2023-07-05 11:00:52.802784	2023-07-05 11:00:52.802784
+1	仕入	仕入材料	2023-07-05 13:06:18.093233	2023-07-05 13:06:18.093233
 \.
 
 
@@ -3319,6 +3384,10 @@ COPY public.purchase_divisions (id, purchase_division_name, purchase_division_lo
 --
 
 COPY public.purchase_headers (id, slip_code, complete_flag, created_at, updated_at) FROM stdin;
+2	2	\N	2023-07-03 08:54:48.303264	2023-07-03 08:54:48.303264
+3	3	\N	2023-07-03 08:55:07.45491	2023-07-03 08:55:07.45491
+4	4	\N	2023-07-03 08:55:19.759678	2023-07-03 08:55:19.759678
+1	1	0	2023-07-03 08:45:44.031183	2023-07-10 14:30:15.561149
 \.
 
 
@@ -3327,8 +3396,9 @@ COPY public.purchase_headers (id, slip_code, complete_flag, created_at, updated_
 --
 
 COPY public.purchase_order_data (id, purchase_order_code, construction_datum_id, supplier_master_id, supplier_responsible_id, alias_name, purchase_order_date, mail_sent_flag, created_at, updated_at) FROM stdin;
-4	A2301	1	3	10	Ａサンプル工事	\N	0	2023-06-24 17:40:59.241689	2023-06-24 17:40:59.241689
-3	A2300	2	2	9	Bサンプル工事	\N	1	2023-06-24 16:07:18.304486	2023-06-26 08:54:57.336153
+5	A2302	3	5	13	Bサンプル工事	\N	0	2023-07-03 08:38:04.151229	2023-07-05 13:34:16.365162
+1	-	1	2	9		\N	1	2023-06-24 16:07:18.304486	2023-07-05 13:33:16.502849
+4	A2301	2	4	12	Aサン工事	\N	0	2023-06-24 17:40:59.241689	2023-07-10 18:54:31.483968
 \.
 
 
@@ -3342,6 +3412,46 @@ COPY public.purchase_order_histories (id, purchase_order_date, supplier_master_i
 3	2023-06-12	2	1	\N	\N		2023-06-12 17:56:01.269651	2023-06-12 17:56:01.269651
 4	2023-06-23	2	1	\N	\N		2023-06-23 17:12:49.211645	2023-06-24 13:56:23.665462
 5	2023-06-24	2	\N	1	\N	\N	2023-06-24 15:34:42.158786	2023-06-24 15:34:42.158786
+6	2023-07-06	4	4	\N	\N		2023-07-06 09:59:59.934334	2023-07-06 09:59:59.934334
+7	2023-07-06	4	4	\N	\N		2023-07-06 10:30:53.662959	2023-07-06 10:30:53.662959
+8	2023-07-06	4	4	\N	\N		2023-07-06 10:31:09.385158	2023-07-06 10:31:09.385158
+9	2023-07-07	4	4	\N	\N		2023-07-07 16:03:59.20436	2023-07-07 16:03:59.20436
+10	2023-07-07	4	4	\N	\N		2023-07-07 16:04:11.401739	2023-07-07 16:04:11.401739
+11	2023-07-07	4	4	\N	\N		2023-07-07 16:04:24.0304	2023-07-07 16:04:24.0304
+12	2023-07-07	4	4	\N	\N		2023-07-07 16:04:28.639833	2023-07-07 16:04:28.639833
+13	2023-07-07	4	4	\N	\N		2023-07-07 16:04:37.536615	2023-07-07 16:04:37.536615
+14	2023-07-07	5	5	\N	\N		2023-07-07 17:26:56.316796	2023-07-07 17:26:56.316796
+15	2023-07-07	5	5	\N	\N		2023-07-07 17:31:36.103278	2023-07-07 17:31:36.103278
+16	2023-07-07	5	5	\N	\N		2023-07-07 17:31:44.058895	2023-07-07 17:31:44.058895
+17	2023-07-07	5	5	\N	\N		2023-07-07 17:32:01.407732	2023-07-07 17:32:01.407732
+18	2023-07-07	5	5	\N	\N		2023-07-07 17:39:15.775171	2023-07-07 17:39:15.775171
+19	2023-07-07	5	5	\N	\N		2023-07-07 17:39:24.772687	2023-07-07 17:39:24.772687
+20	2023-07-07	5	5	\N	\N		2023-07-07 17:41:15.295496	2023-07-07 17:41:15.295496
+21	2023-07-07	5	5	\N	\N		2023-07-07 17:41:37.319615	2023-07-07 17:41:37.319615
+22	2023-07-07	5	5	\N	\N		2023-07-07 17:48:06.682129	2023-07-07 17:48:06.682129
+23	2023-07-07	5	5	\N	\N		2023-07-07 17:48:12.451117	2023-07-07 17:48:12.451117
+24	2023-07-07	5	5	\N	\N		2023-07-07 17:48:16.367533	2023-07-07 17:48:16.367533
+25	2023-07-07	5	5	\N	\N		2023-07-07 17:48:27.237145	2023-07-07 17:48:27.237145
+26	2023-07-07	5	5	\N	\N		2023-07-07 17:48:39.213446	2023-07-07 17:48:39.213446
+27	2023-07-07	5	5	\N	\N		2023-07-07 17:49:02.821314	2023-07-07 17:49:02.821314
+28	2023-07-07	5	5	\N	\N		2023-07-07 17:49:14.839817	2023-07-07 17:49:14.839817
+29	2023-07-07	5	5	\N	\N		2023-07-07 17:50:28.728224	2023-07-07 17:50:28.728224
+30	2023-07-07	5	5	\N	\N		2023-07-07 18:39:33.744359	2023-07-07 18:39:33.744359
+31	2023-07-07	5	5	\N	\N		2023-07-07 18:39:47.476741	2023-07-07 18:39:47.476741
+32	2023-07-07	5	5	\N	\N		2023-07-07 18:40:40.028548	2023-07-07 18:40:40.028548
+33	2023-07-07	5	5	\N	\N		2023-07-07 18:46:57.086804	2023-07-07 18:46:57.086804
+37	2023-07-08	4	4	\N	\N		2023-07-08 09:51:10.249958	2023-07-08 09:51:10.249958
+38	2023-07-19	5	5	\N	\N		2023-07-19 15:47:38.860788	2023-07-19 15:47:38.860788
+39	2023-07-19	5	5	\N	\N		2023-07-19 15:48:16.63459	2023-07-19 15:48:16.63459
+40	2023-07-19	5	5	\N	\N		2023-07-19 15:50:11.696657	2023-07-19 15:50:11.696657
+41	2023-07-19	5	5	\N	\N		2023-07-19 15:52:40.294182	2023-07-19 15:52:40.294182
+42	2023-07-19	5	5	\N	\N		2023-07-19 15:56:20.063166	2023-07-19 15:56:20.063166
+43	2023-07-19	5	5	\N	\N		2023-07-19 15:56:54.756278	2023-07-19 15:56:54.756278
+44	2023-07-19	5	5	\N	\N		2023-07-19 15:57:01.726583	2023-07-19 15:57:01.726583
+45	2023-07-19	5	5	\N	\N		2023-07-19 15:58:02.399891	2023-07-19 15:58:02.399891
+46	2023-07-19	5	5	\N	\N		2023-07-19 15:58:43.159102	2023-07-19 15:58:43.159102
+47	2023-07-19	5	5	\N	\N		2023-07-19 15:59:45.951315	2023-07-19 15:59:45.951315
+48	2023-07-19	5	5	\N	\N		2023-07-19 16:03:07.525859	2023-07-19 16:03:07.525859
 \.
 
 
@@ -3350,10 +3460,13 @@ COPY public.purchase_order_histories (id, purchase_order_date, supplier_master_i
 --
 
 COPY public.purchase_unit_prices (id, supplier_id, material_id, supplier_material_code, unit_price, list_price, unit_id, created_at, updated_at) FROM stdin;
-1	2	1	<手入力用>	1000.00	\N	2	2023-06-08 14:05:02.516822	2023-06-08 14:05:02.516822
 2	4	1	<手入力用>	1000.00	\N	2	2023-06-08 18:09:48.060093	2023-06-08 18:09:48.060093
-3	3	1	<手入力用>	14928.00	\N	\N	2023-06-10 11:42:18.053544	2023-06-10 16:47:29.174141
-4	2	2	\N	100.00	\N	2	2023-06-12 17:50:26.59913	2023-06-24 17:31:47.51379
+5	2	3	ZN1002	150.00	\N	2	2023-07-01 17:05:05.059739	2023-07-01 17:05:05.059739
+3	3	1	<手入力用>	200.00	\N	2	2023-06-10 11:42:18.053544	2023-07-04 13:30:33.866245
+4	2	2	\N	90.00	\N	2	2023-06-12 17:50:26.59913	2023-07-05 08:21:52.433859
+9	5	2	\N	0.00	\N	2	2023-07-07 17:26:56.302119	2023-07-07 17:26:56.302119
+6	4	2	ZN1001	100.00	\N	2	2023-07-05 13:56:20.617415	2023-07-11 18:13:12.397164
+10	4	3	ZN1002	\N	\N	1	2023-07-19 15:21:03.135705	2023-07-19 15:21:03.135705
 \.
 
 
@@ -3371,7 +3484,12 @@ COPY public.quatation_material_headers (id, quotation_code, requested_date, cons
 
 COPY public.quotation_detail_large_classifications (id, quotation_header_id, quotation_items_division_id, working_large_item_id, working_specific_middle_item_id, working_large_item_name, working_large_item_short_name, working_middle_item_category_id, working_middle_item_category_id_call, working_middle_item_subcategory_id, working_middle_item_subcategory_id_call, working_large_specification, line_number, quantity, execution_quantity, working_unit_id, working_unit_name, working_unit_price, quote_price, execution_unit_price, execution_price, labor_productivity_unit, labor_productivity_unit_total, last_line_number, remarks, construction_type, piping_wiring_flag, equipment_mounting_flag, labor_cost_flag, created_at, updated_at) FROM stdin;
 12	2	1	2	\N	配線Ａテスト	1	2	\N	\N	\N		1	1.00	1.00	2	箇所	100	180	80	130	0.000	0.000	3		0	\N	\N	\N	2023-06-17 16:36:26.063225	2023-06-17 16:43:30.817611
-17	1	1	1	\N	※入力してください※	1	\N	\N	\N	\N		1	1.00	1.00	22	式	\N	150	\N	120	0.000	0.000	3	\N	0	0	0	0	2023-06-19 15:48:07.979085	2023-06-19 15:48:08.143853
+20	7	1	1	1	電気設備工事	1	2	2	\N	\N		1	1.00	1.00	3	式	500000	500000	400000	400000	\N	\N	\N		0	\N	\N	\N	2023-07-12 17:23:24.517331	2023-07-13 14:20:23.542266
+21	7	1	1	\N	諸経費	1	2	1	\N	\N		2	1.00	1.00	3	式	50000	50000	30000	30000	\N	\N	\N		0	\N	\N	\N	2023-07-12 17:23:50.692217	2023-07-13 14:20:23.567359
+22	7	1	6	\N	test3	6	1	1	\N	\N		4	1.00	1.00	3	式	100	100	80	80	\N	\N	\N		0	\N	\N	\N	2023-07-19 17:08:10.213194	2023-07-19 17:08:10.213194
+25	8	1	6	\N	配線3	6	1	1	\N	\N		3	1.00	1.00	3	式	100	100	80	80	\N	\N	\N		0	\N	\N	\N	2023-07-19 17:14:03.842313	2023-07-19 17:14:03.842313
+23	8	1	6	\N	配線１	6	1	1	\N	\N		1	1.00	1.00	3	式	80	80	50	50	0.800	0.800	\N		0	\N	\N	\N	2023-07-19 17:13:30.899229	2023-07-19 18:11:22.855437
+24	8	1	6	\N	配線2	6	1	1	\N	\N		2	1.00	1.00	3	式	100	100	80	80	0.800	0.800	\N		0	\N	\N	\N	2023-07-19 17:13:45.35775	2023-07-19 18:19:03.009068
 \.
 
 
@@ -3383,8 +3501,6 @@ COPY public.quotation_detail_middle_classifications (id, quotation_header_id, qu
 2	2	12	1	2	\N	配線Ａ	1	2	\N	\N	\N	1		1	1	2	箇所	100	100	80	80	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N		0	0	0	0	2023-06-17 16:37:37.181217	2023-06-17 16:37:37.181217
 3	2	12	1	2	\N	配線B	1	2	\N	\N	\N	2		1	1	2	箇所	80	80	50	50	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N		0	0	0	0	2023-06-17 16:38:13.12804	2023-06-17 16:38:13.12804
 4	2	12	1	1	\N	小計	1	1	\N	\N	\N	3		1	1	1	<手入力>	\N	180	\N	130	\N	\N	\N	\N	\N	0	\N	\N	\N	\N	\N		1	0	0	0	2023-06-17 16:43:30.291048	2023-06-17 16:43:30.291048
-9	1	17	1	1	\N	配線	1	1	\N	\N	\N	2	配線テスト	1	1	2	箇所	100	100	80	80	\N	\N	\N	\N	0	0	\N	\N	\N	\N	\N		0	0	0	0	2023-06-19 15:48:08.063484	2023-06-19 15:48:08.063484
-10	1	17	1	1	\N	配線テスト２	1	1	\N	\N	\N	3		1	1	2	箇所	50	50	40	40	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N		0	0	0	0	2023-06-19 15:48:08.120257	2023-06-19 15:48:08.120257
 \.
 
 
@@ -3393,8 +3509,9 @@ COPY public.quotation_detail_middle_classifications (id, quotation_header_id, qu
 --
 
 COPY public.quotation_headers (id, quotation_code, invoice_code, delivery_slip_code, quotation_header_origin_id, quotation_date, construction_datum_id, construction_name, customer_id, customer_name, honorific_id, responsible1, responsible2, post, address, house_number, address2, tel, fax, construction_period, construction_period_date1, construction_period_date2, construction_post, construction_place, construction_house_number, construction_place2, trading_method, effective_period, quote_price, execution_amount, net_amount, last_line_number, category_saved_flag, category_saved_id, subcategory_saved_id, invoice_period_start_date, invoice_period_end_date, fixed_flag, not_sum_flag, created_at, updated_at) FROM stdin;
-2	20230002			\N	\N	2	Bサンプル工事	2	株式会社サンプル得意先B	0			〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			\N	\N							180	130	\N	1	1	\N	\N	\N	\N	0	0	2023-05-23 10:28:33.542066	2023-06-17 16:38:14.960552
-1	202300001			\N	\N	1	Ａサンプル工事	7	株式会社サンプル得意先Ａ	0			〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			\N	\N							150	120	\N	1	1	\N	\N	\N	\N	0	0	2023-05-20 17:36:00.991044	2023-06-19 15:48:08.195143
+7	2023070101			\N	2023-07-01	2	Aサンプル工事	2	株式会社サンプル得意先A	0	試験太郎		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			\N	\N	〒955-0013	新潟県三条市井栗	1丁目				550100	430080	\N	4	1	1	\N	\N	\N	0	0	2023-07-12 14:32:53.108023	2023-07-19 17:08:10.330501
+2	2023070102			\N	2023-07-01	2	Bサンプル工事	2	株式会社サンプル得意先A	0	試験太郎		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			\N	\N							180000	130000	\N	1	1	\N	\N	\N	\N	0	0	2023-05-23 10:28:33.542066	2023-07-12 16:43:45.255528
+8	2023071901			\N	\N	2	Aサンプル工事	2	株式会社サンプル得意先A	0	試験太郎		〒955-0013	新潟県三条市東三条	1番地		0120-11-1111			\N	\N	〒955-0013	新潟県三条市井栗	1丁目				280	210	\N	3	1	1	\N	\N	\N	0	0	2023-07-19 17:13:06.968599	2023-07-19 18:19:03.060435
 \.
 
 
@@ -3403,7 +3520,11 @@ COPY public.quotation_headers (id, quotation_code, invoice_code, delivery_slip_c
 --
 
 COPY public.quotation_material_details (id, quotation_material_header_id, material_id, material_code, material_name, maker_id, maker_name, quantity, unit_master_id, list_price, quotation_unit_price_1, quotation_unit_price_2, quotation_unit_price_3, quotation_price_1, quotation_price_2, quotation_price_3, bid_flag_1, bid_flag_2, bid_flag_3, mail_sent_flag, quotation_email_flag_1, quotation_email_flag_2, quotation_email_flag_3, order_email_flag_1, order_email_flag_2, order_email_flag_3, sequential_id, created_at, updated_at) FROM stdin;
-10	1	2	ZN10011	ZN10011	2	パーナ	10	2	200	300	\N	\N	3000	\N	\N	1	0	0	\N	1	0	0	1	0	0	1	2023-06-24 15:34:37.335199	2023-06-24 15:34:37.335199
+14	1	2	ZN1001	ZN10011	2	パーナ	10	2	200	300	\N	\N	3000	\N	\N	1	0	0	\N	1	0	0	1	0	0	1	2023-07-06 10:39:05.95063	2023-07-06 10:39:05.95063
+15	2	3	ZN1002	サンプル２	2	パーナ	3	2	151	\N	\N	\N	\N	\N	\N	0	0	0	\N	0	0	0	0	0	0	1	2023-07-08 11:29:45.556173	2023-07-08 11:29:45.556173
+16	2	4	ZN1003	サンプル３	2	パーナ	1	2	150	\N	\N	\N	\N	\N	\N	0	0	0	\N	0	0	0	0	0	0	2	2023-07-08 11:29:45.575576	2023-07-08 11:29:45.575576
+107	3	4	ZN1003	サンプル３	2	パーナ	1	2	150	50	\N	\N	50	\N	\N	1	0	0	\N	1	0	0	1	0	0	1	2023-07-08 15:43:30.239868	2023-07-08 15:43:30.239868
+108	3	3	ZN1002	サンプル２	2	パーナ	3	2	151	100	\N	\N	300	\N	\N	1	0	0	\N	1	0	0	1	0	0	2	2023-07-08 15:43:30.254277	2023-07-08 15:43:30.254277
 \.
 
 
@@ -3412,7 +3533,9 @@ COPY public.quotation_material_details (id, quotation_material_header_id, materi
 --
 
 COPY public.quotation_material_headers (id, quotation_code, requested_date, construction_datum_id, supplier_master_id, responsible, email, delivery_place_flag, notes_1, notes_2, notes_3, quotation_header_origin_id, total_quotation_price_1, total_quotation_price_2, total_quotation_price_3, total_order_price_1, total_order_price_2, total_order_price_3, supplier_id_1, supplier_id_2, supplier_id_3, supplier_responsible_id_1, supplier_responsible_id_2, supplier_responsible_id_3, quotation_email_flag_1, quotation_email_flag_2, quotation_email_flag_3, order_email_flag_1, order_email_flag_2, order_email_flag_3, all_bid_flag_1, all_bid_flag_2, all_bid_flag_3, created_at, updated_at) FROM stdin;
-1	2023062401	2023-06-24	2	2	8	8	\N		\N	\N	\N	3000	0	0	3000	0	0	2	\N	\N	0	\N	\N	1	0	0	1	0	0	\N	\N	\N	2023-06-24 14:19:04.722708	2023-06-24 15:34:37.322553
+1	2023062401	2023-06-24	2	2	9	9	\N		\N	\N	\N	3000	0	0	3000	0	0	2	\N	\N	0	\N	\N	1	0	0	1	0	0	\N	\N	\N	2023-06-24 14:19:04.722708	2023-07-06 10:33:14.339991
+2	2023070801	2023-07-08	2	4	12	12	\N	\N	\N	\N	\N	0	0	0	0	0	0	4	\N	\N	\N	\N	\N	0	0	0	0	0	0	\N	\N	\N	2023-07-08 11:29:45.535711	2023-07-08 11:29:45.535711
+3	2023070801	2023-07-08	2	4	12	12	\N		\N	\N	\N	350	0	0	350	0	0	4	\N	\N	\N	\N	\N	1	0	0	1	0	0	\N	\N	\N	2023-07-08 11:29:59.684794	2023-07-08 14:37:28.498659
 \.
 
 
@@ -3486,6 +3609,12 @@ COPY public.schema_migrations (version) FROM stdin;
 20230624024333
 20230630071729
 20230701001330
+20230713041035
+20230713041500
+20230714011515
+20230714013849
+20230719035954
+20230719040151
 \.
 
 
@@ -3494,6 +3623,10 @@ COPY public.schema_migrations (version) FROM stdin;
 --
 
 COPY public.sites (id, name, post, address, house_number, address2, created_at, updated_at) FROM stdin;
+13	ああ					2023-07-11 17:30:21.489034	2023-07-11 17:30:21.489034
+14	いい					2023-07-11 17:30:29.692977	2023-07-11 17:30:29.692977
+15	うう					2023-07-11 17:30:38.565242	2023-07-11 17:30:38.565242
+16	ええ					2023-07-11 17:30:47.911254	2023-07-11 17:30:47.911254
 \.
 
 
@@ -3502,10 +3635,10 @@ COPY public.sites (id, name, post, address, house_number, address2, created_at, 
 --
 
 COPY public.staffs (id, staff_name, furigana, affiliation_id, hourly_wage, daily_pay, supplier_master_id, created_at, updated_at) FROM stdin;
-1	サンプル太郎	サンプル　タロウ	1	\N	10000	4	2023-06-09 11:56:56.514446	2023-06-09 13:42:48.242811
 2	外注太郎	がいちゅうたろう	\N	\N	16000	4	2023-06-09 13:36:11.365907	2023-06-09 13:48:53.696212
 3	外注次郎	がいちゅうじろう	\N	\N	15000	3	2023-06-12 12:00:30.185146	2023-06-12 12:01:00.806658
 4	外注三郎	がいちゅうさぶろう	\N	\N	13000	3	2023-06-12 14:22:57.107736	2023-06-12 14:23:11.272328
+1	サンプル太郎	サンプル　タロウ	\N	\N	10000	\N	2023-06-09 11:56:56.514446	2023-07-06 17:26:25.150586
 \.
 
 
@@ -3514,6 +3647,8 @@ COPY public.staffs (id, staff_name, furigana, affiliation_id, hourly_wage, daily
 --
 
 COPY public.stocktakes (id, stocktake_date, material_master_id, inventory_id, physical_quantity, unit_price, physical_amount, book_quantity, book_amount, inventory_update_flag, created_at, updated_at) FROM stdin;
+2	2023-07-05	\N	\N	10.00	150.00	1500	\N	\N	\N	2023-07-05 08:55:34.98468	2023-07-05 08:55:34.98468
+1	2023-07-04	2	1	8.00	50.00	400	10.00	500	1	2023-07-04 14:57:44.8391	2023-07-20 08:55:46.360629
 \.
 
 
@@ -3523,8 +3658,10 @@ COPY public.stocktakes (id, stocktake_date, material_master_id, inventory_id, ph
 
 COPY public.supplier_masters (id, supplier_name, tel_main, fax_main, email_main, responsible1, email1, responsible2, email2, responsible3, email3, responsible_cc, email_cc, search_character, outsourcing_flag, post, address, bank_name, bank_branch_name, account_type, account_number, holder, responsible_title, responsible_name, created_at, updated_at) FROM stdin;
 1	-				\N	\N	\N	\N	\N	\N				0					\N		\N	\N	\N	2023-06-10 09:58:33.646385	2023-06-10 09:59:27.201608
-2	株式会社サンプルＡ	1111-11-1111			\N	\N	\N	\N	\N	\N				0					\N		\N	\N	\N	2023-06-10 10:00:35.557301	2023-06-10 10:00:35.557301
 3	外注サンプル電気	1111-22-3333			\N	\N	\N	\N	\N	\N				1	〒955-0024	新潟県三条市柳沢１丁目	テスト銀行	サンプル支店	0	1234567	オヤカタジロウ	\N	親方次郎	2023-06-10 10:04:29.476662	2023-06-10 16:24:20.882484
+2	自社				\N	\N	\N	\N	\N	\N				0					\N			\N		2023-06-10 10:00:35.557301	2023-07-05 13:15:27.235292
+4	株式会社サンプルA				\N	\N	\N	\N	\N	\N				0					\N			\N		2023-07-01 16:06:38.324542	2023-07-05 13:15:40.266144
+5	株式会社サンプルB				\N	\N	\N	\N	\N	\N				0					\N			\N		2023-07-01 16:07:26.891414	2023-07-05 13:16:23.217328
 \.
 
 
@@ -3537,6 +3674,8 @@ COPY public.supplier_responsibles (id, supplier_master_id, responsible_name, res
 9	2			2023-06-10 10:00:35.900299	2023-06-10 10:00:35.900299
 10	3			2023-06-10 10:04:29.623045	2023-06-10 10:04:29.623045
 11	2			2023-06-23 17:13:02.186522	2023-06-23 17:13:02.186522
+13	5			2023-07-01 16:07:26.899536	2023-07-01 16:07:26.899536
+12	4	山田		2023-07-01 16:06:38.342221	2023-07-07 16:43:53.414662
 \.
 
 
@@ -3547,6 +3686,7 @@ COPY public.supplier_responsibles (id, supplier_master_id, responsible_name, res
 COPY public.unit_masters (id, unit_name, created_at, updated_at) FROM stdin;
 1	-	2023-05-12 09:21:19.086178	2023-05-12 09:21:19.086178
 2	個	2023-05-12 09:21:38.222261	2023-05-12 09:21:38.222261
+4	ｍ	2023-07-13 15:28:40.109366	2023-07-13 15:28:40.109366
 \.
 
 
@@ -3555,7 +3695,8 @@ COPY public.unit_masters (id, unit_name, created_at, updated_at) FROM stdin;
 --
 
 COPY public.users (id, name, email, password_digest, created_at, updated_at) FROM stdin;
-5	adusu	adusu-info@eos.ocn.ne.jp	$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC	2023-07-01 13:51:28.778385	2023-07-01 13:51:28.778385
+6	admin		$2a$12$9pU46QyHPUVLvEYw.0obO.BVp7F3/NdiqegV/5LyDhP0/e3MFlpwO	2023-07-15 09:12:02.562051	2023-07-15 09:12:02.562051
+5	adusu	adusu-info@eos.ocn.ne.jp	$2a$12$AB1X7gUPyhqwdNktGdsZXuRes2wrTNPKZrrQxM383a22Rk6WkxU7y	2023-07-01 13:51:28.778385	2023-07-15 09:19:58.84932
 \.
 
 
@@ -3564,8 +3705,8 @@ COPY public.users (id, name, email, password_digest, created_at, updated_at) FRO
 --
 
 COPY public.working_categories (id, category_name, seq, created_at, updated_at) FROM stdin;
-2	配線	\N	2023-06-16 11:36:37.602856	2023-06-16 11:36:37.602856
-1	未選択	\N	2023-05-25 08:35:58.604409	2023-06-16 11:37:15.711898
+1	未選択	1	2023-05-25 08:35:58.604409	2023-07-12 18:00:08.779847
+2	配線	2	2023-06-16 11:36:37.602856	2023-07-12 18:00:08.800233
 \.
 
 
@@ -3574,8 +3715,8 @@ COPY public.working_categories (id, category_name, seq, created_at, updated_at) 
 --
 
 COPY public.working_middle_items (id, working_middle_item_name, working_middle_item_short_name, working_middle_item_category_id, working_subcategory_id, working_middle_specification, working_unit_id, working_unit_name, working_unit_price, execution_unit_price, material_id, working_material_name, execution_material_unit_price, material_unit_price, execution_labor_unit_price, labor_unit_price, labor_unit_price_standard, labor_productivity_unit, labor_productivity_unit_total, material_quantity, accessory_cost, material_cost_total, labor_cost_total, other_cost, seq, created_at, updated_at) FROM stdin;
-2	配線Ａ		2	1		2	<手入力>	\N	\N	\N	\N	\N	\N	\N	\N	11000	\N	\N	\N	\N	\N	\N	\N	0	2023-06-16 11:39:09.003994	2023-06-16 11:39:09.003994
-1	<手入力>		1	\N		1	<手入力>	\N	\N	\N	\N	\N	\N	\N	\N	11000	\N	\N	\N	\N	\N	\N	\N	0	2023-05-25 09:27:03.352069	2023-06-16 11:40:07.317004
+6	<手入力>1111		1	\N		1	<手入力>	\N	\N	\N	\N	\N	\N	\N	\N	10000	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-19 14:59:44.571929	2023-07-19 15:00:30.503133
+8	<手入力>1111(コピー)		1	\N		1	<手入力>	\N	\N	\N	\N	\N	\N	\N	\N	10000	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-19 15:02:55.817299	2023-07-19 15:02:55.817299
 \.
 
 
@@ -3599,7 +3740,8 @@ COPY public.working_small_items (id, working_middle_item_id, working_small_item_
 -- Data for Name: working_specific_middle_items; Type: TABLE DATA; Schema: public; Owner: adusu
 --
 
-COPY public.working_specific_middle_items (id, quotation_header_id, delivery_slip_header_id, working_middle_item_name, working_middle_item_short_name, working_middle_item_category_id, working_middle_specification, working_unit_id, working_unit_name, working_unit_price, execution_unit_price, material_id, working_material_name, execution_material_unit_price, material_unit_price, execution_labor_unit_price, labor_unit_price, labor_unit_price_standard, labor_productivity_unit, labor_productivity_unit_total, material_cost_total, seq, created_at, updated_at) FROM stdin;
+COPY public.working_specific_middle_items (id, quotation_header_id, delivery_slip_header_id, working_middle_item_name, working_middle_item_short_name, working_middle_item_category_id, working_subcategory_id, working_middle_specification, working_unit_id, working_unit_name, working_unit_price, execution_unit_price, material_id, working_material_name, execution_material_unit_price, material_unit_price, execution_labor_unit_price, labor_unit_price, labor_unit_price_standard, labor_productivity_unit, labor_productivity_unit_total, material_cost_total, seq, created_at, updated_at) FROM stdin;
+1	7	\N	配線Ａ		2	\N		2	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2023-07-13 13:29:00.84258	2023-07-13 13:29:00.84258
 \.
 
 
@@ -3616,7 +3758,6 @@ COPY public.working_specific_small_items (id, working_specific_middle_item_id, w
 --
 
 COPY public.working_subcategories (id, working_category_id, name, seq, created_at, updated_at) FROM stdin;
-1	1	m	\N	2023-05-25 08:36:58.507145	2023-05-25 08:36:58.507145
 \.
 
 
@@ -3625,7 +3766,7 @@ COPY public.working_subcategories (id, working_category_id, name, seq, created_a
 --
 
 COPY public.working_times (id, employment_status_id, working_time_start_time, working_time_end_time, overtime_start_time, overtime_end_time, overtime_early_start_time, overtime_early_end_time, overtime_midnight_start_time, overtime_midnight_end_time, break_time_1_start_time, break_time_1_end_time, break_time_2_start_time, break_time_2_end_time, break_time_3_start_time, break_time_3_end_time, created_at, updated_at) FROM stdin;
-1	0	08:00:00	17:30:00	18:00:00	22:00:00	05:00:00	08:00:00	22:00:00	05:00:00	10:00:00	10:30:00	12:00:00	13:00:00	15:00:00	15:30:00	2023-06-20 10:55:09.893041	2023-06-22 13:52:32.608687
+2	\N	08:00:00	17:30:00	18:00:00	22:00:00	05:00:00	08:00:00	22:00:00	05:00:00	10:00:00	10:30:00	12:00:00	13:00:00	15:00:00	15:30:00	2023-07-03 08:43:36.179898	2023-07-03 08:44:01.266386
 \.
 
 
@@ -3636,6 +3777,7 @@ COPY public.working_times (id, employment_status_id, working_time_start_time, wo
 COPY public.working_units (id, working_unit_name, seq, created_at, updated_at) FROM stdin;
 1	<手入力>	1	2023-05-25 08:26:05.653064	2023-05-25 08:26:05.918459
 2	箇所	2	2023-06-01 07:53:21.888929	2023-06-01 07:53:23.960956
+3	式	\N	2023-07-01 17:39:39.970896	2023-07-01 17:39:39.970896
 \.
 
 
@@ -3643,7 +3785,7 @@ COPY public.working_units (id, working_unit_name, seq, created_at, updated_at) F
 -- Name: affiliations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.affiliations_id_seq', 1, true);
+SELECT pg_catalog.setval('public.affiliations_id_seq', 6, true);
 
 
 --
@@ -3678,35 +3820,35 @@ SELECT pg_catalog.setval('public.construction_attachments_id_seq', 1, false);
 -- Name: construction_costs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.construction_costs_id_seq', 3, true);
+SELECT pg_catalog.setval('public.construction_costs_id_seq', 7, true);
 
 
 --
 -- Name: construction_daily_reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.construction_daily_reports_id_seq', 1, true);
+SELECT pg_catalog.setval('public.construction_daily_reports_id_seq', 5, true);
 
 
 --
 -- Name: construction_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.construction_data_id_seq', 3, true);
+SELECT pg_catalog.setval('public.construction_data_id_seq', 6, true);
 
 
 --
 -- Name: contacts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.contacts_id_seq', 4, true);
+SELECT pg_catalog.setval('public.contacts_id_seq', 14, true);
 
 
 --
 -- Name: customer_masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.customer_masters_id_seq', 8, true);
+SELECT pg_catalog.setval('public.customer_masters_id_seq', 9, true);
 
 
 --
@@ -3734,7 +3876,7 @@ SELECT pg_catalog.setval('public.delivery_slip_headers_id_seq', 2, true);
 -- Name: inventories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.inventories_id_seq', 1, true);
+SELECT pg_catalog.setval('public.inventories_id_seq', 7, true);
 
 
 --
@@ -3748,105 +3890,105 @@ SELECT pg_catalog.setval('public.inventory_categories_id_seq', 2, true);
 -- Name: inventory_histories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.inventory_histories_id_seq', 1, false);
+SELECT pg_catalog.setval('public.inventory_histories_id_seq', 18, true);
 
 
 --
 -- Name: invoice_detail_large_classifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.invoice_detail_large_classifications_id_seq', 14, true);
+SELECT pg_catalog.setval('public.invoice_detail_large_classifications_id_seq', 15, true);
 
 
 --
 -- Name: invoice_detail_middle_classifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.invoice_detail_middle_classifications_id_seq', 5, true);
+SELECT pg_catalog.setval('public.invoice_detail_middle_classifications_id_seq', 7, true);
 
 
 --
 -- Name: invoice_headers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.invoice_headers_id_seq', 3, true);
+SELECT pg_catalog.setval('public.invoice_headers_id_seq', 4, true);
 
 
 --
 -- Name: maker_masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.maker_masters_id_seq', 2, true);
+SELECT pg_catalog.setval('public.maker_masters_id_seq', 5, true);
 
 
 --
 -- Name: material_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.material_categories_id_seq', 2, true);
+SELECT pg_catalog.setval('public.material_categories_id_seq', 4, true);
 
 
 --
 -- Name: material_masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.material_masters_id_seq', 2, true);
+SELECT pg_catalog.setval('public.material_masters_id_seq', 12, true);
 
 
 --
 -- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.orders_id_seq', 54, true);
+SELECT pg_catalog.setval('public.orders_id_seq', 114, true);
 
 
 --
 -- Name: outsourcing_costs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.outsourcing_costs_id_seq', 4, true);
+SELECT pg_catalog.setval('public.outsourcing_costs_id_seq', 7, true);
 
 
 --
 -- Name: purchase_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_data_id_seq', 10, true);
+SELECT pg_catalog.setval('public.purchase_data_id_seq', 31, true);
 
 
 --
 -- Name: purchase_divisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_divisions_id_seq', 1, true);
+SELECT pg_catalog.setval('public.purchase_divisions_id_seq', 12, true);
 
 
 --
 -- Name: purchase_headers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_headers_id_seq', 1, false);
+SELECT pg_catalog.setval('public.purchase_headers_id_seq', 6, true);
 
 
 --
 -- Name: purchase_order_data_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_order_data_id_seq', 4, true);
+SELECT pg_catalog.setval('public.purchase_order_data_id_seq', 7, true);
 
 
 --
 -- Name: purchase_order_histories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_order_histories_id_seq', 5, true);
+SELECT pg_catalog.setval('public.purchase_order_histories_id_seq', 48, true);
 
 
 --
 -- Name: purchase_unit_prices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.purchase_unit_prices_id_seq', 4, true);
+SELECT pg_catalog.setval('public.purchase_unit_prices_id_seq', 10, true);
 
 
 --
@@ -3860,7 +4002,7 @@ SELECT pg_catalog.setval('public.quatation_material_headers_id_seq', 1, false);
 -- Name: quotation_detail_large_classifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.quotation_detail_large_classifications_id_seq', 17, true);
+SELECT pg_catalog.setval('public.quotation_detail_large_classifications_id_seq', 25, true);
 
 
 --
@@ -3874,84 +4016,84 @@ SELECT pg_catalog.setval('public.quotation_detail_middle_classifications_id_seq'
 -- Name: quotation_headers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.quotation_headers_id_seq', 5, true);
+SELECT pg_catalog.setval('public.quotation_headers_id_seq', 8, true);
 
 
 --
 -- Name: quotation_material_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.quotation_material_details_id_seq', 10, true);
+SELECT pg_catalog.setval('public.quotation_material_details_id_seq', 108, true);
 
 
 --
 -- Name: quotation_material_headers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.quotation_material_headers_id_seq', 1, true);
+SELECT pg_catalog.setval('public.quotation_material_headers_id_seq', 3, true);
 
 
 --
 -- Name: sites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.sites_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sites_id_seq', 16, true);
 
 
 --
 -- Name: staffs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.staffs_id_seq', 4, true);
+SELECT pg_catalog.setval('public.staffs_id_seq', 5, true);
 
 
 --
 -- Name: stocktakes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.stocktakes_id_seq', 1, false);
+SELECT pg_catalog.setval('public.stocktakes_id_seq', 2, true);
 
 
 --
 -- Name: supplier_masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.supplier_masters_id_seq', 3, true);
+SELECT pg_catalog.setval('public.supplier_masters_id_seq', 6, true);
 
 
 --
 -- Name: supplier_responsibles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.supplier_responsibles_id_seq', 11, true);
+SELECT pg_catalog.setval('public.supplier_responsibles_id_seq', 14, true);
 
 
 --
 -- Name: unit_masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.unit_masters_id_seq', 2, true);
+SELECT pg_catalog.setval('public.unit_masters_id_seq', 4, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 5, true);
+SELECT pg_catalog.setval('public.users_id_seq', 6, true);
 
 
 --
 -- Name: working_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.working_categories_id_seq', 2, true);
+SELECT pg_catalog.setval('public.working_categories_id_seq', 3, true);
 
 
 --
 -- Name: working_middle_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.working_middle_items_id_seq', 3, true);
+SELECT pg_catalog.setval('public.working_middle_items_id_seq', 8, true);
 
 
 --
@@ -3972,7 +4114,7 @@ SELECT pg_catalog.setval('public.working_small_items_id_seq', 1, false);
 -- Name: working_specific_middle_items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.working_specific_middle_items_id_seq', 1, false);
+SELECT pg_catalog.setval('public.working_specific_middle_items_id_seq', 1, true);
 
 
 --
@@ -3993,14 +4135,14 @@ SELECT pg_catalog.setval('public.working_subcategories_id_seq', 1, true);
 -- Name: working_times_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.working_times_id_seq', 1, true);
+SELECT pg_catalog.setval('public.working_times_id_seq', 2, true);
 
 
 --
 -- Name: working_units_id_seq; Type: SEQUENCE SET; Schema: public; Owner: adusu
 --
 
-SELECT pg_catalog.setval('public.working_units_id_seq', 2, true);
+SELECT pg_catalog.setval('public.working_units_id_seq', 3, true);
 
 
 --

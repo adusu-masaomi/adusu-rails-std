@@ -379,15 +379,17 @@ class StocktakesController < ApplicationController
   end
   
   def get_construction_datum_id
-  #資材マスターの品目区分より、工事IDを割振ってセットする
-    material_master = MaterialMaster.find(@stocktake_record.material_master_id)
-	
-	@construction_datum_id = 1
-	
-	if material_master.present?
-	  inventory_category_id = material_master.inventory_category_id
-	  @construction_datum_id = ConstructionDatum.get_construction_on_inventory_category(inventory_category_id)
-	end
+    #資材マスターの品目区分より、工事IDを割振ってセットする
+    #material_master = MaterialMaster.find(@stocktake_record.material_master_id)
+    #upd230720
+    material_master = MaterialMaster.where(id: @stocktake_record.material_master_id).first
+    
+    @construction_datum_id = 1
+    
+    if material_master.present?
+      inventory_category_id = material_master.inventory_category_id
+      @construction_datum_id = ConstructionDatum.get_construction_on_inventory_category(inventory_category_id)
+    end
     
   end
   

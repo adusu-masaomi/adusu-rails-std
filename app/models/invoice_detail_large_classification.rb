@@ -1,6 +1,6 @@
 class InvoiceDetailLargeClassification < ApplicationRecord
   belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #demo版対応
   MAX_RECORD_COUNT = 10
@@ -41,8 +41,9 @@ class InvoiceDetailLargeClassification < ApplicationRecord
     #sum(:invoice_price)
 	#upd170308
     #工事種別が通常かまたは値引の場合のみ合算。
-    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:invoice_price)
-    #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).pluck(:invoice_price).sum
+    #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:invoice_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(invoice_price: nil).sum(&:invoice_price)
 
   end
   #金額合計(実行)
@@ -50,8 +51,10 @@ class InvoiceDetailLargeClassification < ApplicationRecord
     #sum(:execution_price)  #del230603
 	#upd170308
     #工事種別が通常かまたは値引の場合のみ合算。
-    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
-    #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).pluck(:execution_price).sum
+    #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(execution_price: nil).sum(&:execution_price)
+
   end
   
   #合計(歩掛り)
@@ -66,7 +69,10 @@ class InvoiceDetailLargeClassification < ApplicationRecord
     #where(:construction_type => "0").sum(:labor_productivity_unit_total)
     #upd170308
     #工事種別が通常かまたは値引の場合のみ合算。
-    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total)
+    #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total)
+
   end
   
   #add170223

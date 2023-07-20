@@ -45,14 +45,14 @@ class DeliverySlipDetailLargeClassification < ApplicationRecord
   #金額合計(納品)
   def self.sumpriceDeliverySlip  
     #sum(:delivery_slip_price)
-	#工事種別が通常かまたは値引の場合のみ合算。
+	  #工事種別が通常かまたは値引の場合のみ合算。
     #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:delivery_slip_price)
 	
     #工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:delivery_slip_price)
-    #230603 psql対応
-    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(delivery_slip_price:nil).
-    #      pluck(:delivery_slip_price).map(&:to_i).sum
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:delivery_slip_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(delivery_slip_price: nil).sum(&:delivery_slip_price)
+
   end
   #金額合計(実行)
   def self.sumpriceExecution  
@@ -61,10 +61,9 @@ class DeliverySlipDetailLargeClassification < ApplicationRecord
     #where("construction_type = ? or construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
     
     #工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
-    #230603 psql対応
-    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price:nil).
-    #      pluck(:execution_price).map(&:to_i).sum
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price: nil).sum(&:execution_price)
   end
   
   #合計(歩掛り)
@@ -80,9 +79,9 @@ class DeliverySlipDetailLargeClassification < ApplicationRecord
     
     #upd180105
     #工事種別が小計以外は加算する
-    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total)
-    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total:nil).
-    #       pluck(:labor_productivity_unit_total).map(&:to_i).sum
+    #where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total)
     
   end
   

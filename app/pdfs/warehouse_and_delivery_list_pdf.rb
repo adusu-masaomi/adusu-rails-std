@@ -138,8 +138,12 @@ class WarehouseAndDeliveryListPDF
         if inventory_history.unit_master.present?
           unit_name = inventory_history.unit_master.unit_name
         end 
-
-
+        
+        maker_name = ""
+        #upd230720
+        if inventory_history.material_master.MakerMaster.present?
+          maker_name = inventory_history.material_master.MakerMaster.maker_name
+        end
 
         row.values inventory_date: inventory_history.inventory_date,
                    inventory_division_name: InventoryHistory.inventory_division[inventory_history.inventory_division_id][0],
@@ -149,7 +153,7 @@ class WarehouseAndDeliveryListPDF
                    #purchase_order_code: purchase_datum.purchase_order_datum.purchase_order_code,
                    material_code: material_code,
                    material_name: material_name,
-                   maker_name: inventory_history.material_master.MakerMaster.maker_name,
+                   maker_name: maker_name,
                    quantity: quantity,
                    unit_name: unit_name,
                    unit_price: unit_price,

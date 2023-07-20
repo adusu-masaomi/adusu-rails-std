@@ -176,8 +176,13 @@ class QuotationDetailLargeClassificationsController < ApplicationController
     
     $public_flag = false
     
-    quotation_header = QuotationHeader.find(params[:quotation_header_id])
-    if quotation_header.customer_master.present?
+    #quotation_header = QuotationHeader.find(params[:quotation_header_id])
+    #upd230720
+    quotation_header = QuotationHeader.where(id: params[:quotation_header_id]).first
+    
+    #if quotation_header.customer_master.present?
+    #upd230720
+    if quotation_header.present? && quotation_header.customer_master.present?
       if quotation_header.customer_master.public_flag == 1
         $public_flag = true
       end

@@ -6,8 +6,8 @@ class QuotationDetailMiddleClassification < ApplicationRecord
 
   belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
   belongs_to :QuotationDetailLargeClassification, :foreign_key => "quotation_detail_large_classification_id"
-  belongs_to :QuotationLargeItem, :foreign_key => "quotation_detail_large_classification_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+  belongs_to :QuotationLargeItem, optional: true, :foreign_key => "quotation_detail_large_classification_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #行挿入用
   attr_accessor :check_line_insert
@@ -47,9 +47,10 @@ class QuotationDetailMiddleClassification < ApplicationRecord
     
     #upd180105
 	#工事種別が小計以外は加算する
-    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:quote_price)
-    #postgresql対応 230531
-    #where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).pluck(:quote_price).sum 
+    #where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:quote_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(quote_price: nil).sum(&:quote_price)
+    
     
   end
   #金額合計(実行)
@@ -58,9 +59,9 @@ class QuotationDetailMiddleClassification < ApplicationRecord
     #where("quotation_detail_middle_classifications.construction_type = ? or quotation_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
     #upd180105
     #工事種別が小計以外は加算する
-    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
-    #postgresql対応 230531
-    #where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).pluck(:execution_price).sum
+    #where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price: nil).sum(&:execution_price)
   end
   #合計(歩掛り)
   def self.sumLaborProductivityUnit 
@@ -73,8 +74,9 @@ class QuotationDetailMiddleClassification < ApplicationRecord
   
     #upd180105
     #工事種別が小計以外は加算する
-    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total).round(3)
-	
+    #where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total).round(3)
+	  #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("quotation_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total).round(3)
   end 
   
   #scope

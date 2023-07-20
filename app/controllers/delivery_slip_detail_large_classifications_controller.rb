@@ -180,9 +180,13 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
     
     $public_flag = false
     
-    delivery_slip_header = DeliverySlipHeader.find(params[:delivery_slip_header_id])
+    #delivery_slip_header = DeliverySlipHeader.find(params[:delivery_slip_header_id])
+    #upd230720
+    delivery_slip_header = DeliverySlipHeader.where(id: params[:delivery_slip_header_id]).first
     
-    if delivery_slip_header.customer_master.present?
+    #if delivery_slip_header.customer_master.present?
+    #upd230720
+    if delivery_slip_header.present? && delivery_slip_header.customer_master.present?
       if delivery_slip_header.customer_master.public_flag == 1
         $public_flag = true
       end

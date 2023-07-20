@@ -430,19 +430,21 @@ end
     
     #
     @term = @year
-    if @year == 2022
-    #11月以降、次年度となる
-      if @month > 10
-        @term = @year + 1
+    if @year.present?  #add230720
+      if @year == 2022
+      #11月以降、次年度となる
+        if @month > 10
+          @term = @year + 1
+        end
+      elsif @year > 2022
+      #10月以降、次年度となる
+        if @month > 9
+          @term = @year + 1
+        end
+      else
+      #そのまま
+        @term = @year
       end
-    elsif @year > 2022
-    #10月以降、次年度となる
-      if @month > 9
-        @term = @year + 1
-      end
-    else
-    #そのまま
-      @term = @year
     end
     #
     

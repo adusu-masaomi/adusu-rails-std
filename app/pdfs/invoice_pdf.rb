@@ -49,18 +49,27 @@ class InvoicePDF
         
         @flag = "1"
      
-        @invoice_headers = InvoiceHeader.find(invoice_detail_large_classification.invoice_header_id)
+        #@invoice_headers = InvoiceHeader.find(invoice_detail_large_classification.invoice_header_id)
+        #upd230720
+        @invoice_headers = InvoiceHeader.where(id: invoice_detail_large_classification.invoice_header_id).first
      
         #郵便番号(得意先)
-        @report.page.item(:post).value(@invoice_headers.post) 
+        if @invoice_headers.present?
+          @report.page.item(:post).value(@invoice_headers.post) 
+		    end
 		 
         #住所(得意先)
         #分割された住所を一つにまとめる。
-        all_address = @invoice_headers.address
-        if @invoice_headers.house_number.present?
+        if @invoice_headers.present?
+          all_address = @invoice_headers.address
+        end
+      
+        #if @invoice_headers.house_number.present?
+        if @invoice_headers.present? && @invoice_headers.house_number.present?
           all_address += @invoice_headers.house_number
         end
-        if @invoice_headers.address2.present?
+        #if @invoice_headers.address2.present?
+        if @invoice_headers.present? && @invoice_headers.address2.present?
           all_address += "　" + @invoice_headers.address2
         end
         #@report.page.item(:address).value(@invoice_headers.address) 
@@ -68,23 +77,27 @@ class InvoicePDF
         #  
        
         #得意先名
-        if @invoice_headers.customer_master.present?  #標準版仕様
+        #if @invoice_headers.customer_master.present?  #標準版仕様
+        if @invoice_headers.present? && @invoice_headers.customer_master.present?  #標準版仕様
           @report.page.item(:customer_name).value(@invoice_headers.customer_master.customer_name) 
         end
         #敬称
         honorific_name = CustomerMaster.honorific[0].find{0}  #"様"
 		   
-        if @invoice_headers.honorific_id == 1   #"御中?
+        #if @invoice_headers.honorific_id == 1   #"御中?
+        if @invoice_headers.present? && @invoice_headers.honorific_id == 1   #"御中?
           id = @invoice_headers.honorific_id
           honorific_name = CustomerMaster.honorific[id].find{id} #"御中"
         end
         @report.page.item(:honorific).value(honorific_name) 
 		   
         #件名
-        @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
-		 
+        if @invoice_headers.present?
+          @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
+		    end
         #請求No
-        if @invoice_headers.invoice_code.present?
+        #if @invoice_headers.invoice_code.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_code.present?
           @report.page.item(:invoice_code).value(@invoice_headers.invoice_code) 
         else
         #請求Noが未入力の場合は、見積Noをそのまま出す。
@@ -92,12 +105,14 @@ class InvoicePDF
         end
 		 
         #税抜見積金額
-        @report.page.item(:billing_amount_no_tax).value(@invoice_headers.billing_amount)
-       
+        if @invoice_headers.present?
+          @report.page.item(:billing_amount_no_tax).value(@invoice_headers.billing_amount)
+        end
         #税込見積合計金額	 
         date_per_ten_start = Date.parse("2019/10/01")   #消費税１０％開始日  add190824
             
-        if @invoice_headers.billing_amount.present?
+        #if @invoice_headers.billing_amount.present?
+        if @invoice_headers.present? && @invoice_headers.billing_amount.present?
           if !(@invoice_headers.invoice_date.nil?) && @invoice_headers.invoice_date < date_per_ten_start
           #消費税8%の場合 
             @billing_amount_tax_in = @invoice_headers.billing_amount * $consumption_tax_include
@@ -119,7 +134,8 @@ class InvoicePDF
         end
 		   
         #消費税のみ金額
-        if @invoice_headers.billing_amount.present?
+        #if @invoice_headers.billing_amount.present?
+        if @invoice_headers.present? && @invoice_headers.billing_amount.present?
 		     
           #if @invoice_headers.invoice_date.nil? || @invoice_headers.invoice_date < date_per_ten_start
           if !(@invoice_headers.invoice_date.nil?) && @invoice_headers.invoice_date < date_per_ten_start
@@ -143,7 +159,8 @@ class InvoicePDF
         end
 		 
         #対象期間(開始)
-        if @invoice_headers.invoice_period_start_date.present?
+        #if @invoice_headers.invoice_period_start_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_period_start_date.present?
          
           @gengou = @invoice_headers.invoice_period_start_date
              
@@ -165,7 +182,8 @@ class InvoicePDF
         end
 		   
         #対象期間(終了)
-        if @invoice_headers.invoice_period_end_date.present?
+        #if @invoice_headers.invoice_period_end_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_period_end_date.present?
           @gengou = @invoice_headers.invoice_period_end_date
           #元号変わったらここも要変更
           if @gengou >= d_heisei_limit 
@@ -185,9 +203,11 @@ class InvoicePDF
         end
 	
         #支払期限
-        @report.page.item(:payment_period).value(@invoice_headers.payment_period) 
-		 
-        if @invoice_headers.invoice_date.present?
+        if @invoice_headers.present?
+          @report.page.item(:payment_period).value(@invoice_headers.payment_period) 
+		    end 
+        #if @invoice_headers.invoice_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_date.present?
           @gengou = @invoice_headers.invoice_date
              
           #元号変わったらここも要変更
@@ -199,7 +219,7 @@ class InvoicePDF
             else
               @gengou = $gengo_name_2 + "#{@gengou.year - $gengo_minus_ad_2}年#{@gengou.strftime('%-m')}月#{@gengou.strftime('%-d')}日"
             end
-          else
+           else
             #平成
             @gengou = $gengo_name + "#{@gengou.year - $gengo_minus_ad}年#{@gengou.strftime('%-m')}月#{@gengou.strftime('%-d')}日"
           end
@@ -214,8 +234,9 @@ class InvoicePDF
         end
 		   
        #小計(請求金額) 
-       @report.page.item(:billing_amount).value(@invoice_headers.billing_amount)
-    
+       if @invoice_headers.present?
+         @report.page.item(:billing_amount).value(@invoice_headers.billing_amount)
+       end
       end  #@flag.nil?
 		 
       @report.list(:default).add_row do |row|
@@ -417,20 +438,26 @@ class InvoicePDF
       #---見出し---
       if @flag.nil? 
         @flag = "1"
-        @invoice_headers = InvoiceHeader.find(invoice_detail_middle_classification.invoice_header_id)
+        #@invoice_headers = InvoiceHeader.find(invoice_detail_middle_classification.invoice_header_id)
+        #upd230720
+        @invoice_headers = InvoiceHeader.where(id: invoice_detail_middle_classification.invoice_header_id).first
 	       
         #件名
-        @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
-  
+        if @invoice_headers.present?
+          @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
+        end
         #請求No
-        if @invoice_headers.invoice_code.present?
+        #if @invoice_headers.invoice_code.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_code.present?
           @report.page.item(:invoice_code).value(@invoice_headers.invoice_code) 
         else
         #請求Noが未入力の場合は、見積Noをそのまま出す。
-          @report.page.item(:invoice_code).value(@invoice_headers.invoice_code)
+          #??
+          #@report.page.item(:invoice_code).value(@invoice_headers.invoice_code)
         end
 		   
-        if @invoice_headers.invoice_date.present?
+        #if @invoice_headers.invoice_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_date.present?
           @gengou = @invoice_headers.invoice_date
           #元号変わったらここも要変更
           if @gengou >= d_heisei_limit

@@ -3,7 +3,7 @@ class InvoiceDetailMiddleClassification < ApplicationRecord
   
   belongs_to :InvoiceDetailLargeClassification, :foreign_key => "invoice_detail_large_classification_id"
   #belongs_to :InvoiceLargeItem, :foreign_key => "invoice_detail_large_classification_id"
-  belongs_to :WorkingUnit, :foreign_key => "working_unit_id"
+  belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #行挿入用
   attr_accessor :check_line_insert
@@ -28,25 +28,26 @@ class InvoiceDetailMiddleClassification < ApplicationRecord
   #金額合計(請求)
   def self.sumpriceInvoice  
     #sum(:invoice_price)
-	#工事種別が通常かまたは値引の場合のみ合算。
-    where("invoice_detail_middle_classifications.construction_type = ? or 
-      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:invoice_price)
-    #230603 psql対応
+	  #工事種別が通常かまたは値引の場合のみ合算。
     #where("invoice_detail_middle_classifications.construction_type = ? or 
-    #  invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).pluck(:invoice_price).sum
-    
+    #  invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:invoice_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("invoice_detail_middle_classifications.construction_type = ? or 
+      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(invoice_price: nil).sum(&:invoice_price)
+      
+
   end
   #金額合計(実行)
   def self.sumpriceExecution  
     #sum(:execution_price)
     
     #工事種別が通常かまたは値引の場合のみ合算。
-    where("invoice_detail_middle_classifications.construction_type = ? or 
-      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
-    #230603 psql対応
     #where("invoice_detail_middle_classifications.construction_type = ? or 
-    #  invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).pluck(:execution_price).sum
-
+      #invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("invoice_detail_middle_classifications.construction_type = ? or 
+      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(execution_price: nil).sum(&:execution_price)
+  
   end
   #合計(歩掛り)
   def self.sumLaborProductivityUnit 
@@ -59,11 +60,11 @@ class InvoiceDetailMiddleClassification < ApplicationRecord
     #where(:construction_type => "0").sum(:labor_productivity_unit_total).round(3)
 	#upd170308
     #工事種別が通常かまたは値引の場合のみ合算。
-    where("invoice_detail_middle_classifications.construction_type = ? or 
-      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total).round(3)
     #where("invoice_detail_middle_classifications.construction_type = ? or 
-    #  invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).pluck(:labor_productivity_unit_total).sum.round(3)
-    
+      #invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total).round(3)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("invoice_detail_middle_classifications.construction_type = ? or 
+      invoice_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total).round(3)
   end 
   
   #scope

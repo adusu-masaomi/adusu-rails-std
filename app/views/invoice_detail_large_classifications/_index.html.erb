@@ -1,8 +1,14 @@
 <% @invoice_detail_large_classifications.order("invoice_header_id desc, line_number desc").each do |invoice_detail_large_classification| %>
       <tr id="<%= invoice_detail_large_classification.id%>">
+      <!--add230720-->
+      <% if invoice_detail_large_classification.InvoiceHeader.present? && invoice_detail_large_classification.InvoiceHeader.construction_name.present? %>
+        <% @construction_name = invoice_detail_large_classification.InvoiceHeader.construction_name %>
+      <% else %>
+        <% @construction_name = "" %>
+      <% end %>
 	    <td><%= link_to "明細へ",
             invoice_detail_middle_classifications_path(invoice_header_id: invoice_detail_large_classification.invoice_header_id, 
-                                                         invoice_header_name: invoice_detail_large_classification.InvoiceHeader.construction_name,
+                                                         invoice_header_name: @construction_name,
                                                          working_large_item_name: invoice_detail_large_classification.working_large_item_name, 
                                                          working_large_specification: invoice_detail_large_classification.working_large_specification,
                                                          invoice_detail_large_classification_id: invoice_detail_large_classification.id,  new_flag: "1"),

@@ -47,13 +47,9 @@ class DeliverySlipDetailMiddleClassification < ApplicationRecord
     
 	#upd180105
 	#工事種別が小計以外は加算する
-    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:delivery_slip_price)
-    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(delivery_slip_price:nil).
-    #        pluck(:id, :delivery_slip_price).map(&:delivery_slip_price.to_i).sum
-    
-    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(delivery_slip_price:nil).
-    #        pluck(:delivery_slip_price).map(&:to_i).sum
-    
+    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:delivery_slip_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(delivery_slip_price: nil).sum(&:delivery_slip_price)
   end
   #金額合計(実行)
   def self.sumpriceExecution  
@@ -64,11 +60,9 @@ class DeliverySlipDetailMiddleClassification < ApplicationRecord
     #       delivery_slip_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:execution_price)
     
     #工事種別が小計以外は加算する
-    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
-    #psql対応
-    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price:nil).
-    #       pluck(:execution_price).map(&:to_i).sum
-	
+    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:execution_price)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(execution_price: nil).sum(&:execution_price)
   end
   #合計(歩掛り)
   def self.sumLaborProductivityUnit 
@@ -82,10 +76,10 @@ class DeliverySlipDetailMiddleClassification < ApplicationRecord
     #      delivery_slip_detail_middle_classifications.construction_type = ? ", "0", $INDEX_DISCOUNT.to_s ).sum(:labor_productivity_unit_total).round(3)
     
     #工事種別が小計以外は加算する
-    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total).round(3)
-    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total:nil).
-    #   pluck(:labor_productivity_unit_total).map(&:to_i).sum.round(3)
-	
+    #where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).sum(:labor_productivity_unit_total).round(3)
+    #Rails6対応 upd230719 ↑これだとdistinctされてしまう
+    where("delivery_slip_detail_middle_classifications.construction_type <> ? ", $INDEX_SUBTOTAL.to_s ).where.not(labor_productivity_unit_total: nil).sum(&:labor_productivity_unit_total).round(3)
+
   end 
   
   #scope

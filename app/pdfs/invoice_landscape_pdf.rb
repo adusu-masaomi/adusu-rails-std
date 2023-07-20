@@ -53,18 +53,27 @@ class InvoiceLandscapePDF
 		 
       if @flag.nil? 
         @flag = "1"
-        @invoice_headers = InvoiceHeader.find(invoice_detail_large_classification.invoice_header_id)
+        #@invoice_headers = InvoiceHeader.find(invoice_detail_large_classification.invoice_header_id)
+        #upd230720
+        @invoice_headers = InvoiceHeader.where(id: invoice_detail_large_classification.invoice_header_id).first
+        
         @construction_data = nil
-        if ConstructionDatum.exists?(id: @invoice_headers.construction_datum_id)  
-          @construction_data = ConstructionDatum.find(@invoice_headers.construction_datum_id)
-        end
-        @customer_masters = CustomerMaster.find(@invoice_headers.customer_id)
-        @construction_costs = ConstructionCost.find_by(construction_datum_id: @invoice_headers.construction_datum_id)
-		       
+        if @invoice_headers.present?
+          if ConstructionDatum.exists?(id: @invoice_headers.construction_datum_id)  
+            @construction_data = ConstructionDatum.find(@invoice_headers.construction_datum_id)
+          end
+          
+          #@customer_masters = CustomerMaster.find(@invoice_headers.customer_id)
+          #upd230720
+          @customer_masters = CustomerMaster.where(id: @invoice_headers.customer_id).first
+          @construction_costs = ConstructionCost.find_by(construction_datum_id: @invoice_headers.construction_datum_id)
+		    end
+           
         #消費税
         date_per_ten_start = Date.parse("2019/10/01")   #消費税１０％開始日  
            
-        if @invoice_headers.billing_amount.present?
+        #if @invoice_headers.billing_amount.present?
+        if @invoice_headers.present? && @invoice_headers.billing_amount.present?
           #消費税のみの金額
           #if @invoice_headers.invoice_date.nil? || @invoice_headers.invoice_date < date_per_ten_start
           if !(@invoice_headers.invoice_date.nil?) && @invoice_headers.invoice_date < date_per_ten_start
@@ -104,7 +113,8 @@ class InvoiceLandscapePDF
           end
         end  #@invoice_headers.billing_amount.present?
 		 		 
-        if @invoice_headers.invoice_date.present?
+        #if @invoice_headers.invoice_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_date.present?
           @gengou = @invoice_headers.invoice_date
           #元号変わったらここも要変更
           if @gengou >= d_heisei_limit
@@ -123,10 +133,12 @@ class InvoiceLandscapePDF
            
         #見出に確定申告区分が入ってる場合(Zを除く)
         isFinalDivisionHeader = false
-           
-        if @invoice_headers.final_return_division.present? &&
-          #@invoice_headers.final_return_division > 0 &&
+        
+        if @invoice_headers.present? && @invoice_headers.final_return_division.present? &&
           @invoice_headers.final_return_division < $FINAL_RETURN_DIVISION_Z
+           
+        #if @invoice_headers.final_return_division.present? &&
+        #  @invoice_headers.final_return_division < $FINAL_RETURN_DIVISION_Z
               
           isFinalDivisionHeader = true
           final_return_division_header = @invoice_headers.final_return_division
@@ -134,15 +146,18 @@ class InvoiceLandscapePDF
         #
     
         #小計(見積金額) 
-        @report.page.item(:billing_amount).value(@invoice_headers.billing_amount)
-    
+        if @invoice_headers.present? 
+          @report.page.item(:billing_amount).value(@invoice_headers.billing_amount)
+        end
         ## 右側のヘッダ
         #請求No
-        if @invoice_headers.invoice_code.present?
+        #if @invoice_headers.invoice_code.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_code.present?
           @report.page.item(:invoice_code2).value(@invoice_headers.invoice_code) 
         else
           #請求Noが未入力の場合は、見積Noをそのまま出す。
-          @report.page.item(:invoice_code2).value(@invoice_headers.invoice_code)
+          #?? del230720
+          #@report.page.item(:invoice_code2).value(@invoice_headers.invoice_code)
         end
 		   
         #工事CD
@@ -151,68 +166,76 @@ class InvoiceLandscapePDF
         end
            
         #顧客CD
-        @report.page.item(:customer_code).value(@customer_masters.id)
-		   
+        if @customer_masters.present?
+          @report.page.item(:customer_code).value(@customer_masters.id)
+		    end
         #見積日付
         @report.page.item(:invoice_date).value(@gengou) 
 		   
         #郵便番号(得意先)
-        #@report.page.item(:post2).value(@invoice_headers.post)
-        @report.page.item(:post).value(@invoice_headers.post) 
-		 
+        if @invoice_headers.present?
+          @report.page.item(:post).value(@invoice_headers.post) 
+		    end
+        
         #住所(得意先)
         #upd171012 分割された住所を一つにまとめる。
-        all_address = @invoice_headers.address
-        if @invoice_headers.house_number.present?
-          all_address += @invoice_headers.house_number
+        if @invoice_headers.present?
+          all_address = @invoice_headers.address
+          if @invoice_headers.house_number.present?
+            all_address += @invoice_headers.house_number
+          end
+          if @invoice_headers.address2.present?
+            all_address += "　" + @invoice_headers.address2
+          end
+        
+          @report.page.item(:address).value(all_address) 
         end
-        if @invoice_headers.address2.present?
-          all_address += "　" + @invoice_headers.address2
-        end
-        #@report.page.item(:address2).value(@invoice_headers.address) 
-        @report.page.item(:address).value(all_address) 
         #
 		   
         #TEL
-        @report.page.item(:tel).value(@invoice_headers.tel) 
-        #FAX
-        @report.page.item(:fax).value(@invoice_headers.fax) 
+        if @invoice_headers.present?
+          @report.page.item(:tel).value(@invoice_headers.tel) 
+          #FAX
+          @report.page.item(:fax).value(@invoice_headers.fax) 
        
-        #得意先名
-        @report.page.item(:customer_name2).value(@invoice_headers.customer_master.customer_name) 
-		 
-        #件名
-        @report.page.item(:construction_name2).value(@invoice_headers.construction_name) 
-		   
+          #得意先名
+          if @invoice_headers.customer_master.present? 
+            @report.page.item(:customer_name2).value(@invoice_headers.customer_master.customer_name) 
+		      end
+          #件名
+          @report.page.item(:construction_name2).value(@invoice_headers.construction_name) 
+		    end
+        
         #工事期間
         #@report.page.item(:construction_period2).value(@invoice_headers.construction_period) 
 		 
         #工事場所
         #@report.page.item(:construction_place2).value(@invoice_headers.construction_place) 
 		 
-        #対象期間
-        @report.page.item(:invoice_period_start_date).value(@invoice_headers.invoice_period_start_date)
-        @report.page.item(:invoice_period_end_date).value(@invoice_headers.invoice_period_end_date)
+		    if @invoice_headers.present?
+          #対象期間
+          @report.page.item(:invoice_period_start_date).value(@invoice_headers.invoice_period_start_date)
+          @report.page.item(:invoice_period_end_date).value(@invoice_headers.invoice_period_end_date)
 		 
-        #支払期限
-        #@report.page.item(:trading_method2).value(@invoice_headers.trading_method) 
-        @report.page.item(:payment_period).value(@invoice_headers.payment_period) 
+          #支払期限
+          @report.page.item(:payment_period).value(@invoice_headers.payment_period) 
 		   
-        #有効期間
-        #@report.page.item(:effective_period2).value(@invoice_headers.effective_period) 
+          #有効期間
+          #@report.page.item(:effective_period2).value(@invoice_headers.effective_period) 
 		   
-        #見積金額合計
-        @report.page.item(:billing_amount2).value(@invoice_headers.billing_amount)
-        #消費税
-        if @billing_amount_tax_only != ""
-          @report.page.item(:billing_amount_tax_only).value(@billing_amount_tax_only) 
-        end
+          #見積金額合計
+          @report.page.item(:billing_amount2).value(@invoice_headers.billing_amount)
+          #消費税
+          if @billing_amount_tax_only != ""
+            @report.page.item(:billing_amount_tax_only).value(@billing_amount_tax_only) 
+          end
 		   
-        #税込金額(合計)
-        if @invoice_headers.billing_amount.present?
-          @report.page.item(:billing_amount_tax_in).value(@billing_amount_tax_in)
-        end
-		   
+          #税込金額(合計)
+          if @invoice_headers.billing_amount.present?
+            @report.page.item(:billing_amount_tax_in).value(@billing_amount_tax_in)
+          end
+		    end
+        
         ##以下抹消(復活する可能性もあるので一応残しておく)
         ##実行金額
         #execution_amount = 0
@@ -409,20 +432,26 @@ class InvoiceLandscapePDF
       #---見出し---
       if @flag.nil? 
         @flag = "1"
-        @invoice_headers = InvoiceHeader.find(invoice_detail_middle_classification.invoice_header_id)
+        #@invoice_headers = InvoiceHeader.find(invoice_detail_middle_classification.invoice_header_id)
+        #upd230720
+        @invoice_headers = InvoiceHeader.where(id: invoice_detail_middle_classification.invoice_header_id).first
       
         #件名
-        @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
-		 
+        if @invoice_headers.present?
+          @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
+		    end
         #請求No
-        if @invoice_headers.invoice_code.present?
+        #if @invoice_headers.invoice_code.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_code.present?
           @report.page.item(:invoice_code).value(@invoice_headers.invoice_code) 
         else
         #請求Noが未入力の場合は、見積Noをそのまま出す。
-          @report.page.item(:invoice_code).value(@invoice_headers.invoice_code) 
+          #?del230720
+          #@report.page.item(:invoice_code).value(@invoice_headers.invoice_code) 
         end
            
-        if @invoice_headers.invoice_date.present?
+        #if @invoice_headers.invoice_date.present?
+        if @invoice_headers.present? && @invoice_headers.invoice_date.present?
           @gengou = @invoice_headers.invoice_date
              
           #元号変わったらここも要変更
@@ -505,7 +534,9 @@ class InvoiceLandscapePDF
                   
         if invoice_detail_middle_classification.invoice_price.present?
           if invoice_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL  #add 170308
-            tmp = invoice_detail_middle_classification.invoice_price.delete("^0-9").to_i
+            #tmp = invoice_detail_middle_classification.invoice_price.delete("^0-9").to_i
+            #標準版対応 230720
+            tmp = invoice_detail_middle_classification.invoice_price
             if tmp > 0
               num = invoice_detail_middle_classification.invoice_price.to_i
             else
@@ -519,7 +550,9 @@ class InvoiceLandscapePDF
         #実行金額合計
         if invoice_detail_middle_classification.execution_price.present?
           if invoice_detail_middle_classification.construction_type.to_i != $INDEX_SUBTOTAL  
-            tmp = invoice_detail_middle_classification.execution_price.delete("^0-9").to_i
+            #tmp = invoice_detail_middle_classification.execution_price.delete("^0-9").to_i
+            #upd230720
+            tmp = invoice_detail_middle_classification.execution_price
             if tmp > 0
               num = invoice_detail_middle_classification.execution_price.to_i
             else
