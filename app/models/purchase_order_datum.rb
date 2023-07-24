@@ -48,7 +48,8 @@ class PurchaseOrderDatum < ApplicationRecord
   validate :check_supplier   #add210727
     
   #demo版対応
-  validate :purchase_order_datum_count_must_be_within_limit, on: :create
+  #ここはFaxで落ちるので、カット
+  #validate :purchase_order_datum_count_must_be_within_limit, on: :create
     
   #validates :purchase_order_code, uniqueness: {message: ",工事IDが同じ組み合わせのレコードが既に存在します。", scope: [:construction_datum_id]} 
     

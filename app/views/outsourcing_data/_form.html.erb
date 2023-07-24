@@ -193,8 +193,10 @@
   
   
   <%= button_tag( @button_caption, :value => 'pdf', :name => 'format', :class => "btn btn-purple500_ftg" , 
-             formtarget: "_blank", :onclick => "setOutSourcingFlag()" ) %>
-  
+             formtarget: "_blank", :onclick => "return validateAndsetOutSourcingFlag()" ) %>
+  <!--<%= button_tag( @button_caption, :value => 'pdf', :name => 'format', :class => "btn btn-purple500_ftg" , 
+              :onclick => "setOutSourcingFlag()" ) %>-->
+             
   <!--  新会社表記　ひとまず保留(日付で判定)
   <%= f.check_box :new_company_flag , {id:'new_company_flag' } %>
   <%= f.label :new_company_flag, "新様式(株式会社)", {} %>
@@ -458,12 +460,68 @@
 	
    });
    
-   //外注フラグをチェックする
-   function setOutSourcingFlag(){
+   //事前にバリデート＆外注フラグをチェックする
+   function validateAndsetOutSourcingFlag(){
+     
+     //js側でバリデートする(modelを介せない為)
+     //但し、モデルのvalidateと一致させる必要がある...
+     //add230720
+     //資材チェック(リスト)
+     var material = document.getElementById("material_id").value
+     if (material == ""){
+       alert("品番を選択してください。");
+       return false;
+     }
+     //資材コードチェック
+     var material_code = document.getElementById("material_code").value
+     if (material_code == ""){
+       alert("品番を入力してください。");
+       return false;
+     }
+     //メーカーチェック(除外)
+     //var maker = document.getElementById("maker_id").value;
+     //if (maker == ""){
+     //  alert("メーカーを選択してください。");
+     //  return false;
+     //}
+     //仕入先チェック
+     var supplier = document.getElementById("supplier_id").value;
+     if (supplier == ""){
+       alert("仕入先を選択してください。");
+       return false;
+     }
+     
+     //数量チェック
+     var quantity = document.getElementById("quantity").value
+     if (quantity == ""){
+       alert("数量を入力してください。");
+       return false;
+     }
+     //単位チェック
+     var unit = document.getElementById("unit_id").value;
+     if (unit == ""){
+       alert("単位を選択してください。");
+       return false;
+     }
+     //注文Noチェック
+     var purchase_order = document.getElementById("purchase_datum").value;
+     if (purchase_order == ""){
+       alert("注文Noを選択してください。");
+       return false;
+     }
+     //金額チェック---ひとまず保留
+     
+     //add end
+     
+     
+     
+     //上記バリデーションが終わったら、従来の↓処理を行う。
+     
      //一旦チェックを外してから、イベント発現させる
      document.getElementById("outsourcing_invoice_flag").checked = false;
      $('#outsourcing_invoice_flag').trigger('click');
    }
+   
    
    function initialMurayama(){
      
@@ -769,8 +827,11 @@
 	  
       var supplier_id = document.getElementById("supplier_id").value;
       var material_id = document.getElementById("material_id").value;
-      var last_unit_price_update_at = document.getElementById("last_unit_price_update_at").value;
-	  
+      var last_unit_price_update_at = 0;
+      //upd230720
+      if (document.getElementById("last_unit_price_update_at") != null){
+        var last_unit_price_update_at = document.getElementById("last_unit_price_update_at").value;
+	    }
 	  if (material_id > 1) {
 	  
         $.get("<%= purchase_datum_unit_price_select_path %>",

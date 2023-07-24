@@ -105,30 +105,44 @@ class ConstructionCostsController < ApplicationController
     #upd170209 入力時に反映することにした。
     ##set_amount
     
-    #add210208
     #納品書・請求書データへ、確定申告区分をアップする
-    set_final_return_divsion
+    #標準版はカット
+    #set_final_return_divsion
     
-    @construction_cost = ConstructionCost.new(construction_cost_params)
-
+    @construction_cost = ConstructionCost.where(construction_datum_id: params[:construction_cost][:construction_datum_id]).first
+    
+    #binding.pry
+    
+    new_flag = false
+    if @construction_cost.nil?
+      @construction_cost = ConstructionCost.new(construction_cost_params)
+      new_flag = true
+    end
+    
     respond_to do |format|
-      
-      if @construction_cost.save
+      #
+      check = false
+      if new_flag  #新規の場合
+        check = @construction_cost.save
+      else
+        check = @construction_cost.update(construction_cost_params)
+      end
+      #
+      #if @construction_cost.save
+      if check 
         #format.html { redirect_to @construction_cost, notice: 'Construction cost was successfully created.' }
         #format.json { render :show, status: :created, location: @construction_cost }
-		
-		#if params[:costs_pdf].present?  
-		if params[:format] == "pdf"
-  
-		  #更新後に集計表を出すようにする
-		  set_pdf(format)
-		 
-		else
-		#通常の更新の場合。
-		
-		  format.html {redirect_to construction_cost_path(@construction_cost, :construction_id => params[:construction_id], 
+        
+        #if params[:costs_pdf].present?  
+        if params[:format] == "pdf"
+          #更新後に集計表を出すようにする
+          set_pdf(format)
+           
+        else
+          #通常の更新の場合
+          format.html {redirect_to construction_cost_path(@construction_cost, :construction_id => params[:construction_id], 
           :move_flag => params[:move_flag])}
-		end
+        end
       else
         format.html { render :new }
         format.json { render json: @construction_cost.errors, status: :unprocessable_entity }
@@ -147,6 +161,8 @@ class ConstructionCostsController < ApplicationController
     #add210208
     #納品書・請求書データへ、確定申告区分をアップする
     set_final_return_divsion
+   
+    #binding.pry
    
     respond_to do |format|
 	
@@ -311,8 +327,6 @@ end
       #仕入明細をセット
       purchase_order_amount_select
       
-      binding.pry
-      
       if @purchase_order_amount.present?
         @construction_costs[0].purchase_order_amount = @purchase_order_amount
       end
@@ -399,9 +413,12 @@ end
      #construction_data = ConstructionDatum.find(params[:construction_datum_id])
 	 if params[:construction_datum_id].present? 
 	 
-	   construction_data = ConstructionDatum.find(params[:construction_datum_id])
-	   #construction_data = ConstructionDatum.find(@construction_cost.construction_datum_id)
+	   #binding.pry
 	 
+	   #construction_data = ConstructionDatum.find(params[:construction_datum_id])
+     #upd230721
+     construction_data = ConstructionDatum.where(id: params[:construction_datum_id]).first
+	   
 	   if construction_data.present?
 	 
 	     construction_data_params = { calculated_flag: 1 }

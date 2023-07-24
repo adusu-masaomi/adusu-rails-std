@@ -605,34 +605,34 @@
   var checkQuantity = function(ok_flag){ 
   
     //quantity = document.getElementsByName("quantity[]");
-	quantity = document.querySelectorAll("#quantity");
-	destroy = document.getElementsByName("_destroy[]");
-	
-	//item = document.querySelectorAll("#material_id");
-	//Rails6対応
-	item = $('.searchableSelect1_1')
+  quantity = document.querySelectorAll("#quantity");
+  destroy = document.getElementsByName("_destroy[]");
   
-	//var message = "";
-	
-	for (var i = 0; i < quantity.length ; i ++) {
-	    if (quantity[i].value == undefined || quantity[i].value == 0){
-	      
-		  
-		  //if (destroy[i].value != "1") {
-		  
-		    itemName = item[i].options[item[i].selectedIndex].innerText;
-		    window.confirm(itemName + 'の数量を入力してください。');
-		  
-		    ok_flag = false;
-		  //}
-	    }
-	}
-	
-	//if (ok_flag == false){
-	//  window.confirm( message );
-	//}
-	
-	return ok_flag;
+  //item = document.querySelectorAll("#material_id");
+  //Rails6対応
+  item = $('.searchableSelect1_1')
+  
+  //var message = "";
+  
+  for (var i = 0; i < quantity.length ; i ++) {
+      if (quantity[i].value == undefined || quantity[i].value == 0){
+        
+      
+      //if (destroy[i].value != "1") {
+      
+      itemName = item[i].options[item[i].selectedIndex].innerText;
+      window.confirm(itemName + 'の数量を入力してください。');
+      
+        ok_flag = false;
+    //}
+    }
+  }
+
+    //if (ok_flag == false){
+    //  window.confirm( message );
+    //}
+    
+    return ok_flag;
   }
   
  

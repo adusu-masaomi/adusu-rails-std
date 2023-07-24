@@ -53,9 +53,11 @@
    
    <!-- -->
    
-   <%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, input_html:{ id:"requested_date", 
-    :value => f.object.requested_date || Date.today , style: 'width:140px'},as: :date_picker %>
-  
+   <!--<%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, input_html:{ id:"requested_date", 
+    :value => f.object.requested_date || Date.today , style: 'width:140px'},as: :date_picker %>-->
+   <%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, as: :string, input_html:{ id:"requested_date", 
+    :value => f.object.requested_date || Date.today , class:"datetimepicker", style: 'width:140px'} %>
+    
    <!--<%= f.input :last_header_number, label:"注文No", label_html: { style: 'color:blue;' }, input_html:{ id:"last_header_number" ,
          style: 'width:35px', :value => @last_header_number, :readonly => true } %>-->
    
@@ -871,13 +873,22 @@
    }
    submitAfterValidation(flag);
  }
- 
  //入力チェック後の、更新処理
- function submitAfterValidation(flag) {
- 	
-   var ok_flag = true;
-	
-	 var after_check = checkQuantity(ok_flag);
+  function submitAfterValidation(flag) {
+  
+    var ok_flag = true;
+  
+    //
+    var after_check = true;
+    //add230720
+    //明細フォームがない場合は下記のfunctionが読み込まれない為、事前にチェックをする
+    if ($.isFunction(window.checkQuantity)){
+      //数量チェック
+      after_check = checkQuantity(ok_flag);
+    }else{
+      alert("「アイテム追加」を行ってください。");
+      return false;
+    }
    
    //標準版はカット
    //納品場所チェック
@@ -885,50 +896,50 @@
    //  after_check = checkDeliveryPlace(ok_flag, flag);   
    //}
    
-	 if (after_check == true){
-	   //var after_check = checkSupplier(flag);
-     after_check = checkSupplier(flag);
-	 }
-	
-	 //メッセージを可変にする
-	 var message = "";
-   messageFlag = true;
-   
-	 if (flag == FLAG_ESTIMATE_EMAIL){
-	   message = "見積依頼をメールしますか？"
-	 }else if (flag == 2){
-	   message = "登録のみ行いますか？"
-     //message = "登録しますか？"
-	 }else if (flag == FLAG_ORDER_EMAIL){
-	   message = "注文依頼をメールしますか？"
-	 }else if (flag == 4){
-     document.getElementById("sent_flag").value = 4;  //add200428
-	   message = "見積比較表を発行しますか？"
-     messageFlag = false;
+    if (after_check == true){
+     //var after_check = checkSupplier(flag);
+      after_check = checkSupplier(flag);
+    }
+    
+    //メッセージを可変にする
+    var message = "";
+    messageFlag = true;
+    
+    if (flag == FLAG_ESTIMATE_EMAIL){
+      message = "見積依頼をメールしますか？"
+    }else if (flag == 2){
+      message = "登録のみ行いますか？"
+      //message = "登録しますか？"
+    }else if (flag == FLAG_ORDER_EMAIL){
+      message = "注文依頼をメールしますか？"
+    }else if (flag == 4){
+      document.getElementById("sent_flag").value = 4;  //add200428
+      message = "見積比較表を発行しますか？"
+      messageFlag = false;
    }else if (flag == 5){
-     document.getElementById("sent_flag").value = 5;  //add200428
-	   message = "見積依頼をＦＡＸしますか？"
+      document.getElementById("sent_flag").value = 5;  //add200428
+      message = "見積依頼をＦＡＸしますか？"
    }else if (flag == 6){
      document.getElementById("sent_flag").value = 6;  //add200428
-	   message = "注文依頼をＦＡＸしますか？"
+     message = "注文依頼をＦＡＸしますか？"
    }else if (flag == 7){
      //標準版仕様
      document.getElementById("sent_flag").value = 7;  //add200428
-	   message = "見積依頼書を発行しますか？"
+     message = "見積依頼書を発行しますか？"
    }else if (flag == 8){
      //標準版仕様
      document.getElementById("sent_flag").value = 8;  //add200428
-	   message = "注文書を発行しますか？"
- 	 }else{
+     message = "注文書を発行しますか？"
+   }else{
      //それ以外
      messageFlag = false;
      document.getElementById("sent_flag").value = flag;
    }
-	  
-	 if (after_check == true){
-	   //if (flag != 4){
+    
+   if (after_check == true){
+     //if (flag != 4){
      if (messageFlag){
-	   //比較表のみメッセージは非表示とする（ややうざいので・・）
+     //比較表のみメッセージは非表示とする（ややうざいので・・）
        if (window.confirm(message)) {
           if (flag == FLAG_ESTIMATE_EMAIL ||
              flag == FLAG_ORDER_EMAIL)
@@ -937,16 +948,21 @@
           }else{
             document.getElementById("format").value = "html";
           }
-	        reset_value();
+          reset_value();
           document.forms[0].submit();
-	     }else{
-	       return false; 
+       }else{
+         return false; 
        }
       }
    }else
    {
      return false;  //add200501
 	 }
+   
+   //add230722
+   //画面をリフレッシュしておく(印刷後に見積・注文済の状態になるように)
+   window.location.reload();
+   
  }
 
   var checkDeliveryPlace = function(ok_flag, flag){ 

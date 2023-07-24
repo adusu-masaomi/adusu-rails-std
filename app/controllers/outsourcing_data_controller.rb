@@ -443,7 +443,8 @@ class OutsourcingDataController < ApplicationController
       
       #ヴァリデーションを無効にする
       #確定申告などで編集する場合を考慮。
-      save_check = @purchase_datum.save!(:validate => false)
+      #save_check = @purchase_datum.save!(:validate => false)
+      save_check = @purchase_datum.save  #upd230720
       
       if save_check
         #外注用の請求書発行
@@ -470,6 +471,8 @@ class OutsourcingDataController < ApplicationController
       else
         format.html { render :new }
         format.json { render json: @purchase_datum.errors, status: :unprocessable_entity }
+        
+        format.any
       end  #if save_check
     end  #do end
   end
@@ -493,6 +496,7 @@ class OutsourcingDataController < ApplicationController
 
       #定価・メーカーID、品番品名も更新
       update_params_list_price_and_maker
+      #binding.pry
       @purchase_datum.update(material_masters_params)  
    
     else
@@ -532,7 +536,11 @@ class OutsourcingDataController < ApplicationController
         @purchase_datum.closing_date = @closing_date  #add210301
       end
       
-      update_check = @purchase_datum.save!(:validate => false)
+      #update_check = @purchase_datum.save!(:validate => false)
+      #upd230720
+      update_check = @purchase_datum.save
+      
+      #binding.pry
       
       if update_check   
         
@@ -557,9 +565,15 @@ class OutsourcingDataController < ApplicationController
         format.html {redirect_to outsourcing_datum_path(@purchase_datum, :construction_id => params[:construction_id], 
          :purchase_order_id => params[:purchase_order_id], :supplier_master_id => params[:supplier_master_id],
          :move_flag => params[:move_flag])}
-      else
+      else 
+        #binding.pry
+         
         format.html { render :edit }
         format.json { render json: @purchase_datum.errors, status: :unprocessable_entity }
+        
+        #flash[:notice] = "在庫マスターへ新規登録しました。資材マスターの在庫区分・在庫マスターの画像を登録してください。"
+        
+        format.any
       end
     end  #end do
   end
@@ -671,7 +685,9 @@ class OutsourcingDataController < ApplicationController
   #資材マスターの分類を更新
   def update_material_category
     
-    if params[:purchase_datum][:MaterialMaster_attributes][:material_category_id].to_i > 0
+    #if params[:purchase_datum][:MaterialMaster_attributes][:material_category_id].to_i > 0
+    #upd230720
+    if params[:purchase_datum][:MaterialMaster_attributes].present? && params[:purchase_datum][:MaterialMaster_attributes][:material_category_id].to_i > 0
         if params[:purchase_datum][:material_id].to_i > 1
             #手入力の場合の資材IDは、別ファンクション(add_manual_input_except_unit_price)で更新されている。
             @material = MaterialMaster.find(params[:purchase_datum][:material_id])
@@ -709,9 +725,11 @@ class OutsourcingDataController < ApplicationController
   
   #仕入先単価マスターへの新規追加又は更新
   def create_or_update_purchase_unit_prices
-    @purchase_unit_prices = PurchaseUnitPrice.where(["supplier_id = ? and material_id = ?", 
-    params[:purchase_datum][:supplier_id], params[:purchase_datum][:material_id] ]).first
-
+    
+    if params[:purchase_datum][:supplier_id].present? && params[:purchase_datum][:material_id].present? #add230720
+      @purchase_unit_prices = PurchaseUnitPrice.where(["supplier_id = ? and material_id = ?", 
+        params[:purchase_datum][:supplier_id], params[:purchase_datum][:material_id] ]).first
+    end
     if @purchase_unit_prices.present?
       #purchase_unit_prices_params = {material_id:  params[:purchase_datum][:material_id], supplier_id: params[:purchase_datum][:supplier_id], 
       #                  unit_price: params[:purchase_datum][:purchase_unit_price]}

@@ -86,7 +86,7 @@ class OutsourcingInvoicePDF
       page_count = report.page_count.to_s + "頁"
       
       #binding.pry
-      if outsourcing_cost.invoice_code.present?
+      if outsourcing_cost.present? && outsourcing_cost.invoice_code.present?
         report.page.item(:invoice_code).value(outsourcing_cost.invoice_code)
       end
      
@@ -125,33 +125,41 @@ class OutsourcingInvoicePDF
       #
         
       #注文No
-      report.page.item(:purchase_order_code).value(purchase_data_current.purchase_order_datum.purchase_order_code) 
-        
-      #工事コード
-      report.page.item(:construction_code).value(purchase_data_current.construction_datum.construction_code) 
-        
-      #件名には備考も加える
-      if purchase_data_current.notes.blank?
-        construction_name = purchase_data_current.construction_datum.construction_name
-      else
-        construction_name = purchase_data_current.construction_datum.construction_name + "（" + purchase_data_current.notes + "）"
+      if purchase_data_current.purchase_order_datum.present?
+        report.page.item(:purchase_order_code).value(purchase_data_current.purchase_order_datum.purchase_order_code) 
       end
-        
+      #工事コード
+      if purchase_data_current.construction_datum.present?
+        report.page.item(:construction_code).value(purchase_data_current.construction_datum.construction_code) 
+      end
+      #件名には備考も加える
+      construction_name = ""
+      if purchase_data_current.construction_datum.present?
+        if purchase_data_current.notes.blank?
+          construction_name = purchase_data_current.construction_datum.construction_name
+        else
+          construction_name = purchase_data_current.construction_datum.construction_name + "（" + purchase_data_current.notes + "）"
+        end
+      end
       #件名
       #report.page.item(:construction_name).value($purchase_data_current.construction_datum.construction_name)
       report.page.item(:construction_name).value(construction_name) 
         
       #得意先名
-      report.page.item(:customer_name).value(purchase_data_current.construction_datum.CustomerMaster.customer_name) 
- 
+      if purchase_data_current.construction_datum.present? && purchase_data_current.construction_datum.CustomerMaster.present? 
+        report.page.item(:customer_name).value(purchase_data_current.construction_datum.CustomerMaster.customer_name) 
+      end
  
       #工事場所(住所)
       #分割された住所を一つにまとめる。
-	    all_address = purchase_data_current.construction_datum.address
-      if purchase_data_current.construction_datum.house_number.present?
+      if purchase_data_current.construction_datum.present?
+	      all_address = purchase_data_current.construction_datum.address
+      end
+      if purchase_data_current.construction_datum.present? && purchase_data_current.construction_datum.house_number.present?
         all_address += purchase_data_current.construction_datum.house_number
       end
-      if purchase_data_current.construction_datum.address2.present?
+      #if purchase_data_current.construction_datum.address2.present?
+      if purchase_data_current.construction_datum.present? && purchase_data_current.construction_datum.address2.present?
         all_address += "　" + purchase_data_current.construction_datum.address2
       end
       report.page.item(:construction_place).value(all_address) 
@@ -245,7 +253,7 @@ class OutsourcingInvoicePDF
       purchase_amount_tax_only = 0
       purchase_amount_tax_in = 0
         
-      if purchase_data_current.purchase_amount > 0
+      if purchase_data_current.purchase_amount.present? && purchase_data_current.purchase_amount > 0
         
         date_per_ten_start = Date.parse("2019/10/01")   #消費税１０％開始日  add190824
         if purchase_data_current.purchase_date < date_per_ten_start

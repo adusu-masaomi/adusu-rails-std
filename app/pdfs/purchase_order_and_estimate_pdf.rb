@@ -39,19 +39,21 @@ class PurchaseOrderAndEstimatePDF
     
     pre_page_count = 1
     last_page_count = 1
-    #$detail_parameters.values.each do
-    detail_parameters.values.each do 
-      cnt += 1
-      cnt2 += 1
+    
+    if detail_parameters.present?  #add230720
+      detail_parameters.values.each do 
+        cnt += 1
+        cnt2 += 1
       
-      #if cnt > 19  #maxの行数 - 1
-      if cnt >= MAX_LINE  #maxの行数 - 1
-        pre_page_count += 1
-        cnt = 0
+        #if cnt > 19  #maxの行数 - 1
+        if cnt >= MAX_LINE  #maxの行数 - 1
+          pre_page_count += 1
+          cnt = 0
+        end
+      
       end
-      
+      last_page_count = pre_page_count
     end
-    last_page_count = pre_page_count
     #
     
     #タイトル
@@ -179,131 +181,131 @@ class PurchaseOrderAndEstimatePDF
     
     #明細
     #注文でループ
-    #$detail_parameters.values.each_with_index.reverse_each do |item, index|
-    detail_parameters.values.each_with_index.reverse_each do |item, index|
-      
-      #出力判定
-      check = false
-      
-      #if item[:_destroy] != "1" && @bid_flag == 1 && @mail_sent_flag != "1"
-      @quotation_unit_price = 0 
-      @quotation_price = 0 
-      @bid_flag = false
-      @quotation_email_sent_flag = false
-      @order_email_sent_flag = false
-      
-      #仕入先１〜３の各判定
-      #if $request_type == FLAG_ESTIMATE
-      if request_type == FLAG_ESTIMATE
-        get_supplier_when_quotation(item)
-      #elsif $request_type == FLAG_ORDER
-      elsif request_type == FLAG_ORDER
-        get_supplier_when_order(item)
-      end
-      
-      #各アイテムの出力判定
-      #if !$mail_flag
-      if !mail_flag
-      #帳票の場合
-        #if $request_type == FLAG_ESTIMATE
-        if request_type == FLAG_ESTIMATE
-        #見積の場合
-          if item[:_destroy] != "true"
-            check = true
-          end
-        else
-        #注文の場合
-          #if item[:_destroy] != "true"
-          if item[:_destroy] != "true" && @bid_flag == true
-            check = true
-          end
-        end
-        #注文の場合
-      else
-      #メール送信の場合
-        #if $request_type == FLAG_ESTIMATE
-        if request_type == FLAG_ESTIMATE
-        #見積の場合
-          if item[:_destroy] != "true" && !@quotation_email_sent_flag
-            check = true
-          end
-        else
-        #注文の場合
-          if item[:_destroy] != "true" && !@order_email_sent_flag && @bid_flag
-            check = true
-          end
-        end
-      end
-      ##
-      
-      if check
+    if detail_parameters.present?  #add230720
+      detail_parameters.values.each_with_index.reverse_each do |item, index|
         
-        report.list(:default).add_row do |row|
-          
-          
-          #品名(備考有無により表示切り分け)
-          material_name = ""
-          #material_name2 = ""
-          notes = ""
-          
-          material_name = item[:material_name]
-          
-          #備考(資材単位)
-          if item[:notes].present?
-            #material_name2 = item[:material_name]
-            notes = "※" + item[:notes]
+        #出力判定
+        check = false
+      
+        #if item[:_destroy] != "1" && @bid_flag == 1 && @mail_sent_flag != "1"
+        @quotation_unit_price = 0 
+        @quotation_price = 0 
+        @bid_flag = false
+        @quotation_email_sent_flag = false
+        @order_email_sent_flag = false
+      
+        #仕入先１〜３の各判定
+        #if $request_type == FLAG_ESTIMATE
+        if request_type == FLAG_ESTIMATE
+          get_supplier_when_quotation(item)
+        #elsif $request_type == FLAG_ORDER
+        elsif request_type == FLAG_ORDER
+          get_supplier_when_order(item)
+        end
+      
+        #各アイテムの出力判定
+        #if !$mail_flag
+        if !mail_flag
+        #帳票の場合
+          #if $request_type == FLAG_ESTIMATE
+          if request_type == FLAG_ESTIMATE
+          #見積の場合
+            if item[:_destroy] != "true"
+              check = true
+            end
+          else
+          #注文の場合
+            #if item[:_destroy] != "true"
+            if item[:_destroy] != "true" && @bid_flag == true
+              check = true
+            end
           end
-          
-          #定価
-          @num = item[:list_price].to_i
-          formatNum()
-          list_price = @num
-          #needed??
-          str_list_price = ""
-          if item[:list_price].to_i > 0
-            str_list_price = "定価" + list_price
+          #注文の場合
+        else
+        #メール送信の場合
+          #if $request_type == FLAG_ESTIMATE
+          if request_type == FLAG_ESTIMATE
+          #見積の場合
+            if item[:_destroy] != "true" && !@quotation_email_sent_flag
+              check = true
+            end
+          else
+          #注文の場合
+            if item[:_destroy] != "true" && !@order_email_sent_flag && @bid_flag
+              check = true
+            end
           end
-          #
+        end
+        ##
+      
+        if check
+        
+          report.list(:default).add_row do |row|
           
-          #仕入先１〜３の判定
-          #if $request_type == 2
-          #  get_supplier_when_order(item)
-          #end
-          #注文単価
-          @num = 0  
           
-          #if $request_type == 2
-          if request_type == 2
-            @num = @quotation_unit_price
-          end
+            #品名(備考有無により表示切り分け)
+            material_name = ""
+            #material_name2 = ""
+            notes = ""
           
-          #単価が存在しない場合のフラグ
-          #念の為、残しておく
-          #if @num == 0
-          #  exist_no_price = true
-          #end
-          #
+            material_name = item[:material_name]
           
-          formatNum()
-          unit_price = @num
-          ##
+            #備考(資材単位)
+            if item[:notes].present?
+              #material_name2 = item[:material_name]
+              notes = "※" + item[:notes]
+            end
           
-          #@num = item[:list_price].to_i #定価
-          #金額
-          amount = 0  
-          #if $request_type == 2
-          if request_type == 2
-            amount = item[:quantity].to_i * @quotation_unit_price
-          end
-          @num = amount
-          formatNum()
-          str_amount = @num
+            #定価
+            @num = item[:list_price].to_i
+            formatNum()
+            list_price = @num
+            #needed??
+            str_list_price = ""
+            if item[:list_price].to_i > 0
+              str_list_price = "定価" + list_price
+            end
+            #
           
-          #binding.pry
+            #仕入先１〜３の判定
+            #if $request_type == 2
+            #  get_supplier_when_order(item)
+            #end
+            #注文単価
+            @num = 0  
           
-          subtotal += amount
+            #if $request_type == 2
+            if request_type == 2
+              @num = @quotation_unit_price
+            end
           
-          row.values material_code: item[:material_code],
+            #単価が存在しない場合のフラグ
+            #念の為、残しておく
+            #if @num == 0
+            #  exist_no_price = true
+            #end
+            #
+          
+            formatNum()
+            unit_price = @num
+            ##
+          
+            #@num = item[:list_price].to_i #定価
+            #金額
+            amount = 0  
+            #if $request_type == 2
+            if request_type == 2
+              amount = item[:quantity].to_i * @quotation_unit_price
+            end
+            @num = amount
+            formatNum()
+            str_amount = @num
+          
+            #binding.pry
+          
+            subtotal += amount
+          
+            row.values material_code: item[:material_code],
 		                 material_name: material_name,
                      material_note: notes,
                      list_price: str_list_price,
@@ -315,51 +317,51 @@ class PurchaseOrderAndEstimatePDF
                      unit_price: unit_price,
                      amount: str_amount
           
-        end 
+          end 
       
         
-        #ページ番号
-        #(２ページ以上の場合のみ表示)
-        if last_page_count > 1
-          page_count = report.page_count.to_s + "/" + last_page_count.to_s
-          report.page.item(:page_no).value(page_count)
-        end
-        #
-        
-        #合計
-        #(最終ページにのみ表示)
-        if report.page_count >= last_page_count
-        #  report.page.item(:page_no).value(page_count)
-          
-          
-          ##小計〜合計
-          
-          #合計
-          @num = subtotal
-          formatNum()
-          str_subtotal = @num
-          
-          
-          #単価が抜けているものがあれば合計は非表示にする
-          if !exist_no_price
-            report.page.item(:subtotal).value(str_subtotal)
-          else
-            report.page.item(:subtotal).visible(false)
+          #ページ番号
+          #(２ページ以上の場合のみ表示)
+          if last_page_count > 1
+            page_count = report.page_count.to_s + "/" + last_page_count.to_s
+            report.page.item(:page_no).value(page_count)
           end
-          
-          report.page.item(:lbl_tax).value("")
-          report.page.item(:lbl_total).visible(false)
-        else
-          #最終ページ以外は非表示に
-          report.page.item(:lbl_subtotal).visible(false)
-          report.page.item(:lbl_tax).value("")
-          report.page.item(:lbl_total).visible(false)
-        end
-      
-      end  #check sent
+          #
         
-    end	#do end
+          #合計
+          #(最終ページにのみ表示)
+          if report.page_count >= last_page_count
+          #  report.page.item(:page_no).value(page_count)
+          
+          
+            ##小計〜合計
+          
+            #合計
+            @num = subtotal
+            formatNum()
+            str_subtotal = @num
+          
+          
+            #単価が抜けているものがあれば合計は非表示にする
+            if !exist_no_price
+              report.page.item(:subtotal).value(str_subtotal)
+            else
+              report.page.item(:subtotal).visible(false)
+            end
+          
+            report.page.item(:lbl_tax).value("")
+            report.page.item(:lbl_total).visible(false)
+          else
+            #最終ページ以外は非表示に
+            report.page.item(:lbl_subtotal).visible(false)
+            report.page.item(:lbl_tax).value("")
+            report.page.item(:lbl_total).visible(false)
+          end
       
+        end  #check sent
+        
+      end	#do end
+    end
     
     # ThinReports::Reportを返す
     return report

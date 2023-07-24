@@ -17,6 +17,8 @@ class ConstructionDatum < ApplicationRecord
 	has_many :construction_daily_reports
 	has_many :construction_attachments, dependent: :destroy
   accepts_nested_attributes_for :construction_attachments, allow_destroy: true
+  
+  has_one :construction_costs  #add230721
   #
    
   #発行日用

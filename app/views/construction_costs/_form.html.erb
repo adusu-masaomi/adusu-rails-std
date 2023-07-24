@@ -14,7 +14,8 @@
   
   <!--<%= f.input :construction_datum_id %>-->
   
-  <%= f.input :construction_datum_id , input_html:{id:"construction_datum_id" }, as: :hidden  %>
+  <!--del230721影響出るか？-->
+  <!--<%= f.input :construction_datum_id , input_html:{id:"construction_datum_id" }, as: :hidden  %>-->
   
   <%= f.label :工事コード, {:class => "my-custom-class-l"}  %></br>
   <%= f.collection_select :construction_datum_id, ConstructionDatum.order('construction_code DESC').all, :id, :p_cd_name, {:prompt => "どれか一つを選択して下さい",:selected => @construction_cost.construction_datum_id} , {id:"construction_datum_id", class: "searchableConstructionCode" , :tabindex=>"0", style: 'width:440px'} %>
@@ -80,14 +81,20 @@
             construction_costs_path(f.object, construction_costs_id: f.object.id, format: "pdf" ),
             :class => 'btn  btn-lime500_ftg', :target=>["_blank"], :onclick => "return submitAfterValidation()", :method=> :put %>-->
   
-  <!--upd170922-->
-  <%= button_tag( '工事費集計表', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" , formtarget: "_blank", :onclick => "resetPrintFlag()" ) %>
+  <%= button_tag( '工事費集計表', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" , formtarget: "_blank", :onclick => "return resetPrintFlag()" ) %>
+  
   <%= button_tag( 'ＰＤＦ発行・集計完了', :value => 'pdf', :name => 'format', :class => "btn btn-purple500_ftg" , formtarget: "_blank", :onclick => "return submitAfterValidation()" ) %>
   
-  <%= link_to t('.cancel', :default => t("helpers.links.back")),
+  <% if params[:construction_id].present? %>
+    <!--工事画面からの遷移の場合は、工事画面へ戻る-->
+    <%= link_to t('.cancel', :default => t("helpers.links.back")),
                 construction_data_path(construction_id: params[:construction_id], 
 				move_flag: params[:move_flag]), :class => 'btn btn-white_rsd' %>
-  
+  <% else %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                construction_costs_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                :class => 'btn btn-white_rsd' %>
+  <% end %>
   <!--<%= f.button_tag :登録する, :type => 'button', :class => "btn btn-primary", 
                :onclick => "submitAfterValidation()" , :tabindex=>"5"  %>-->
   <!--<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
@@ -396,15 +403,33 @@
 
   //プリントフラグを初期化する
   function resetPrintFlag(){
+    
+    //add230721
+    //modelのバリデーションと同様にチェックを行う
+    var check = checkValidation();
+    if (check == false){
+      return false;
+    }
+   
     document.getElementById("print_flag_hide").value = "";
   }
+  
+  function checkValidation(){
+    //modelのバリデーションと同様にチェックを行う
+    var construction = document.getElementById("construction_datum_id").value
+    if (construction == ""){
+      alert("工事コードを選択してください。");
+      return false;
+     }
+     //
+  }
+  
   
   //印刷時の確認＆集計フラグをセット。
   function submitAfterValidation() {
   
 	//swalにしたいが、うまくいかないので保留
-	
-	
+		
 	//swal({
     //  title: "集計「済」にしますか?",
     //  type: 'warning',
@@ -426,10 +451,21 @@
 	//  location.reload();
 	//  return true;
 	//}, function(dismiss) {return false;})
-	 
    
-	
-	
+   //add230721
+   //modelのバリデーションと同様にチェックを行う
+   var check = checkValidation();
+   if (check == false){
+     return false;
+   }
+   
+   //var construction = document.getElementById("construction_datum_id").value
+   //if (construction == ""){
+   //  alert("工事コードを選択してください。");
+   //  return false;
+   //}
+   //
+   
 	//if (window.confirm('工事集計表を発行しますか？')) {
 	if (window.confirm('ＰＤＦ発行して集計完了しますか？')) {
 	  

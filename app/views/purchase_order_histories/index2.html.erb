@@ -86,7 +86,11 @@
         <td><%= orders.purchase_order_history.purchase_order_date %></td>
         <td><%= orders.material_code %></td>
         <td><%= orders.material_name %></td>
-        <td><%= orders.material_master.MakerMaster.maker_name %></td>
+        <% if orders.material_master.present? && orders.material_master.MakerMaster.present? %>
+          <td><%= orders.material_master.MakerMaster.maker_name %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         <td><%= orders.quantity %></td>
         <% if orders.unit_master.present? %> 
           <td><%= orders.unit_master.unit_name %></td>

@@ -386,6 +386,8 @@ class QuotationMaterialHeadersController < ApplicationController
 
     @quotation_material_header = QuotationMaterialHeader.new(quotation_material_header_params)
 
+    #binding.pry
+
     respond_to do |format|
       if @quotation_material_header.save!(:validate => false)
         
@@ -916,8 +918,11 @@ class QuotationMaterialHeadersController < ApplicationController
           #昇順になっている場合は、本来の降順にしておく。
 	        #@detail_parameters = Hash[detail_parameters.sort.reverse]
           #rails6対応
-          @detail_parameters = detail_parameters.to_unsafe_h.sort.reverse.to_h
-          
+          if detail_parameters.present?
+            @detail_parameters = detail_parameters.to_unsafe_h.sort.reverse.to_h
+          else
+            @detail_parameters = detail_parameters
+          end
         else
 	        #$detail_parameters = detail_parameters
           @detail_parameters = detail_parameters
@@ -1500,7 +1505,8 @@ class QuotationMaterialHeadersController < ApplicationController
         supplier_responsible_id = quotation_material_header.supplier_responsible_id_3
       end
       
-      if supplier_responsible_id > 0
+      #if supplier_responsible_id > 0
+      if supplier_responsible_id.present? && supplier_responsible_id > 0
         
         #
         @supplier_responsibles = SupplierResponsible.where(:id => supplier_responsible_id).
