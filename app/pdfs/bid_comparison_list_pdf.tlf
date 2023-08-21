@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.10.0",
   "items": [
     {
       "id": "",
@@ -2004,7 +2004,7 @@
   "state": {
     "layout-guides": []
   },
-  "title": "",
+  "title": "見積比較表",
   "report": {
     "paper-type": "A4",
     "orientation": "landscape",

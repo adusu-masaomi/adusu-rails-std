@@ -124,7 +124,7 @@
             "description": "",
             "x": 347,
             "y": 102.7,
-            "width": 40,
+            "width": 40.4,
             "height": 14.4,
             "style": {
               "font-family": [
@@ -947,7 +947,7 @@
   "state": {
     "layout-guides": []
   },
-  "title": "在庫一覧表",
+  "title": "棚卸表",
   "report": {
     "paper-type": "A4",
     "orientation": "portrait",

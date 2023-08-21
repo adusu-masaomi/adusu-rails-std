@@ -1287,7 +1287,7 @@
       "description": "",
       "x": 255,
       "y": 324,
-      "width": 49.5,
+      "width": 52,
       "height": 12.3,
       "style": {
         "font-family": [
@@ -2435,7 +2435,7 @@
   "state": {
     "layout-guides": []
   },
-  "title": "quotation_pdf",
+  "title": "納品書",
   "report": {
     "paper-type": "A4",
     "orientation": "portrait",

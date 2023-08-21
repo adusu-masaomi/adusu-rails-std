@@ -152,8 +152,13 @@ class PurchaseDataController < ApplicationController
           
       #add210319
       #仕入業者の絞り込み
-      @supplier_master_extract = SupplierMaster.joins(:purchase_data).
+      if params[:construction_id].present?
+        @supplier_master_extract = SupplierMaster.joins(:purchase_data).
                           where('purchase_data.construction_datum_id = ?', params[:construction_id]).distinct
+      else                                                      
+        #upd230724
+        @supplier_master_extract = SupplierMaster.joins(:purchase_data)
+      end
     end
 		
     #@q = PurchaseDatum.ransack(params[:q]) 

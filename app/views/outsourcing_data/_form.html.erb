@@ -81,6 +81,7 @@
   <%= f.input :material_code, label: "品番（手入力用）", hint: "品名をﾌﾘｰ入力したい場合は”手入力”のまま" , 
         label_html: { style: 'color:blue' }, input_html: { :class => "my-custom-class-t", id:'material_code' , style: 'width:220px' , :tabindex=>"8" }  %>
   </div>
+  </br>
   <div class="col-lg-5" , style="margin-left : -15px">
   <%= f.input :supplier_material_code, label: "仕入先品番（手入力用）", input_html: { :class => "my-custom-class-t", id:'supplier_material_code' , 
                    style: 'width:220px;', :tabindex=>"9", :onchange => "copySupplierCodeToMaterial()" }  %>

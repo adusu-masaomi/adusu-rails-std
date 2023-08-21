@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.10.0",
   "items": [
     {
       "id": "",
@@ -1481,7 +1481,7 @@
   "state": {
     "layout-guides": []
   },
-  "title": "仕入表",
+  "title": "請求一覧(外注)",
   "report": {
     "paper-type": "A4",
     "orientation": "landscape",

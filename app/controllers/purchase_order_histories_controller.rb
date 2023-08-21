@@ -700,14 +700,21 @@ class PurchaseOrderHistoriesController < ApplicationController
         @material_category = MaterialCategory.where(:id => item[:material_category_id]).first
 
         if @material_category.nil?
-          #名称にID(カテゴリー名が入ってくる--やや強引？)をセット。
-          material_category_params = {name: item[:material_category_id] }
-          @material_category = MaterialCategory.new(material_category_params)
-          @material_category.save!(:validate => false)
-
-          if @material_category.present?
-            #メーカーIDを更新（パラメータ）
-            item[:material_category_id] = @material_category.id
+          if item[:material_category_id].present?
+            #名称にID(カテゴリー名が入ってくる--やや強引？)をセット。
+            material_category_params = {name: item[:material_category_id] }
+            
+            @material_category = MaterialCategory.where(:name => item[:material_category_id]).first
+            
+            if @material_category.blank?
+              @material_category = MaterialCategory.new(material_category_params)
+              @material_category.save!(:validate => false)
+            end
+          
+            if @material_category.present?
+              #メーカーIDを更新（パラメータ）
+              item[:material_category_id] = @material_category.id
+            end
           end
         end
         #

@@ -8,7 +8,7 @@
       "description": "",
       "x": 10,
       "y": 28,
-      "width": 70,
+      "width": 119.1,
       "height": 21,
       "style": {
         "font-family": [
@@ -24,7 +24,7 @@
         "font-style": []
       },
       "texts": [
-        "棚卸調査表"
+        "棚卸表(記入用)"
       ]
     },
     {
@@ -871,7 +871,7 @@
   "state": {
     "layout-guides": []
   },
-  "title": "在庫一覧表",
+  "title": "棚卸表(記入用)",
   "report": {
     "paper-type": "A4",
     "orientation": "portrait",
