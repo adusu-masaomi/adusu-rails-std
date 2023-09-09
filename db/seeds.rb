@@ -32,41 +32,55 @@ require "csv"
 #(株)アデュース　データ移行用(社内sys→render.com)
 
 
-#purchase_data
-CSV.foreach('db/purchase_data.csv') do |row|
-  PurchaseDatum.create do |p|
+#purchase_divisions
+CSV.foreach('db/purchase_divisions.csv') do |row|
+  PurchaseDivision.create do |p|
     p.id = row[0]
-    p.purchase_date = row[1]
-    p.slip_code = row[2]
+    p.purchase_division_name = row[1]
+    p.purchase_division_long_name = row[2]
+    p.created_at = row[3]
+    p.updated_at = row[4]
+  end
+end
+
+#purchase_headers
+CSV.foreach('db/purchase_headers.csv') do |row|
+  PurchaseHeader.create do |p|
+    p.id = row[0]
+    p.slip_code = row[1]
+    p.complete_flag = row[2]
+    p.created_at = row[3]
+    p.updated_at = row[4]
+  end
+end
+
+#purchase_order_data
+CSV.foreach('db/purchase_order_data.csv') do |row|
+  PurchaseOrderDatum.create do |p|
+    p.id = row[0]
+    p.purchase_order_code = row[1]
+    p.construction_datum_id = row[2]
+    p.supplier_master_id = row[3]
+    p.supplier_responsible_id = row[4]
+    p.alias_name = row[5]
+    p.purchase_order_date = row[6]
+    p.mail_sent_flag = row[7]
+    p.created_at = row[8]
+    p.updated_at = row[9]
+  end
+end
+
+#purchase_order_histories
+CSV.foreach('db/purchase_order_histories.csv') do |row|
+  PurchaseOrderHistory.create do |p|
+    p.id = row[0]
+    p.purchase_order_date = row[1]
+    p.supplier_master_id = row[2]
     p.purchase_order_datum_id = row[3]
-    p.construction_datum_id = row[4]
-    p.material_id = row[5]
-    p.material_code = row[6]
-    p.material_name = row[7]
-    p.maker_id = row[8]
-    p.maker_name = row[9]
-    p.quantity = row[10]
-    p.quantity2 = row[11]
-    p.unit_id = row[12]
-    p.purchase_unit_price = row[13]
-    p.purchase_unit_price2 = row[14]
-    p.purchase_amount = row[15]
-    p.list_price = row[16]
-    p.purchase_id = row[17]
-    p.division_id = row[18]
-    p.supplier_id = row[19]
-    p.inventory_division_id = row[20]
-    p.unit_price_not_update_flag = row[21]
-    p.outsourcing_invoice_flag = row[22]
-    p.outsourcing_payment_flag = row[23]
-    p.purchase_header_id = row[24]
-    p.working_end_date = row[25]
-    p.closing_date = row[26]
-    p.payment_due_date = row[27]
-    p.payment_date = row[28]
-    p.unpaid_payment_date = row[29]
-    p.notes = row[30]
-    p.created_at = row[31]
-    p.updated_at = row[32]
+    p.mail_sent_flag = row[4]
+    p.delivery_place_flag = row[5]
+    p.notes = row[6]
+    p.created_at = row[7]
+    p.updated_at = row[8]
   end
 end
