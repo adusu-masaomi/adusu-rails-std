@@ -32,81 +32,41 @@ require "csv"
 #(株)アデュース　データ移行用(社内sys→render.com)
 
 
-#material_masters
-CSV.foreach('db/material_masters.csv') do |row|
-  MaterialMaster.create do |m|
-    m.id = row[0]
-    m.material_code = row[1]
-    m.internal_code = row[2]
-    m.material_name = row[3]
-    m.maker_id = row[4]
-    m.unit_id = row[5]
-    m.list_price = row[6]
-    m.list_price_quotation = row[7]
-    m.standard_quantity = row[8]
-    m.standard_labor_productivity_unit = row[9]
-    m.standard_rate = row[10]
-    m.last_unit_price = row[11]
-    m.last_unit_price_update_at = row[12]
-    m.inventory_category_id = row[13]
-    m.material_category_id = row[14]
-    m.list_price_update_at = row[15]
-    m.notes = row[16]
-    m.created_at = row[17]
-    m.updated_at = row[18]
-  end
-end
-
-#orders
-CSV.foreach('db/orders.csv') do |row|
-  Order.create do |o|
-    o.id = row[0]
-    o.purchase_order_history_id = row[1]
-    o.material_id = row[2]
-    o.material_code = row[3]
-    o.material_name = row[4]
-    o.maker_id = row[5]
-    o.maker_name = row[6]
-    o.quantity = row[7]
-    o.unit_master_id = row[8]
-    o.list_price = row[9]
-    o.order_unit_price = row[10]
-    o.order_price = row[11]
-    o.material_category_id = row[12]
-    o.mail_sent_flag = row[13]
-    o.delivery_complete_flag = row[14]
-    o.sequential_id = row[15]
-    o.created_at = row[16]
-    o.updated_at = row[17]
-  end
-end
-
-#outsourcing_costs
-CSV.foreach('db/outsourcing_costs.csv') do |row|
-  OutsourcingCost.create do |o|
-    o.id = row[0]
-    o.invoice_code = row[1]
-    o.purchase_order_datum_id = row[2]
-    o.construction_datum_id = row[3]
-    o.staff_id = row[4]
-    o.supplier_master_id = row[5]
-    o.working_start_date = row[6]
-    o.working_end_date = row[7]
-    o.purchase_amount = row[8]
-    o.supplies_expense = row[9]
-    o.labor_cost = row[10]
-    o.misellaneous_expense = row[11]
-    o.execution_amount = row[12]
-    o.billing_amount = row[13]
-    o.purchase_order_amount = row[14]
-    o.closing_date = row[15]
-    o.source_bank_id = row[16]
-    o.payment_amount = row[17]
-    o.unpaid_amount = row[18]
-    o.payment_due_date = row[19]
-    o.payment_date = row[20]
-    o.unpaid_payment_date = row[21]
-    o.created_at = row[22]
-    o.updated_at = row[23]
+#purchase_data
+CSV.foreach('db/purchase_data.csv') do |row|
+  PurchaseDatum.create do |p|
+    p.id = row[0]
+    p.purchase_date = row[1]
+    p.slip_code = row[2]
+    p.purchase_order_datum_id = row[3]
+    p.construction_datum_id = row[4]
+    p.material_id = row[5]
+    p.material_code = row[6]
+    p.material_name = row[7]
+    p.maker_id = row[8]
+    p.maker_name = row[9]
+    p.quantity = row[10]
+    p.quantity2 = row[11]
+    p.unit_id = row[12]
+    p.purchase_unit_price = row[13]
+    p.purchase_unit_price2 = row[14]
+    p.purchase_amount = row[15]
+    p.list_price = row[16]
+    p.purchase_id = row[17]
+    p.division_id = row[18]
+    p.supplier_id = row[19]
+    p.inventory_division_id = row[20]
+    p.unit_price_not_update_flag = row[21]
+    p.outsourcing_invoice_flag = row[22]
+    p.outsourcing_payment_flag = row[23]
+    p.purchase_header_id = row[24]
+    p.working_end_date = row[25]
+    p.closing_date = row[26]
+    p.payment_due_date = row[27]
+    p.payment_date = row[28]
+    p.unpaid_payment_date = row[29]
+    p.notes = row[30]
+    p.created_at = row[31]
+    p.updated_at = row[32]
   end
 end
