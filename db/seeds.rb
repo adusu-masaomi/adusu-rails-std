@@ -32,55 +32,54 @@ require "csv"
 #(株)アデュース　データ移行用(社内sys→render.com)
 
 
-#purchase_divisions
-CSV.foreach('db/purchase_divisions.csv') do |row|
-  PurchaseDivision.create do |p|
-    p.id = row[0]
-    p.purchase_division_name = row[1]
-    p.purchase_division_long_name = row[2]
-    p.created_at = row[3]
-    p.updated_at = row[4]
-  end
-end
-
-#purchase_headers
-CSV.foreach('db/purchase_headers.csv') do |row|
-  PurchaseHeader.create do |p|
-    p.id = row[0]
-    p.slip_code = row[1]
-    p.complete_flag = row[2]
-    p.created_at = row[3]
-    p.updated_at = row[4]
-  end
-end
-
-#purchase_order_data
-CSV.foreach('db/purchase_order_data.csv') do |row|
-  PurchaseOrderDatum.create do |p|
-    p.id = row[0]
-    p.purchase_order_code = row[1]
-    p.construction_datum_id = row[2]
-    p.supplier_master_id = row[3]
-    p.supplier_responsible_id = row[4]
-    p.alias_name = row[5]
-    p.purchase_order_date = row[6]
-    p.mail_sent_flag = row[7]
-    p.created_at = row[8]
-    p.updated_at = row[9]
-  end
-end
-
-#purchase_order_histories
-CSV.foreach('db/purchase_order_histories.csv') do |row|
-  PurchaseOrderHistory.create do |p|
-    p.id = row[0]
-    p.purchase_order_date = row[1]
-    p.supplier_master_id = row[2]
-    p.purchase_order_datum_id = row[3]
-    p.mail_sent_flag = row[4]
-    p.delivery_place_flag = row[5]
-    p.notes = row[6]
+#purchase_unit_prices
+CSV.foreach('db/purchase_unit_prices.csv') do |row|
+  PurchaseUnitPrice.create do |p|
+    p.id = row[1], row[2]
+    p.supplier_id = row[1]
+    p.material_id = row[2]
+    p.supplier_material_code = row[3]
+    p.unit_price = row[4]
+    p.list_price = row[5]
+    p.unit_id = row[6]
     p.created_at = row[7]
     p.updated_at = row[8]
+  end
+end
+
+#quotation_detail_large_classifications
+CSV.foreach('db/quotation_detail_large_classifications.csv') do |row|
+  QuotationDetailLargeClassification.create do |q|
+    q.id = row[0]
+    q.quotation_header_id = row[1]
+    q.quotation_items_division_id = row[2]
+    q.working_large_item_id = row[3]
+    q.working_specific_middle_item_id = row[4]
+    q.working_large_item_name = row[5]
+    q.working_large_item_short_name = row[6]
+    q.working_middle_item_category_id = row[7]
+    q.working_middle_item_category_id_call = row[8]
+    q.working_middle_item_subcategory_id = row[9]
+    q.working_middle_item_subcategory_id_call = row[10]
+    q.working_large_specification = row[11]
+    q.line_number = row[12]
+    q.quantity = row[13]
+    q.execution_quantity = row[14]
+    q.working_unit_id = row[15]
+    q.working_unit_name = row[16]
+    q.working_unit_price = row[17]
+    q.quote_price = row[18]
+    q.execution_unit_price = row[19]
+    q.execution_price = row[20]
+    q.labor_productivity_unit = row[21]
+    q.labor_productivity_unit_total = row[22]
+    q.last_line_number = row[23]
+    q.remarks = row[24]
+    q.construction_type = row[25]
+    q.piping_wiring_flag = row[26]
+    q.equipment_mounting_flag = row[27]
+    q.labor_cost_flag = row[28]
+    q.created_at = row[29]
+    q.updated_at = row[30]
   end
 end
