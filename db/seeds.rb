@@ -31,92 +31,97 @@ require "csv"
 
 #(株)アデュース　データ移行用(社内sys→render.com)
 
-#affiliations
-CSV.foreach('db/affiliations.csv') do |row|
-  Affiliation.create do |a|
-    a.id = row[0]
-    a.affiliation_name = row[1]
-    a.created_at = row[2]
-    a.updated_at = row[3]
+
+#最新必須
+#construction_data
+CSV.foreach('db/construction_data.csv') do |row|
+  ConstructionDatum.create do |c|
+    c.id = row[0]
+    c.construction_code = row[1]
+    c.construction_name = row[2]
+    c.alias_name = row[3]
+    c.reception_date = row[4]
+    c.customer_id = row[5]
+    c.personnel = row[6]
+    c.site_id = row[7]
+    c.construction_start_date = row[8]
+    c.construction_end_date = row[9]
+    c.construction_period_start = row[10]
+    c.construction_period_end = row[11]
+    c.post = row[12]
+    c.address = row[13]
+    c.house_number = row[14]
+    c.address2 = row[15]
+    c.latitude = row[16]
+    c.longitude = row[17]
+    c.construction_detail = row[18]
+    c.attention_matter = row[19]
+    c.working_safety_matter_id = row[20]
+    c.working_safety_matter_name = row[21]
+    c.estimated_amount = row[22]
+    c.final_amount = row[23]
+    c.billing_due_date = row[24]
+    c.deposit_due_date = row[25]
+    c.deposit_date = row[26]
+    c.quotation_header_id = row[27]
+    c.delivery_slip_header_id = row[28]
+    c.billed_flag = row[29]
+    c.calculated_flag = row[30]
+    c.order_flag = row[31]
+    c.quotation_flag = row[32]
+    c.created_at = row[33]
+    c.updated_at = row[34]
   end
 end
 
-#business_holidays
-CSV.foreach('db/business_holidays.csv') do |row|
-  BusinessHoliday.create do |b|
-    b.id = row[0]
-    b.working_date = row[1]
-    b.holiday_flag = row[2]
-    b.created_at = row[3]
-    b.updated_at = row[4]
+#contacts
+CSV.foreach('db/contacts.csv') do |row|
+  Contact.create do |c|
+    c.id = row[0]
+    c.name = row[1]
+    c.search_character = row[2]
+    c.company_name = row[3]
+    c.affiliation = row[4]
+    c.department = row[5]
+    c.post = row[6]
+    c.address = row[7]
+    c.tel = row[8]
+    c.fax = row[9]
+    c.email = row[10]
+    c.url = row[11]
+    c.partner_division_id = row[12]
+    c.created_at = row[13]
+    c.updated_at = row[14]
   end
 end
 
 #最新必須
-#constants
-CSV.foreach('db/constants.csv') do |row|
-  Constant.create do |c|
+#customer_masters
+CSV.foreach('db/customer_masters.csv') do |row|
+  CustomerMaster.create do |c|
     c.id = row[0]
-    c.purchase_order_last_header_code = row[1]
-    c.created_at = row[2]
-    c.updated_at = row[3]
+    c.customer_name = row[1]
+    c.search_character = row[2]
+    c.post = row[3]
+    c.address = row[4]
+    c.house_number = row[5]
+    c.address2 = row[6]
+    c.tel_main = row[7]
+    c.fax_main = row[8]
+    c.email_main = row[9]
+    c.closing_date = row[10]
+    c.closing_date_division = row[11]
+    c.due_date = row[12]
+    c.due_date_division = row[13]
+    c.honorific_id = row[14]
+    c.responsible1 = row[15]
+    c.responsible2 = row[16]
+    c.contact_id = row[17]
+    c.payment_bank_id = row[18]
+    c.card_not_flag = row[19]
+    c.contractor_flag = row[20]
+    c.public_flag = row[21]
+    c.created_at = row[22]
+    c.updated_at = row[23]
   end
 end
-
-#移行無し
-#construction_attachments
-#CSV.foreach('db/construction_attachments.csv') do |row|
-#  ConstructionAttachment.create do |c|
-#    c.id = row[0]
-#    c.construction_datum_id = row[1]
-#    c.title = row[2]
-#    c.attachment = row[3]
-#    c.created_at = row[4]
-#    c.updated_at = row[5]
-#  end
-#end
-
-#最新必須
-#construction_costs
-CSV.foreach('db/construction_costs.csv') do |row|
-  ConstructionCost.create do |c|
-    c.id = row[0]
-    c.construction_datum_id = row[1]
-    c.purchase_amount = row[2]
-    c.supplies_expense = row[3]
-    c.labor_cost = row[4]
-    c.misellaneous_expense = row[5]
-    c.execution_amount = row[6]
-    c.constructing_amount = row[7]
-    c.purchase_order_amount = row[8]
-    c.final_return_division = row[9]
-    c.created_at = row[10]
-    c.updated_at = row[11]
-  end
-end
-
-#最新必須
-#construction_daily_reports
-CSV.foreach('db/construction_daily_reports.csv') do |row|
-  ConstructionDailyReport.create do |c|
-    c.id = row[0]
-    c.working_date = row[1]
-    c.construction_datum_id = row[2]
-    c.staff_id = row[3]
-    c.start_time_1 = row[4]
-    c.end_time_1 = row[5]
-    c.start_time_2 = row[6]
-    c.end_time_2 = row[7]
-    c.working_times = row[8]
-    c.man_month = row[9]
-    c.labor_cost = row[10]
-    c.working_details = row[11]
-    c.is_one_day_work = row[12]
-    c.is_no_break_time_1 = row[13]
-    c.is_no_break_time_2 = row[14]
-    c.is_no_break_time_3 = row[15]
-    c.created_at = row[16]
-    c.updated_at = row[17]
-  end
-end
-
