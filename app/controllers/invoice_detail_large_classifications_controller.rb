@@ -100,22 +100,25 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
           #官公庁・学校の判定
           get_public_flag
       
+          #ログイン中のUser確認(Standard)
+          #add230831
+          app_get_session_user
+      
           case @print_type
           when "1"
           #請求書
-            #report = InvoicePDF.create @invoice_detail_large_classifications
-            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
+            #report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
+            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type, @company_id)
           when "2"
           #請求書(横)
             report = InvoiceLandscapePDF.create @invoice_detail_large_classifications
           when "3"
           #請求書（印鑑有）
-            #report = InvoicePDF.create @invoice_detail_large_classifications
-            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
+            #report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
+            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type, @company_id)
           when "4"
           #請求書（印鑑有-旧様式）
-            #report = InvoicePDF.create @invoice_detail_large_classifications
-            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
+            report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type, @company_id)
           end 
 	      
           #現在時刻をセットする

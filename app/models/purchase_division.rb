@@ -7,7 +7,7 @@ class PurchaseDivision < ApplicationRecord
   has_many :PurchaseDatum
   
   #demo版対応
-  validate :purchase_division_count_must_be_within_limit, on: :create
+  #validate :purchase_division_count_must_be_within_limit, on: :create
   
     
   #demo版対応

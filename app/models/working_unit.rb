@@ -4,10 +4,12 @@ class WorkingUnit < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 10
 
-  validates :working_unit_name, presence: true
+  #seed用 del
+  #validates :working_unit_name, presence: true
+  #del end
   
   #demo版対応
-  validate :working_unit_count_must_be_within_limit, on: :create
+  #validate :working_unit_count_must_be_within_limit, on: :create
 
   #demo版対応
   def working_unit_count_must_be_within_limit

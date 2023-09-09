@@ -1,8 +1,11 @@
 class InvoiceDetailMiddleClassification < ApplicationRecord
-  belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
+  #belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
+  #belongs_to :InvoiceDetailLargeClassification, :foreign_key => "invoice_detail_large_classification_id"
+  #seed用!! 終わったら↑戻す
+  belongs_to :InvoiceHeader, optional: true, :foreign_key => "invoice_header_id"
+  belongs_to :InvoiceDetailLargeClassification,  optional: true, :foreign_key => "invoice_detail_large_classification_id"
+  #
   
-  belongs_to :InvoiceDetailLargeClassification, :foreign_key => "invoice_detail_large_classification_id"
-  #belongs_to :InvoiceLargeItem, :foreign_key => "invoice_detail_large_classification_id"
   belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #行挿入用

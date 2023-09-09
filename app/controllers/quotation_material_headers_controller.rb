@@ -861,6 +861,9 @@ class QuotationMaterialHeadersController < ApplicationController
   #見積依頼書・注文書の発行
   def set_purchase_order_and_estimate(format)
     
+    
+    #binding.pry
+    
     check = false
     mail_flag = false
     
@@ -929,6 +932,10 @@ class QuotationMaterialHeadersController < ApplicationController
         end
         #
         
+        #ログイン中のUser確認(Standard)
+        #add230831
+        app_get_session_user
+        
         if !mail_flag
           
           #標準版仕様---送信フラグをセット
@@ -943,10 +950,10 @@ class QuotationMaterialHeadersController < ApplicationController
           #
           
           format.pdf do
-            #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-            #report = PurchaseOrderAndEstimatePDF.create @quotation_material
+            #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+            #                                            @supplier, request_type, purchase_order_code, mail_flag)
             report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
-                                                        @supplier, request_type, purchase_order_code, mail_flag)
+                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id)
             
             # ブラウザでPDFを表示する
             # disposition: "inline" によりダウンロードではなく表示させている
@@ -963,10 +970,11 @@ class QuotationMaterialHeadersController < ApplicationController
           
           #$mail_flag = true
           #ＰＤＦを作成
-          #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-          #report = PurchaseOrderAndEstimatePDF.create @quotation_material
+          #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+          #                                            @supplier, request_type, purchase_order_code, mail_flag)
           report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
-                                                      @supplier, request_type, purchase_order_code, mail_flag)
+                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id)
+          
             
           # PDFファイルのバイナリデータを生成する
           #$attachment = report.generate

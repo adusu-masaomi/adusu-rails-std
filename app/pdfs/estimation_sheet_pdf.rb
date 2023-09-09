@@ -1,8 +1,8 @@
 class EstimationSheetPDF
     
   
-  #def self.create quotation_detail_large_classifications
-  def self.create(quotation_detail_large_classifications, print_type, sort_qm)
+  #def self.create(quotation_detail_large_classifications, print_type, sort_qm)
+  def self.create(quotation_detail_large_classifications, print_type, sort_qm, company_id)
   #見積書PDF発行
         
     #新元号対応 190401
@@ -18,10 +18,21 @@ class EstimationSheetPDF
       @history = true
     end 
   
-    #if $print_type == "1" || $print_type == "51"
-    #if @print_type == "1" || @print_type == "51"
-      #ハンコ無しVer
+    #add230831
+    #ここでUser別に帳票を切り分ける処理を行う。
+    
+    #add end
+      
+  
+    @is_company_with_pic = false
+    case company_id
+    when 1  #(株)アデュース
+      @is_company_with_pic = true
+      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_signed_pdf.tlf")
+    else
+      #ハンコ無しVer(通常標準版)
       @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_pdf.tlf")
+    end
     
     #else
     #  #押印付Ver(アデュース仕様)
@@ -76,42 +87,45 @@ class EstimationSheetPDF
     #
     
     #標準版仕様--会社情報の取得、印刷
+    if !@is_company_with_pic  #add230831
+      company = Company.first
     
-    company = Company.first
+      #会社名
+      @report.page.item(:company_name).value(company.name)
     
-    #会社名
-    @report.page.item(:company_name).value(company.name)
+      #代表者肩書
+      @report.page.item(:representative_title).value(company.representative_title)
+      #代表者名
+      @report.page.item(:representative_name).value(company.representative_name)
     
-    #代表者肩書
-    @report.page.item(:representative_title).value(company.representative_title)
-    #代表者名
-    @report.page.item(:representative_name).value(company.representative_name)
+      #郵便番号
+      @report.page.item(:post_company).value(company.post)
+      #住所１
+      @report.page.item(:address_company).value(company.address)
+      @report.page.item(:address2_company).value(company.address2)
+      #番地
+      #@report.page.item(:house_number).value(company.house_number)
     
-    #郵便番号
-    @report.page.item(:post_company).value(company.post)
-    #住所１
-    @report.page.item(:address_company).value(company.address)
-    @report.page.item(:address2_company).value(company.address2)
-    #番地
-    #@report.page.item(:house_number).value(company.house_number)
+      #TEL
+      if company.tel.present?
+        tel_str = "TEL:" + company.tel
+        @report.page.item(:tel).value(tel_str)
+      end
+      if company.fax.present?
+        fax_str = "FAX:" + company.fax
+        @report.page.item(:fax).value(fax_str)
+      end
     
-    #TEL
-    if company.tel.present?
-      tel_str = "TEL:" + company.tel
-      @report.page.item(:tel).value(tel_str)
-    end
-    if company.fax.present?
-      fax_str = "FAX:" + company.fax
-      @report.page.item(:fax).value(fax_str)
-    end
     
-    #請求書番号
-    if company.invoice_number.present?
-      invoice_str = "登録番号　" + company.invoice_number
-      @report.page.item(:invoice_number).value(invoice_str)
+      #請求書番号
+      if company.invoice_number.present?
+        invoice_str = "登録番号　" + company.invoice_number
+        @report.page.item(:invoice_number).value(invoice_str)
+      end
+    
     end
     #
-    
+        
     #
     
     #$quotation_detail_large_classifications.order(:line_number).each do |quotation_detail_large_classification| 

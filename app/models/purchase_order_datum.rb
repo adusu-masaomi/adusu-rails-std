@@ -8,7 +8,9 @@ class PurchaseOrderDatum < ApplicationRecord
   belongs_to :construction_datum, optional: true
   accepts_nested_attributes_for :construction_datum, update_only: true
     
-  belongs_to :supplier_master
+  #belongs_to :supplier_master
+  #seed用!! 終わったら↑戻す
+  belongs_to :supplier_master, optional: true
   accepts_nested_attributes_for :supplier_master, update_only: true
 
   #add210703
@@ -42,11 +44,15 @@ class PurchaseOrderDatum < ApplicationRecord
     
   #add210703
   #attr_accessor :supplier_responsible_email
-    
-  #validation
-  validates :purchase_order_code, presence: true, uniqueness: true
-  validate :check_supplier   #add210727
-    
+  
+  #seedのため、一旦validate解除!!! ---from  
+  
+  ##validation
+  #validates :purchase_order_code, presence: true, uniqueness: true
+  #validate :check_supplier   
+  
+  #seedのため、一旦validate解除!!! ---to
+  
   #demo版対応
   #ここはFaxで落ちるので、カット
   #validate :purchase_order_datum_count_must_be_within_limit, on: :create

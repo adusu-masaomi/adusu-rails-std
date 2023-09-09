@@ -6,7 +6,7 @@ class Staff < ApplicationRecord
   MAX_RECORD_COUNT = 11
 
   #demo版対応
-  validate :staff_count_must_be_within_limit, on: :create
+  #validate :staff_count_must_be_within_limit, on: :create
 
   #demo版対応
   def staff_count_must_be_within_limit

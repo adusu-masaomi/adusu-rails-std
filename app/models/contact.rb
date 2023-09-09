@@ -5,7 +5,7 @@ class Contact < ApplicationRecord
   MAX_RECORD_COUNT = 6
 
   #demo版対応
-  validate :contact_count_must_be_within_limit, on: :create
+  #validate :contact_count_must_be_within_limit, on: :create
  
   #demo版対応
   def contact_count_must_be_within_limit

@@ -58,9 +58,11 @@ class WorkingMiddleItem < ApplicationRecord
   attr_accessor :working_middle_item_id_select_hide
   attr_accessor :working_middle_item_short_name_select_hide
   ##
-   
+  
+  #seed用　del
   #validation 
-  validates :working_middle_item_name, presence: true
+  #validates :working_middle_item_name, presence: true
+  #del end
 
   #demo版対応
   #ひとまず保留

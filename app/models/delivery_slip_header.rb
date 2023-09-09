@@ -18,7 +18,7 @@ class DeliverySlipHeader < ApplicationRecord
   validates :delivery_slip_code, presence:true, uniqueness: true
 
   #demo版対応
-  validate :delivery_slip_header_count_must_be_within_limit, on: :create
+  #validate :delivery_slip_header_count_must_be_within_limit, on: :create
 
   #demo版対応
   def delivery_slip_header_count_must_be_within_limit
@@ -32,43 +32,40 @@ class DeliverySlipHeader < ApplicationRecord
   ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
   ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
   ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
+  
+  #seedのため、一旦validate解除!!! ---from
+  
+  #validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  ##「流通センター」などの地名も有るため、許可する。
+  #validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validate :check_fixed
+  ##住所に数値が混じっていた場合も禁止する
+  #validate  :address_regex
+  
+  #def address_regex
+  #  if address.match(/[0-9０-９]+$/)
+  #    errors.add :address, ADDRESS_ERROR_MESSAGE_4
+  #  end
+  #end
    
-  validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  #「流通センター」などの地名も有るため、許可する。
-  #validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-   
-  #add180817
-  validate :check_fixed
-   
-  #住所に数値が混じっていた場合も禁止する
-  validate  :address_regex
-  def address_regex
-    if address.match(/[0-9０-９]+$/)
-      errors.add :address, ADDRESS_ERROR_MESSAGE_4
-    end
-  end
-   
-  #add180817
-  def check_fixed
-    if fixed_flag == 1
-      errors.add(:delivery_slip_code, ": 確定済みです。変更したい場合は、" << 
-      "　　　　　　　　" << "「確定済み」のチェックを外してください。")
-    end
-  end
+  #def check_fixed
+  #  if fixed_flag == 1
+  #    errors.add(:delivery_slip_code, ": 確定済みです。変更したい場合は、" << 
+  #    "　　　　　　　　" << "「確定済み」のチェックを外してください。")
+  #  end
+  #end
    
   #見積書用（工事場所）
-  validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  #「流通センター」などの地名も有るため、許可する。
-  #validates :construction_place, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :construction_place, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-   
-  #住所に数値が混じっていた場合も禁止する
-  validate  :construction_place_regex
+  #validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  ##「流通センター」などの地名も有るため、許可する。
+  #validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  ##住所に数値が混じっていた場合も禁止する
+  #validate  :construction_place_regex
+  
+  #seedのため、一旦validate解除!!! ---to
+  
   def construction_place_regex
     if construction_place.match(/[0-9０-９]+$/)
      errors.add :construction_place, ADDRESS_ERROR_MESSAGE_4

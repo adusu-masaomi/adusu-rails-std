@@ -14,13 +14,14 @@ class PurchaseUnitPrice < ApplicationRecord
   #has_many :unit_masters, :foreign_key => "unit_id"
   belongs_to :UnitMaster, optional: true, :foreign_key => "unit_id"
   
-  #validates :supplier_id, uniqueness: {: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
-  validates :supplier_id, presence: true, uniqueness: {message: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
-  validates :material_id, presence: true
-  validates :unit_id, presence: true
+  #seedのため、一旦validate解除!!! ---from  
+  #validates :supplier_id, presence: true, uniqueness: {message: ",資材コードが同じ組み合わせのレコードが既に存在します。", scope: [:material_id]}
+  #validates :material_id, presence: true
+  #validates :unit_id, presence: true
+  #seedのため、一旦validate解除!!! ---to
   
   #demo版対応
-  validate :purchase_unit_price_count_must_be_within_limit, on: :create
+  #validate :purchase_unit_price_count_must_be_within_limit, on: :create
 
   #demo版対応
   def purchase_unit_price_count_must_be_within_limit

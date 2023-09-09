@@ -56,22 +56,24 @@ class ConstructionDailyReport < ApplicationRecord
   attr_accessor :overtime_midnight_end_time
   #
   
-  #validation
-  validates :working_date, presence: true
-  validates :staff_id, presence: true
-  validates :working_details, presence: true
+  #seedのため、一旦validate解除!!! ---from
   
-  #validates :construction_datum_id, presence: true
+  #validation
+  #validates :working_date, presence: true
+  #validates :staff_id, presence: true
+  #validates :working_details, presence: true
+  
   # 数値であり、0以上の場合有効
-  validates :working_times, numericality: {
-            only_integer: true, greater_than_or_equal_to: 0
-          }
+  #validates :working_times, numericality: {only_integer: true, greater_than_or_equal_to: 0}
   
   #作業日＆時間の重複登録防止
-  validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
+  #validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
+  
+  #seedのため、一旦validate解除!!! ---to
+  
   
   #demo版対応
-  validate :construction_daily_report_count_must_be_within_limit, on: :create
+  #validate :construction_daily_report_count_must_be_within_limit, on: :create
   
   #入力チェック(日またがりで計算がおかしくなるのを防止)
   # ↑ 計算異常を修正したので下記は未使用にした

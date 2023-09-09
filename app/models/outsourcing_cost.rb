@@ -13,7 +13,7 @@ class OutsourcingCost < ApplicationRecord
   #支払日入力有で、支払金額が入力されていなければ警告する
   validate :check_payment_amount
   #demo版対応
-  validate :outsourcing_cost_count_must_be_within_limit, on: :create
+  #validate :outsourcing_cost_count_must_be_within_limit, on: :create
   
   #demo版対応
   def outsourcing_cost_count_must_be_within_limit

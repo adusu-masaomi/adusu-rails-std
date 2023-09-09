@@ -4,7 +4,7 @@ class WorkingSafetyMatter < ApplicationRecord
   MAX_RECORD_COUNT = 10
 
   #demo版対応
-  validate :working_safety_matter_count_must_be_within_limit, on: :create
+  #validate :working_safety_matter_count_must_be_within_limit, on: :create
 
   #demo版対応
   def working_safety_matter_count_must_be_within_limit

@@ -2,9 +2,8 @@ class DeliverySlipPDF
     
   
   #def self.create delivery_slip	
-  #upd170626
-  #def self.create delivery_slip_detail_large_classifications
-  def self.create(delivery_slip_detail_large_classifications, print_type, sort_dm)
+  #def self.create(delivery_slip_detail_large_classifications, print_type, sort_dm)
+  def self.create(delivery_slip_detail_large_classifications, print_type, sort_dm, company_id)
   #納品書PDF発行
     #新元号対応
     require "date"
@@ -12,22 +11,27 @@ class DeliverySlipPDF
     
     @sort_dm = sort_dm  #add230426
     
-    # tlfファイルを読み込む
-    #if $print_type == "1"
-    if print_type == "1"
+    #if print_type == "1"
+     
+     
+    @is_company_with_pic = false
+    case company_id
+    when 1  #(株)アデュース用のレポート
+      @is_company_with_pic = true
+      #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_signed_pdf.tlf")
+      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
+    else
+      #通常のユーザーのレポート
+      
       #ハンコ無Ver
       @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_pdf.tlf")
-    else
-      #ハンコ有Ver
-      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
-         
-      #if !$public_flag
-      #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
-      #else
-      #  #官公庁・学校の場合で押印が異なる(upd221105)
-      #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_cs_pdf.tlf")
-      #end
     end
+    
+    #else
+    #  #ハンコ有Ver
+    #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
+    #     
+    #end
 	   
     #1ページ目を開始
     @report.start_new_page
@@ -35,7 +39,9 @@ class DeliverySlipPDF
     
     #振込先等、会社情報の表示
     #(標準版仕様)
-    set_company_info
+    if !@is_company_with_pic
+      set_company_info
+    end
   
     #$delivery_slip_detail_large_classifications.order(:line_number).each do |delivery_slip_detail_large_classification|
     #upd170626

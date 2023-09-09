@@ -2,9 +2,8 @@ class InvoicePDF
     
   
   #def self.create invoice
-  #upd170626
-  #def self.create invoice_detail_large_classifications
-  def self.create(invoice_detail_large_classifications, print_type)
+  #def self.create(invoice_detail_large_classifications, print_type)
+  def self.create(invoice_detail_large_classifications, print_type, company_id)
   #請求書PDF発行
  
     #新元号対応 190401
@@ -12,31 +11,45 @@ class InvoicePDF
     d_heisei_limit = Date.parse("2019/5/1")
  
     # tlfファイルを読み込む
-    #case $print_type
-    case print_type
-    when "1"
-    #請求書(印鑑なし)
+    
+    #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_pdf.tlf")
+    
+    @is_company_with_pic = false
+    case company_id
+    when 1  #(株)アデュース独自仕様
+      @is_company_with_pic = true
+      #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_pdf.tlf")
+      if print_type == "1"
+        @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_adusu1_pdf.tlf")
+      else
+        #ハンコ無しVer
+        @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_adusu2_pdf.tlf")
+      end
+    else
+      #ハンコ無しVer(通常標準版)
+      #print_type --1,3で2種類切替も可能
       @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_pdf.tlf")
-    #else
-    when "3"
-    #請求書（印鑑有）--従来様式
-      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_pdf.tlf")
-         
-      #if !$public_flag
-      #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_pdf.tlf")
-      #else
-      #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_cs_pdf.tlf")
-      #end
-    when "4"
-      #請求書（印鑑有）--新様式--(210522-殆ど使わない)
-      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_new_pdf.tlf")
     end
+    
+    #case print_type
+    #when "1"
+    ##請求書(印鑑なし)
+    #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_pdf.tlf")
+    #when "3"
+    ##請求書（印鑑有）--従来様式
+    #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_pdf.tlf")
+    #when "4"
+    #  #請求書（印鑑有）--新様式--(210522-殆ど使わない)
+    #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_signed_new_pdf.tlf")
+    #end
        
     # 1ページ目を開始
     @report.start_new_page
 	  
     #見出--標準版仕様
-    set_company_info
+    if !@is_company_with_pic
+      set_company_info
+    end
     #
   
     @flag = nil

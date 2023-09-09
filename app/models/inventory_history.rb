@@ -16,7 +16,7 @@ class InventoryHistory < ApplicationRecord
   validates :supplier_master_id, presence: true
   
   #demo版対応
-  validate :inventory_history_count_must_be_within_limit, on: :create
+  #validate :inventory_history_count_must_be_within_limit, on: :create
 
   #demo版対応
   def inventory_history_count_must_be_within_limit

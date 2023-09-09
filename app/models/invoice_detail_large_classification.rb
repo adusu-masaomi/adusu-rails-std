@@ -1,5 +1,6 @@
 class InvoiceDetailLargeClassification < ApplicationRecord
-  belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
+  #belongs_to :InvoiceHeader, :foreign_key => "invoice_header_id"
+  belongs_to :InvoiceHeader, optional: true, :foreign_key => "invoice_header_id" #seed用!! 終わったら↑戻す
   belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   
   #demo版対応

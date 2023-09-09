@@ -5,7 +5,7 @@ class WorkingCategory < ApplicationRecord
   MAX_RECORD_COUNT = 10
 
   #demo版対応
-  validate :working_category_count_must_be_within_limit, on: :create
+  #validate :working_category_count_must_be_within_limit, on: :create
 
   #demo版対応
   def working_category_count_must_be_within_limit

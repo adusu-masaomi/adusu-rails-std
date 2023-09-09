@@ -117,19 +117,23 @@ class QuotationDetailLargeClassificationsController < ApplicationController
             sort_qm = ""
           end
           
+          #ログイン中のUser確認(Standard)
+          #add230831
+          app_get_session_user
+          
           case @print_type
           when "1"
             #見積書
             #report = EstimationSheetPDF.create @quotation_detail_large_classifications
-            report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
+            report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm, @company_id)
           when "2"
             #見積書(横)
             #report = EstimationSheetLandscapePDF.create @quotation_detail_large_classifications
             report = EstimationSheetLandscapePDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
           when "3", "4"
             #見積書(印あり）
-            #report = EstimationSheetPDF.create @quotation_detail_large_classifications
-            report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
+            #report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
+            report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm, @company_id)
           end 
          
           #現在時刻をセットする

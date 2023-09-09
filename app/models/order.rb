@@ -6,7 +6,11 @@ class Order < ApplicationRecord
   
   belongs_to :material_master, optional: true, :foreign_key => "material_id"
   belongs_to :unit_master, optional: true
-  belongs_to :purchase_order_history
+  #belongs_to :purchase_order_history
+  #seed用!! 終わったら↑戻す
+  belongs_to :purchase_order_history, optional: true
+  #
+  
   belongs_to :purchase_order_datum, optional: true
   
   belongs_to :maker_master,optional: true, :foreign_key => "maker_id"

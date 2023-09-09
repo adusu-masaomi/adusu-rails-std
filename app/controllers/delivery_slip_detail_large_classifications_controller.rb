@@ -114,12 +114,19 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
             sort_dm = ""
           end
           
+          #ログイン中のUser確認(Standard)
+          #add230831
+          app_get_session_user
+          
 	        case @print_type
           when "1"
             #納品書
-            #report = DeliverySlipPDF.create @delivery_slip_detail_large_classifications
+            #report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
+            #                               sort_dm)
+            #標準版対応
             report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
-                                           sort_dm)
+                                           sort_dm, @company_id)
+            
           when "2"
             #納品書(横)
             #report = DeliverySlipLandscapePDF.create @delivery_slip_detail_large_classifications
@@ -127,9 +134,11 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
                                                      sort_dm)
           when "3"
             #納品書（印付）
-            #report = DeliverySlipPDF.create @delivery_slip_detail_large_classifications
+            #report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
+            #                                sort_dm)
+            #標準版対応
             report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
-                                            sort_dm)
+                                            sort_dm, @company_id)
           end 
 	         
           #現在時刻をセットする

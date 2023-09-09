@@ -991,38 +991,44 @@ class PurchaseOrderHistoriesController < ApplicationController
       
       #if $order_parameters.present?  #add230719
       
-        if params[:purchase_order_history][:sent_flag] != "1" 
-          format.pdf do
-            report = PurchaseOrderPDF.create @purchase_order
-            #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-            # ブラウザでPDFを表示する
-            # disposition: "inline" によりダウンロードではなく表示させている
-            send_data(
-            report.generate,
-            filename:  "purchase_order.pdf",
-            type:        "application/pdf",
-            disposition: "inline")
-          end
-        else
-          #メール送信し添付する場合
-          $mail_flag = 1
-          #PDFを作成
+      #ログイン中のUser確認(Standard)
+      #add230831
+      app_get_session_user
+      
+      if params[:purchase_order_history][:sent_flag] != "1" 
+        format.pdf do
+          #report = PurchaseOrderPDF.create @purchase_order
+          report = PurchaseOrderPDF.create(@purchase_order, @company_id)
+          
           #report = PurchaseOrderAndEstimatePDF.create @purchase_order
-          report = PurchaseOrderPDF.create @purchase_order
-
-          # PDFファイルのバイナリデータを生成する
-          #$attachment = report.generate
-          #upd230509
-          @attachment = report.generate
-
-          # ダウンロードは必要なし。又ここでsend_dataするとredirectができない為、抹消
-          # send_data(
-          # @file,
-          # filename:  "purchase_order.pdf",
-          # type:        "application/pdf",
-          # disposition: "attachment")
-
+          # ブラウザでPDFを表示する
+          # disposition: "inline" によりダウンロードではなく表示させている
+          send_data(
+          report.generate,
+          filename:  "purchase_order.pdf",
+          type:        "application/pdf",
+          disposition: "inline")
         end
+      else
+        #メール送信し添付する場合
+        $mail_flag = 1
+        #PDFを作成
+        #report = PurchaseOrderPDF.create @purchase_order
+        report = PurchaseOrderPDF.create(@purchase_order, @company_id)
+        
+        # PDFファイルのバイナリデータを生成する
+        #$attachment = report.generate
+        #upd230509
+        @attachment = report.generate
+
+        # ダウンロードは必要なし。又ここでsend_dataするとredirectができない為、抹消
+        # send_data(
+        # @file,
+        # filename:  "purchase_order.pdf",
+        # type:        "application/pdf",
+        # disposition: "attachment")
+      end
+      
       #pdf
       #else
       #  format.any

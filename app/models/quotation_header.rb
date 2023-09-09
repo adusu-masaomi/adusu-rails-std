@@ -4,13 +4,12 @@ class QuotationHeader < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 10
 
-  belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
-   
-  #not work well..
-  #belongs_to :construction_datum, :foreign_key => "construction_datum_id"
-  #accepts_nested_attributes_for :construction_datum, update_only: true    #add190131
-   
-  belongs_to :customer_master, :foreign_key => "customer_id"
+  #belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
+  #belongs_to :customer_master, :foreign_key => "customer_id"
+  #seed対応
+  belongs_to :ConstructionDatum, optional: true, :foreign_key => "construction_datum_id"
+  belongs_to :customer_master, optional: true, :foreign_key => "customer_id"
+  
   accepts_nested_attributes_for :customer_master, update_only: true
    
   attr_accessor :customer_id_hide
@@ -19,11 +18,9 @@ class QuotationHeader < ApplicationRecord
   attr_accessor :invoice_period_start_date_hide
   attr_accessor :invoice_period_end_date_hide
    
-  #見積書コードはユニークのチェックのみ。
-  validates :quotation_code, presence:true, uniqueness: true
-
+ 
   #demo版対応
-  validate :quotation_header_count_must_be_within_limit, on: :create
+  #validate :quotation_header_count_must_be_within_limit, on: :create
 
   #demo版対応
   def quotation_header_count_must_be_within_limit
@@ -37,19 +34,19 @@ class QuotationHeader < ApplicationRecord
   ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
   ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
   ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
-   
-  validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  #「流通センター」などの地名も有るため、許可する。
-  #validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-   
-  #add180803
-  validate :check_fixed
-   
-  #住所に数値が混じっていた場合も禁止する
-  validate  :address_regex
+  
+  #seedのためvalidation解除
+  #見積書コードはユニークのチェックのみ。
+  #validates :quotation_code, presence:true, uniqueness: true
+  #validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  ##「流通センター」などの地名も有るため、許可する。
+  ##validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validate :check_fixed
+  ##住所に数値が混じっていた場合も禁止する
+  #validate  :address_regex
+    
   def address_regex
     if address.match(/[0-9０-９]+$/)
       errors.add :address, ADDRESS_ERROR_MESSAGE_4
@@ -63,17 +60,17 @@ class QuotationHeader < ApplicationRecord
       "　　　　　　　　" << "「確定済み」のチェックを外してください。")
     end
   end
-   
-  #見積書用（工事場所）
-  validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  #「流通センター」などの地名も有るため、許可する。
-  #validates :construction_place, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :construction_place, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-   
-  #住所に数値が混じっていた場合も禁止する
-  validate  :construction_place_regex
+  
+  #seedのためvalidation解除
+  ##見積書用（工事場所）
+  #validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  ##「流通センター」などの地名も有るため、許可する。
+  ##validates :construction_place, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  ##住所に数値が混じっていた場合も禁止する
+  #validate  :construction_place_regex
+  
   def construction_place_regex
     if construction_place.match(/[0-9０-９]+$/)
       errors.add :construction_place, ADDRESS_ERROR_MESSAGE_4

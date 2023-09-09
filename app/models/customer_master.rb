@@ -30,7 +30,7 @@ class CustomerMaster < ApplicationRecord
   validates :due_date, presence: true, numericality: :integer
 
   #demo版対応
-  validate :customer_master_count_must_be_within_limit, on: :create
+  #validate :customer_master_count_must_be_within_limit, on: :create
     
   ##add180123
   #住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)

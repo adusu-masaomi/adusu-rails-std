@@ -32,6 +32,10 @@
 <%= link_to "　　請求書PDF　　",
             invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "1", format: "pdf"),
             :class => 'btn btn-indigo500_ftg keep-disp' , :target=>["_blank"] %>
+<!-- (株)アデュース仕様 ハンコ無しVer -->
+<%= link_to "　　請求書(２)PDF　　",
+            invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "3", format: "pdf"),
+            :class => 'btn btn-yellow200_ftg keep-disp' , :target=>["_blank"] %>
 <!--
 <%= link_to "請求書(提出／印付)PDF",
             invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "3", format: "pdf"),

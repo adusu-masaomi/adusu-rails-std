@@ -365,6 +365,22 @@ class ApplicationController < ActionController::Base
   end
   ##
   
+  #ログイン中のUser取得(standard)
+  def app_get_session_user
+    #ここでUser別に帳票を切り分ける処理を行う。
+    user = User.where("id = ?" , session[:user_id]).first
+    @company_id = 0
+    
+    if user.present?
+      user_name = user.name
+      case user_name
+      #アデュースの場合
+      when "adusu", "masami"
+        @company_id = 1
+      end
+    end
+  end
+  
   
   #元号の設定(改定時はここを変更する)
   $gengo_name = "平成"      #平成の場合

@@ -1,5 +1,7 @@
 class QuotationDetailLargeClassification < ApplicationRecord
-  belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
+  #belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
+  #seed対応
+  belongs_to :QuotationHeader, optional: true, :foreign_key => "quotation_header_id"
   belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   has_many :quotation_detail_middle_classifications
 

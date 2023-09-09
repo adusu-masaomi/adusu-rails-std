@@ -6,7 +6,7 @@ class Site < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
   #demo版対応
-  validate :site_count_must_be_within_limit, on: :create
+  #validate :site_count_must_be_within_limit, on: :create
 
   #demo版対応
   def site_count_must_be_within_limit

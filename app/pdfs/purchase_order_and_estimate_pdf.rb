@@ -7,7 +7,9 @@ class PurchaseOrderAndEstimatePDF
   
   #def self.create purchase_order_and_estimate
   #def self.create purchase_order
-  def self.create(quotation_material_header, detail_parameters, supplier, request_type, purchase_order_code, mail_flag)
+  #def self.create(quotation_material_header, detail_parameters, supplier, request_type, purchase_order_code, mail_flag)
+  def self.create(quotation_material_header, detail_parameters, supplier, request_type, purchase_order_code, 
+                  mail_flag, company_id)
   #注文書PDF発行
     @quotation_material_header = quotation_material_header
     @supplier = supplier
@@ -17,7 +19,18 @@ class PurchaseOrderAndEstimatePDF
     @d_heisei_limit = Date.parse("2019/5/1")
   
     # tlfファイルを読み込む
-    report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_order_and_estimate_pdf.tlf")
+    @is_company_with_pic = false
+    case company_id
+    when 1  #(株)アデュース
+      @is_company_with_pic = true
+      report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_order_and_estimate_adusu_pdf.tlf")
+    else
+      #ハンコ無しVer(通常標準版)
+      report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_order_and_estimate_pdf.tlf")
+    end
+  
+    # tlfファイルを読み込む
+    #report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_order_and_estimate_pdf.tlf")
     
 
     # 総ページ数
@@ -126,44 +139,45 @@ class PurchaseOrderAndEstimatePDF
     
     ##
     #標準仕様--会社情報
-    company = Company.first
-    if company.present?
-      #会社名
-      report.page.item(:company_name).value(company.name)
-      #郵便番号
-      report.page.item(:company_post).value(company.post)
-      #住所
-      address = ""
-      address += company.address
-      if company.house_number.present?
-        address += company.house_number
+    if !@is_company_with_pic
+      company = Company.first
+      if company.present?
+        #会社名
+        report.page.item(:company_name).value(company.name)
+        #郵便番号
+        report.page.item(:company_post).value(company.post)
+        #住所
+        address = ""
+        address += company.address
+        if company.house_number.present?
+          address += company.house_number
+        end
+        if company.address2.present?
+          address += company.address2
+        end
+        report.page.item(:company_address).value(address)
+        #
+        #tel
+        if company.tel.present?
+          tel = "TEL:" + company.tel
+          report.page.item(:company_tel).value(tel)
+        end
+        #fax
+        if company.fax.present?
+          fax = "FAX:" + company.fax
+          report.page.item(:company_fax).value(fax)
+        end
+        #email
+        if company.email.present?
+          email = "E-Mail:" + company.email
+          report.page.item(:company_email).value(email)
+        end
+        #担当
+        if company.responsible_order.present?
+          responsible = "担当:" + company.responsible_order
+          report.page.item(:company_responsible_order).value(responsible)
+        end
       end
-       if company.address2.present?
-        address += company.address2
-      end
-      report.page.item(:company_address).value(address)
-      #
-      #tel
-      if company.tel.present?
-        tel = "TEL:" + company.tel
-        report.page.item(:company_tel).value(tel)
-      end
-      #fax
-      if company.fax.present?
-        fax = "FAX:" + company.fax
-        report.page.item(:company_fax).value(fax)
-      end
-      #email
-      if company.email.present?
-        email = "E-Mail:" + company.email
-        report.page.item(:company_email).value(email)
-      end
-      #担当
-      if company.responsible_order.present?
-        responsible = "担当:" + company.responsible_order
-        report.page.item(:company_responsible_order).value(responsible)
-      end
-      
     end
     ##
     
