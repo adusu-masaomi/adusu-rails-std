@@ -161,8 +161,11 @@
         <% else %>
 		  <td align="right"><%= number_to_currency(invoice_header.billing_amount,  precision: 0) %></td>
 		<% end %>
-        <!--<td align="right"><%= number_to_currency(invoice_header.execution_amount,  precision: 0) %></td>-->
-        <td align="right"><%= number_to_currency(invoice_header.deposit_amount,  precision: 0) %></td>
+        <% if invoice_header.deposit_amount.present? %>
+          <td align="right"><%= number_to_currency(invoice_header.deposit_amount,  precision: 0) %></td>
+        <% else %>
+          <td></td>
+        <% end %>
         <% if invoice_header.payment_method_id.present? %>
           <td align="center"><%= InvoiceHeader.payment_method[invoice_header.payment_method_id][0] %></td>
         <% else %>
