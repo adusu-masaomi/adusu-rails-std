@@ -5593,3 +5593,162 @@ use the `skip_pipeline: true` option.
 Completed 200 OK in 1005ms (Views: 980.3ms | ActiveRecord: 18.3ms | Allocations: 937686)
 
 
+Started GET "/system/index" for ::1 at 2023-09-11 16:24:53 +0900
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SystemController#index as HTML
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering system/index.html.erb within layouts/application
+  Rendered system/_logged_in.html.erb (Duration: 1.0ms | Allocations: 328)
+  Rendered system/index.html.erb within layouts/application (Duration: 7.2ms | Allocations: 1617)
+DEPRECATION WARNING: The asset "apple-touch-icon-144x144-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-114x114-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-72x72-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "favicon.ico" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+  Rendered layout layouts/application.html.erb (Duration: 4624.6ms | Allocations: 2084692)
+Completed 200 OK in 4702ms (Views: 4644.9ms | ActiveRecord: 7.3ms | Allocations: 2100387)
+
+
+Started GET "/construction_daily_reports" for ::1 at 2023-09-11 16:25:01 +0900
+Processing by ConstructionDailyReportsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering construction_daily_reports/index.html.erb within layouts/application
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT COUNT(*) FROM (SELECT 1 AS one FROM "construction_daily_reports" LIMIT $1 OFFSET $2) subquery_for_count[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/construction_daily_reports/index.html.erb:8
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "construction_daily_reports"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:8
+  [1m[36mConstructionDatum Load (1.0ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:14:in `map'
+  [1m[36mStaff Load (1.2ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:18
+  [1m[36mCACHE Staff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:20:in `map'
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT SUM("construction_daily_reports"."labor_cost") FROM "construction_daily_reports" LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/models/construction_daily_report.rb:110:in `sumprice'
+  [1m[36mConstructionDailyReport Load (0.9ms)[0m  [1m[34mSELECT "construction_daily_reports".* FROM "construction_daily_reports" ORDER BY id desc LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/construction_daily_reports/index.html.erb:108
+  [1m[36mConstructionDatum Load (0.5ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:117
+  [1m[36mCACHE Staff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:125
+  Rendered construction_daily_reports/index.html.erb within layouts/application (Duration: 209.3ms | Allocations: 97537)
+  Rendered layout layouts/application.html.erb (Duration: 211.0ms | Allocations: 98022)
+Completed 500 Internal Server Error in 298ms (ActiveRecord: 17.0ms | Allocations: 112594)
+
+
+  
+ActionView::Template::Error (undefined method `staff' for #<ConstructionDailyReport id: 4, working_date: "2023-07-25", construction_datum_id: 3, staff_id: 4, start_time_1: "2000-01-01 08:00:00.000000000 +0900", end_time_1: "2000-01-01 16:00:00.000000000 +0900", start_time_2: "2000-01-01 00:00:00.000000000 +0900", end_time_2: "2000-01-01 00:00:00.000000000 +0900", working_times: 21600, man_month: 0.8e0, labor_cost: 10400, working_details: "打合せ", is_one_day_work: 0, is_no_break_time_1: 0, is_no_break_time_2: 0, is_no_break_time_3: 0, created_at: "2023-07-01 17:58:28.230935000 +0900", updated_at: "2023-07-01 17:58:28.230935000 +0900">
+Did you mean?  Staff
+               Staff=):
+    123: 		<!--<% end %> -->
+    124: 		
+    125:         <!--<td><%= @staff[(construction_daily_report.staff_id)-1].staff_name %></td>-->
+    126:         <td><%= construction_daily_report.staff.staff_name %></td>
+    127:         <!--<td><%= construction_daily_report.start_time_1.to_s(:start_time_1) %></td>-->
+    128:         <td><%= construction_daily_report.start_time_1.strftime("%H:%M") %></td>
+    129:         <td><%= construction_daily_report.end_time_1.strftime("%H:%M") %></td>
+  
+app/views/construction_daily_reports/index.html.erb:126
+app/views/construction_daily_reports/index.html.erb:108
+Started GET "/construction_daily_reports" for ::1 at 2023-09-11 16:27:51 +0900
+Processing by ConstructionDailyReportsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering construction_daily_reports/index.html.erb within layouts/application
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM (SELECT 1 AS one FROM "construction_daily_reports" LIMIT $1 OFFSET $2) subquery_for_count[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/construction_daily_reports/index.html.erb:8
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "construction_daily_reports"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:8
+  [1m[36mConstructionDatum Load (0.5ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:14:in `map'
+  [1m[36mStaff Load (0.8ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:18
+  [1m[36mCACHE Staff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:20:in `map'
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT SUM("construction_daily_reports"."labor_cost") FROM "construction_daily_reports" LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/models/construction_daily_report.rb:110:in `sumprice'
+  [1m[36mConstructionDailyReport Load (0.6ms)[0m  [1m[34mSELECT "construction_daily_reports".* FROM "construction_daily_reports" ORDER BY id desc LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/construction_daily_reports/index.html.erb:108
+  [1m[36mConstructionDatum Load (0.5ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:117
+  [1m[36mCACHE Staff Load (0.0ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs"[0m
+  ↳ app/views/construction_daily_reports/index.html.erb:125
+  [1m[36mStaff Load (0.4ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:126
+  [1m[36mCACHE ConstructionDatum Load (0.0ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:117
+  [1m[36mStaff Load (0.4ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:126
+  [1m[36mConstructionDatum Load (0.6ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:117
+  [1m[36mStaff Load (0.4ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:126
+  [1m[36mCACHE ConstructionDatum Load (0.0ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:117
+  [1m[36mStaff Load (0.6ms)[0m  [1m[34mSELECT "staffs".* FROM "staffs" WHERE "staffs"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/construction_daily_reports/index.html.erb:126
+  Rendered construction_daily_reports/index.html.erb within layouts/application (Duration: 78.5ms | Allocations: 37289)
+DEPRECATION WARNING: The asset "apple-touch-icon-144x144-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-114x114-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-72x72-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "favicon.ico" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+  Rendered layout layouts/application.html.erb (Duration: 857.4ms | Allocations: 871123)
+Completed 200 OK in 870ms (Views: 858.6ms | ActiveRecord: 6.6ms | Allocations: 875676)
+
+
