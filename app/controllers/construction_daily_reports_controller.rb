@@ -237,6 +237,9 @@ class ConstructionDailyReportsController < ApplicationController
     #標準仕様--各種作業時間を取得
     get_working_time
     
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     #初期値をセット(show画面からの遷移時のみ)
     #@@new_flag = params[:new_flag]
     #if @@new_flag == "1"
@@ -273,6 +276,10 @@ class ConstructionDailyReportsController < ApplicationController
   
     #標準仕様--各種作業時間を取得
     get_working_time
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
   end
   
     # POST /construction_daily_reports

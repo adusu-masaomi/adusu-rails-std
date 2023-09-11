@@ -91,10 +91,15 @@ class ConstructionCostsController < ApplicationController
   def new
     @construction_cost = ConstructionCost.new
     @construction_cost.build_construction_datum
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /construction_costs/1/edit
   def edit
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /construction_costs

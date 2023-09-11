@@ -111,6 +111,9 @@
   <!--深夜残業時間-->
   <%= f.hidden_field :overtime_midnight_start_time, :value => @overtime_midnight_start_time, id:"overtime_midnight_start_time" %>
   <%= f.hidden_field :overtime_midnight_end_time, :value => @overtime_midnight_end_time, id:"overtime_midnight_end_time" %>
+  
+  <!--会社ID-->
+  <%= f.hidden_field :company_id, :value => @company_id, id:"company_id" %>
   <!---->
   
   <!--コントローラ側に画面遷移用のパラメータを渡すためのタグ。-->
@@ -584,6 +587,11 @@
   //みなし勤務判定
   function calcRegardTimeAs(f)
   {
+    debugger;
+    //標準版仕様---会社ID取得
+    company_id = document.getElementById("company_id").value
+    //
+    
     if (document.getElementById("regard_one_day").checked == true) {
       //kinmu_time = 27000;
       kinmu_time = working_hour;
@@ -603,10 +611,19 @@
     //debugger;
     
     //if (end_time > 64800) {
-    if (end_time > working_time_end_time) {
-      //var add_time = end_time - 64800;
-      var add_time = end_time - working_time_end_time;
-      kinmu_time += add_time
+    
+    if (company_id != "1"){
+      if (end_time > working_time_end_time) {
+        //var add_time = end_time - 64800;
+        var add_time = end_time - working_time_end_time;
+        kinmu_time += add_time
+      }
+    }else{
+      //(株)アデュース仕様(定時終了17:30だが残業は18:00過ぎてから)
+      if (end_time > working_time_end_time + 1800) {
+        var add_time = end_time - working_time_end_time;
+        kinmu_time += add_time
+      }
     }
     
     

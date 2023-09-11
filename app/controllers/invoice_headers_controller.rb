@@ -89,10 +89,16 @@ class InvoiceHeadersController < ApplicationController
       end
     end
     ##
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /invoice_headers/1/edit
   def edit
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /invoice_headers

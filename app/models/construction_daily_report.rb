@@ -26,7 +26,8 @@ class ConstructionDailyReport < ApplicationRecord
   #所属
   attr_accessor :affiliation
   
-  #
+  #標準版用--会社ID
+  attr_accessor :company_id
   
   #作業時間--ajax計算用--標準仕様
   attr_accessor :working_hour #就業時間

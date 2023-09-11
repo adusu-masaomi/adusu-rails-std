@@ -65,15 +65,16 @@
            input_html:{id:"address2", style: 'width:320px;margin-left:-15px;', :tabindex=>"15"} %>
   </div>
   
-  <!--標準版はカット
-  <%= f.label :確定申告区分, {:class => "my-custom-class-l" , style: 'width:120px;' }  %>
-  <%= f.select :final_return_division, ConstructionCost.final_division, {}, 
-       {id:'searchableSelect2_1', :class => "my-custom-class", style: 'width:60px;height:30px;margin-left:-20px;margin-top:5px;font-size:14px;background: #f1f1f1;',
+  <!--標準版はカット(アデュースを除く)-->
+  <% if @company_id == 1 %>
+    <%= f.label :確定申告区分, {:class => "my-custom-class-l" , style: 'width:120px;' }  %>
+    <%= f.select :final_return_division, ConstructionCost.final_division, {}, 
+         {id:'searchableSelect2_1', :class => "my-custom-class", style: 'width:60px;height:30px;margin-left:-20px;margin-top:5px;font-size:14px;background: #f1f1f1;',
                           :tabindex=>"5" } %>
+  <%end%>
+  
+  
   </br></br></br></br>
-  -->
-  
-  
   </br>
   <%= f.input :tel, input_html:{id:"tel", :tabindex=>"16", :class => 'sbc_field'} %>
   <%= f.input :fax, input_html:{id:"fax", :tabindex=>"17", :class => 'sbc_field'} %>
