@@ -30,22 +30,3 @@ require "csv"
 #)
 
 #(株)アデュース　データ移行用(社内sys→render.com)
-#working_small_items
-CSV.foreach('db/working_small_items.csv') do |row|
-  WorkingSmallItem.create do |w|
-    w.id = row[0]
-    w.working_middle_item_id = row[1]
-    w.working_small_item_id = row[2]
-    w.working_small_item_code = row[3]
-    w.working_small_item_name = row[4]
-    w.unit_price = row[5]
-    w.rate = row[6]
-    w.quantity = row[7]
-    w.material_price = row[8]
-    w.maker_master_id = row[9]
-    w.unit_master_id = row[10]
-    w.labor_productivity_unit = row[11]
-    w.created_at = row[12]
-    w.updated_at = row[13]
-  end
-end
