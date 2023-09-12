@@ -4,12 +4,8 @@ class QuotationDetailMiddleClassification < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
    
 
-  #belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
-  #belongs_to :QuotationDetailLargeClassification, :foreign_key => "quotation_detail_large_classification_id"
-  #seed対応
-  belongs_to :QuotationHeader, optional: true, :foreign_key => "quotation_header_id"
-  belongs_to :QuotationDetailLargeClassification, optional: true, :foreign_key => "quotation_detail_large_classification_id"
-  
+  belongs_to :QuotationHeader, :foreign_key => "quotation_header_id"
+  belongs_to :QuotationDetailLargeClassification, :foreign_key => "quotation_detail_large_classification_id"
   belongs_to :QuotationLargeItem, optional: true, :foreign_key => "quotation_detail_large_classification_id"
   belongs_to :WorkingUnit, optional: true, :foreign_key => "working_unit_id"
   

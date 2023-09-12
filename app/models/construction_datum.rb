@@ -30,40 +30,37 @@ class ConstructionDatum < ApplicationRecord
   #add200114
   attr_accessor :deposit_due_date_hide
     
-  
-  #seedのため、一旦validate解除!!! ---from
-  
-  ##バリデーション
-  #validates :customer_id, presence: true
-  #validates :construction_code, presence: true, uniqueness: true
-	#validates :alias_name, presence: true
+  #バリデーション
+  validates :customer_id, presence: true
+  validates :construction_code, presence: true, uniqueness: true
+	validates :alias_name, presence: true
   
   
-  ##demo版対応
-  ##validate :construction_datum_count_must_be_within_limit, on: :create
+  
+  #demo版対応
+  #validate :construction_datum_count_must_be_within_limit, on: :create
     
-  ##住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
-  #ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
-  #ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
-	#ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
-	#ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
+  #住所に番地等を入れないようにするためのバリデーション(冗長だが他に方法が見当たらない)
+  ADDRESS_ERROR_MESSAGE = "番地（番地）は入力できません。"
+  ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
+	ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
+	ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
    
-  #validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  #validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  ##「流通センター」などの地名も有るため、許可する。
-  ##validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  #「流通センター」などの地名も有るため、許可する。
+  #validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
    
-  ##住所に数値が混じっていた場合も禁止する
-  #validate  :address_regex
-  #def address_regex
-  #  #if address.match(/[0-9０-９]+$/)
-  #  if address.present? && address.match(/[0-9０-９]+$/)  #upd211005
-  #    errors.add :address, ADDRESS_ERROR_MESSAGE_4
-  #  end
-  #end
-  
-  #seedのため、一旦validate解除!!! ---to
+  #住所に数値が混じっていた場合も禁止する
+  validate  :address_regex
+  def address_regex
+    #if address.match(/[0-9０-９]+$/)
+    if address.present? && address.match(/[0-9０-９]+$/)  #upd211005
+      errors.add :address, ADDRESS_ERROR_MESSAGE_4
+    end
+  end
     
   #demo版対応
   def construction_datum_count_must_be_within_limit

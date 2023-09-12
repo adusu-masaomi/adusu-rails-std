@@ -1,8 +1,5 @@
 class SupplierResponsible < ApplicationRecord
-  #belongs_to :supplier_master
-  #seed対応
-  belongs_to :supplier_master, optional: true
-  #
+  belongs_to :supplier_master
   has_many :purchase_order_datum
 
   #demo版対応

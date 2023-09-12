@@ -3,20 +3,20 @@ class InvoiceHeader < ApplicationRecord
 
   #demo版対応
   MAX_RECORD_COUNT = 10
-  
-  #belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
-  #belongs_to :customer_master, :foreign_key => "customer_id"
-  #accepts_nested_attributes_for :customer_master, update_only: true
-  
-  #seed用!! 終わったら↑戻す
-  belongs_to :ConstructionDatum, optional: true, :foreign_key => "construction_datum_id"
-  belongs_to :customer_master, optional: true, :foreign_key => "customer_id"
+
+  belongs_to :ConstructionDatum, :foreign_key => "construction_datum_id"
+   
+  belongs_to :customer_master, :foreign_key => "customer_id"
   accepts_nested_attributes_for :customer_master, update_only: true
-  
    
   attr_accessor :customer_id_hide
   attr_accessor :billing_amount_with_tax  #add210419
   
+  #バリデーション
+  #validates :invoice_code, presence: true, uniqueness: true
+  #請求書コードはユニークのチェックのみ。nullチェックはコピーに失敗するため除外。
+  validates :invoice_code, presence:true, uniqueness: true
+
   #demo版対応
   #validate :invoice_header_count_must_be_within_limit, on: :create
 
@@ -31,23 +31,17 @@ class InvoiceHeader < ApplicationRecord
   ADDRESS_ERROR_MESSAGE_2 = "番地（丁目）は入力できません。"
   ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
   ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
-  
-  #seedのため、一旦validate解除!!! ---from
-  
-  ##バリデーション
-  ##請求書コードはユニークのチェックのみ。nullチェックはコピーに失敗するため除外。
-  #validates :invoice_code, presence:true, uniqueness: true
-  #validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  #validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
-  ##「流通センター」などの地名も有るため、許可する。
-  ##validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  #validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
    
-  ##住所に数値が混じっていた場合も禁止する
-  #validate  :address_regex
-  
-  #seedのため、一旦validate解除!!! ---to
-  
+  validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  #「流通センター」などの地名も有るため、許可する。
+  #validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+   
+  #住所に数値が混じっていた場合も禁止する
+  validate  :address_regex
+
   def address_regex
     if address.match(/[0-9０-９]+$/)
       errors.add :address, ADDRESS_ERROR_MESSAGE_4

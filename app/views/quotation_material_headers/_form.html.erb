@@ -406,7 +406,16 @@
 	  
       </br></br>
 	       <div id="subForms" class="sortDone" >
-             
+       
+       <!--
+       <% if @quotation_material_header.id == nil %>
+         <% tmp = QuotationMaterialHeader.where(quotation_code: @quotation_material_header.quotation_code).first %>
+         <% if tmp != nil %>
+           <% @quotation_material_header = tmp %>
+         <% end %>
+       <% end %>
+       -->
+       
 			 <%= f.simple_fields_for :quotation_material_details, @quotation_material_header.quotation_material_details.order(@form_detail_order), :include_id => false  do |orders| %>
 		       
 			   <%= render 'quotation_material_detail_fields', f: orders, cache: true %>
@@ -949,7 +958,15 @@
             document.getElementById("format").value = "html";
           }
           reset_value();
+          
           document.forms[0].submit();
+          
+          //add230912
+          //trueを返さないと正常更新されない。
+          if (flag == 2){
+            return true;
+          }
+          
        }else{
          return false; 
        }
@@ -959,9 +976,13 @@
      return false;  //add200501
 	 }
    
+   
    //add230722
    //画面をリフレッシュしておく(印刷後に見積・注文済の状態になるように)
-   window.location.reload();
+   //window.location.reload();
+   
+   //3秒待つ（描写されないことがあるため）
+	 setTimeout("reloadDiv()", 3000);
    
  }
 
@@ -1121,6 +1142,8 @@ function dispDiv() {
   
   //{purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, supplier_master_id: supplier_master_id},
   
+  
+  //debugger;
   
   $.get("<%= quotation_material_headerz_get_data_path %>",
     {quotation_header_origin_id: quotation_header_origin_id },

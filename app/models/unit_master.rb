@@ -5,10 +5,8 @@ class UnitMaster < ApplicationRecord
   
   before_destroy :ensure_id
   
-  #seed対応　del
   #バリデーション
-  #validates :unit_name, presence: true, uniqueness: true
-  #del end
+  validates :unit_name, presence: true, uniqueness: true
   
   #demo版対応
   #validate :unit_master_count_must_be_within_limit, on: :create

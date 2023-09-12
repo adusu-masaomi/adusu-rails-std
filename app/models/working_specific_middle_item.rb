@@ -61,10 +61,9 @@ class WorkingSpecificMiddleItem < ApplicationRecord
    attr_accessor :rate_hide   #add180726
    #
    
-   #seed用　del
    #validation 
-   #validates :working_middle_item_name, presence: true
-   #del end
+   #add171117
+   validates :working_middle_item_name, presence: true
    
    scope :with_material, -> {joins(:MaterialMaster)}
    scope :with_unit, -> {joins(:WorkingUnit)}

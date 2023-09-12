@@ -1,7 +1,5 @@
 class WorkingSubcategory < ApplicationRecord
-  #belongs_to :working_category
-  #seed用
-  belongs_to :working_category, optional: true
+  belongs_to :working_category
 
   #demo版対応
   MAX_RECORD_COUNT = 10

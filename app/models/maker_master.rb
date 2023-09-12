@@ -4,12 +4,9 @@ class MakerMaster < ApplicationRecord
   MAX_RECORD_COUNT = 11
   
   before_destroy :ensure_id
-  
-  has_many :PurchaseDatum
-  
-  #seedのため、一旦validate解除!!!
-  #validates :maker_name, uniqueness: true
-  
+
+	has_many :PurchaseDatum
+	validates :maker_name, uniqueness: true
   #demo版対応
   #validate :maker_master_count_must_be_within_limit, on: :create
 

@@ -1,10 +1,9 @@
 class QuotationMaterialHeader < ApplicationRecord
 
-  #belongs_to :construction_datum
-  #belongs_to :supplier_master
-  #seed用
-  belongs_to :construction_datum, optional: true
-  belongs_to :supplier_master, optional: true
+  belongs_to :construction_datum
+  belongs_to :supplier_master
+  
+  #belongs_to :MaterialMaster, :foreign_key => "material_id"  #add200129
   
   has_many :quotation_material_details
   accepts_nested_attributes_for :quotation_material_details, :allow_destroy => true
@@ -37,10 +36,8 @@ class QuotationMaterialHeader < ApplicationRecord
   #add220607
   attr_accessor :format
   
-  #seed用　del
   #バリデーション
-  #validates :quotation_code, presence: true
-  #del end
+  validates :quotation_code, presence: true
   
   #参照見積コード
   #attr_accessor :quotation_header_origin_id

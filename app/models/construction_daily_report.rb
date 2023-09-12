@@ -26,8 +26,7 @@ class ConstructionDailyReport < ApplicationRecord
   #所属
   attr_accessor :affiliation
   
-  #標準版用--会社ID
-  attr_accessor :company_id
+  #
   
   #作業時間--ajax計算用--標準仕様
   attr_accessor :working_hour #就業時間
@@ -57,21 +56,19 @@ class ConstructionDailyReport < ApplicationRecord
   attr_accessor :overtime_midnight_end_time
   #
   
-  #seedのため、一旦validate解除!!! ---from
-  
   #validation
-  #validates :working_date, presence: true
-  #validates :staff_id, presence: true
-  #validates :working_details, presence: true
+  validates :working_date, presence: true
+  validates :staff_id, presence: true
+  validates :working_details, presence: true
   
+  #validates :construction_datum_id, presence: true
   # 数値であり、0以上の場合有効
-  #validates :working_times, numericality: {only_integer: true, greater_than_or_equal_to: 0}
+  validates :working_times, numericality: {
+            only_integer: true, greater_than_or_equal_to: 0
+          }
   
   #作業日＆時間の重複登録防止
-  #validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
-  
-  #seedのため、一旦validate解除!!! ---to
-  
+  validates :construction_datum_id,  presence: true, uniqueness: { scope: [:working_date, :staff_id, :start_time_1, :end_time_1] }
   
   #demo版対応
   #validate :construction_daily_report_count_must_be_within_limit, on: :create

@@ -55,29 +55,25 @@ class PurchaseDatum < ApplicationRecord
   attr_accessor :outsourcing_flag #add230610
   
   attr_accessor :new_company_flag  #221104
-  
-  #seedのため、一旦validate解除!!! ---from  
-  
-  ##validation
-  #validates :material_id, presence: true
-  #validates :material_code, presence: true
-  #validates :maker_id, presence: true
-  #validates :supplier_id, presence: true
-  #validates :quantity, presence: true  #upd230719
-  #validates :unit_id, presence: true
-  #validates :check_unit, acceptance: true 
-  #validates :purchase_order_datum_id, presence:true
-  #validates_numericality_of :purchase_amount, :only_integer => true, :allow_nil => false
-  #validate :purchase_order_code_check   
-  #validate :check_complete    
-  #VALID_HALF_REGEX = /\A[a-z0-9]+\z/i
-  #validates :slip_code, format: { with: VALID_HALF_REGEX }, allow_blank: true
-  
-  #seedのため、一旦validate解除!!! ---to
-  
+    
+  #validation
+  validates :material_id, presence: true
+  validates :material_code, presence: true
+  validates :maker_id, presence: true
+  validates :supplier_id, presence: true
+  validates :quantity, presence: true  #upd230719
+  validates :unit_id, presence: true
+  validates :check_unit, acceptance: true 
+  validates :purchase_order_datum_id, presence:true
+  validates_numericality_of :purchase_amount, :only_integer => true, :allow_nil => false
+  validate :purchase_order_code_check   
+  validate :check_complete    
   #demo版対応
   #validate :purchase_count_must_be_within_limit, on: :create
     
+  #add210628
+  VALID_HALF_REGEX = /\A[a-z0-9]+\z/i
+  validates :slip_code, format: { with: VALID_HALF_REGEX }, allow_blank: true
   #
     
   #demo版対応

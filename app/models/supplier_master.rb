@@ -23,11 +23,8 @@ class SupplierMaster < ApplicationRecord
     [["普通", 0], ["当座", 1]] 
   end
   
-  #seed対応　del
   #バリデーション
-  #validates :supplier_name, presence: true
-  #
-  
+  validates :supplier_name, presence: true
   #demo版対応
   #validate :supplier_count_must_be_within_limit, on: :create
   

@@ -3,6 +3,7 @@ class MaterialMaster < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 11
 
+
   #belongs_to :PurchaseDatum
   #belongs_to :MakerMaster, :foreign_key => "maker_id"
   #Rails6対応
@@ -19,14 +20,27 @@ class MaterialMaster < ApplicationRecord
   
   has_many :inventories
 
-  #seedのため、一旦validate解除!!! ---from
-  
-  ##バリデーション
-  #validates :material_code, presence: true, uniqueness: true
+  #バリデーション
   #validates :maker_id, presence: true
-  #validate :maker_existing
+  #validates :material_code, presence: true
+  #validate :add_error_sample
+    
+  validates :material_code, presence: true, uniqueness: true
+  #validates :maker_id, presence: true
+  #validates :MakerMaster, presence: true, if: -> { maker_id.present? }
   
-  #seedのため、一旦validate解除!!! ---to
+  
+  #validates_presence_of :maker
+  #field :maker_id
+  #validates :maker_id, inclusion: { in: 	1..80 }
+    
+  #validates_presence_of  :maker_id
+  #validates_associated :MakerMaster
+    
+  #validates :maker_id, presence: true, if: "maker_id.nil?"
+  #rails6対応
+  #validates :maker_id, presence: true, if: lambda {puts 'maker_id.nil?'}
+  validates :maker_id, presence: true
     
   #demo版対応
   #validate :material_master_count_must_be_within_limit, on: :create
@@ -41,7 +55,9 @@ class MaterialMaster < ApplicationRecord
       errors[:maker_id] << "＊メーカーは必ず入力して下さい"
     end
   end
-     
+    
+  validate :maker_existing
+   
   #select2高速化のための処理
   #scope :search_faster, lambda { |query| where('material_name LIKE ?', "%#{query}%").limit(100) }
 	 

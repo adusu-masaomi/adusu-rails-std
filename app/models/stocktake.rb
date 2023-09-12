@@ -16,13 +16,11 @@ class Stocktake < ApplicationRecord
   
   #attr_accessor :inventory_id_hide  #add171128
   
-  #seed対応　del
-  #validates :material_master_id, presence: true
-  ##棚卸日＆アイテムの重複登録防止。
-  #validates :stocktake_date,  presence: true, uniqueness: { scope: [:material_master_id] }
-  #end
+  validates :material_master_id, presence: true
   
-  
+  #棚卸日＆アイテムの重複登録防止。
+  validates :stocktake_date,  presence: true, uniqueness: { scope: [:material_master_id] }
+
   #demo版対応
   #validate :stocktake_count_must_be_within_limit, on: :create
 

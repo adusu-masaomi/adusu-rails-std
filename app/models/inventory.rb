@@ -12,18 +12,17 @@ class Inventory < ApplicationRecord
   #ファイルのアップローダー追加 add 171218
   mount_uploader :image, ImagesUploader
   
-  #seedのため、一旦validate解除!!! ---from
+  #バリデーション追加
+  #validates_numericality_of :inventory_quantity, :only_integer => true, :allow_nil => false
+  validates_numericality_of :inventory_quantity, :only_float => true, :allow_nil => false    #upd180608 int to float
+  validates_numericality_of :inventory_amount, :only_integer => true, :allow_nil => false
+  #validates_numericality_of :current_quantity, :only_integer => true, :allow_nil => false   
+  validates_numericality_of :current_quantity, :only_float => true, :allow_nil => false      #upd180608 int to float
+  validates_numericality_of :current_unit_price, :allow_nil => false
+  validates_numericality_of :last_unit_price, :allow_nil => false
+  validates :supplier_master_id, presence: true  #add230703
   
-  ##バリデーション
-  #validates_numericality_of :inventory_quantity, :only_float => true, :allow_nil => false    #upd180608 int to float
-  #validates_numericality_of :inventory_amount, :only_integer => true, :allow_nil => false
-  #validates_numericality_of :current_quantity, :only_float => true, :allow_nil => false      #upd180608 int to float
-  #validates_numericality_of :current_unit_price, :allow_nil => false
-  #validates_numericality_of :last_unit_price, :allow_nil => false
-  #validates :supplier_master_id, presence: true  
-  #validates :material_master_id, presence: true
-  
-  #seedのため、一旦validate解除!!! ---to
+  validates :material_master_id, presence: true
   
   #
   #demo版対応

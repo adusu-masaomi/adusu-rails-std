@@ -1,12 +1,8 @@
 class PurchaseOrderHistory < ApplicationRecord
 
-    #belongs_to :purchase_order_datum
-    #belongs_to :supplier_master
-    #seed用
-    belongs_to :purchase_order_datum, optional: true
-    belongs_to :supplier_master, optional: true
-    #
-    
+    belongs_to :purchase_order_datum
+    belongs_to :supplier_master
+
     has_many :orders
     accepts_nested_attributes_for :orders, allow_destroy: true
     
@@ -65,9 +61,7 @@ class PurchaseOrderHistory < ApplicationRecord
 	#attr_accessor :construction_id
 	#attr_accessor :move_flag
 	
-    #seed用 del
-    #validates_associated :orders
-	  #del end
+	validates_associated :orders
 	
     #validates :quantity, presence: true
     #validate :no_quantity

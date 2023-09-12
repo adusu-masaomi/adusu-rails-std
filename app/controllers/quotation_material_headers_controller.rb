@@ -137,6 +137,8 @@ class QuotationMaterialHeadersController < ApplicationController
   # GET /quotation_material_headers/new
   def new
     
+    is_reload = false
+    
     #画面の並びは昇順にする
     #新規は昇順、編集は降順。
     @form_detail_order = "sequential_id ASC"
@@ -162,7 +164,18 @@ class QuotationMaterialHeadersController < ApplicationController
       #グローバルを空に戻す
       $quotation_material_header = nil
     else
-      @quotation_material_header = QuotationMaterialHeader.new
+      if session[:quotation_material_headers_id].nil?   #add230912
+        @quotation_material_header = QuotationMaterialHeader.new
+      else
+        #リロードした場合 #add230912
+        @quotation_material_header = QuotationMaterialHeader.where(id: session[:quotation_material_headers_id]).first
+        session[:quotation_material_headers_id] = nil
+        if @quotation_material_header.nil?
+          @quotation_material_header = QuotationMaterialHeader.new
+        else
+          is_reload = true
+        end
+      end
     end
 
     #工事画面から遷移した場合、予めIDをセットする
@@ -171,8 +184,9 @@ class QuotationMaterialHeadersController < ApplicationController
     end
 
     #見積コードの自動採番
-    get_last_quotation_code_select
-
+    if !is_reload
+      get_last_quotation_code_select
+    end
   end
 
   #レコード毎のメール送信済みフラグを初期化する
@@ -201,7 +215,7 @@ class QuotationMaterialHeadersController < ApplicationController
     #注文NOの頭文字を定数ファイルから取得する
     @last_header_number = Constant.where(:id => 1).
            where("id is NOT NULL").pluck(:purchase_order_last_header_code).flatten.join(" ")
-
+   
   end
   
   def reset_mail_sent_flag
@@ -370,6 +384,8 @@ class QuotationMaterialHeadersController < ApplicationController
   # POST /quotation_material_headers.json
   def create
   
+    #binding.pry
+  
     @quotation_material_header = QuotationMaterialHeader.new(quotation_material_header_params)
    
     #備考１〜３のいずれかへセット
@@ -404,6 +420,11 @@ class QuotationMaterialHeadersController < ApplicationController
         end
         #
         
+        #add230912
+        session[:quotation_material_headers_id] = @quotation_material_header.id
+        
+        #binding.pry
+        
         #見積依頼書・注文書の発行
         set_purchase_order_and_estimate(format)
                 
@@ -424,7 +445,7 @@ class QuotationMaterialHeadersController < ApplicationController
           break
         end
         #
-		      
+		    
         format.html {redirect_to quotation_material_headers_path( @quotation_material_header,
                  :construction_id => params[:construction_id] , :move_flag => params[:move_flag] )}
 		  else
@@ -439,7 +460,7 @@ class QuotationMaterialHeadersController < ApplicationController
   # PATCH/PUT /quotation_material_headers/1.json
   def update
      
-	  if @quotation_material_header.quotation_code == params[:quotation_material_header][:quotation_code]
+    if @quotation_material_header.quotation_code == params[:quotation_material_header][:quotation_code]
   
       #備考１〜３のいずれかへセット
       set_notes_before_save
@@ -449,11 +470,13 @@ class QuotationMaterialHeadersController < ApplicationController
     
       #すでに登録していた注文データは一旦抹消する。
 	    destroy_before_update
-	
+	    
       #パラーメータ補完＆メール送信する
       set_params_complement
       
       respond_to do |format|
+        
+        #binding.pry
         
         if @quotation_material_header.update(quotation_material_header_params)
         
@@ -470,28 +493,42 @@ class QuotationMaterialHeadersController < ApplicationController
           end
           #
           
+          #add230912
+          session[:quotation_material_headers_id] = @quotation_material_header.id
+          
           #見積依頼書・注文書の発行
           set_purchase_order_and_estimate(format)
           
           #メール送信
           send_email
 		      
+		      #binding.pry
+		      
           #メール送信の場合、見積／注文書を後から発行する場合もあるため、画面遷移させない
           if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2"
-            
             redirect_to request.referer, alert: "Successfully sending message"  #ここでalertを適当に入れないと下部のflashメッセージが出ない。
             flash[:notice] = "メールを送信しました。"
             
             break
           end
           #
-          
-          
+                    
           #format.html {redirect_to quotation_material_header_path( 
           #         :construction_id => params[:construction_id] , :move_flag => params[:move_flag] )}
           format.html {redirect_to quotation_material_headers_path( 
-                   :construction_id => params[:construction_id] , :move_flag => params[:move_flag] )}
-         
+                   :construction_id => params[:construction_id] , :move_flag => params[:move_flag] ) }
+          
+          
+          #binding.pry
+          
+          #if params[:quotation_material_header][:sent_flag] == "7"
+          
+            #redirect_back(fallback_location: fallback_location)
+            #redirect_back(fallback_location: fallback_location)
+            #format.js {render inline: "location.reload();" }
+            #redirect_to :back
+            #break
+          #end
         else
           format.html { render :edit }
           format.json { render json: @quotation_material_header.errors, status: :unprocessable_entity }
@@ -948,6 +985,11 @@ class QuotationMaterialHeadersController < ApplicationController
           set_mail_sent_flag
           
           #
+          
+          #test
+          #binding.pry
+          #format.js {render inline: "location.reload();" }
+          #format.html { redirect_to request.referrer, notice: "User was successfully WHATEVER." }
           
           format.pdf do
             #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 

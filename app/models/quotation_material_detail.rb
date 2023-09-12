@@ -1,8 +1,6 @@
 class QuotationMaterialDetail < ApplicationRecord
 
-  #belongs_to :quotation_material_header
-  #seed対応
-  belongs_to :quotation_material_header, optional: true
+  belongs_to :quotation_material_header
   
   belongs_to :maker_master, optional: true, :foreign_key => "maker_id"
   belongs_to :unit_master, optional: true
