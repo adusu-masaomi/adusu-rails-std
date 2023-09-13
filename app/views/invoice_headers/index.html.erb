@@ -76,15 +76,16 @@
 
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<!--
-<%= link_to "請求一覧(元請-確認用)",
+
+<% if @company_id == 1 %>
+<!-- (株)アデュース仕様 -->
+  <%= link_to "請求一覧(元請-確認用)",
             invoice_headers_path(@invoice_headers, format: "pdf" , print_flag: 1 ),
             :class => 'btn  btn-lime500_ftg btn-xs keep-disp', :target=>["_blank"] %>
-<%= link_to "請求一覧(確定申告用)",
+  <%= link_to "請求一覧(確定申告用)",
             invoice_headers_path(@invoice_headers, format: "pdf" , print_flag: 2 ),
             :class => 'btn  btn-cyan500_ftg btn-xs keep-disp', :target=>["_blank"] %>
--->
-
+<% end %>
 			   
 <!--見出し固定用設定追加-->
 <div style="margin-top : -0px;", class="span11 table-scrollable" >

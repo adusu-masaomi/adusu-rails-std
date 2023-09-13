@@ -39,7 +39,10 @@ class InvoiceHeadersController < ApplicationController
       $invoice_date_start = query["invoice_date_gteq(1i)"] + "/" + query["invoice_date_gteq(2i)"]  + "/" + query["invoice_date_gteq(3i)"]
       $invoice_date_end = query["invoice_date_lteq(1i)"] + "/" + query["invoice_date_lteq(2i)"]  + "/" + query["invoice_date_lteq(3i)"]
     end
-     
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     respond_to do |format|
       format.html
       
@@ -61,7 +64,7 @@ class InvoiceHeadersController < ApplicationController
       end
       
       #
-	end
+    end
 	
   end
 
