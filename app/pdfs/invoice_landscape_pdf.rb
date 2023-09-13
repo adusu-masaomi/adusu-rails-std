@@ -3,12 +3,14 @@ class InvoiceLandscapePDF
   
   #def self.create invoice
   #upd170626
-  def self.create invoice_detail_large_classifications
+  #def self.create invoice_detail_large_classifications
+  def self.create(invoice_detail_large_classifications, company_id)
 	#請求書(横)PDF発行
     #新元号対応 190401
     require "date"
     d_heisei_limit = Date.parse("2019/5/1")
        
+    
     # tlfファイルを読み込む
     #変数reportはインスタンス変数に変更
     @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/invoice_landscape_pdf.tlf")
@@ -346,24 +348,29 @@ class InvoiceLandscapePDF
           end
         end
         
-        #標準版は確定申告区分はカット
         
+        
+        
+        #標準版は確定申告区分はカット
         #
-        row.values working_large_item_name: item_name,
+        if company_id != 1
+          row.values working_large_item_name: item_name,
                    working_large_specification: invoice_detail_large_classification.working_large_specification,
                    #final_return_division: final_return_division,
                    quantity: @quantity,
                    working_unit_name: @unit_name,
                    working_unit_price: unit_price_or_notices,
                    invoice_price: invoice_detail_large_classification.invoice_price
-                       
-                   #row.values working_large_item_name: invoice_detail_large_classification.working_large_item_name,
-                   # working_large_specification: invoice_detail_large_classification.working_large_specification,
-                   # quantity: @quantity,
-                   # working_unit_name: @unit_name,
-                   # working_unit_price: invoice_detail_large_classification.working_unit_price,
-                   # invoice_price: invoice_detail_large_classification.invoice_price
-                      
+        else
+        #(株)アデュース仕様 
+          row.values working_large_item_name: item_name,
+                   working_large_specification: invoice_detail_large_classification.working_large_specification,
+                   final_return_division: final_return_division,
+                   quantity: @quantity,
+                   working_unit_name: @unit_name,
+                   working_unit_price: unit_price_or_notices,
+                   invoice_price: invoice_detail_large_classification.invoice_price
+        end
       end  #report do end 
     end	   #do end
 	   

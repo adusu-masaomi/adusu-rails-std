@@ -367,6 +367,7 @@ class ApplicationController < ActionController::Base
   
   #ログイン中のUser取得(standard)
   def app_get_session_user
+    
     #ここでUser別に帳票を切り分ける処理を行う。
     user = User.where("id = ?" , session[:user_id]).first
     @company_id = 0
@@ -379,7 +380,15 @@ class ApplicationController < ActionController::Base
         @company_id = 1
       end
     end
+    
+    #return @company_id
+    
   end
+  
+  #attr_accessor :company_id
+  #def app_get_company
+  #  return self.company_id
+  #end
   
   
   #元号の設定(改定時はここを変更する)

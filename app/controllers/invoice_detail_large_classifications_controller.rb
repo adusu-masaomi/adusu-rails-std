@@ -111,7 +111,12 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
             report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type, @company_id)
           when "2"
           #請求書(横)
-            report = InvoiceLandscapePDF.create @invoice_detail_large_classifications
+            #ログイン中のUser確認(Standard)
+            #add230831
+            #app_get_session_user
+            
+            #report = InvoiceLandscapePDF.create @invoice_detail_large_classifications
+            report = InvoiceLandscapePDF.create(@invoice_detail_large_classifications, @company_id)
           when "3"
           #請求書（印鑑有）
             #report = InvoicePDF.create(@invoice_detail_large_classifications, @print_type)
