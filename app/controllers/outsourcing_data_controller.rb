@@ -247,7 +247,10 @@ class OutsourcingDataController < ApplicationController
       end
     end
     #
-
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     respond_to do |format|
   
       format.html

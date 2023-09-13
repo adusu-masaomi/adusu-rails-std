@@ -167,14 +167,16 @@
             :class => 'btn btn-lime500_rsd keep-disp', :onclick => "bulkCheck()" %>-->
        <!--add200916-->
        
-       <!--わかりづらいので、標準版はひとまずカット。
-       <%= f.text_field :payment_date, class:"input-append date datepicker", include_blank: true ,  id: 'payment_date_input' , style: 'width:100px'  %>
        
-       <%= f.button_tag "チェック反映", :type => 'link', name: "setCheck",  
+       <!-- (株)アデュース仕様 -->
+       <% if @company_id == 1 %>
+         <%= f.text_field :payment_date, class:"input-append date datetimepicker", include_blank: true ,  id: 'payment_date_input' , style: 'width:100px', autocomplete: 'off'  %>
+       
+         <%= f.button_tag "チェック反映", :type => 'link', name: "setCheck",  
                :onclick => "bulkCheck()" , :class => 'btn btn-lime500_rsd keep-disp' %>
        
-       &nbsp;&nbsp; <font color = red >※日付を先に入れる</font>
-       -->
+         &nbsp;&nbsp; <font color = red >※日付を先に入れる</font>
+       <% end %>
        
        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
        
