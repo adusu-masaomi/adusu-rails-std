@@ -39,6 +39,8 @@ class CustomerMastersController < ApplicationController
     #    csv << []
     #end
     
+    #標準版仕様--会社IDを取得
+    app_get_session_user
     
 	respond_to do |format|
 	  format.html
@@ -71,10 +73,15 @@ class CustomerMastersController < ApplicationController
   # GET /customer_masters/new
   def new
     @customer_master = CustomerMaster.new
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /customer_masters/1/edit
   def edit
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /customer_masters

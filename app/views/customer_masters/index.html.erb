@@ -30,13 +30,13 @@
             customer_masters_path(@customer_masters, action:"index", print_flag: "1", format: "pdf"),
             :class => 'btn  btn-deeporange500_ftg', :target=>["_blank"] %>
         
-        <!--
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <%= link_to "一覧(年賀状確認用)",
+        <% if @company_id == 1 %>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= link_to "一覧(年賀状確認用)",
             customer_masters_path(@customer_masters, action:"index", print_flag: "2", format: "pdf"),
             :class => 'btn  btn-orange500_ftg', :target=>["_blank"] %>
-        -->
+        <% end %>
         
         <%= link_to "CSV", customer_masters_path(format: "csv" , params: params.to_unsafe_h),:class => 'btn btn-grey300_rsd btn-xs'%>
         

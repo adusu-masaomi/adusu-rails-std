@@ -63,11 +63,11 @@
   <%= f.input :responsible1 , input_html:{:tabindex=>"13"} %>
   <%= f.input :responsible2 , input_html:{:tabindex=>"14"} %>
   
-  <!--標準版ではカット-->
-  <!--
-  <%= f.check_box :card_not_flag %> 
-  <%= f.label :card_not_flag, "年賀状不要", {style: 'color: black', :tabindex=>"15"} %>
-  -->
+  <% if @company_id ==  1%>
+  <!--(株)アデュースのみ表示-->
+    <%= f.check_box :card_not_flag %> 
+    <%= f.label :card_not_flag, "年賀状不要", {style: 'color: black', :tabindex=>"15"} %>
+  <% end %>
   
   &nbsp;&nbsp;&nbsp;
   
