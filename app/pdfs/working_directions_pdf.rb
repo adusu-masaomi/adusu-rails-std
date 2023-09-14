@@ -1,7 +1,7 @@
 class WorkingDirectionsPDF
   
-  #def self.create working_directions
-  def self.create(construction_datum_in, working_date, issue_date, staff_name)
+  #def self.create(construction_datum_in, working_date, issue_date, staff_name)
+  def self.create(construction_datum_in, working_date, issue_date, staff_name, company_id)
   #作業指示書PDF発行
  
     # tlfファイルを読み込む
@@ -23,7 +23,26 @@ class WorkingDirectionsPDF
 	
     #construction_datum = $construction_datum
     construction_datum = construction_datum_in
-        
+    
+    
+    #印鑑欄担当者
+    responsible_1 = ""
+    responsible_2 = ""
+    
+    case company_id
+    when 1
+    #(株)アデュース仕様
+      responsible_1 = "社　長"
+      responsible_2 = "総　務"
+    else
+    #標準仕様
+      responsible_1 = "管理者"
+      responsible_2 = "担当者"
+    end
+    report.page.item(:responsible_1).value(responsible_1)
+    report.page.item(:responsible_2).value(responsible_2)
+    #
+    
     #$construction_datum.order(:construction_code).each do |construction_datum| 
     #---見出し---
           
@@ -78,7 +97,41 @@ class WorkingDirectionsPDF
     #	              material_code: purchase_datum.material_code
     #end 
     #end	
-  
+    
+    #(株)アデュース仕様　色を変える
+    if company_id == 1
+      report.page.item(:line_1).style(:border_color, 'red')
+      report.page.item(:line_2).style(:border_color, 'red')
+      report.page.item(:line_3).style(:border_color, 'red')
+      report.page.item(:line_4).style(:border_color, 'red')
+      report.page.item(:line_5).style(:border_color, 'red')
+      report.page.item(:line_6).style(:border_color, 'red')
+      report.page.item(:line_7).style(:border_color, 'red')
+      report.page.item(:line_8).style(:border_color, 'red')
+      report.page.item(:line_9).style(:border_color, 'red')
+      report.page.item(:line_10).style(:border_color, 'red')
+      report.page.item(:line_11).style(:border_color, 'red')
+      report.page.item(:line_12).style(:border_color, 'red')
+      report.page.item(:line_13).style(:border_color, 'red')
+      report.page.item(:line_14).style(:border_color, 'red')
+      report.page.item(:line_15).style(:border_color, 'red')
+      report.page.item(:line_16).style(:border_color, 'red')
+      report.page.item(:line_17).style(:border_color, 'red')
+      report.page.item(:line_18).style(:border_color, 'red')
+      report.page.item(:line_19).style(:border_color, 'red')
+      report.page.item(:line_20).style(:border_color, 'red')
+      report.page.item(:line_21).style(:border_color, 'red')
+      report.page.item(:line_22).style(:border_color, 'red')
+      report.page.item(:line_23).style(:border_color, 'red')
+      report.page.item(:line_24).style(:border_color, 'red')
+      
+      #印鑑欄
+      report.page.item(:line_sign_1).style(:border_color, 'red')
+      report.page.item(:line_sign_2).style(:border_color, 'red')
+      report.page.item(:line_sign_3).style(:border_color, 'red')
+    end
+    #
+    
     # ThinReports::Reportを返す
     return report
 

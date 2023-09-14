@@ -1,7 +1,8 @@
 class PurchaseListPDF
     
   
-  def self.create purchase_list	
+  #def self.create purchase_list
+  def self.create(purchase_list, company_id)	
 	#仕入表PDF発行
  
        #@@page_number = 0
@@ -50,6 +51,10 @@ class PurchaseListPDF
 	 @purchase_amount_subtotal = 0
 	 @purchase_amount_total = 0
 	    
+	    #ヘッダの線の色を変える(アデュース仕様)
+      if company_id == 1
+        report.page.item(:line_3).style(:border_color, 'red')
+      end
       
       #binding.pry
       
@@ -60,7 +65,8 @@ class PurchaseListPDF
 		 #---見出し---
          page_count = report.page_count.to_s + "頁"
 		 report.page.item(:pageno).value(page_count)
-
+     
+     
 		 if @flag.nil? 
 		 
 		    @flag = "1"
@@ -80,7 +86,9 @@ class PurchaseListPDF
 		   #report.page.item(:quote_price).value(@quotation_headers.quote_price)
 		   
 		 end
-		
+		  
+		   
+		  
          #小計
 		 if @purchase_order_code  != ""
 		  if @purchase_order_code  != purchase_datum.purchase_order_datum.purchase_order_code
@@ -105,10 +113,29 @@ class PurchaseListPDF
 		  @purchase_amount_subtotal = @purchase_amount_subtotal + purchase_datum.purchase_amount
 		  @purchase_amount_total = @purchase_amount_total + purchase_datum.purchase_amount
 		end
+    
+      #ヘッダの線の色を変える(アデュース仕様)
+      if company_id == 1
+        report.list(:default).header.item(:line_1).style(:border_color, 'red')
+        #
+        report.list(:default).header.item(:line_4).style(:border_color, 'red')
+        report.list(:default).header.item(:line_5).style(:border_color, 'red')
+        report.list(:default).header.item(:line_6).style(:border_color, 'red')
+        report.list(:default).header.item(:line_7).style(:border_color, 'red')
+        report.list(:default).header.item(:line_8).style(:border_color, 'red')
+        report.list(:default).header.item(:line_9).style(:border_color, 'red')
+        report.list(:default).header.item(:line_10).style(:border_color, 'red')
+        report.list(:default).header.item(:line_11).style(:border_color, 'red')
+        report.list(:default).header.item(:line_12).style(:border_color, 'red')
+        report.list(:default).header.item(:line_13).style(:border_color, 'red')
+      end
+      #
+    
 		 #for i in 0..29   #29行分(for test)
 		    report.list(:default).add_row do |row|
-			           
-					   #品名のセット
+			       
+			       
+			       #品名のセット
 					   #フリー入力とマスターからの取得を切り分ける
 					   if purchase_datum.material_id == 1
 					     material_name = purchase_datum.material_name
@@ -149,10 +176,13 @@ class PurchaseListPDF
                        #数量は小数点の場合あり、その場合で表示を切り分ける。
                        quantity = ""
                        first, second = purchase_datum.quantity.to_s.split('.')
-                       if second.to_i > 0
-                         quantity = sprintf("%.2f", purchase_datum.quantity)
-                       else
-                         quantity = sprintf("%.0f", purchase_datum.quantity)
+                       
+                       if purchase_datum.quantity.present? 
+                         if second.to_i > 0
+                           quantity = sprintf("%.2f", purchase_datum.quantity)
+                         else
+                           quantity = sprintf("%.0f", purchase_datum.quantity)
+                         end
                        end
                        #
 					   
@@ -194,7 +224,25 @@ class PurchaseListPDF
                                   list_price: list_price,
                                   supplier_name: purchase_datum.SupplierMaster.supplier_name,
 								  purchase_division_name: division_name
-	                    
+	             
+	             
+	             #(株)アデュース仕様　色を変える(明細側)
+               if company_id == 1
+                 row.item(:line_2).style(:border_color, 'red')
+                 
+                 row.item(:line_14).style(:border_color, 'red')
+                 row.item(:line_15).style(:border_color, 'red')
+                 row.item(:line_16).style(:border_color, 'red')
+                 row.item(:line_17).style(:border_color, 'red')
+                 row.item(:line_18).style(:border_color, 'red')
+                 row.item(:line_19).style(:border_color, 'red')
+                 row.item(:line_20).style(:border_color, 'red')
+                 row.item(:line_21).style(:border_color, 'red')
+                 row.item(:line_22).style(:border_color, 'red')
+                 row.item(:line_23).style(:border_color, 'red')
+                 row.item(:line_24).style(:border_color, 'red')
+              end
+	             
             end 
 
 
@@ -215,6 +263,22 @@ class PurchaseListPDF
            row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
                        purchase_amount: @purchase_amount_subtotal
            row2.item(:lbl_unit_price_multi).visible(false)  #add200716
+           
+            #(株)アデュース仕様　色を変える(明細側)
+               if company_id == 1
+                 row2.item(:line_2).style(:border_color, 'red')
+                 row2.item(:line_14).style(:border_color, 'red')
+                 row2.item(:line_15).style(:border_color, 'red')
+                 row2.item(:line_16).style(:border_color, 'red')
+                 row2.item(:line_17).style(:border_color, 'red')
+                 row2.item(:line_18).style(:border_color, 'red')
+                 row2.item(:line_19).style(:border_color, 'red')
+                 row2.item(:line_20).style(:border_color, 'red')
+                 row2.item(:line_21).style(:border_color, 'red')
+                 row2.item(:line_22).style(:border_color, 'red')
+                 row2.item(:line_23).style(:border_color, 'red')
+                 row2.item(:line_24).style(:border_color, 'red')
+              end
         end
 		
         
@@ -230,6 +294,22 @@ class PurchaseListPDF
                 row2.values purchase_unit_price: "合計", 
                             purchase_amount: @purchase_amount_total
                 row2.item(:lbl_unit_price_multi).visible(false)  #add200716
+                
+          #(株)アデュース仕様　色を変える(明細側)
+          if company_id == 1
+             row2.item(:line_2).style(:border_color, 'red')
+             row2.item(:line_14).style(:border_color, 'red')
+             row2.item(:line_15).style(:border_color, 'red')
+             row2.item(:line_16).style(:border_color, 'red')
+             row2.item(:line_17).style(:border_color, 'red')
+             row2.item(:line_18).style(:border_color, 'red')
+             row2.item(:line_19).style(:border_color, 'red')
+             row2.item(:line_20).style(:border_color, 'red')
+             row2.item(:line_21).style(:border_color, 'red')
+             row2.item(:line_22).style(:border_color, 'red')
+             row2.item(:line_23).style(:border_color, 'red')
+             row2.item(:line_24).style(:border_color, 'red')
+          end
         end
 		
         # ThinReports::Reportを返す

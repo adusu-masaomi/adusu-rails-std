@@ -334,10 +334,13 @@ class ConstructionDataController < ApplicationController
             #$staff_name = @staff.staff_name
             staff_name = @staff.staff_name
           end
-    
+          
+          #標準版仕様--会社IDを取得
+          app_get_session_user
+          
           format.pdf do
-            #report = WorkingDirectionsPDF.create @working_dirctions
-            report = WorkingDirectionsPDF.create(@construction_datum, working_date, issue_date, staff_name)
+            #report = WorkingDirectionsPDF.create(@construction_datum, working_date, issue_date, staff_name)
+            report = WorkingDirectionsPDF.create(@construction_datum, working_date, issue_date, staff_name, @company_id)
             # ブラウザでPDFを表示する
             # disposition: "inline" によりダウンロードではなく表示させている
             send_data(

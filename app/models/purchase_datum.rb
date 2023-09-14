@@ -56,6 +56,8 @@ class PurchaseDatum < ApplicationRecord
   
   attr_accessor :new_company_flag  #221104
     
+  attr_accessor :company_id_hide   #230914
+    
   #validation
   validates :material_id, presence: true
   validates :material_code, presence: true

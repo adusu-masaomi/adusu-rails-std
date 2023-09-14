@@ -1,8 +1,8 @@
 class DailyWorkReportPDF
     
   
-  #def self.create daily_work_report
-  def self.create construction_daily_reports
+  #def self.create construction_daily_reports
+  def self.create(construction_daily_reports, company_id)
      #作業日報PDF発行
  
     #tlfファイルを読み込む
@@ -17,7 +17,8 @@ class DailyWorkReportPDF
     working_date_saved = nil
     working_details_saved = nil
     #初期化
-        
+    
+    
     #$construction_daily_reports.joins(:Staff).joins(:construction_datum).order("working_date, staff_id").each do |construction_daily_report| 
     construction_daily_reports.joins(:Staff).joins(:construction_datum).order("working_date, staff_id").each do |construction_daily_report|
     
@@ -30,7 +31,16 @@ class DailyWorkReportPDF
         report.page.item(:construction_name).value(construction_daily_report.construction_datum.construction_name)
       end
 
+      #ヘッダの線の色を変える(アデュース仕様)
+      if company_id == 1
+        report.list(:default).header.item(:line_1).style(:border_color, 'red')
+        report.list(:default).header.item(:line_2).style(:border_color, 'red')
+      end
+      #
+      
+      
       report.list(:default).add_row do |row|
+                
         #
         if (working_date_saved == nil) || (working_date_saved != construction_daily_report.working_date)
           print_working_date = construction_daily_report.working_date
@@ -59,6 +69,17 @@ class DailyWorkReportPDF
           print_working_details = nil
           row.item(:line_working_details).styles(:visible => false)
         end
+        
+        #(株)アデュース仕様　色を変える
+        if company_id == 1
+          row.item(:line_working_date).style(:border_color, 'red')
+          row.item(:line_working_times_dot).style(:border_color, 'red')
+          row.item(:line_working_times).style(:border_color, 'red')
+          row.item(:line_working_details).style(:border_color, 'red')
+          
+          #row.item(:line_last).style(:border_color, 'red')
+        end
+        #
         
         working_details_saved = construction_daily_report.working_details
         #
@@ -97,8 +118,21 @@ class DailyWorkReportPDF
     #最終の横線
     report.list(:default).add_row do |row_end|
       row_end.item(:line_working_times_dot).styles(:visible => false)
+      
+      row_end.item(:line_last).style(:border_color, 'red')
     end
-     
+    
+    #(株)アデュース仕様　色を変える
+    if company_id == 1
+      #縦線
+      #report.page.item(:line_2).style(:border_color, 'red')
+      report.page.item(:line_3).style(:border_color, 'red')
+      report.page.item(:line_4).style(:border_color, 'red')
+      report.page.item(:line_5).style(:border_color, 'red')
+      report.page.item(:line_6).style(:border_color, 'red')
+    end
+    #
+    
     # ThinReports::Reportを返す
     return report
 		

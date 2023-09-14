@@ -1,8 +1,9 @@
 class ConstructionCostSummaryPDF
     
   
-  def self.create construction_cost_summary	
-	#仕入表PDF発行
+  #def self.create construction_cost_summary
+  def self.create(construction_cost_summary, company_id)
+	#工事集計表PDF発行
       
       #新元号対応 190401
       require "date"
@@ -154,7 +155,15 @@ class ConstructionCostSummaryPDF
 		   if construction_costs.misellaneous_expense.present? && construction_costs.misellaneous_expense > 0
 		     footer.item(:misellaneous_expense).value(construction_costs.misellaneous_expense)
 		   end
-         end
+       
+       
+       #(株)アデュース仕様　色を変える
+       if company_id == 1
+		     footer.item(:line_3).style(:border_color, 'red')
+         footer.item(:line_4).style(:border_color, 'red')
+         footer.item(:line_5).style(:border_color, 'red')
+       end
+     end
 	
 			#i = 0
 		    purchase_order_detail = construction_costs.purchase_order_amount.split(",")
@@ -181,6 +190,8 @@ class ConstructionCostSummaryPDF
 			  end
 			end
 		
+		 
+		
 		 #最下部の合計欄
 		 if construction_costs.execution_amount.present?
 		   report.page.item(:execution_amount).value(construction_costs.execution_amount)
@@ -201,7 +212,25 @@ class ConstructionCostSummaryPDF
          
 		 
     #end	
-	
+	   
+	   
+	   #(株)アデュース仕様　色を変える
+    if company_id == 1
+      #縦線
+      report.page.item(:line_1).style(:border_color, 'red')
+      report.page.item(:line_2).style(:border_color, 'red')
+      #
+      report.page.item(:line_6).style(:border_color, 'red')
+      report.page.item(:line_7).style(:border_color, 'red')
+      report.page.item(:line_8).style(:border_color, 'red')
+      report.page.item(:line_9).style(:border_color, 'red')
+      report.page.item(:line_10).style(:border_color, 'red')
+      report.page.item(:line_11).style(:border_color, 'red')
+      report.page.item(:line_12).style(:border_color, 'red')
+      report.page.item(:line_13).style(:border_color, 'red')
+    end
+    #
+    
 	#end
         # Thinrs::Reportを返す
         return report

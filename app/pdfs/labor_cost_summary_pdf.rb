@@ -2,7 +2,8 @@ class LaborCostSummaryPDF
     
   
   #def self.create labor_cost_summary	
-  def self.create construction_daily_reports
+  #def self.create construction_daily_reports
+  def self.create(construction_daily_reports, company_id)
   #労務集計表PDF発行
       
     #新元号対応 190401
@@ -41,7 +42,8 @@ class LaborCostSummaryPDF
     @staff_position = 0
     @page_staff_count = 0
     @page_count_staff_only = 1  #(行数オーバーによる改ページは含まない)
-    
+        
+  
     #construction_daily_reports.order(:working_date).each do |construction_daily_report|
     construction_daily_reports.order(:staff_id, :working_date).each do |construction_daily_report|
  	    
@@ -202,6 +204,24 @@ class LaborCostSummaryPDF
     @last_page = true
     set_last_row_and_footer(report)
     
+    #(株)アデュースの場合は罫線を赤色にする
+    if company_id == 1
+      report.page.item(:line_1).style(:border_color, 'red')
+      report.page.item(:line_2).style(:border_color, 'red')
+      report.page.item(:line_3).style(:border_color, 'red')
+      report.page.item(:line_4).style(:border_color, 'red')
+      report.page.item(:line_5).style(:border_color, 'red')
+      report.page.item(:line_6).style(:border_color, 'red')
+      report.page.item(:line_7).style(:border_color, 'red')
+      report.page.item(:line_8).style(:border_color, 'red')
+      report.page.item(:line_9).style(:border_color, 'red')
+      report.page.item(:line_10).style(:border_color, 'red')
+      report.page.item(:line_11).style(:border_color, 'red')
+      report.page.item(:line_12).style(:border_color, 'red')
+      report.page.item(:line_13).style(:border_color, 'red')
+      report.page.item(:line_14).style(:border_color, 'red')
+    end
+    #
     
     # Thinrs::Reportを返す
     return report

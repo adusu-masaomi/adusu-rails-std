@@ -95,6 +95,10 @@ class ConstructionDailyReportsController < ApplicationController
       #$outsoucing_staff = nil   
       @outsourcing_staff = nil
       
+      #ログイン中のUser確認(Standard)
+      #add230913
+      app_get_session_user
+      
       format.pdf do
         case params[:pdf_flag] 
         when "1"
@@ -102,7 +106,8 @@ class ConstructionDailyReportsController < ApplicationController
           
           #労務費集計表
           #縦型PDF（外注のいない場合）
-          report = LaborCostSummaryPDF.create @construction_daily_reports
+          #report = LaborCostSummaryPDF.create @construction_daily_reports
+          report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
             
           #if confirm_outsourcing == false
             #縦型PDF（外注のいない場合）
@@ -122,7 +127,8 @@ class ConstructionDailyReportsController < ApplicationController
           #end
         when "2"
           #作業日報
-		      report = DailyWorkReportPDF.create @construction_daily_reports
+		      #report = DailyWorkReportPDF.create @construction_daily_reports
+          report = DailyWorkReportPDF.create(@construction_daily_reports, @company_id)
         end
   
         # ブラウザでPDFを表示する

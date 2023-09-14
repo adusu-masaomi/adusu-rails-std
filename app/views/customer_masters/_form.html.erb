@@ -54,11 +54,13 @@
   </br></br></br></br></br>
   
   <!--標準版ではカット-->
-  <!--
-  <%= f.label :支払先銀行：, {:class => "my-custom-class-l" , style: 'width:90px;' }  %>
-  <%= f.select :payment_bank_id, CustomerMaster.payment_bank, {:selected => @customer_master.payment_bank_id || 1}, 
+  <% if @company_id ==  1%>
+  <!--(株)アデュースのみ表示-->
+    <%= f.label :支払先銀行：, {:class => "my-custom-class-l" , style: 'width:90px;' }  %>
+    <%= f.select :payment_bank_id, CustomerMaster.payment_bank, {:selected => @customer_master.payment_bank_id || 1}, 
        {id:'searchableSelect2_3', :class => "my-custom-class", style: 'width:120px;height:30px;margin-left:-0px;margin-top:-30px;font-size:14px;', :tabindex=>"12" } %>
-  -->
+  <% end %>
+  
   
   <%= f.input :responsible1 , input_html:{:tabindex=>"13"} %>
   <%= f.input :responsible2 , input_html:{:tabindex=>"14"} %>

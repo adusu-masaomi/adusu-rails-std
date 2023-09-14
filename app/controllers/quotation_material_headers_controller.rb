@@ -407,6 +407,9 @@ class QuotationMaterialHeadersController < ApplicationController
     respond_to do |format|
       if @quotation_material_header.save!(:validate => false)
         
+        #add230912
+        session[:quotation_material_headers_id] = @quotation_material_header.id
+        
         #比較表・ＦＡＸ
         if params[:quotation_material_header][:sent_flag] == "4"
           #見積比較表
@@ -421,7 +424,7 @@ class QuotationMaterialHeadersController < ApplicationController
         #
         
         #add230912
-        session[:quotation_material_headers_id] = @quotation_material_header.id
+        #session[:quotation_material_headers_id] = @quotation_material_header.id
         
         #binding.pry
         

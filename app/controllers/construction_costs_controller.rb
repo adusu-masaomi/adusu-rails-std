@@ -282,13 +282,17 @@ class ConstructionCostsController < ApplicationController
 	#集計表発行時にデータの初期値をセットする
     $construction_costs = @construction_cost 
     
-	#プリントフラグをセット（赤ラインか黒ライン（PDF）の切り分け用）
-	$print_type_costs = params[:construction_cost][:print_flag_hide]
-	
+    #プリントフラグをセット（赤ラインか黒ライン（PDF）の切り分け用）
+    $print_type_costs = params[:construction_cost][:print_flag_hide]
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     format.html { render :edit }
     format.pdf do
       	
-      report = ConstructionCostSummaryPDF.create @construction_costs 
+      #report = ConstructionCostSummaryPDF.create @construction_costs 
+      report = ConstructionCostSummaryPDF.create(@construction_costs, @company_id) 
         
       # ブラウザでPDFを表示する
       # disposition: "inline" によりダウンロードではなく表示させている

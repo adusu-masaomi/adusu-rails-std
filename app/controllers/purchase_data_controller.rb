@@ -288,6 +288,9 @@ class PurchaseDataController < ApplicationController
     end
     #
     
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
 	respond_to do |format|
 	  
 	  format.html
@@ -305,10 +308,10 @@ class PurchaseDataController < ApplicationController
 	
 	  format.pdf do
         
-		
-        case @print_type
+		    case @print_type
         when "1"
-          report = PurchaseListPDF.create @purchase_list 
+          #report = PurchaseListPDF.create @purchase_list
+          report = PurchaseListPDF.create(@purchase_list, @company_id)
         when "2"
           report = PurchaseListBySupplierPDF.create @purchase_list_by_supplier
         when "3"
