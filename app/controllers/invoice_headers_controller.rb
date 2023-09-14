@@ -77,6 +77,8 @@ class InvoiceHeadersController < ApplicationController
   # GET /invoice_headers/1
   # GET /invoice_headers/1.json
   def show
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /invoice_headers/new

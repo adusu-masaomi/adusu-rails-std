@@ -40,7 +40,12 @@
   <dt><font color=green><strong><%= model_class.human_attribute_name(:deposit_amount) %>:</strong></font></dt>
   <dd><%= number_to_currency(@invoice_header.deposit_amount,  precision: 0) %></dd>
   <dt><font color=green><strong><%= model_class.human_attribute_name(:payment_method_id) %>:</strong></font></dt>
-  <dd><%= InvoiceHeader.payment_method[@invoice_header.payment_method_id][0] %></dd>
+  <% if @company_id != 1 %>
+    <dd><%= InvoiceHeader.payment_method[@invoice_header.payment_method_id][0] %></dd>
+  <% else %>
+    <!--アデュース仕様-->
+    <dd><%= InvoiceHeader.payment_method_adusu[@invoice_header.payment_method_id][0] %></dd>
+  <% end %>
   <dt><font color=green><strong><%= model_class.human_attribute_name(:commission) %>:</strong></font></dt>
   <dd><%= number_to_currency(@invoice_header.commission,  precision: 0) %></dd>
   <dt><font color=green><strong><%= model_class.human_attribute_name(:payment_date) %>:</strong></font></dt>
