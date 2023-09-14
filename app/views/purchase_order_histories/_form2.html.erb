@@ -151,6 +151,9 @@
    <!--<%= f.hidden_field :construction_id, {:value => params[:construction_id] } %>-->
    <!--<%= f.hidden_field :move_flag, {:value => params[:move_flag] } %>-->
    
+   <!-- 標準版判定用-->
+    <%= f.input :company_id_hide, input_html:{id:'company_id_hide', :value => @company_id} , as: :hidden %>
+   
    <%= hidden_field_tag(:format) %>
    <%= hidden_field_tag(:print_type) %>
    
@@ -946,14 +949,19 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
     //注文書フラグをセット
     document.getElementById("print_type").value = "purchase_order";
     
-    //標準版はカット
-    //納品場所チェック
-    //delivery_place_flag = document.getElementById("delivery_place_flag").value;
-    //if (delivery_place_flag == "")
-    //{
-    //  window.confirm('納品場所を選択して下さい。');
-    //  return false;
-    //}
+    
+    company_id = document.getElementById("company_id_hide").value;
+    
+    //納品場所チェック(アデュースのみ)
+    if (company_id == 1){
+      delivery_place_flag = document.getElementById("delivery_place_flag").value;
+      if (delivery_place_flag == "")
+      {
+        window.confirm('納品場所を選択して下さい。');
+        return false;
+      }
+    }
+    //
     
     document.forms[0].target="_blank";  //add220615
     document.forms[0].submit();

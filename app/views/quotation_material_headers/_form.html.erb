@@ -263,7 +263,12 @@
    <%= hidden_field_tag(:construction_id, params[:construction_id]) %>
    <%= hidden_field_tag(:move_flag, params[:move_flag]) %>
    
+   <!--会社ID-->
+  <%= f.hidden_field :company_id, :value => @company_id, id:"company_id" %>
+  <!---->
+  
    <%= hidden_field_tag(:format) %>
+  
    
    </br></br>
 	 
@@ -899,11 +904,13 @@
       return false;
     }
    
-   //標準版はカット
-   //納品場所チェック
-   //if (after_check == true){
-   //  after_check = checkDeliveryPlace(ok_flag, flag);   
-   //}
+   //納品場所チェック((株)アデュースのみ)
+   company_id = document.getElementById("company_id").value;
+   if (company_id == 1){
+      if (after_check == true){
+        after_check = checkDeliveryPlace(ok_flag, flag);   
+      }
+    }
    
     if (after_check == true){
      //var after_check = checkSupplier(flag);

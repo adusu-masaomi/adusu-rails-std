@@ -1,7 +1,8 @@
 class InvoiceListPDF
     
   
-  def self.create invoice_list	
+  #def self.create invoice_list
+  def self.create(invoice_list, company_id)	
 	#請求一覧PDF発行
  
        #@@page_number = 0
@@ -107,7 +108,12 @@ class InvoiceListPDF
 			  payment_method = ""
 			  
 			  if invoice_header.payment_method_id.present?
-			    payment_method = InvoiceHeader.payment_method[invoice_header.payment_method_id][0]
+          if company_id != 1
+			      payment_method = InvoiceHeader.payment_method[invoice_header.payment_method_id][0]
+			    else
+            #アデュース仕様の支払方法を表示
+            payment_method = InvoiceHeader.payment_method_adusu[invoice_header.payment_method_id][0]
+          end
 			  end
 			  
 			 #現金以外なら、手数料ない場合はスペースではなくゼロを明示する

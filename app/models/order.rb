@@ -41,7 +41,9 @@ class Order < ApplicationRecord
    end
    
    def self.mail_flag 
-    [["送信済", 1]] 
+    #[["送信済", 1]] 
+     #標準はメール使えないため、変更
+     [["注文済", 1]] 
    end
    
    def self.ransackable_attributes(auth_object = nil)

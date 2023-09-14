@@ -172,8 +172,12 @@ class PurchaseOrderPDF
         check = false
         if $mail_flag == 0
         #帳票の場合
-          #if item[:_destroy] != "true"
-          if item[:_destroy] != "true" && item[:_destroy] != "1"
+          #if item[:_destroy] != "true" && item[:_destroy] != "1"
+          #upd230914
+          #帳票上も、メール送信済フラグを使う
+          if item[:_destroy] != "true" && item[:_destroy] != "1" && 
+            item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
+            
             check = true
           end
         else

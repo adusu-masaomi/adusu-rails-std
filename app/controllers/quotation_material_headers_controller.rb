@@ -187,6 +187,9 @@ class QuotationMaterialHeadersController < ApplicationController
     if !is_reload
       get_last_quotation_code_select
     end
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   #レコード毎のメール送信済みフラグを初期化する
@@ -216,6 +219,8 @@ class QuotationMaterialHeadersController < ApplicationController
     @last_header_number = Constant.where(:id => 1).
            where("id is NOT NULL").pluck(:purchase_order_last_header_code).flatten.join(" ")
    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
   
   def reset_mail_sent_flag

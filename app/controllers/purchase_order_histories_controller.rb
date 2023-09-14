@@ -309,6 +309,10 @@ class PurchaseOrderHistoriesController < ApplicationController
       @purchase_order_history.purchase_order_datum.supplier_master.id)
       
       
+      #標準版仕様--会社IDを取得
+      app_get_session_user
+    
+      
     end
 
     def get_max_seq
@@ -615,9 +619,11 @@ class PurchaseOrderHistoriesController < ApplicationController
 
         #注文書発行
         set_purchase_order(format)
-
+        
         #メール送信する
         send_email
+
+        
 
         #メール送信の場合
         if params[:purchase_order_history][:sent_flag] == "1"
@@ -646,6 +652,15 @@ class PurchaseOrderHistoriesController < ApplicationController
       end
 
     end
+
+    #add230914
+    #２重注文しないようにメール送信フラグをセット
+    if params[:purchase_order_history][:sent_flag] != "1" 
+      @order_flag = true
+      set_mail_sent_flag
+      @order_flag = false
+    end
+    #
     #
   end
 
@@ -919,7 +934,8 @@ class PurchaseOrderHistoriesController < ApplicationController
   #レコード毎にメール送信済みフラグをセットする
   def set_mail_sent_flag
 
-    if params[:purchase_order_history][:sent_flag] == "1" 
+    #if params[:purchase_order_history][:sent_flag] == "1"
+    if params[:purchase_order_history][:sent_flag] == "1" || @order_flag  #upd230914 
       if params[:purchase_order_history][:orders_attributes].present?
         params[:purchase_order_history][:orders_attributes].values.each do |item|
           item[:mail_sent_flag] = 1
@@ -983,9 +999,8 @@ class PurchaseOrderHistoriesController < ApplicationController
       save_only_flag = false
       #global set
       $purchase_order_history = @purchase_order_history 
-
       $mail_flag = 0
-
+      
       #送信済み・削除判定が必要なので現在のパラメータをセット
       $order_parameters = params[:purchase_order_history][:orders_attributes]
       
@@ -1028,6 +1043,12 @@ class PurchaseOrderHistoriesController < ApplicationController
         # type:        "application/pdf",
         # disposition: "attachment")
       end
+      
+      #add230914
+      #@order_flag = true
+      #set_mail_sent_flag
+      #@order_flag = false
+      #
       
       #pdf
       #else

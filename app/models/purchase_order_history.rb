@@ -57,6 +57,8 @@ class PurchaseOrderHistory < ApplicationRecord
     #分類(ajax明細用)
     attr_accessor :material_category_id_hide
     
+    attr_accessor :company_id_hide   #230914
+    
 	#工事画面からの遷移にて使用
 	#attr_accessor :construction_id
 	#attr_accessor :move_flag

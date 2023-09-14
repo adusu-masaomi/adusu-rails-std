@@ -29,10 +29,11 @@
   <%= f.collection_select :unit_master_id, @unit_masters.all, :id, :unit_name, {:selected => f.object.unit_master_id || 3} , 
         { class: "searchableSelect1_2" , style: 'width:50px' } %>
   
-  <!--Activemail使えないためカット
+  <!--Activemail使えないためカット-->
+  <!--二重注文にならないよう、やはり必要-->
   <%= f.select :mail_sent_flag, Order.mail_flag, {:include_blank => true}, 
        {id:'mail_sent_flag', :class => "my-custom-class", style: 'width:120px;margin-left:0px;font-size:16px;font-weight:bold;color:red;' } %>
-  -->
+  
   
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

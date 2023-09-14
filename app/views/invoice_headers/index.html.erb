@@ -168,7 +168,12 @@
           <td></td>
         <% end %>
         <% if invoice_header.payment_method_id.present? %>
-          <td align="center"><%= InvoiceHeader.payment_method[invoice_header.payment_method_id][0] %></td>
+          <%if @company_id != 1 %>
+            <td align="center"><%= InvoiceHeader.payment_method[invoice_header.payment_method_id][0] %></td>
+          <% else %>
+          <!-- (株)アデュース仕様 -->
+            <td align="center"><%= InvoiceHeader.payment_method_adusu[invoice_header.payment_method_id][0] %></td>
+          <% end %>
         <% else %>
           <td></td>
         <% end %>

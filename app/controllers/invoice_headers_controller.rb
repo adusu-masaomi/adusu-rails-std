@@ -52,7 +52,8 @@ class InvoiceHeadersController < ApplicationController
       #pdf
 	    format.pdf do
 
-        report = InvoiceListPDF.create @invoice_list 
+        #report = InvoiceListPDF.create @invoice_list
+        report = InvoiceListPDF.create(@invoice_list, @company_id) 
         
         # ブラウザでPDFを表示する
         # disposition: "inline" によりダウンロードではなく表示させている

@@ -107,9 +107,18 @@
   
   <div class="col-md-4" ,  style="margin-left : 0px;margin-top : -5px">
   <%= f.label :"支払方法", {:class => "my-custom-class-l"}  %></br>
-  <%= f.select :payment_method_id, InvoiceHeader.payment_method, {:selected => @invoice_header.payment_method_id || 0}, 
-  {id:'payment_method_id', :class => "my-custom-class", style: 'width:140px;height:30px;margin-left:-10px;margin-top:5px;font-size:16px;background-color:#ffffff;', 
-  :tabindex=>"21", :onchange => "setCommission(this.form)" } %>
+  
+  <% if @company_id != 1 %>
+    <%= f.select :payment_method_id, InvoiceHeader.payment_method, {:selected => @invoice_header.payment_method_id || 0}, 
+    {id:'payment_method_id', :class => "my-custom-class", style: 'width:140px;height:30px;margin-left:-10px;margin-top:5px;font-size:16px;background-color:#ffffff;', 
+    :tabindex=>"21", :onchange => "setCommission(this.form)" } %>
+  <%else%>
+  <!--アデュース仕様-->
+     <%= f.select :payment_method_id, InvoiceHeader.payment_method_adusu, {:selected => @invoice_header.payment_method_id || 0}, 
+    {id:'payment_method_id', :class => "my-custom-class", style: 'width:140px;height:30px;margin-left:-10px;margin-top:5px;font-size:16px;background-color:#ffffff;', 
+    :tabindex=>"21", :onchange => "setCommission(this.form)" } %>
+  <%end%>
+  
   </div>
   
   <div class="col-md-3" ,  style="margin-left : -50px;margin-top : -10px">
@@ -142,6 +151,9 @@
   
   <%= f.input :customer_id_hide, input_html:{id:'customer_id_hide'}, as: :hidden  %>
   
+  <!--会社ID-->
+  <%= f.hidden_field :company_id, :value => @company_id, id:"company_id" %>
+  <!---->
   
   <input type="button" onclick="submit();" class = 'btn btn-primary' value="登録する" tabindex="25"/>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
@@ -275,10 +287,24 @@
     var payment_method = document.getElementById("payment_method_id").value;
 	payment_method = parseInt(payment_method)
 	
+	   company_id = document.getElementById("company_id").value;
+     check = false;
+     if (company_id != 1){
+       //標準仕様
+       if (payment_method == 1 || payment_method == 3){
+         check = true;
+       }
+     }else{
+       //アデュース仕様
+       if (payment_method > 1){
+         check = true;
+       }
+     }
+	
     //if (payment_method != "0"){
     //if (payment_method > 1){
-    //upd230914
-    if (payment_method == 1 || payment_method == 3){   
+    //if (payment_method == 1 || payment_method == 3){
+    if (check == true){
       //現金以外
       var obj1 = document.getElementById("billing_amount");
       var obj2 = document.getElementById("deposit_amount");
@@ -287,14 +313,14 @@
         //test
         billing_amount_tax_in = setTaxIn(f, obj1.value)
       
-	    //billing_amount_tax_in = parseInt(obj1.value * CONSUMPTION_TAX_INCLUDE);
+	      //billing_amount_tax_in = parseInt(obj1.value * CONSUMPTION_TAX_INCLUDE);
 	    
-		//upd170727
+		    //upd170727
         //var commission = obj1.value - obj2.value;
-		var commission = billing_amount_tax_in - obj2.value;
-	    document.getElementById("commission").value = commission;
+		   var commission = billing_amount_tax_in - obj2.value;
+	      document.getElementById("commission").value = commission;
       }
-	}else{
+	  }else{
       //現金の場合は、０をセット（必要ないかも）
       document.getElementById("commission").value = 0;
 	}
