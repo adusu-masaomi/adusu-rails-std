@@ -24,11 +24,14 @@
   
   </br>
   
-  <!--geeqとなっておりイマイチなので、カット-->
-  <!--<%= f.label :update_at, '入力日' %>-->
-  <!--value~の部分は本来いらないが、入力後に日付を消したいために、あえてするVer-->
-  <!--<%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datepicker", include_blank: true , size: "12", id: 'update_start'   %>-->
-  <!--<%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datetimepicker", include_blank: true , size: "12", id: 'update_start'   %>-->
+  <!--gteqとなっておりイマイチなので、カット-->
+  <!--(株)アデュースのみ復活-->
+  <% if @company_id == 1 %>
+  <%= f.label :update_at, '入力日' %>
+    <!--value~の部分は本来いらないが、入力後に日付を消したいために、あえてするVer-->
+    <!--<%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datepicker", include_blank: true , size: "12", id: 'update_start'   %>-->
+    <%= f.text_field :updated_at_gteq, as: :datepicker, :value=> (f.object.update_at.strftime("%Y/%m/%d") if f.object.updated_at), class:"input-append date datetimepicker", include_blank: true , size: "12", id: 'update_start'   %>
+  <% end %>
   
   <!--restore 220221-->
   <%= f.label :working_date, '作業日' %>

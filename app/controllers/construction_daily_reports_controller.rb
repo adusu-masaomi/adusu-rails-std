@@ -85,6 +85,10 @@ class ConstructionDailyReportsController < ApplicationController
     @staff = Staff.all
     # @staff_pay = Staff.all
     
+    #ログイン中のUser確認(Standard)
+    #add230913
+    app_get_session_user
+        
     respond_to do |format|
       format.html
       format.csv { send_data @construction_daily_reports.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
@@ -95,9 +99,6 @@ class ConstructionDailyReportsController < ApplicationController
       #$outsoucing_staff = nil   
       @outsourcing_staff = nil
       
-      #ログイン中のUser確認(Standard)
-      #add230913
-      app_get_session_user
       
       format.pdf do
         case params[:pdf_flag] 

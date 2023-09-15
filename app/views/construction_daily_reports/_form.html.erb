@@ -20,7 +20,7 @@
   <!--<%= f.input :working_date , input_html:{id: "working_date" , class: "test", style: 'width:220px' , :tabindex=>"0" } , as: :date_picker %>-->
   <!--<%= f.input :working_date , as: :string, input_html:{id: "working_date" , class: "date-picker", style: 'width:120px' , :tabindex=>"0" }  %>-->
   <!--<%= f.input :working_date , as: :datepicker, input_html:{id: "working_date" , class:"datepicker", style: 'width:120px' , :tabindex=>"0", dateInputFormat: 'yyyy-MM-dd' }  %>-->
-  <%= f.input :working_date , as: :string, input_html:{id: "working_date" , style: 'width:120px' , class:"datetimepicker", :tabindex=>"0" }  %>
+  <%= f.input :working_date , as: :string, input_html:{id: "working_date" , style: 'width:120px' , class:"datetimepicker", :tabindex=>"0", autocomplete: 'off' }  %>
   
   <!--下記だと工事日がうまく更新されないので保留・・・-->
   <!--<%= f.input :working_date , input_html:{id: "working_date" , style: 'width:220px'}  %>-->
@@ -315,9 +315,15 @@
      }
 
      //calcWorkTime.call(); 
-     var tmp_kinmu_time = 0;
-     kinmu_time = calcWorkTime(tmp_kinmu_time); 
+     //標準版仕様---会社ID取得
+     company_id = document.getElementById("company_id").value
      
+     var tmp_kinmu_time = 0;
+     if (company_id != 1){
+       kinmu_time = calcWorkTime(tmp_kinmu_time); 
+     }else{
+       kinmu_time = calcWorkTimeAdusu(tmp_kinmu_time);
+     }
      //テキストへセット
      document.getElementById("working_times").value = kinmu_time + kinmu_time_2 ;  
      
@@ -552,9 +558,15 @@
            end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
         }
      }
-       
+        //標準版仕様---会社ID取得
+        company_id = document.getElementById("company_id").value
+         
         var tmp_kinmu_time = 0;
-        kinmu_time_2 = calcWorkTime(tmp_kinmu_time); 
+        if (company_id != 1){
+          kinmu_time_2 = calcWorkTime(tmp_kinmu_time); 
+        }else{
+          kinmu_time_2 = calcWorkTimeAdusu(tmp_kinmu_time);
+        }
        
        //再編集時の場合の処理追加. 勤務時間1を再セットする。 
        if (kinmu_time == 0 && document.getElementById("start_time_1").value > 0 && document.getElementById("end_time_1").value > 0 ) {
@@ -961,6 +973,40 @@
   
    }
    
+   
+  function calcWorkTimeAdusu(tmp_kinmu_time){
+    // 勤務時間の計算
+    if (start_time >= 18000 & start_time <= 32400 & end_time >= 61200 & end_time <= 86400){
+      // フルタイム勤務に近ければ、休憩時間を単純にマイナスする。
+      tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 7200; 
+     
+      //add170328
+      //終了時間が18時以降なら、勤務時間を３０分マイナス（１日勤務とするため）
+      //if (end_time == 64800){
+      //  tmp_kinmu_time -= 1800;
+      //}
+      //} else if (start_time >= 18000 & start_time <= 32400 & end_time > 57600 & end_time < 61200){
+    } else if (start_time >= 18000 & start_time <= 32400 & end_time > 50400 & end_time < 61200){
+      // フルタイム勤務に近ければ、休憩時間をマイナスする(但し小休憩は引かない) 161207 end=16:00以降→14:00以降に変更
+      tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 3600; 
+    } else if (start_time >= 55800 & start_time <= 86400 & end_time >= 0 & end_time <= 28800){
+      //tmp_kinmu_time = tmp_kinmu_time + 86400 - end_time + start_time;
+      //upd 170303
+      tmp_kinmu_time = tmp_kinmu_time + 86400 - start_time + end_time ;  
+    } else if (start_time >= 34200 & start_time <= 37800 & end_time >= 55800 & end_time <= 86400){
+      //add170328  9:30~10:30 ~ の勤務は、昼と、１５時休憩をマイナスする。
+      tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 5400; 
+    } else if (start_time >= 39600 & start_time <= 43200 & end_time >= 55800 & end_time <= 86400){
+      //add170328  11:00 ~ の勤務は、昼休憩のみをマイナスする。→しない！！
+      //200608 restore 11:00~18:00のような勤務が１日扱いになるので
+      tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 3600; 
+    } else {
+      tmp_kinmu_time = tmp_kinmu_time + end_time - start_time;   
+    }
+    
+    return tmp_kinmu_time;
+  
+  }
    
    function calcBreakTime(break_time_start_time, break_time_end_time){
      break_time = 0;
