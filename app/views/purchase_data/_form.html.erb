@@ -553,9 +553,12 @@
        //単価・金額(非表示)
        //visibleOffOnShipping(false);
        //
-       
+     var company_id = document.getElementById("company_id_hide").value;
+     
+     //debugger;
+     
 	   //かつ、在庫マスターの単価を持ってくる！！
-	   getInventoryUnitPricesAndSupplier();
+	   getInventoryUnitPricesAndSupplier(company_id);
 	   
        //add200701
        //出庫時の単価(2)の計算
@@ -595,7 +598,12 @@
      }
      
      document.getElementById("purchase_unit_price").style.display = cond;
-     document.getElementById("purchase_unit_price2").style.display = cond;
+     
+     //upd
+     if (document.getElementById("purchase_unit_price2") != null){
+       document.getElementById("purchase_unit_price2").style.display = cond;
+     }
+     
      document.getElementById("purchase_amount").style.display = cond;
      document.getElementById("list_price").style.display = cond;
      //checkbox
@@ -610,8 +618,7 @@
      //出庫の場合、仕入区分も”出庫”にする
        
 	 if (inventory_division_id == INDEX_INVENTORY_SHIPPING){
-	    debugger;
-	    
+	    	    
 	    if (document.getElementById("company_id_hide").value != 1){
 	      document.getElementById("division_id").value = INDEX_DIVISION_SHIPPING;
 	    }else{
@@ -624,15 +631,17 @@
          index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
        }else{
           //upd230915
+         //index = 2;
          index = 10;  //(株)アデュース仕様 自社のID
        }
        $(".searchableSupplier").val(index).trigger("change"); 
        
        //標準版仕様---非表示にはしない
        //visibleOffOnShipping(false);
-       
+       var company_id = document.getElementById("company_id_hide").value;
        //かつ、在庫マスターの単価を持ってくる！！
-       getInventoryUnitPricesAndSupplier();
+       
+       getInventoryUnitPricesAndSupplier(company_id);
        
        //add200701
        //出庫時の単価の計算
@@ -662,13 +671,13 @@
    }
    
    //在庫Mより現在単価・業者を取得する（出庫の場合に取得する）--ajax利用
-   function getInventoryUnitPricesAndSupplier() {
+   function getInventoryUnitPricesAndSupplier(company_id) {
      material_id = document.getElementById("material_id").value;
      
      if (material_id != "")
      {
 	    $.get("<%= inventoriez_get_unit_price_path %>",
-          {material_id: material_id },
+          {material_id: material_id, company_id: company_id },
           function(data){
 		    obj = document.getElementById("unit_price_hide").textContent;
 			//obj = document.getElementById("unit_price_hide").textContent;

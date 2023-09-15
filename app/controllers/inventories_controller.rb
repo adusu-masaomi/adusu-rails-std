@@ -1255,9 +1255,19 @@ class InventoriesController < ApplicationController
   def get_unit_price
     record = Inventory.where(material_master_id: params[:material_id]).first
   	
-      
+   
+  
+  company_id =  params[:company_id]   #標準仕様
+  if company_id != "1"
+    supplier_own_company = $SUPPLIER_MASER_ID_OWN_COMPANY
+  else
+    #アデュース仕様
+    supplier_own_company = 10
+  end
+
   if record.present?
-    #@current_unit_price = record.current_unit_price
+    
+        #@current_unit_price = record.current_unit_price
     #@inventory_id = record.id   #idをセット add171128
     
     #@current_unit_price = record.last_unit_price
@@ -1271,11 +1281,12 @@ class InventoriesController < ApplicationController
     #@supplier  = SupplierMaster.where(:id => record.supplier_master_id).where("id is NOT NULL").pluck("supplier_name, id")
     #200627
     #ここで仕入先を自社にする。
-    @supplier  = SupplierMaster.where(:id => $SUPPLIER_MASER_ID_OWN_COMPANY).where("id is NOT NULL").pluck("supplier_name, id")
+    #@supplier  = SupplierMaster.where(:id => $SUPPLIER_MASER_ID_OWN_COMPANY).where("id is NOT NULL").pluck("supplier_name, id")
+    @supplier  = SupplierMaster.where(:id => supplier_own_company).where("id is NOT NULL").pluck("supplier_name, id")
     @supplier += SupplierMaster.all.pluck("supplier_name, id")
   else
       #自社にする
-      @supplier  = SupplierMaster.where(:id => $SUPPLIER_MASER_ID_OWN_COMPANY).where("id is NOT NULL").pluck("supplier_name, id")
+      @supplier  = SupplierMaster.where(:id => supplier_own_company).where("id is NOT NULL").pluck("supplier_name, id")
     
       @supplier += SupplierMaster.all.pluck("supplier_name, id")
       #@supplier = SupplierMaster.all.pluck("supplier_name, id")
