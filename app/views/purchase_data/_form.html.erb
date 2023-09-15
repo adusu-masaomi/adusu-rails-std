@@ -496,10 +496,20 @@
      
      //add200702
      division_id = document.getElementById("division_id").value;
-	 division_id = parseInt(division_id);
-     if (division_id == INDEX_DIVISION_SHIPPING) {
+     division_id = parseInt(division_id);
+     //
+     var company_id = document.getElementById("company_id_hide").value;
+     if (company_id != 1){
+       division_id_shipping = INDEX_DIVISION_SHIPPING;
+     }else{
+       division_id_shipping = INDEX_DIVISION_SHIPPING + 1;
+     }
+     //
+     //if (division_id == INDEX_DIVISION_SHIPPING) {
+     if (division_id == division_id_shipping) {
        //単価・金額(非表示)
-       visibleOffOnShipping(false);
+       //標準版は非表示にしない。
+       //visibleOffOnShipping(false);
      }
      //
      
@@ -533,7 +543,16 @@
 	 inventory_division_id = document.getElementById("inventory_division_id").value;
 	 inventory_division_id = parseInt(inventory_division_id);
 	 
-	 if (division_id == INDEX_DIVISION_SHIPPING) {
+	 var company_id = document.getElementById("company_id_hide").value;
+   if (company_id != 1){
+      division_id_shipping = INDEX_DIVISION_SHIPPING;
+   }else{
+      //アデュース仕様
+        division_id_shipping = INDEX_DIVISION_SHIPPING + 1;
+   }
+	 
+	 //if (division_id == INDEX_DIVISION_SHIPPING) {
+   if (division_id == division_id_shipping) {
 	   document.getElementById("unit_price_not_update_flag").checked = true;
 	   //在庫区分も”出庫”にする
 	   //document.getElementById("inventory_division_id").selectedIndex = INDEX_INVENTORY_SHIPPING;
@@ -865,7 +884,15 @@
    //出庫の場合のみ、在庫の単価・業者を取得
    function setInventoriesInfo(){
      division_id = document.getElementById("division_id").value;
-     if (division_id == INDEX_DIVISION_SHIPPING) {
+     var company_id = document.getElementById("company_id_hide").value;
+     if (company_id != 1){
+       division_id_shipping = INDEX_DIVISION_SHIPPING;
+     }else{
+       division_id_shipping = INDEX_DIVISION_SHIPPING + 1;
+     }
+      
+     //if (division_id == INDEX_DIVISION_SHIPPING) {
+     if (division_id == division_id_shipping) {
        getInventoryUnitPricesAndSupplier();
        
      }
@@ -905,10 +932,17 @@
       division_id = document.getElementById("division_id").value;
       //if (division_id == INDEX_DIVISION_SHIPPING) {
       
+      var company_id = document.getElementById("company_id_hide").value;
+      if (company_id != 1){
+        division_id_shipping = INDEX_DIVISION_SHIPPING;
+      }else{
+        division_id_shipping = INDEX_DIVISION_SHIPPING + 1;
+      }
       
 	  //if (material_id > 1) {
       //upd200629  出庫の場合は除く
-      if (material_id > 1 && division_id != INDEX_DIVISION_SHIPPING) {
+      //if (material_id > 1 && division_id != INDEX_DIVISION_SHIPPING) {
+      if (material_id > 1 && division_id != division_id_shipping) {
 	  
         $.get("<%= purchase_datum_unit_price_select_path %>",
             { supplier_id: supplier_id, material_id: material_id },
@@ -1073,7 +1107,16 @@
     //add200629
     //出庫の場合は、次の単価になってないか見る必要がある
     division_id = document.getElementById("division_id").value;
-    if (division_id == INDEX_DIVISION_SHIPPING) {
+    //
+    var company_id = document.getElementById("company_id_hide").value;
+    if (company_id != 1){
+      division_id_shipping = INDEX_DIVISION_SHIPPING;
+    }else{
+      division_id_shipping = INDEX_DIVISION_SHIPPING + 1;
+    }
+    //
+    //if (division_id == INDEX_DIVISION_SHIPPING) {
+    if (division_id == division_id_shipping) {
       var material_id = document.getElementById("material_id").value;
       var quantity = document.getElementById("quantity").value;
       var id = document.getElementById("id").value;
