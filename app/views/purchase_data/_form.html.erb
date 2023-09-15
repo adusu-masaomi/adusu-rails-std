@@ -114,10 +114,10 @@
     <%= f.input :quantity , label: "数量" , input_html:{ id: "quantity", style: 'width:220px;' , :tabindex=>"12" , :onfocusout => "calcMoney(this.form)" } %>
   </div>
   
-  <!--標準版はカット
+  <!--標準版はカット→やはり表示 -->
   <%= f.input :quantity2 , label: "数量(在庫時)" , input_html:{ id: "quantity2", :tabindex=>"20", style: 'width:100px;' } %>
-  -->
-  </br></br></br></br></br>
+  
+  <!--</br></br></br></br></br>-->
   
   <!--<%= link_to (button_tag "ボタン", type: 'button'), {:onclick => "calcMoney(this.form)"} %></br>-->
   <%= f.label :単位, {:class => "my-custom-class-l"}  %></br>
@@ -127,10 +127,10 @@
     <%= f.input :purchase_unit_price, label: "仕入単価", input_html:{id:"purchase_unit_price", :tabindex=>"14" ,  style: 'width:220px;' , :onfocusout => "calcMoney(this.form)" } %>
   </div>
   
-  <!--標準版はカット
+  <!--標準版はカット→やはり表示-->
   <%= f.input :purchase_unit_price2, label: "単価２(在庫時)", input_html:{id:"purchase_unit_price2", :tabindex=>"21", style: 'width:100px;' } %>
-  -->
-  </br></br></br></br></br>
+  
+  <!--</br></br></br></br></br>-->
   
   <!--標準版はカット
   <div class="col-lg-6" , style="margin-left : -15px">
