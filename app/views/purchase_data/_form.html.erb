@@ -540,8 +540,13 @@
 	   document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;
 	   
        //upd200630
-       var index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
-       
+       var index = 0;
+       if (document.getElementById("company_id_hide").value != 1){
+         index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
+       }else{
+         //upd230915
+         index = 10;  //(株)アデュース仕様 自社のID
+       }
        $(".searchableSupplier").val(index).trigger("change"); 
        
        //標準版仕様---非表示にしない
@@ -583,8 +588,12 @@
      }else{
        cond = "block";   //表示
      }
-          
-     document.getElementById("quantity2").style.display = cond;
+     
+     //標準版はカット(upd230915)
+     if (document.getElementById("quantity2") != null){
+       document.getElementById("quantity2").style.display = cond;
+     }
+     
      document.getElementById("purchase_unit_price").style.display = cond;
      document.getElementById("purchase_unit_price2").style.display = cond;
      document.getElementById("purchase_amount").style.display = cond;
@@ -599,14 +608,24 @@
    function uncheckUnitPriceInventory(){
      inventory_division_id = document.getElementById("inventory_division_id").value;
      //出庫の場合、仕入区分も”出庫”にする
+       
 	 if (inventory_division_id == INDEX_INVENTORY_SHIPPING){
+	    debugger;
+	    
 	    if (document.getElementById("company_id_hide").value != 1){
-	      //アデュース仕様
-        document.getElementById("division_id").value = INDEX_DIVISION_SHIPPING;
+	      document.getElementById("division_id").value = INDEX_DIVISION_SHIPPING;
 	    }else{
+        //アデュース仕様
         document.getElementById("division_id").value = INDEX_DIVISION_SHIPPING + 1;
       }
-       var index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
+      
+       var index = 0;
+       if (document.getElementById("company_id_hide").value != 1){
+         index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
+       }else{
+          //upd230915
+         index = 10;  //(株)アデュース仕様 自社のID
+       }
        $(".searchableSupplier").val(index).trigger("change"); 
        
        //標準版仕様---非表示にはしない

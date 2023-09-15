@@ -484,6 +484,9 @@ class PurchaseDataController < ApplicationController
       #add180223
       #伝票が登録済みかチェック
       check_complete_flag
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   #add180224
@@ -514,6 +517,9 @@ class PurchaseDataController < ApplicationController
     #add180223
     #伝票が登録済みかチェック
     check_complete_flag
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /purchase_data
