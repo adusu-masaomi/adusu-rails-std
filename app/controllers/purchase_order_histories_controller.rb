@@ -365,19 +365,35 @@ class PurchaseOrderHistoriesController < ApplicationController
         
         #binding.pry
         
-        if $id.present?
-          @purchase_order_data  = PurchaseOrderDatum.find($id)
-        elsif params[:purchase_order_history].present? && 
-              params[:purchase_order_history][:purchase_order_datum_id].present?
-          @purchase_order_data  = PurchaseOrderDatum.find(params[:purchase_order_history][:purchase_order_datum_id])
-        elsif params[:id].present?
+        #if $id.present?
+        #  @purchase_order_data  = PurchaseOrderDatum.find($id)
+        #elsif params[:purchase_order_history].present? && 
+        #      params[:purchase_order_history][:purchase_order_datum_id].present?
+        #  @purchase_order_data  = PurchaseOrderDatum.find(params[:purchase_order_history][:purchase_order_datum_id])
+        #elsif params[:id].present?
+        #  #予期せぬID??
+        #  #@purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+        #  #upd230707
+        #  if PurchaseOrderDatum.where(:id => params[:id]).exists?
+        #    @purchase_order_data  = PurchaseOrderDatum.find(params[:id])
+        #  end
+        #end
+        #upd230915
+        if params[:id].present?
           #予期せぬID??
           #@purchase_order_data  = PurchaseOrderDatum.find(params[:id])
           #upd230707
           if PurchaseOrderDatum.where(:id => params[:id]).exists?
             @purchase_order_data  = PurchaseOrderDatum.find(params[:id])
           end
+        elsif $id.present?  #古いIDの場合有、注意...
+          @purchase_order_data  = PurchaseOrderDatum.find($id)
+        elsif params[:purchase_order_history].present? && 
+              params[:purchase_order_history][:purchase_order_datum_id].present?
+          @purchase_order_data  = PurchaseOrderDatum.find(params[:purchase_order_history][:purchase_order_datum_id])
         end
+        
+        
         #if params[:id].present?
         #  #↑変なIDが来る？？
         #  #@purchase_order_data  = PurchaseOrderDatum.find(params[:id])
