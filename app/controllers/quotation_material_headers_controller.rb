@@ -143,6 +143,8 @@ class QuotationMaterialHeadersController < ApplicationController
     #新規は昇順、編集は降順。
     @form_detail_order = "sequential_id ASC"
   
+   # binding.pry
+  
     #コード参照元がある場合、セットする。
     if $quotation_material_header.present?
       #ここは現在通らない??(カットしても良い?)
@@ -168,6 +170,7 @@ class QuotationMaterialHeadersController < ApplicationController
         @quotation_material_header = QuotationMaterialHeader.new
       else
         #リロードした場合 #add230912
+        
         @quotation_material_header = QuotationMaterialHeader.where(id: session[:quotation_material_headers_id]).first
         session[:quotation_material_headers_id] = nil
         if @quotation_material_header.nil?
@@ -212,6 +215,8 @@ class QuotationMaterialHeadersController < ApplicationController
     #レコード毎のメール送信済みフラグを初期化するためのフラグをセット(一時用)
     reset_mail_sent_flag
 
+    #binding.pry
+
     #連番の最大値を取る(フォーム用)
     get_max_seq
   
@@ -221,6 +226,12 @@ class QuotationMaterialHeadersController < ApplicationController
    
     #標準版仕様--会社IDを取得
     app_get_session_user
+    
+    #リロード用のセッションが残っている場合は、空にする
+    if session[:quotation_material_headers_id].present?
+      session[:quotation_material_headers_id] = nil
+    end
+    
   end
   
   def reset_mail_sent_flag
