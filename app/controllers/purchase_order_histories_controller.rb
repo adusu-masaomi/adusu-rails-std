@@ -602,6 +602,16 @@ class PurchaseOrderHistoriesController < ApplicationController
 
       end
     end
+    
+    #add230914
+    #２重注文しないようにメール送信フラグをセット
+    if params[:purchase_order_history][:sent_flag] != "1" 
+      @order_flag = true
+      set_mail_sent_flag
+      @order_flag = false
+    end
+    #
+    
   end
 
   # PATCH/PUT /purchase_order_histories/1
