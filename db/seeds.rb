@@ -29,4 +29,19 @@ require "csv"
 #   password_digest: '$2a$12$txtWNUkWEoNnmHkz2skkwu/8wLJpy3rp/.bgzAhAQykBhKBGVfvbC'
 #)
 
-#(株)アデュース　データ移行用(社内sys→render.com)
+#最新必須
+#purchase_order_data
+CSV.foreach('db/purchase_order_data.csv') do |row|
+  PurchaseOrderDatum.create do |p|
+    p.id = row[0]
+    p.purchase_order_code = row[1]
+    p.construction_datum_id = row[2]
+    p.supplier_master_id = row[3]
+    p.supplier_responsible_id = row[4]
+    p.alias_name = row[5]
+    p.purchase_order_date = row[6]
+    p.mail_sent_flag = row[7]
+    p.created_at = row[8]
+    p.updated_at = row[9]
+  end
+end

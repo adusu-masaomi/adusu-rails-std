@@ -9,6 +9,8 @@ class PurchaseOrderDatum < ApplicationRecord
   accepts_nested_attributes_for :construction_datum, update_only: true
     
   belongs_to :supplier_master
+  #一時的にオフ
+  #belongs_to :supplier_master, optional: true
   accepts_nested_attributes_for :supplier_master, update_only: true
 
   #add210703
@@ -42,7 +44,7 @@ class PurchaseOrderDatum < ApplicationRecord
     
   #add210703
   #attr_accessor :supplier_responsible_email
-    
+   
   #validation
   validates :purchase_order_code, presence: true, uniqueness: true
   validate :check_supplier   #add210727

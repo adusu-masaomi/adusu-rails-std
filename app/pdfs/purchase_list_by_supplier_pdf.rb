@@ -16,13 +16,16 @@ class PurchaseListBySupplierPDF
         @purchase_amount_subtotal = 0
         @purchase_amount_total = 0
 
+        
         #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum| 
         
         #$purchase_data.joins(:purchase_order_datum).order("purchase_date, purchase_order_code, id").each do |purchase_datum|
         #rails6対応
-        $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").
+        #$purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").
+        #  order("purchase_data.purchase_date, purchase_order_data.purchase_order_code, purchase_data.id").each do |purchase_datum| 
+        #upd230919
+        $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").
           order("purchase_data.purchase_date, purchase_order_data.purchase_order_code, purchase_data.id").each do |purchase_datum| 
-        
           
         #ソート順は仕入日、注文ナンバーの順とする。
 		
@@ -123,10 +126,12 @@ class PurchaseListBySupplierPDF
                        #数量は小数点の場合あり、その場合で表示を切り分ける。
                        quantity = ""
                        first, second = purchase_datum.quantity.to_s.split('.')
-                       if second.to_i > 0
-                         quantity = sprintf("%.2f", purchase_datum.quantity)
-                       else
-                         quantity = sprintf("%.0f", purchase_datum.quantity)
+                       if purchase_datum.quantity.present?
+                         if second.to_i > 0
+                           quantity = sprintf("%.2f", purchase_datum.quantity)
+                         else
+                           quantity = sprintf("%.0f", purchase_datum.quantity)
+                         end
                        end
                        #
 					   

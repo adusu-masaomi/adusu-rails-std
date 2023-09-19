@@ -258,6 +258,8 @@ class PurchaseDataController < ApplicationController
 	#global set
 	$purchase_data = @purchase_data
 	
+	#binding.pry
+	
     #####
     #検索用のパラメータがセットされていたら、グローバルにもセットする
     #if params[:q].present?

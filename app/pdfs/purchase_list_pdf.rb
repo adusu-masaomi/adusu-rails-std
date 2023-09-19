@@ -60,8 +60,9 @@ class PurchaseListPDF
       
       #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum| 
       #postgreSQL仕様
-      $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
-       
+      #$purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
+      #upd230919
+      $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
 		 #---見出し---
          page_count = report.page_count.to_s + "頁"
 		 report.page.item(:pageno).value(page_count)
@@ -102,6 +103,22 @@ class PurchaseListPDF
                               row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
                                           purchase_amount: @purchase_amount_subtotal
                                           row2.item(:lbl_unit_price_multi).visible(false)  #add200716
+                                          
+               if company_id == 1
+                 
+                 row2.item(:line_2).style(:border_color, 'red')
+                 row2.item(:line_14).style(:border_color, 'red')
+                 row2.item(:line_15).style(:border_color, 'red')
+                 row2.item(:line_16).style(:border_color, 'red')
+                 row2.item(:line_17).style(:border_color, 'red')
+                 row2.item(:line_18).style(:border_color, 'red')
+                 row2.item(:line_19).style(:border_color, 'red')
+                 row2.item(:line_20).style(:border_color, 'red')
+                 row2.item(:line_21).style(:border_color, 'red')
+                 row2.item(:line_22).style(:border_color, 'red')
+                 row2.item(:line_23).style(:border_color, 'red')
+                 row2.item(:line_24).style(:border_color, 'red')
+              end
             end
 			@purchase_amount_subtotal = 0
 		  end
@@ -266,6 +283,7 @@ class PurchaseListPDF
            
             #(株)アデュース仕様　色を変える(明細側)
                if company_id == 1
+                 
                  row2.item(:line_2).style(:border_color, 'red')
                  row2.item(:line_14).style(:border_color, 'red')
                  row2.item(:line_15).style(:border_color, 'red')
@@ -297,6 +315,7 @@ class PurchaseListPDF
                 
           #(株)アデュース仕様　色を変える(明細側)
           if company_id == 1
+             
              row2.item(:line_2).style(:border_color, 'red')
              row2.item(:line_14).style(:border_color, 'red')
              row2.item(:line_15).style(:border_color, 'red')
