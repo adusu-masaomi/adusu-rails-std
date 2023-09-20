@@ -97,8 +97,10 @@
   <!--210709 tabを削った -->
   <!--margin-top : +20px追加230712-->
   <div class="col-md-3" , style="margin-left : 90px;margin-top : 20px">
-    <%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datepicker", 
-           style: 'width:120px'  }  %>
+    <!--<%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datepicker", 
+           style: 'width:120px'  }  %>-->
+    <%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datetimepicker", 
+           style: 'width:120px'  }, autocomplete: 'off' %>
   </div>
  
   <!--210709 tabを削った -->
@@ -108,8 +110,10 @@
   </div>
   <!--margin-top : +20px追加230712-->
   <div class="col-md-3" , style="margin-left : -130px;margin-top : 20px">
-    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
-           style: 'width:120px'  }  %>
+    <!--<%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
+           style: 'width:120px'  }  %>-->
+    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker", 
+           style: 'width:120px'  }, autocomplete: 'off' %>
   </div>
   
   </br></br></br></br></br></br>
@@ -136,9 +140,9 @@
   <%= f.input :execution_amount, hint: "＊自動計算されます。手入力可。", input_html:{ id:"execution_amount", :tabindex=>"26"}  %>
   
   <%= f.check_box :fixed_flag %> 
-  <!--<%= f.label :fixed_flag, "確定済み(確定後に自動チェックされます。解除のみ操作可能です。)", {style: 'color: blue', :tabindex=>"27"} %>-->
+  <%= f.label :fixed_flag, "確定済み(確定後に自動チェックされます。解除のみ操作可能です。)", {style: 'color: blue', :tabindex=>"27"} %>
   <!--標準仕様-->
-  <%= f.label :fixed_flag, "確定済み", {style: 'color: blue', :tabindex=>"27"} %>
+  <!--<%= f.label :fixed_flag, "確定済み", {style: 'color: blue', :tabindex=>"27"} %>-->
   </br>
   
   <%= f.input :customer_id_hide, input_html:{id:'customer_id_hide'}, as: :hidden  %>

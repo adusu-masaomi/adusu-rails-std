@@ -38,7 +38,7 @@
 <!--"見積書(プレビュー)PDF"をリネーム-->
 <%= link_to "　　見積書PDF　　",
             quotation_detail_large_classifications_path(quotation_header_id: params[:quotation_header_id], print_type: "1", format: "pdf"),
-            :class => 'btn btn-green500_ftg keep-disp' , :target=>["_blank"] %>
+            :class => 'btn btn-green500_ftg keep-disp' , :target=>["_blank"], :onclick => "submitAfterValidation()" %>
 <%= link_to "見積書(単価抜)PDF",
             quotation_detail_large_classifications_path(quotation_header_id: params[:quotation_header_id], print_type: "4", format: "pdf"),
             :class => 'btn btn-cyan500_ftg keep-disp' , :target=>["_blank"] %>

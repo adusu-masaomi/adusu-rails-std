@@ -41,7 +41,7 @@
 <!--"納品書(プレビュー)PDF"をリネーム-->
 <%= link_to "　　納品書PDF　　",
             delivery_slip_detail_large_classifications_path($delivery_slip_detail_large_classifications, delivery_slip_header_id: params[:delivery_slip_header_id], print_type: "1",  format: "pdf" ),
-            :class => 'btn btn-red400_ftg keep-disp' , :target=>["_blank"] %>
+            :class => 'btn btn-red400_ftg keep-disp' , :target=>["_blank"], :onclick => "submitAfterValidation()" %>
 <!--
 <%= link_to "納品書(提出／印付)PDF",
             delivery_slip_detail_large_classifications_path($delivery_slip_detail_large_classifications, delivery_slip_header_id: params[:delivery_slip_header_id], print_type: "3",  format: "pdf" ),

@@ -80,16 +80,20 @@
     <%= f.input :construction_period, label:"工事期間（文字）" , input_html:{:tabindex=>"16"}  %>
   </div>
   <div class="col-md-3" , style="margin-left : 90px">
-    <%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datepicker", 
-           style: 'width:120px' , :tabindex=>"17" }  %>
+    <!--<%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datepicker", 
+           style: 'width:120px' , :tabindex=>"17" }  %>-->
+    <%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datetimepicker", 
+           style: 'width:120px' , :tabindex=>"17" }, autocomplete: 'off' %>
   </div>
  
   <div class="col-md-3" , style="margin-left : -30px ;margin-top : 35px">
     <%= f.label :〜, {:class => "my-custom-class-l"}  %>
   </div>
   <div class="col-md-3" , style="margin-left : -130px">
-    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
-           style: 'width:120px' , :tabindex=>"18" }  %>
+    <!--<%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
+           style: 'width:120px' , :tabindex=>"18" }  %>-->
+    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker", 
+           style: 'width:120px' , :tabindex=>"18" }, autocomplete: 'off' %>
   </div>
   </br></br></br>
   
@@ -123,9 +127,9 @@
   <%= f.input :execution_amount, hint: "＊自動計算されます。手入力可。", input_html:{id:"execution_amount", :tabindex=>"24"}  %>
 
   <%= f.check_box :fixed_flag %> 
-  <!--<%= f.label :fixed_flag, "確定済み(確定後に自動チェックされます。解除のみ操作可能です。)", {style: 'color: blue', :tabindex=>"25"} %>-->
+  <%= f.label :fixed_flag, "確定済み(確定後に自動チェックされます。解除のみ操作可能です。)", {style: 'color: blue', :tabindex=>"25"} %>
   <!--標準版仕様-->
-  <%= f.label :fixed_flag, "確定済み", {style: 'color: blue', :tabindex=>"25"} %>
+  <!--<%= f.label :fixed_flag, "確定済み", {style: 'color: blue', :tabindex=>"25"} %>-->
   </br>
 
   <!--得意先M-->
