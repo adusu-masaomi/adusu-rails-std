@@ -944,25 +944,33 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
 
  function submitPurchaseOrder()
  {
+ 
+   //数量チェック(add230920)
+   var after_check = checkQuantity(true);
+   if (after_check == false){
+     return false;
+   }
+   //
+   
+   //
+   company_id = document.getElementById("company_id_hide").value;
+    
+   //納品場所チェック(アデュースのみ)
+   if (company_id == 1){
+     delivery_place_flag = document.getElementById("delivery_place_flag").value;
+     if (delivery_place_flag == "")
+     {
+       window.confirm('納品場所を選択して下さい。');
+       return false;
+     }
+   }
+   //
+ 
    if (window.confirm('注文書を発行しますか？')) {
     document.getElementById("format").value = "pdf";
     //注文書フラグをセット
     document.getElementById("print_type").value = "purchase_order";
-    
-    
-    company_id = document.getElementById("company_id_hide").value;
-    
-    //納品場所チェック(アデュースのみ)
-    if (company_id == 1){
-      delivery_place_flag = document.getElementById("delivery_place_flag").value;
-      if (delivery_place_flag == "")
-      {
-        window.confirm('納品場所を選択して下さい。');
-        return false;
-      }
-    }
-    //
-    
+        
     document.forms[0].target="_blank";  //add220615
     document.forms[0].submit();
     return true;
