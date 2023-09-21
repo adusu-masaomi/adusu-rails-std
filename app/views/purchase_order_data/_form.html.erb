@@ -97,10 +97,10 @@
   <%= f.input :alias_name, label:"通称" , 
            input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>
   
-  <!--標準版はカット
   <%= f.check_box :mail_sent_flag,  { :id => "mail_sent_flag",  :class => "mail_sent_flag"} , '1', '0' %> 
-  <%= f.label :mail_sent_label, "メール送信済フラグ（障害発生等で再送信したい場合は、チェックを外してください）", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>
-  -->
+  <!--<%= f.label :mail_sent_label, "メール送信済フラグ（障害発生等で再送信したい場合は、チェックを外してください）", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>-->
+  <!--標準版仕様-->
+  <%= f.label :mail_sent_label, "FAX済", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>
   
   <!--<%= f.input :mail_sent_flag, input_html:{id: "mail_sent_flag"}, as: :hidden %>-->
   
@@ -228,9 +228,12 @@
   //標準版対応
   function submitAfterValidation() {
     if (checkBeforeSubmit() == true){
-      //document.forms[0].target = "_blank";  
-      //document.forms[0].submit();
-      return true;
+      //標準仕様
+      if (window.confirm('ＦＡＸしますか？')) {
+        return true;
+      }else{
+        return false;
+      }
     }else{
       return false;
     }

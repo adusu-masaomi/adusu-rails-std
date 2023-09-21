@@ -143,6 +143,13 @@ class PurchaseOrderDataController < ApplicationController
     #工事データの住所を更新
     update_address_to_construction
     
+    #
+    #標準版仕様--faxでも送信済みにする 
+    if params[:format] == "pdf"
+      params[:purchase_order_datum][:mail_sent_flag] = 1
+    end
+    #
+    
     #メール送信する(メール送信ボタン押した場合)
     if params[:send].present?
       
@@ -204,6 +211,13 @@ class PurchaseOrderDataController < ApplicationController
     #工事データの住所を更新
     update_address_to_construction
    
+    #
+    #標準版仕様--faxでも送信済みにする   --(createも要追加)
+    if params[:format] == "pdf"
+      params[:purchase_order_datum][:mail_sent_flag] = 1
+    end
+    #
+    
     #
     #メール送信する(メール送信ボタン押した場合)
     if params[:send].present?
