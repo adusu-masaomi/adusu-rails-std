@@ -367,6 +367,8 @@
           function(data){
             //
               
+              //debugger;
+              
               obj = document.getElementById("outsourcing_flag_hide").textContent;
               if (obj.value == 1){
                 
@@ -379,6 +381,7 @@
 			    setForOursourcing(purchase_order_code_header);
 			  }
 			  
+			  //debugger;
 			  
 			  obj = document.getElementById("supplier_id_hide").textContent;
 			  if (obj != null){
@@ -558,6 +561,8 @@
 	   //document.getElementById("inventory_division_id").selectedIndex = INDEX_INVENTORY_SHIPPING;
 	   document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;
 	   
+	     //debugger;
+	   
        //upd200630
        var index = 0;
        if (document.getElementById("company_id_hide").value != 1){
@@ -645,6 +650,8 @@
         document.getElementById("division_id").value = INDEX_DIVISION_SHIPPING + 1;
       }
       
+       //debugger;
+      
        var index = 0;
        if (document.getElementById("company_id_hide").value != 1){
          index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
@@ -659,6 +666,8 @@
        //visibleOffOnShipping(false);
        var company_id = document.getElementById("company_id_hide").value;
        //かつ、在庫マスターの単価を持ってくる！！
+       
+       //debugger;
        
        getInventoryUnitPricesAndSupplier(company_id);
        
@@ -692,6 +701,8 @@
    //在庫Mより現在単価・業者を取得する（出庫の場合に取得する）--ajax利用
    function getInventoryUnitPricesAndSupplier(company_id) {
      material_id = document.getElementById("material_id").value;
+     
+     debugger;
      
      if (material_id != "")
      {
@@ -893,7 +904,9 @@
       
      //if (division_id == INDEX_DIVISION_SHIPPING) {
      if (division_id == division_id_shipping) {
-       getInventoryUnitPricesAndSupplier();
+       //getInventoryUnitPricesAndSupplier();
+       //upd230921
+       getInventoryUnitPricesAndSupplier(company_id);
        
      }
    }

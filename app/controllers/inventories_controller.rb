@@ -1255,7 +1255,7 @@ class InventoriesController < ApplicationController
   def get_unit_price
     record = Inventory.where(material_master_id: params[:material_id]).first
   	
-   
+   #binding.pry
   
   company_id =  params[:company_id]   #標準仕様
   if company_id != "1"
