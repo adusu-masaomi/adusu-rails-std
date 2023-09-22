@@ -566,8 +566,11 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     #メール送信済みフラグをセット
     #set_mail_sent_flag
-    #binding.pry
-
+    
+    #add230922
+    #注文書を2回押した場合等、データ2重登録しないようにする
+    get_data_on_create_twice
+    
     respond_to do |format|
       #if PurchaseOrderHistory.create(purchase_order_history_params)
       if @purchase_order_history.save!(:validate => false)   
@@ -612,6 +615,20 @@ class PurchaseOrderHistoriesController < ApplicationController
     end
     #
     
+  end
+  
+  #add230922
+  #注文書を2回押した場合等、データ2重登録しないようにする
+  def get_data_on_create_twice
+    tmp_history = PurchaseOrderHistory.where(purchase_order_date: params[:purchase_order_history][:purchase_order_date],
+                                             purchase_order_datum_id: params[:purchase_order_history][:purchase_order_datum_id]).first
+    if tmp_history.present?
+      @purchase_order_history = tmp_history
+      #すでに登録していた注文データは一旦抹消する。
+      destroy_before_update
+      #
+      @purchase_order_history.attributes = purchase_order_history_params
+    end
   end
 
   # PATCH/PUT /purchase_order_histories/1
