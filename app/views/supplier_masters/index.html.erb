@@ -61,7 +61,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @supplier_masters.each do |supplier_master| %>
+    <% @supplier_masters.order("id").each do |supplier_master| %>
       <tr>
         <td><%= link_to supplier_master.id, supplier_master_path(supplier_master) %></td>
         <td><%= supplier_master.supplier_name %></td>
