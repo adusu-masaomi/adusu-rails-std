@@ -64,13 +64,24 @@ class DetailedStatementPDF
                   if quotation_detail_middle_classification.quote_price.present?
                     @@quote_price += quotation_detail_middle_classification.quote_price
                   end
-                  	  
+                  
+                  #標準仕様--備考があればのせる(金額ない場合) ---未使用？？
+                  quote_price = ""
+                    
+                  if quotation_detail_middle_classification.quote_price.present?
+                    quote_price = quotation_detail_middle_classification.quote_price
+                  else
+                    quote_price = quotation_detail_middle_classification.remarks
+                  end
+                  #
+                  
                   row.values quotation_middle_item_name: quotation_detail_middle_classification.quotation_middle_item_name,
                    quotation_middle_specification: quotation_detail_middle_classification.quotation_middle_specification, 
                    quantity: @quantity,
                    quotation_unit_name: @unit_name,
                    quotation_unit_price: quotation_detail_middle_classification.quotation_unit_price,
-                   quote_price: quotation_detail_middle_classification.quote_price
+                   #quote_price: quotation_detail_middle_classification.quote_price
+                   quote_price: quote_price
 		    
     	  end
 		  

@@ -460,13 +460,23 @@ class DeliverySlipPDF
             @delivery_slip_price += num
           end
         end
-                  
+        
+        #標準仕様--備考があればのせる(金額ない場合) 
+        delivery_slip_price = ""
+        if delivery_slip_detail_middle_classification.delivery_slip_price.present?
+          delivery_slip_price = delivery_slip_detail_middle_classification.delivery_slip_price
+        else
+          delivery_slip_price = delivery_slip_detail_middle_classification.remarks
+        end
+        #
+        
         row.values working_middle_item_name: item_name,
                    working_middle_specification: delivery_slip_detail_middle_classification.working_middle_specification, 
                    quantity: @quantity,
                    working_unit_name: @unit_name,
                    working_unit_price: unit_price_or_notices,
-                   delivery_slip_price: delivery_slip_detail_middle_classification.delivery_slip_price
+                   #delivery_slip_price: delivery_slip_detail_middle_classification.delivery_slip_price
+                   delivery_slip_price: delivery_slip_price
       end  #end report do
 		  
       #頁番号

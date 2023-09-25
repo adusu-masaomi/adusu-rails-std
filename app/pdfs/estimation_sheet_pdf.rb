@@ -563,7 +563,15 @@ class EstimationSheetPDF
         if @print_type != "4"
           quote_price = quotation_detail_middle_classification.quote_price
         end
-                  
+        
+        #標準仕様--備考があればのせる(金額ない場合) 
+        if quote_price.present?
+          quote_price = quotation_detail_middle_classification.quote_price
+        else
+          quote_price = quotation_detail_middle_classification.remarks
+        end
+        #
+        
         #明細欄出力
         row.values working_middle_item_name: item_name,
                    working_middle_specification: quotation_detail_middle_classification.working_middle_specification, 
