@@ -146,7 +146,8 @@ class PurchaseOrderDataController < ApplicationController
     #
     #標準版仕様--faxでも送信済みにする 
     if params[:format] == "pdf"
-      params[:purchase_order_datum][:mail_sent_flag] = 1
+      #params[:purchase_order_datum][:mail_sent_flag] = 1
+      @purchase_order_datum.mail_sent_flag = 1
     end
     #
     
