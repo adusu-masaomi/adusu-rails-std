@@ -418,7 +418,9 @@ class QuotationMaterialHeadersController < ApplicationController
 
     @quotation_material_header = QuotationMaterialHeader.new(quotation_material_header_params)
 
-    #binding.pry
+    #add230922
+    #注文書を2回押した場合等、データ2重登録しないようにする
+    get_data_on_create_twice
 
     respond_to do |format|
       if @quotation_material_header.save!(:validate => false)
@@ -558,6 +560,21 @@ class QuotationMaterialHeadersController < ApplicationController
       #
      create
 
+    end
+  end
+  
+  #add230922
+  #注文書を2回押した場合等、データ2重登録しないようにする
+  def get_data_on_create_twice
+    tmp_header = QuotationMaterialHeader.where(quotation_code: params[:quotation_material_header][:quotation_code]).first
+    
+    if tmp_header.present?
+      @quotation_material_header = tmp_header
+      #すでに登録していた注文データは一旦抹消する。
+      destroy_before_update
+      #
+      #@purchase_order_history.attributes = purchase_order_history_params
+      @quotation_material_header.attributes = quotation_material_header_params
     end
   end
   
