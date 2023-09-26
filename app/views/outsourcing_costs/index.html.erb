@@ -85,7 +85,11 @@
             <td></td>
           <% end %>
         <% else %>
-          <td><%= number_to_currency(outsourcing_cost.labor_cost * $consumption_tax_include, :precision => 0 ) %></td>
+          <% if outsourcing_cost.labor_cost.present? %>
+            <td><%= number_to_currency(outsourcing_cost.labor_cost * $consumption_tax_include, :precision => 0 ) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
         <% end %>
         <td><%= number_to_currency(outsourcing_cost.billing_amount, :precision => 0 )  %></td>
         <% if @due_date >= Date.new(2019,10,1) %>
@@ -95,7 +99,11 @@
             <td>-</td>
           <% end %>
         <% else %>
-          <td><%= number_to_currency(outsourcing_cost.billing_amount * $consumption_tax_include, :precision => 0 ) %></td>
+          <% if outsourcing_cost.billing_amount.present? %>
+            <td><%= number_to_currency(outsourcing_cost.billing_amount * $consumption_tax_include, :precision => 0 ) %></td>
+          <% else %>
+            <td>-</td>
+          <% end %>
         <% end %>
         <td><%= outsourcing_cost.closing_date %></td>
         <td><%= number_to_currency(outsourcing_cost.payment_amount, :precision => 0 ) %></td>
