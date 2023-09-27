@@ -772,11 +772,16 @@ class OutsourcingDataController < ApplicationController
 	   
 	   #工事idをセット
 	   construction_id = params[:construction_id]
-	   @construction_data = ConstructionDatum.where("id >= ?", construction_id)
-	   
+     
+     if construction_id.present?     #add230927
+       @construction_data = ConstructionDatum.where("id >= ?", construction_id)
+     end
+   
 	   #仕入idをセット
 	   supplier_master_id = params[:supplier_master_id]
-	   @supplier_master = SupplierMaster.where("id >= ?", supplier_master_id)
+     if supplier_master_id.present?  #add230927
+       @supplier_master = SupplierMaster.where("id >= ?", supplier_master_id)
+	   end
 	   
 	   #外注の注文Noの判定
 	   
