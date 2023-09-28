@@ -82,8 +82,11 @@
   <div class="col-md-3" , style="margin-left : 90px">
     <!--<%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datepicker", 
            style: 'width:120px' , :tabindex=>"17" }  %>-->
+    
+    
     <%= f.input :construction_period_date1 , as: :string, input_html:{id: "construction_period_date1" , class: "datetimepicker", 
            style: 'width:120px' , :tabindex=>"17", autocomplete: 'off' } %>
+    
   </div>
  
   <div class="col-md-3" , style="margin-left : -30px ;margin-top : 35px">
@@ -92,8 +95,10 @@
   <div class="col-md-3" , style="margin-left : -130px">
     <!--<%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
            style: 'width:120px' , :tabindex=>"18" }  %>-->
-    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker", 
+    
+    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker2", 
            style: 'width:120px' , :tabindex=>"18", autocomplete: 'off' } %>
+   
   </div>
   </br></br></br>
   
@@ -158,7 +163,6 @@
 <script type="text/javascript">
 
    $(document).on('ready page:load', function(){
-   
      //納品コード（参照）
      //select2のタブインデックスはここで指定する
 	 $(".searchableDeliverySlipOrigin").select2({ theme: "classic", allowClear: true, placeholder: "" }).on("load", function(e) { 
@@ -194,7 +198,23 @@
 	  　 $('[tabindex=5]').focus(); 
 	 });
 	 //
+   
+     //datepicker,２個目用。
+     $('.datetimepicker2').datetimepicker(
+    //jQuery('.datetimepicker').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+   
    });
+   
+   //$(function() {
+   //  $( "input[name^=construction_period_date1]" ).datetimepicker({ dateFormat: "yyyy-mm-dd" });
+   //}  );
    
   //フォームロード時のイベント
   window.onload = function(){
@@ -211,6 +231,7 @@
     setResponsibleOnload();
     
   }
+  
   
   //顧客情報のセット add180206
   function setCustomerDefaultBySearch(){

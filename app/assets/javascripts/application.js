@@ -72,7 +72,6 @@ $(function(){
       lang: 'ja'
    }
   );
-
 });
 
 

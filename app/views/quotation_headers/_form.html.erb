@@ -112,7 +112,7 @@
   <div class="col-md-3" , style="margin-left : -130px;margin-top : 20px">
     <!--<%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datepicker", 
            style: 'width:120px'  }  %>-->
-    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker", 
+    <%= f.input :construction_period_date2 , as: :string, input_html:{id: "construction_period_date2" , class: "datetimepicker2", 
            style: 'width:120px' , autocomplete: 'off' } %>
   </div>
   
@@ -216,9 +216,20 @@
 	 });
 	 //
 	 
-	 //見積コード参照用
-	 $(".searchableSelect2_1").select2({ theme: "classic", allowClear: true , placeholder: "" });
-	 
+	    //見積コード参照用
+	    $(".searchableSelect2_1").select2({ theme: "classic", allowClear: true , placeholder: "" });
+	    
+	   //datepicker,２個目用。
+     $('.datetimepicker2').datetimepicker(
+    //jQuery('.datetimepicker').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+	   
    });
   
   
