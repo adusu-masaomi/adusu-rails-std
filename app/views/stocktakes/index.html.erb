@@ -12,7 +12,7 @@
     <%= f.text_field :stocktake_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  
               id: 'stocktake_date_start', autocomplete: 'off'   %>
 	<%= f.label :stocktake_date, '〜' %>
-    <%= f.text_field :stocktake_date_lteq, class:"input-append date datetimepicker", include_blank: true ,  
+    <%= f.text_field :stocktake_date_lteq, class:"input-append date datetimepicker2", include_blank: true ,  
               id: 'stocktake_date_end', autocomplete: 'off'   %>
 	<%= f.label :inventory_category, 'カテゴリー：' %>
     <%= f.select :with_material_category_include, InventoryCategory.all.map{|st| [st.name, st.id]}, {include_blank: true}, 
@@ -153,6 +153,17 @@
     
     //画面位置保持用
     $('form').keepPosition();
+  
+    //日付のdatetimepicker ２個以上の対応--rails6仕様
+    //(１つ目のみapplication.jsに記述)
+    $('.datetimepicker2').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+    );
   });
  
  //入力チェック後の、更新処理

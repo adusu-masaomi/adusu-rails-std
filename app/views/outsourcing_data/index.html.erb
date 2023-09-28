@@ -22,7 +22,7 @@
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartDate()" %>
   
   <%= f.label :purchase_date, '～' %>
-  <%= f.text_field :purchase_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'purchase_date_end', autocomplete: 'off'  %>
+  <%= f.text_field :purchase_date_lteq, class:"input-append date datetimepicker2", include_blank: true, id: 'purchase_date_end', autocomplete: 'off'  %>
 
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearEndDate()" %>
 
@@ -34,17 +34,17 @@
   
   <!--支払日検索。未払支払日も含める-->
   <%= f.label :purchase_date, '支払日' %>
-  <%= f.text_field :payment_date_or_unpaid_payment_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'payment_date_start', autocomplete: 'off'   %>
+  <%= f.text_field :payment_date_or_unpaid_payment_date_gteq, class:"input-append date datetimepicker3", include_blank: true ,  id: 'payment_date_start', autocomplete: 'off'   %>
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartPaymentDate()" %>
   <%= f.label :purchase_date, '～' %>
-  <%= f.text_field :payment_date_or_unpaid_payment_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'payment_date_end', autocomplete: 'off'  %>
+  <%= f.text_field :payment_date_or_unpaid_payment_date_lteq, class:"input-append date datetimepicker4", include_blank: true, id: 'payment_date_end', autocomplete: 'off'  %>
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearEndPaymentDate()" %>
   
   <%= f.label :purchase_due_date, '支払予定日' %>
-  <%= f.text_field :payment_due_date_gteq, class:"input-append date datetimepicker", include_blank: true ,  id: 'payment_due_date_start', autocomplete: 'off'   %>
+  <%= f.text_field :payment_due_date_gteq, class:"input-append date datetimepicker5", include_blank: true ,  id: 'payment_due_date_start', autocomplete: 'off'   %>
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartPaymentDueDate()" %>
   <%= f.label :purchase_due_date, '～' %>
-  <%= f.text_field :payment_due_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'payment_due_date_end' , autocomplete: 'off' %>
+  <%= f.text_field :payment_due_date_lteq, class:"input-append date datetimepicker6", include_blank: true, id: 'payment_due_date_end' , autocomplete: 'off' %>
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearEndPaymentDueDate()" %>
   
   <!--<%= f.label :maker_code, 'メーカー：：' %>
@@ -170,7 +170,7 @@
        
        <!-- (株)アデュース仕様 -->
        <% if @company_id == 1 %>
-         <%= f.text_field :payment_date, class:"input-append date datetimepicker", include_blank: true ,  id: 'payment_date_input' , style: 'width:100px', autocomplete: 'off'  %>
+         <%= f.text_field :payment_date, class:"input-append date datetimepicker7", include_blank: true ,  id: 'payment_date_input' , style: 'width:100px', autocomplete: 'off'  %>
        
          <%= f.button_tag "チェック反映", :type => 'link', name: "setCheck",  
                :onclick => "bulkCheck()" , :class => 'btn btn-lime500_rsd keep-disp' %>
@@ -448,7 +448,58 @@
           
      });
      
-     
+     //日付のdatetimepicker ２個以上の対応--rails6仕様
+     //(１つ目のみapplication.jsに記述)
+     $('.datetimepicker2').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     $('.datetimepicker3').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     $('.datetimepicker4').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     $('.datetimepicker5').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     $('.datetimepicker6').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     $('.datetimepicker7').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+     );
+     //
+     //
   });
   
   //フォームロード時のイベント(再読込時も)

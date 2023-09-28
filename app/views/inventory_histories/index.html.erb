@@ -12,7 +12,7 @@
   <%= f.label :inventory_date, '入出庫日' %>
   <%= f.text_field :inventory_date_gteq, class:"input-append date datetimepicker ", include_blank: true ,  id: 'inventory_date_start', autocomplete: 'off'   %>
   <%= f.label :inventory_date, '～' %>
-  <%= f.text_field :inventory_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'inventory_date_end', autocomplete: 'off'  %>
+  <%= f.text_field :inventory_date_lteq, class:"input-append date datetimepicker2", include_blank: true, id: 'inventory_date_end', autocomplete: 'off'  %>
   
   <%= f.label :maker_code, 'メーカー：：' %>
   <%= f.select :with_maker_id, MakerMaster.all.map{|st| [st.maker_name, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableMakerName" } %>
@@ -202,11 +202,22 @@
   
   //検索可能なリストボックス
   $(document).ready(function(){
-   $(".searchableSupplierName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST }); 
-   $(".searchableMakerName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST }); 
-   $(".searchableConstructionCode").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
-   $(".searchableCustomerName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
-   $(".searchableMaterialCode").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
+    $(".searchableSupplierName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST }); 
+    $(".searchableMakerName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST }); 
+    $(".searchableConstructionCode").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
+    $(".searchableCustomerName").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
+    $(".searchableMaterialCode").select2({ theme: "classic" , allowClear: true , placeholder: MESSAGE_LIST });
+   
+    //日付のdatetimepicker ２個以上の対応--rails6仕様
+    //(１つ目のみapplication.jsに記述)
+    $('.datetimepicker2').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+    );
   });
   
 </script>

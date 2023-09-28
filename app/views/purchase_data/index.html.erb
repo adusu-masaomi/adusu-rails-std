@@ -16,7 +16,7 @@
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearStartDate()" %>
   
   <%= f.label :purchase_date, '～' %>
-  <%= f.text_field :purchase_date_lteq, class:"input-append date datetimepicker", include_blank: true, id: 'purchase_date_end', autocomplete: 'off'  %>
+  <%= f.text_field :purchase_date_lteq, class:"input-append date datetimepicker2", include_blank: true, id: 'purchase_date_end', autocomplete: 'off'  %>
 
   <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearEndDate()" %>
 
@@ -499,7 +499,17 @@
         var slip = document.getElementById("slip_code").value;
         document.getElementById("old_slip_code").value = slip;
       })
-  
+      
+    //datepicker,２個目用。
+    $('.datetimepicker2').datetimepicker(
+    //jQuery('.datetimepicker').datetimepicker(
+      {
+        timepicker:false,
+        closeOnDateSelect:true,
+        format: 'Y/m/d',
+        lang: 'ja'
+      }
+    );
   });
   
   function submitAfterValidation() {
