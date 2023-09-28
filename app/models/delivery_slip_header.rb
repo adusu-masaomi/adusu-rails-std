@@ -15,7 +15,7 @@ class DeliverySlipHeader < ApplicationRecord
   #バリデーション
   #validates :delivery_slip_code, presence: true, uniqueness: true	
   #納品書コードはユニークのチェックのみ。nullチェックはコピーに失敗するため除外。
-  validates :delivery_slip_code, presence:true, uniqueness: true
+  #validates :delivery_slip_code, presence:true, uniqueness: true
 
   #demo版対応
   #validate :delivery_slip_header_count_must_be_within_limit, on: :create
@@ -33,18 +33,18 @@ class DeliverySlipHeader < ApplicationRecord
   ADDRESS_ERROR_MESSAGE_3 = "番地（ハイフン）は入力できません。"
   ADDRESS_ERROR_MESSAGE_4 = "番地（数字）は入力できません。"
    
-  validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  #validates :address, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :address, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
   #「流通センター」などの地名も有るため、許可する。
   #validates :address, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
   #validates :address, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :address, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
    
   #add180817
-  validate :check_fixed
+  #validate :check_fixed
    
   #住所に数値が混じっていた場合も禁止する
-  validate  :address_regex
+  #validate  :address_regex
   def address_regex
     if address.match(/[0-9０-９]+$/)
       errors.add :address, ADDRESS_ERROR_MESSAGE_4
@@ -60,15 +60,15 @@ class DeliverySlipHeader < ApplicationRecord
   end
    
   #見積書用（工事場所）
-  validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
-  validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
+  #validates :construction_place, format: {without: /丁目/ , :message => ADDRESS_ERROR_MESSAGE_2 }
+  #validates :construction_place, format: {without: /番地/ , :message => ADDRESS_ERROR_MESSAGE }
   #「流通センター」などの地名も有るため、許可する。
   #validates :construction_place, format: {without: /ー/ , :message => ADDRESS_ERROR_MESSAGE_3 }
   #validates :construction_place, format: {without: /−/ , :message => ADDRESS_ERROR_MESSAGE_3 }
-  validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
+  #validates :construction_place, format: {without: /-/ , :message => ADDRESS_ERROR_MESSAGE_3 }
    
   #住所に数値が混じっていた場合も禁止する
-  validate  :construction_place_regex
+  #validate  :construction_place_regex
   def construction_place_regex
     if construction_place.match(/[0-9０-９]+$/)
      errors.add :construction_place, ADDRESS_ERROR_MESSAGE_4
