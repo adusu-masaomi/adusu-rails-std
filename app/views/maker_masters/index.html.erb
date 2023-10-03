@@ -30,7 +30,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @maker_masters.each do |maker_master| %>
+    <% @maker_masters.order("id").each do |maker_master| %>
       <tr>
         <td><%= link_to maker_master.id, maker_master_path(maker_master) %></td>
         <td><%= maker_master.maker_name %></td>
