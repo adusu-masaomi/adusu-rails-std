@@ -30,32 +30,3 @@ require "csv"
 #)
 
 #最新必須
-#outsourcing_costs
-CSV.foreach('db/outsourcing_costs.csv') do |row|
-  OutsourcingCost.create do |o|
-    o.id = row[0]
-    o.invoice_code = row[1]
-    o.purchase_order_datum_id = row[2]
-    o.construction_datum_id = row[3]
-    o.staff_id = row[4]
-    #o.supplier_master_id = row[5]
-    o.working_start_date = row[5]
-    o.working_end_date = row[6]
-    o.purchase_amount = row[7]
-    o.supplies_expense = row[8]
-    o.labor_cost = row[9]
-    o.misellaneous_expense = row[10]
-    o.execution_amount = row[11]
-    o.billing_amount = row[12]
-    o.purchase_order_amount = row[13]
-    o.closing_date = row[14]
-    o.source_bank_id = row[15]
-    o.payment_amount = row[16]
-    o.unpaid_amount = row[17]
-    o.payment_due_date = row[18]
-    o.payment_date = row[19]
-    o.unpaid_payment_date = row[20]
-    o.created_at = row[21]
-    o.updated_at = row[22]
-  end
-end
