@@ -13,6 +13,8 @@ class QuotationMaterialHeadersController < ApplicationController
     #フォーム連番用
     $seq  = 0        #フォーム用(追加時)
     $seq_exists = 0  #フォーム用
+    session[:seq_exists] = 0  #add231006
+    
     $seq_max = 0  #最大値取得用
     
     #ransack保持用コード
@@ -208,7 +210,9 @@ class QuotationMaterialHeadersController < ApplicationController
   def edit
     #画面の並びは昇順にする
     #新規は昇順、編集は降順。
-    @form_detail_order = "sequential_id DESC"
+    #@form_detail_order = "sequential_id DESC"
+    #upd230926 編集も昇順
+    @form_detail_order = "sequential_id ASC"
   
     $new_flag = 0
     
@@ -269,7 +273,8 @@ class QuotationMaterialHeadersController < ApplicationController
     if @quotation_material_header.quotation_material_details.present?
       @details = @quotation_material_header.quotation_material_details
     end
-  
+     
+    
     if @form_detail_order != "sequential_id DESC"
     #編集時（昇順）はのぞく
       if  @details.present?
@@ -289,6 +294,9 @@ class QuotationMaterialHeadersController < ApplicationController
         $seq_max = 1
       end
     end
+    
+    session[:seq_exists] = $seq_exists  #add231006
+    
     #
   end
   
@@ -1680,21 +1688,26 @@ class QuotationMaterialHeadersController < ApplicationController
   end
 
   def set_sequence
-    
+        
     if $seq.blank?
       $seq = 0
     end
-
-    if $seq_exists == 0
+        
+     
+    #if $seq_exists == 0
+    if session[:seq_exists] == 0  #upd231006
     #降順とみなす
       @sort_order = "DESC"
+      #upd231006
+      #@sort_order = "ASC"
     else
     #昇順とみなす
       @sort_order = "ASC"
     end
 
     #@form_detail_order
-
+    
+    
     #すでに登録済みのアイテムがあった場合
     if $seq_max > 0 && $seq == 0
       $seq = $seq_max 
@@ -1778,7 +1791,7 @@ class QuotationMaterialHeadersController < ApplicationController
                       :quantity, :unit_master_id, :list_price, :quotation_unit_price_1, :quotation_unit_price_2, :quotation_unit_price_3, 
                       :quotation_price_1, :quotation_price_2, :quotation_price_3, 
                       :bid_flag_1, :bid_flag_2, :bid_flag_3, :mail_sent_flag, :quotation_email_flag_1, :quotation_email_flag_2, 
-                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3,
+                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, 
                       :_destroy])
         
     end

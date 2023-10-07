@@ -126,17 +126,25 @@ class OutsourcingDataController < ApplicationController
           
       contain_no_payment_date = true
         
-      custom_q_0 = query
+      #custom_q_0 = query
+      #upd231007 rails6?対応
+      custom_q_0 = query.permit!.to_h
+            
       custom_q_1 = {:supplier_id_eq => query["supplier_id_eq"] , :outsourcing_payment_flag_eq => "0", 
                     :outsourcing_invoice_flag_eq => "1", :payment_due_date_null => true }
+      
+      
       #支払済みのものも出力するように
       custom_q_2 = {:supplier_id_eq => query["supplier_id_eq"] , :payment_date_lteq => query["payment_due_date_lteq"], 
                     :payment_date_gteq => query["payment_due_date_gteq"],  
                     :outsourcing_payment_flag_eq => query["outsourcing_payment_flag_eq"],
                     :outsourcing_invoice_flag_eq => "1", :payment_due_date_null => true }
                         
+      #union_params = {groupings: [custom_q_0, custom_q_1, custom_q_2], m: 'or'}
+      #@q = PurchaseDatum.ransack(union_params)
+      
       @q = PurchaseDatum.ransack(combinator: 'or', g: { '0': custom_q_0, '1': custom_q_1, '2': custom_q_2 })
-          
+      
     else
       #通常の検索の場合
       @q = PurchaseDatum.ransack(query)

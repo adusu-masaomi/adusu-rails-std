@@ -282,7 +282,14 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     # GET /purchase_order_histories/1/edit
     def edit
-
+      
+      #add231004
+      $seq = 0
+      $seq_exists = 0
+      
+      @form_detail_order = "sequential_id DESC"
+      #add end
+      
       $quantity_nothing = false
 
       set_edit_params
@@ -329,6 +336,9 @@ class PurchaseOrderHistoriesController < ApplicationController
           session[:seq_exists] = @details.maximum(:sequential_id)
           #$seq_max = $seq_exists
           session[:seq_max] = session[:seq_exists]
+          
+          #add231004
+          $seq = session[:seq_exists]
         end
         #SEQが逆になっているのでみやすいよう再び逆にする
         #reverse_seq
@@ -1264,12 +1274,15 @@ class PurchaseOrderHistoriesController < ApplicationController
 
   #add170721
   def set_sequence
-    if session[:seq].blank?
-      #$seq = 0
-      session[:seq] = 0
+    #if session[:seq].blank?
+    #231004 restore
+    if $seq.blank?
+      $seq = 0
+      #session[:seq] = 0
     end
-    #$seq += 1
-    session[:seq] += 1
+    $seq += 1
+    
+    #session[:seq] += 1
   end
 
   # @supplier_responsibles = SupplierResponsible.where(:supplier_master_id => params[:id])
@@ -1300,10 +1313,11 @@ class PurchaseOrderHistoriesController < ApplicationController
     #                orders_attributes: [:id, :purchase_order_datum_id, :material_id, :material_code, :material_name, :quantity, :unit_master_id, 
     #               :maker_id, :maker_name, :list_price, :mail_sent_flag, :_destroy])
     #upd170616 メーカー名は抹消
+    #upd231004 sequential_id追加
     params.require(:purchase_order_history).permit(:purchase_order_datum_id, :supplier_master_id, :purchase_order_date, :mail_sent_flag, 
                    :delivery_place_flag, :notes, 
                     orders_attributes: [:id, :material_id, :material_code, :material_name, :quantity, :unit_master_id, 
-                   :maker_id, :list_price, :order_unit_price, :order_price, :material_category_id, :mail_sent_flag, :_destroy])
+                   :maker_id, :list_price, :order_unit_price, :order_price, :material_category_id, :mail_sent_flag, :sequential_id, :_destroy])
   end
 
 end

@@ -210,7 +210,8 @@
       </br></br>
 	  
 	       <div id="subForms" class="sortDone" >
-           	 <%= f.simple_fields_for :orders, @purchase_order_history.orders.order("sequential_id ASC"), :include_id => false  do |orders| %>
+             <!--upd231004-->
+           	 <%= f.simple_fields_for :orders, @purchase_order_history.orders.order(@form_detail_order), :include_id => false  do |orders| %>
 
                <%= render 'order_fields', f: orders, cache: true %>
 

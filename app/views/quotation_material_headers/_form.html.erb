@@ -651,34 +651,36 @@
     //連番をセットする
     $.get("<%= quotation_material_headerz_set_sequence_path %>",
     {},
-     function(data){
-	   //debugger;
-	   obj = document.getElementById("sequential_id_hide").textContent;
-	   controlNum = parseInt(obj);
-	   controlNum -= 1
-	   
-	   var sort_order = document.getElementById("sort_order").textContent;
-	   
-	   //if (document.querySelectorAll("#sequential_id")[controlNum] == undefined){
-       if (sort_order == "DESC"){
-	   //降順
-         document.getElementById("sequential_id").value = obj;
-	   }else{
-	   //昇順の場合
-       if (document.querySelectorAll("#sequential_id")[controlNum] != undefined){
-	       document.querySelectorAll("#sequential_id")[controlNum].value = obj;
-		   }
-        //ループでインデックスを作り直す（うまくそろわないため）
-		if (obj != undefined){
-		   for (var i = 0; i <= parseInt(obj); i++) {
-             if (document.querySelectorAll("#sequential_id")[i] != undefined){
-			   document.querySelectorAll("#sequential_id")[i].value = i + 1
-			 }
-		   }
-		 }
-		 
-	   }
-     });
+    function(data){
+     //debugger;
+      obj = document.getElementById("sequential_id_hide").textContent;
+      controlNum = parseInt(obj);
+      controlNum -= 1
+       
+      var sort_order = document.getElementById("sort_order").textContent;
+      
+      debugger;
+      
+      //if (document.querySelectorAll("#sequential_id")[controlNum] == undefined){
+      if (sort_order == "DESC"){
+      //降順
+        document.getElementById("sequential_id").value = obj;
+      }else{
+      //昇順の場合
+        if (document.querySelectorAll("#sequential_id")[controlNum] != undefined){
+          document.querySelectorAll("#sequential_id")[controlNum].value = obj;
+        }
+      //ループでインデックスを作り直す（うまくそろわないため）
+      if (obj != undefined){
+        for (var i = 0; i <= parseInt(obj); i++) {
+          if (document.querySelectorAll("#sequential_id")[i] != undefined){
+            document.querySelectorAll("#sequential_id")[i].value = i + 1
+          }
+        }
+      }
+ 
+    }
+  });
    
        //明細フォーム用(追加時のみ、ここが使用されるらしい。)
 	   //検索可能なリストボックス(品名の場合)
