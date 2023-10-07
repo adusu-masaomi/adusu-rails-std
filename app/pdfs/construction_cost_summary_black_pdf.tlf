@@ -1,5 +1,5 @@
 {
-  "version": "0.10.0",
+  "version": "0.12.0",
   "items": [
     {
       "id": "default",
@@ -221,7 +221,7 @@
             "x": 327.8,
             "y": 299.6,
             "width": 34.6,
-            "height": 13.1,
+            "height": 16.8,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -247,7 +247,7 @@
             "x": 44.3,
             "y": 321.2,
             "width": 93.1,
-            "height": 12.3,
+            "height": 16.8,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -273,7 +273,7 @@
             "x": 45,
             "y": 361.9,
             "width": 56.4,
-            "height": 15.4,
+            "height": 16.8,
             "style": {
               "font-family": [
                 "IPAPGothic"
@@ -498,7 +498,7 @@
             }
           },
           {
-            "id": "",
+            "id": "line_3",
             "type": "line",
             "display": true,
             "description": "",
@@ -513,7 +513,7 @@
             "y2": 294.5
           },
           {
-            "id": "",
+            "id": "line_4",
             "type": "line",
             "display": true,
             "description": "",
@@ -528,7 +528,7 @@
             "y2": 338.1
           },
           {
-            "id": "",
+            "id": "line_5",
             "type": "line",
             "display": true,
             "description": "",
@@ -679,7 +679,7 @@
       "x": 45,
       "y": 90,
       "width": 108.8,
-      "height": 18.5,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -700,7 +700,7 @@
       ]
     },
     {
-      "id": "",
+      "id": "line_1",
       "type": "line",
       "display": true,
       "description": "",
@@ -715,7 +715,7 @@
       "y2": 112
     },
     {
-      "id": "",
+      "id": "line_2",
       "type": "line",
       "display": true,
       "description": "",
@@ -737,7 +737,7 @@
       "x": 79,
       "y": 117,
       "width": 47.5,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -763,7 +763,7 @@
       "x": 188,
       "y": 117,
       "width": 90.4,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -789,7 +789,7 @@
       "x": 399.7,
       "y": 117,
       "width": 47.5,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -815,7 +815,7 @@
       "x": 519,
       "y": 117,
       "width": 35.1,
-      "height": 16.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -893,7 +893,7 @@
       "x": 45,
       "y": 45,
       "width": 46.1,
-      "height": 16.4,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -919,7 +919,7 @@
       "x": 45,
       "y": 61.5,
       "width": 45.5,
-      "height": 14,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -938,7 +938,7 @@
       ]
     },
     {
-      "id": "",
+      "id": "line_6",
       "type": "line",
       "display": true,
       "description": "",
@@ -953,7 +953,7 @@
       "y2": 727
     },
     {
-      "id": "",
+      "id": "line_7",
       "type": "line",
       "display": true,
       "description": "",
@@ -968,7 +968,7 @@
       "y2": 753.2
     },
     {
-      "id": "",
+      "id": "line_8",
       "type": "line",
       "display": true,
       "description": "",
@@ -983,7 +983,7 @@
       "y2": 782.2
     },
     {
-      "id": "",
+      "id": "line_9",
       "type": "line",
       "display": true,
       "description": "",
@@ -1031,7 +1031,7 @@
       "x": 303.9,
       "y": 760.2,
       "width": 68,
-      "height": 19,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -1057,7 +1057,7 @@
       "x": 331.9,
       "y": 788.2,
       "width": 38,
-      "height": 18,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -1282,7 +1282,7 @@
       }
     },
     {
-      "id": "",
+      "id": "line_10",
       "type": "line",
       "display": true,
       "description": "",
@@ -1297,7 +1297,7 @@
       "y2": 727
     },
     {
-      "id": "",
+      "id": "line_11",
       "type": "line",
       "display": true,
       "description": "",
@@ -1312,7 +1312,7 @@
       "y2": 727
     },
     {
-      "id": "",
+      "id": "line_12",
       "type": "line",
       "display": true,
       "description": "",
@@ -1327,7 +1327,7 @@
       "y2": 727
     },
     {
-      "id": "",
+      "id": "line_13",
       "type": "line",
       "display": true,
       "description": "",

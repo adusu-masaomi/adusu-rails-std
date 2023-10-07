@@ -11,9 +11,7 @@ class ConstructionCostSummaryPDF
       
       #@@page_number = 0
       #report = ThinReports::Report.create do |report|
-	  
-	  #binding.pry
-       
+	  	     
       # tlfファイルを読み込む
       if $print_type_costs != "1"
         report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/construction_cost_summary_pdf.tlf")
