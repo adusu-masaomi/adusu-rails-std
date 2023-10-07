@@ -128,7 +128,16 @@ class OutsourcingDataController < ApplicationController
         
       #custom_q_0 = query
       #upd231007 rails6?対応
-      custom_q_0 = query.permit!.to_h
+      
+      if query[:supplier_id_eq].present?
+        custom_q_0 = query.permit!.to_h
+      else
+        custom_q_0 = query
+      end
+      
+      #binding.pry
+      
+      #custom_q_0 = query.to_unsafe_h
             
       custom_q_1 = {:supplier_id_eq => query["supplier_id_eq"] , :outsourcing_payment_flag_eq => "0", 
                     :outsourcing_invoice_flag_eq => "1", :payment_due_date_null => true }
