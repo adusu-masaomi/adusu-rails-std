@@ -164,7 +164,7 @@ class OutsourcingInvoicePDF
       end
       report.page.item(:construction_place).value(all_address) 
       #
-        
+      
       #着工日
       if outsourcing_cost.present? && outsourcing_cost.working_start_date.present?
         @gengou = outsourcing_cost.working_start_date
