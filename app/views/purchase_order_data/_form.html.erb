@@ -112,10 +112,11 @@
   <!--これを使いたいがsubmitでは現状sweetalertが使えないので、保留中・・・-->
   <!--<%= f.submit "メール送信＆登録",name: "send", class: "btn btn-info", id: "mail_sent_button", data: {confirm: "メール送信&更新します。よろしいですか？"} %>-->
   
-  <!--activeMail使用できずカット....
-  <%= f.submit "メール送信＆登録",name: "send", class: "btn btn-info", id: "mail_sent_button", 
-    :onclick => "return confirm('メール送信&更新します。よろしいですか？ ')",  :tabindex => "11"  %>
-  -->
+  <!--activeMail使用できずカット....-->
+  <% if @company_id == 1 %>
+    <%= f.submit "メール送信＆登録",name: "send", class: "btn btn-info", id: "mail_sent_button", 
+      :onclick => "return confirm('メール送信&更新します。よろしいですか？ ')",  :tabindex => "11"  %>
+  <% end %>
   
   <%= f.submit '登録', name: "upd", class: "btn btn-success" %>
   

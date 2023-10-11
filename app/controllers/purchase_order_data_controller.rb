@@ -110,7 +110,10 @@ class PurchaseOrderDataController < ApplicationController
     
     #工事データの初期値をセット
     set_construction_default
-  
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+      
     #@purchase_order_datum.mail_sent_flag = 0
     
   end
@@ -130,6 +133,10 @@ class PurchaseOrderDataController < ApplicationController
     
     #担当者の初期値セット
     set_email_default
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
   end
  
   # POST /purchase_order_data
