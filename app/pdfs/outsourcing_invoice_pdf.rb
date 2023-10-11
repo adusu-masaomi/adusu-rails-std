@@ -366,7 +366,8 @@ end
         @supplier_account_type_name = SupplierMaster.account_type_division[supplier.account_type][0]
       end
       @supplier_account_number = supplier.account_number
-      @supplier_account_name = supplier.responsible_name
+      #@supplier_account_name = supplier.responsible_name
+      @supplier_account_name = supplier.holder  #upd231011
     end
     
     

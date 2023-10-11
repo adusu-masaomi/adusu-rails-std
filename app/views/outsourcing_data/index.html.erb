@@ -223,7 +223,11 @@
 	  <th style="width:79px;"><%= sort_link(@q, :SupplierMaster_supplier_name, "仕入業者" ) %></th>
 	  <th style="width:40px;"><%= sort_link(@q, :PurchaseDivision_purchase_division_name, "区分" ) %></th>
       <th style="width:40px;">請求</th>
-      <th style="width:40px;">支払</th>
+      
+      <!-- (株)アデュース仕様 -->
+      <% if @company_id == 1 %>
+        <th style="width:40px;">支払</th>
+      <% end %>
       
       <!--<th><%= model_class.human_attribute_name(:created_at) %></th>-->
       <th style="width:90px;"><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -326,9 +330,12 @@
         <!--請求のチェック-->
         <td><%= check_box("outsourcing_invoice_flag", "active", {checked: check_if_true(purchase_datum.outsourcing_invoice_flag) , 
                   :multiple => true, :style => "margin-left: 16px;",  :disabled => false , :class => "outsourcing_check",  :id => purchase_datum.id  }, "true", "false") %></td>
-        <!--支払のチェック 標準版はカット? →要検討 -->
-        <td><%= check_box("outsourcing_payment_flag", "active", {checked: check_if_true(purchase_datum.outsourcing_payment_flag) , 
+        
+        <% if @company_id == 1 %>
+        <!--支払のチェック (株)アデュースのみ仕様-->
+          <td><%= check_box("outsourcing_payment_flag", "active", {checked: check_if_true(purchase_datum.outsourcing_payment_flag) , 
                   :multiple => true, :style => "margin-left: 16px;",  :disabled => false , :class => "payment_check",  :id => purchase_datum.id  }, "true", "false") %></td>
+		    <% end %>
 		<td>
           <%= link_to '編集',
                       edit_outsourcing_datum_path(purchase_datum, construction_id: params[:construction_id], purchase_order_id: params[:purchase_order_id], 
