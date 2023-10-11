@@ -1,8 +1,8 @@
 class OutsourcingInvoicePDF
    
   #def self.create outsourcing_invoice
-  #def self.create purchase_data
-  def self.create purchase_data_current
+  #def self.create purchase_data_current
+  def self.create(purchase_data_current, company_id)
     
     #新元号対応 190401
     require "date"
@@ -116,7 +116,27 @@ class OutsourcingInvoicePDF
       #外注の住所等
       report.page.item(:supplier_post).value(@supplier_post)
       report.page.item(:supplier_address).value(@supplier_address)
-      report.page.item(:supplier_name).value(@supplier_name)
+      #report.page.item(:supplier_name).value(@supplier_name)
+            
+      supplier_name = @supplier_name
+      
+      #(株)アデュース仕様 １文字ずつあける
+      if company_id == 1
+        supplier_name = ""
+        supplier_name_tmp = @supplier_name.chars
+        supplier_name_tmp.each do |sn|
+          if supplier_master_id == 37     #村山電気
+            supplier_name += sn + "　"
+          elsif supplier_master_id == 31  #須戸デンキ
+            supplier_name += sn + " " 
+          end
+        end
+      end
+      #report.page.item(:supplier_name).value(supplier_name)
+      
+      report.page.item(:supplier_name).value(supplier_name)
+      #test end
+      
       report.page.item(:supplier_position).value(@supplier_position)
       report.page.item(:supplier_responsible).value(@supplier_responsible)
       report.page.item(:supplier_tel).value(@supplier_tel)

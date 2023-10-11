@@ -93,7 +93,10 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
       @delivery_slip_header_name = params[:delivery_slip_header_name]
     end
     #
-	
+    
+    #ログイン中のUser確認(Standard)
+    app_get_session_user
+
     @print_type = params[:print_type]
     
     if params[:format] == "pdf" then
@@ -115,8 +118,7 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
           end
           
           #ログイン中のUser確認(Standard)
-          #add230831
-          app_get_session_user
+          #app_get_session_user
           
 	        case @print_type
           when "1"

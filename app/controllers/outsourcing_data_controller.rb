@@ -400,7 +400,9 @@ class OutsourcingDataController < ApplicationController
        
     #伝票が登録済みかチェック
     check_complete_flag
-      
+    
+    #標準版仕様--会社IDを取得
+    #app_get_session_user
   end
 
   def check_complete_flag
@@ -426,6 +428,9 @@ class OutsourcingDataController < ApplicationController
     
     #伝票が登録済みかチェック
     check_complete_flag
+    
+    #標準版仕様--会社IDを取得
+    #app_get_session_user
   end
 
   # POST /purchase_data
@@ -452,6 +457,7 @@ class OutsourcingDataController < ApplicationController
       @purchase_datum.purchase_date = @purchase_date
     end
     
+    
     respond_to do |format|
       
       #外注請求のチェック有りの場合は、ヴァリデーションを無効にする
@@ -461,6 +467,9 @@ class OutsourcingDataController < ApplicationController
       #確定申告などで編集する場合を考慮。
       #save_check = @purchase_datum.save!(:validate => false)
       save_check = @purchase_datum.save  #upd230720
+      
+      #標準版仕様--会社IDを取得
+      app_get_session_user
       
       if save_check
         #外注用の請求書発行
@@ -556,8 +565,9 @@ class OutsourcingDataController < ApplicationController
       #upd230720
       update_check = @purchase_datum.save
       
-      #binding.pry
-      
+      #標準版仕様--会社IDを取得
+      app_get_session_user
+            
       if update_check   
         
         #外注用の請求書発行
@@ -631,7 +641,8 @@ class OutsourcingDataController < ApplicationController
     format.pdf do
         
       #report = OutsourcingInvoicePDF.create @outsourcing_invoice
-      report = OutsourcingInvoicePDF.create purchase_data_current
+      #report = OutsourcingInvoicePDF.create purchase_data_current
+      report = OutsourcingInvoicePDF.create(purchase_data_current, @company_id)
  
       # ブラウザでPDFを表示する
       # disposition: "inline" によりダウンロードではなく表示させている

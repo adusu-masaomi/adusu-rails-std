@@ -87,6 +87,9 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
     end
     #
 	
+    #ログイン中のUser確認(Standard)
+    app_get_session_user
+         
     @print_type = params[:print_type]
  
     if  params[:format] == "pdf" then
@@ -102,7 +105,7 @@ class InvoiceDetailLargeClassificationsController < ApplicationController
       
           #ログイン中のUser確認(Standard)
           #add230831
-          app_get_session_user
+          #app_get_session_user
       
           case @print_type
           when "1"
