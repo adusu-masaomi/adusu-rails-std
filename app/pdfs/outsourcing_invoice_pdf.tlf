@@ -9,7 +9,7 @@
       "x": 255,
       "y": 97,
       "width": 31,
-      "height": 13,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -80,7 +80,7 @@
       "x": 393,
       "y": 50,
       "width": 55,
-      "height": 15.1,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -106,7 +106,7 @@
       "x": 100,
       "y": 150,
       "width": 143.7,
-      "height": 24.7,
+      "height": 27.2,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -164,7 +164,7 @@
       "x": 56.5,
       "y": 220,
       "width": 465.7,
-      "height": 14.8,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAGothic"
@@ -335,7 +335,7 @@
       "x": 80,
       "y": 242.5,
       "width": 63.3,
-      "height": 15,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -545,7 +545,7 @@
       "x": 80,
       "y": 350.4,
       "width": 63.2,
-      "height": 15.8,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -695,7 +695,7 @@
       "x": 83.8,
       "y": 376.4,
       "width": 39.1,
-      "height": 12.5,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -773,7 +773,7 @@
       "x": 272,
       "y": 481.3,
       "width": 65.8,
-      "height": 15.3,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -816,7 +816,7 @@
       "x": 172.4,
       "y": 428.3,
       "width": 63.5,
-      "height": 15.3,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -868,7 +868,7 @@
       "x": 172.4,
       "y": 481.3,
       "width": 49.4,
-      "height": 15.9,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -894,7 +894,7 @@
       "x": 172.4,
       "y": 508.3,
       "width": 55.3,
-      "height": 14.7,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1017,7 +1017,7 @@
       "x": 80,
       "y": 614,
       "width": 57.5,
-      "height": 13.5,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1473,7 +1473,7 @@
       "type": "text-block",
       "display": true,
       "description": "",
-      "x": 405.1,
+      "x": 392,
       "y": 99,
       "width": 98.4,
       "height": 12.1,
@@ -1606,7 +1606,7 @@
       "x": 426,
       "y": 176.5,
       "width": 25,
-      "height": 13.4,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1815,32 +1815,6 @@
         "base": "",
         "type": ""
       }
-    },
-    {
-      "id": "",
-      "type": "text",
-      "display": true,
-      "description": "",
-      "x": 393,
-      "y": 99.7,
-      "width": 18.4,
-      "height": 15,
-      "style": {
-        "font-family": [
-          "IPAPGothic"
-        ],
-        "font-size": 11,
-        "color": "#000000",
-        "text-align": "left",
-        "vertical-align": "top",
-        "line-height": "",
-        "line-height-ratio": "",
-        "letter-spacing": "",
-        "font-style": []
-      },
-      "texts": [
-        "〒"
-      ]
     },
     {
       "id": "supplier_position",
