@@ -126,9 +126,10 @@ class OutsourcingInvoicePDF
         supplier_name_tmp = @supplier_name.chars
         supplier_name_tmp.each do |sn|
           if supplier_master_id == 37     #村山電気
-            supplier_name += sn + "　"
+            supplier_name += sn + "　"  #全角
           elsif supplier_master_id == 31  #須戸デンキ
-            supplier_name += sn + " " 
+            supplier_name += sn + " "   #半角
+            #supplier_name += sn + "　" 
           end
         end
       end
@@ -140,8 +141,12 @@ class OutsourcingInvoicePDF
       report.page.item(:supplier_position).value(@supplier_position)
       report.page.item(:supplier_responsible).value(@supplier_responsible)
       report.page.item(:supplier_tel).value(@supplier_tel)
-      report.page.item(:supplier_fax_label).value(@supplier_fax_label)  
-      report.page.item(:supplier_fax).value(@supplier_fax)              
+      
+      #add231011
+      if @supplier_fax.present?
+        report.page.item(:supplier_fax_label).value(@supplier_fax_label) 
+        report.page.item(:supplier_fax).value(@supplier_fax) 
+      end
       #
         
       #注文No
@@ -349,6 +354,11 @@ end
       @supplier_position = "代表"  #ひとまず固定で
       @supplier_responsible = supplier.responsible_name
       @supplier_tel = supplier.tel_main
+      
+      #add231011
+      @supplier_fax = supplier.fax_main
+      @supplier_fax_label = "FAX"
+      #
       
       @supplier_bank_name = supplier.bank_name
       @supplier_bank_branch_name = supplier.bank_branch_name
