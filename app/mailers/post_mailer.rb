@@ -34,7 +34,8 @@ class PostMailer < ApplicationMailer
     
      #件名に日時を入れる（メール重なるのを防ぐため）
      require 'date'
-     subject_time = "<" + Time.now.to_s + ">"
+     #subject_time = "<" + Time.now.to_s + ">"
+     subject_time = "<" + Time.zone.now.to_s + ">"
     
      #本番用
      ###
@@ -103,7 +104,8 @@ class PostMailer < ApplicationMailer
         
     #件名に日時を入れる（メール重なるのを防ぐため）
     require 'date'
-    subject_time = "<" + Time.now.to_s + ">"
+    #subject_time = "<" + Time.now.to_s + ">"
+    subject_time = "<" + Time.zone.now.to_s + ">"
 	
     # 添付ファイル
     #attachments['sample.jpg'] = ..File.read(‘./tmp/sample.jpg')
