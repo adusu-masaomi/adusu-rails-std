@@ -109,7 +109,8 @@ class PostMailer < ApplicationMailer
 	
     # 添付ファイル
     #attachments['sample.jpg'] = ..File.read(‘./tmp/sample.jpg')
-    send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    #send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    send_time = Time.zone.now.strftime('%Y%m%d%H%M%S')
     #attachments['注文書_' + send_time + '.pdf'] = $attachment
     attachments['注文書_' + send_time + '.pdf'] = attachment
   
@@ -164,10 +165,12 @@ class PostMailer < ApplicationMailer
     
     #件名に日時を入れる（メール重なるのを防ぐため）
     require 'date'
-    subject_time = "<" + Time.now.to_s + ">"
+    #subject_time = "<" + Time.now.to_s + ">"
+    subject_time = "<" + Time.zone.now.to_s + ">"
     
     # 添付ファイル
-    send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    #send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    send_time = Time.zone.now.strftime('%Y%m%d%H%M%S')
     #attachments['見積依頼書_' + send_time + '.pdf'] = $attachment
     attachments['見積依頼書_' + send_time + '.pdf'] = attachment
     
@@ -263,13 +266,15 @@ class PostMailer < ApplicationMailer
     
     #件名に日時を入れる（メール重なるのを防ぐため）
     require 'date'
-    subject_time = "<" + Time.now.to_s + ">"
+    #subject_time = "<" + Time.now.to_s + ">"
+    subject_time = "<" + Time.zone.now.to_s + ">"
     
     #メアド確認
     #binding.pry
     
     #添付ファイル
-    send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    #send_time = Time.now.strftime('%Y%m%d%H%M%S')
+    send_time = Time.zone.now.strftime('%Y%m%d%H%M%S')
     #attachments['注文書_' + send_time + '.pdf'] = $attachment
     attachments['注文書_' + send_time + '.pdf'] = attachment
     
