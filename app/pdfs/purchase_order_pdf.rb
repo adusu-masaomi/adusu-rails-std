@@ -172,14 +172,19 @@ class PurchaseOrderPDF
         check = false
         if $mail_flag == 0
         #帳票の場合
-          #if item[:_destroy] != "true" && item[:_destroy] != "1"
-          #upd230914
-          #帳票上も、メール送信済フラグを使う
-          if item[:_destroy] != "true" && item[:_destroy] != "1" && 
-            item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
-            
-            check = true
+          if company_id == 1
+            #アデュース仕様　メール送信済のチェックをしない(全部出し)
+            if item[:_destroy] != "true" && item[:_destroy] != "1"
+              check = true
+            end
+          else
+            #標準仕様--帳票上も、メール送信済フラグを使う
+            if item[:_destroy] != "true" && item[:_destroy] != "1" && 
+              item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"
+              check = true
+            end
           end
+          
         else
         #メール送信の場合
           #if item[:_destroy] != "true" && item[:mail_sent_flag] != 1 && item[:mail_sent_flag] != "1"

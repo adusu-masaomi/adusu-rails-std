@@ -150,11 +150,16 @@ class PurchaseOrderDataController < ApplicationController
     #工事データの住所を更新
     update_address_to_construction
     
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     #
     #標準版仕様--faxでも送信済みにする 
-    if params[:format] == "pdf"
-      #params[:purchase_order_datum][:mail_sent_flag] = 1
-      @purchase_order_datum.mail_sent_flag = 1
+    if @company_id != 1
+      if params[:format] == "pdf"
+        #params[:purchase_order_datum][:mail_sent_flag] = 1
+        @purchase_order_datum.mail_sent_flag = 1
+      end
     end
     #
     
@@ -219,10 +224,15 @@ class PurchaseOrderDataController < ApplicationController
     #工事データの住所を更新
     update_address_to_construction
    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
     #
-    #標準版仕様--faxでも送信済みにする   --(createも要追加)
-    if params[:format] == "pdf"
-      params[:purchase_order_datum][:mail_sent_flag] = 1
+    #標準版仕様--faxでも送信済みにする(アデュースを除く)
+    if @company_id != 1
+      if params[:format] == "pdf"
+        params[:purchase_order_datum][:mail_sent_flag] = 1
+      end
     end
     #
     

@@ -100,7 +100,11 @@
   <%= f.check_box :mail_sent_flag,  { :id => "mail_sent_flag",  :class => "mail_sent_flag"} , '1', '0' %> 
   <!--<%= f.label :mail_sent_label, "メール送信済フラグ（障害発生等で再送信したい場合は、チェックを外してください）", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>-->
   <!--標準版仕様-->
-  <%= f.label :mail_sent_label, "FAX済", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>
+  <% if @company_id == 1 %>
+    <%= f.label :mail_sent_label, "メール送信済フラグ", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>
+  <% else %>
+    <%= f.label :mail_sent_label, "FAX済", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>
+  <% end %>
   
   <!--<%= f.input :mail_sent_flag, input_html:{id: "mail_sent_flag"}, as: :hidden %>-->
   

@@ -278,6 +278,9 @@ class PurchaseOrderHistoriesController < ApplicationController
       #@construction_id = params[:construction_id]
       #@move_flag = params[:construction_id]
       #
+      
+      #標準版仕様--会社IDを取得
+      app_get_session_user
     end
 
     # GET /purchase_order_histories/1/edit
@@ -618,10 +621,14 @@ class PurchaseOrderHistoriesController < ApplicationController
     
     #add230914
     #２重注文しないようにメール送信フラグをセット
-    if params[:purchase_order_history][:sent_flag] != "1" 
-      @order_flag = true
-      set_mail_sent_flag
-      @order_flag = false
+    if @company_id != 1  #アデュースを除く
+      if params[:purchase_order_history][:sent_flag] != "1" 
+        if params[:format] == "pdf"
+          @order_flag = true
+          set_mail_sent_flag
+          @order_flag = false
+        end
+      end
     end
     #
     
@@ -705,13 +712,18 @@ class PurchaseOrderHistoriesController < ApplicationController
       end
 
     end
-
+    
+    
     #add230914
     #２重注文しないようにメール送信フラグをセット
-    if params[:purchase_order_history][:sent_flag] != "1" 
-      @order_flag = true
-      set_mail_sent_flag
-      @order_flag = false
+    if @company_id != 1  #アデュースを除く
+      if params[:purchase_order_history][:sent_flag] != "1" 
+        if params[:format] == "pdf"
+          @order_flag = true
+          set_mail_sent_flag
+          @order_flag = false
+        end
+      end
     end
     #
     #

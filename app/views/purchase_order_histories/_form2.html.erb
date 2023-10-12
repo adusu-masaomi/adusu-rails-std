@@ -169,12 +169,12 @@
 	  <div id="filter" > 
 	    <%= link_to_add_association 'アイテム追加' ,  f, :orders  ,   :class => 'btn btn-success',  :data => { association_insertion_method: "after" } %> 
 	   
-	      <!--標準版はActiveMailが使えないのでカット....-->
-        <!--
-        <%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
+	      <!--標準版はアデュースのみ表示-->
+        <% if @company_id == 1 %>
+          <%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
                id: "mail_sent_button", :value => 'pdf', :name => 'format', 
                :onclick => "submitAfterValidationEmail()" %>
-        -->
+        <% end %>
         
         
         <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
@@ -895,8 +895,8 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
     //}
     
 	if (after_check == true){
-      //if (window.confirm('実行しますか？')) {
-      if (window.confirm('登録しますか？')) {
+      if (window.confirm('実行しますか？')) {
+      //if (window.confirm('登録しますか？')) {
 	      reset_value();
          
          if (flag == 0){
