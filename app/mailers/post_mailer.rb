@@ -51,12 +51,13 @@ class PostMailer < ApplicationMailer
      end
      
      #test用
+     
      #mail to: "camille.saekiZZZ@gmail.com" ,
      #cc: "i_kyohim@yahoo.co.jp", 
-        
-     #以下は消さない事!
      #件名に日時を入れる（メール重なるのを防ぐため）
-     subject: '注文番号登録依頼' + subject_time
+     #subject: '注文番号登録依頼' + subject_time
+     
+     #test用 end
   end
   
   #注文依頼
@@ -118,16 +119,18 @@ class PostMailer < ApplicationMailer
     #メアドは画面より反映(ccは固定)
     mail to: email_responsible ,
     cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-
-    #test時!!
+    #件名に日時を入れる（メール重なるのを防ぐため）
+    subject: '注文依頼' + subject_time 
+    
+    #test用!!
+    
     #メアドは画面より反映(ccは固定)
     #mail to: "camille.saekiZZZ@gmail.com" ,
     #cc: "i_kyohim@yahoo.co.jp", 
-
-    #以下は消さない事!
     #件名に日時を入れる（メール重なるのを防ぐため）
-    subject: '注文依頼' + subject_time 
-  
+    #subject: '注文依頼' + subject_time 
+    
+    #test用 end
   end
   
   
