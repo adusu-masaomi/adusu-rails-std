@@ -28,7 +28,13 @@ class EstimationSheetPDF
     case company_id
     when 1  #(株)アデュース
       @is_company_with_pic = true
-      @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_signed_pdf.tlf")
+      #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_signed_pdf.tlf")
+      if print_type != "3"
+        @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_adusu1_pdf.tlf")
+      else
+        #ハンコ無しVer
+        @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_adusu2_pdf.tlf")
+      end
     else
       #ハンコ無しVer(通常標準版)
       @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_pdf.tlf")

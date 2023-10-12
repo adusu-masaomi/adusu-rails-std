@@ -98,7 +98,10 @@ class QuotationDetailLargeClassificationsController < ApplicationController
     ###履歴へ保存させる処理追加
     #flash[:notice] = "履歴データへ保存しますか？（保存すると、後から復元させることができます。）"
     @print_type = params[:print_type]
-	
+    
+    #ログイン中のUser確認(Standard)
+    #add230831
+    app_get_session_user
 	
     if params[:format] == "pdf" then
       
