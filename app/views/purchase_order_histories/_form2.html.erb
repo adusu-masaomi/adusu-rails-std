@@ -888,12 +888,15 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
  	var ok_flag = true;
 	var after_check = checkQuantity(ok_flag);
     
-    //標準版はカット
-    //納品場所チェック
-    //if (after_check == true){
-    //  after_check = checkDeliveryPlace(ok_flag);  
-    //}
+    company_id = document.getElementById("company_id_hide").value;
     
+   //納品場所チェック(アデュースのみ)
+   if (company_id == 1){
+      //納品場所チェック
+      if (after_check == true){
+        after_check = checkDeliveryPlace(ok_flag);  
+      }
+    }
 	if (after_check == true){
       if (window.confirm('実行しますか？')) {
       //if (window.confirm('登録しますか？')) {
@@ -910,6 +913,9 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
          document.forms[0].target = "";  //add220615
          document.forms[0].submit();
       }
+   }else{
+      //add231012 メール送信＆キャンセル＆注文書でメールが送られてしまう
+      document.getElementById("sent_flag").value = 0;
 	 }
  }
  
@@ -966,8 +972,20 @@ $(document).bind('cocoon:after-insert', function(e,inserted_item) {
      }
    }
    //
+   
+   check = false;
+   if (company_id != 1){
+     if (window.confirm('注文書を発行しますか？')) {
+       check = true;
+     }
+   }else{
+     //アデュース仕様  注文書発行時はチェックしない
+     check = true;
+   }
+   
  
-   if (window.confirm('注文書を発行しますか？')) {
+   //if (window.confirm('注文書を発行しますか？')) {
+   if (check){
     document.getElementById("format").value = "pdf";
     //注文書フラグをセット
     document.getElementById("print_type").value = "purchase_order";

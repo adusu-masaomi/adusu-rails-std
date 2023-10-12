@@ -1019,11 +1019,13 @@ class QuotationMaterialHeadersController < ApplicationController
         
         if !mail_flag
           
-          #標準版仕様---送信フラグをセット
-          if request_type == 1
-            set_quotation_mail_flag_for_comparison  #ヘッダへ送信フラグセット
-          elsif request_type == 2
-            set_order_mail_flag_for_comparison
+          #標準版仕様---送信フラグをセット(アデュースを除く)
+          if @company_id != 1
+            if request_type == 1
+              set_quotation_mail_flag_for_comparison  #ヘッダへ送信フラグセット
+            elsif request_type == 2
+              set_order_mail_flag_for_comparison
+            end
           end
           
           set_mail_sent_flag

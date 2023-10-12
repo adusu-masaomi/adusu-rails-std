@@ -122,15 +122,13 @@ class PostMailer < ApplicationMailer
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '注文依頼' + subject_time 
     
-    #test用!!
-    
-    #メアドは画面より反映(ccは固定)
+    ##test用!!
+    ##メアドは画面より反映(ccは固定)
     #mail to: "camille.saekiZZZ@gmail.com" ,
     #cc: "i_kyohim@yahoo.co.jp", 
-    #件名に日時を入れる（メール重なるのを防ぐため）
+    ##件名に日時を入れる（メール重なるのを防ぐため）
     #subject: '注文依頼' + subject_time 
-    
-    #test用 end
+    ##test用 end
   end
   
   
@@ -181,18 +179,19 @@ class PostMailer < ApplicationMailer
     
     #本番用
     #メアドは画面より反映(ccは固定)
-    #mail to: email_responsible ,
+    mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
-    #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    
-    #test時!!
-    #メアドは画面より反映(ccは固定)
-    mail to: "camille.saekiZZZ@gmail.com" ,
-    cc: "i_kyohim@yahoo.co.jp", 
-
-    #以下は消さない事!
+    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '見積依頼' + subject_time
+    #本番用 end
+    
+    ##test時!!
+    ##メアドは画面より反映(ccは固定)
+    #mail to: "camille.saekiZZZ@gmail.com" ,
+    #cc: "i_kyohim@yahoo.co.jp", 
+    ##件名に日時を入れる（メール重なるのを防ぐため）
+    #subject: '見積依頼' + subject_time
 
   end
   
@@ -282,17 +281,21 @@ class PostMailer < ApplicationMailer
     
     #本番用
     #メアドは画面より反映(ccは固定)
-    #mail to: email_responsible ,
+    mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
-    #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-
-    #メアドは画面より反映(ccは固定)
-    mail to: "camille0816@gmail.com" ,
-    cc: "i_kyohim@yahoo.co.jp", 
-
-    #以下は消さない事!
+    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '注文依頼' + subject_time 
+    #本番用 end
+    
+    ##test用
+    ##メアドは画面より反映(ccは固定)
+    #mail to: "camille.saekiZZZ@gmail.com" ,
+    #cc: "i_kyohim@yahoo.co.jp", 
+    ##以下は消さない事!
+    ##件名に日時を入れる（メール重なるのを防ぐため）
+    #subject: '注文依頼' + subject_time 
+    ##test用　end
     
   end
   

@@ -680,9 +680,10 @@ class PurchaseOrderHistoriesController < ApplicationController
         #注文書発行
         set_purchase_order(format)
         
+        #binding.pry
+        
         #メール送信する
         send_email
-
         
 
         #メール送信の場合

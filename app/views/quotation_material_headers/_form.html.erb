@@ -287,13 +287,14 @@
                   :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
 		<% end %>
 	   
-    <!--標準版はカット
-    <%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
+	  <!--標準版はアデュースのみ表示-->
+    <% if @company_id == 1 %>
+      <%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
                id: "mail_sent_button", :name => 'send', :onclick => "submitAfterValidationEmailorPdf(1)" %>
                
-    <%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lightBlue100_ftg" ,
-                 formtarget: "_blank", :onclick => "return submitAfterValidation(5)" ) %>
-    -->
+      <!--<%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-lightBlue100_ftg" ,
+                 formtarget: "_blank", :onclick => "return submitAfterValidation(5)" ) %>-->
+    <% end %>
     
     <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
                :onclick => "submitAfterValidation(2)" %>
@@ -311,34 +312,46 @@
 		<!--スペース空ける（誤送信ないように -->
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         
-        <!-- 標準版はカット
-        <span id="filter" >
-		    <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
+        
+        <!--標準版はアデュースのみ表示-->
+        <% if @company_id == 1 %>
+          <span id="filter" >
+		        <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
                id: "mail_sent_button2", :name => 'sendOrder', :onclick => "submitAfterValidationEmailorPdf(3)" %>
         
-        <%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-pink100_ftg" ,
-                 formtarget: "_blank", :onclick => "return submitAfterValidation(6)" ) %>
-        </span>
-	      -->
+           <!--<%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-pink100_ftg" ,
+                 formtarget: "_blank", :onclick => "return submitAfterValidation(6)" ) %>-->
+          </span>
+	      <% end %>
         
         <!--空ボタン-->
-        <!--標準版はカット
-        <span id="empty_button" >
-          <%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
+        <!--標準版はアデュースのみ表示-->
+        <% if @company_id == 1 %>
+          <span id="empty_button" >
+            <%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
                id: "mail_sent_button2", name: "sendOrder" %>
-          <%= f.button_tag "　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
+            <%= f.button_tag "　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
                id: "mail_sent_button2", name: "sendOrder" %>
-        </span>
-        -->
+          </span>
+          
+        <% end %>
          
          <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません-->
-	    
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;
+         
+	       <% if @company_id != 1 %>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		       
+         <% end %>
+		 
+		 
+     
 		 <!--&nbsp;&nbsp;&nbsp;-->
      
 		 <!--見積金額合計（１〜３）-->
@@ -372,23 +385,37 @@
 		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          
-         <!--標準版はカット
-         <%= f.check_box :force_order_flag, :id => "force_order_flag", :onclick => "changeDispOrderButton(this)" %>
-         <%= f.label :force_order_flag, '見積なしで注文', { style: 'color:grey'}  %>
-         -->
-         <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+         <!--標準版はカット アデュースのみ表示-->
+         <% if @company_id == 1 %>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         
+           <%= f.check_box :force_order_flag, :id => "force_order_flag", :onclick => "changeDispOrderButton(this)" %>
+           <%= f.label :force_order_flag, '見積なしで注文', { style: 'color:grey'}  %>
+           
+           
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <% end %>
              
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		 
 		 
      <!--標準版対応-->
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;
+     <% if @company_id != 1 %>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;
+     <% end %>
      
 		 <!--注文金額合計（１〜３）-->
 		 <%= f.input :total_order_price_1 , label:"注文金額計１", label_html: { style: 'color:black;' }, 
@@ -944,10 +971,19 @@
      //標準版仕様
      document.getElementById("sent_flag").value = 7;  //add200428
      message = "見積依頼書を発行しますか？"
+     
+     //アデュース仕様 メッセージは非表示に
+     if (company_id == 1){
+       messageFlag = false;
+     }
    }else if (flag == 8){
      //標準版仕様
      document.getElementById("sent_flag").value = 8;  //add200428
      message = "注文書を発行しますか？"
+     //アデュース仕様 メッセージは非表示に
+     if (company_id == 1){
+       messageFlag = false;
+     }
    }else{
      //それ以外
      messageFlag = false;
@@ -990,9 +1026,11 @@
    //画面をリフレッシュしておく(印刷後に見積・注文済の状態になるように)
    //window.location.reload();
    
-   //4秒待つ（描写されないことがあるため）
-	 setTimeout("reloadDiv()", 4000);
-   
+   //アデュース以外--(必要？？)
+   if (company_id != 1){
+     //4秒待つ（描写されないことがあるため）
+	   setTimeout("reloadDiv()", 4000);
+   }
  }
 
   var checkDeliveryPlace = function(ok_flag, flag){ 
