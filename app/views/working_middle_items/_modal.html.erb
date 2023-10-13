@@ -1,6 +1,9 @@
 <div class="modal-dialog modal-lg" id="myModal" >
   <div class="modal-content" style="width:1280px;" >
   <div style="padding-left : 15px;">
+
+<!--<img src="/images/gif-load.gif" id="loading-indicator" style="display:none" />-->
+
 <!--モーダル化171122-->
 <%= simple_nested_form_for @working_middle_item, remote: true, :html => { id: "mymodal", :class => 'well form-horizontal' , :style => "width:1280px;" } do |f| %>
     
@@ -255,6 +258,17 @@
   
   $(document).ready(function(){
   
+     //debugger;
+     
+     //test
+     // マウスカーソルの形を変える
+      $("body").css("cursor", "default");
+	   
+	   // Loadingイメージ表示
+     //$('#loading-indicator').show();
+     
+     //
+  
      //ドラッグできるようにする 
 	 $("#myModal").draggable({
        handle: ".modal-dialog"
@@ -428,7 +442,6 @@
   //以下はモーダルでは動作しないため、移動・・・
   $(window).load(function(){
   
-     
      //明細の合計値を算出しておく
 	 //資材費合計を算出
 	   CalcLaborMaterialCostTotal("modal_material_price");

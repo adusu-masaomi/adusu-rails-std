@@ -46,8 +46,9 @@
         
 		
 		<td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_working_middle_item_path(working_middle_item, move_flag: ""), remote: true, :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit"), ),  
+                      edit_working_middle_item_path(working_middle_item, move_flag: ""), :onclick => "changeCursor()", 
+                      remote: true, :class => 'btn btn-default btn-xs' %>
           
           
           <%= link_to "コピー", 
@@ -69,4 +70,15 @@
       </tr>
 <% end %>
 <% end %> 
-	
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  });
+  
+  //読み込みが遅い場合があるので砂時計にする
+  function changeCursor(){
+    // マウスカーソルの形を変える
+    $("body").css("cursor", "progress");
+  }
+  
+</script>
