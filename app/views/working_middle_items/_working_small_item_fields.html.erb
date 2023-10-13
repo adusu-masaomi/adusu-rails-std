@@ -135,14 +135,13 @@
 <script type="text/javascript">
 
   //モーダルの場合は、このコードがないとselect2が正常動作しない。
-  //test
   //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
   //$.fn.modal.Constructor.prototype._enforceFocus = function() {};
    
   //$(document).on('ready page:load', function(){
   $(document).ready(function(){
     
-    //debugger;
+    // ↓以下は機能してないよう?
     
     $(".searchableMaterial").select2({ theme: "classic" });
     
@@ -151,11 +150,10 @@
     //upd180412
       $(".searchableMaker").select2({ theme: "classic", tags: true });
     
-    //$(".searchableUnit").select2({ theme: "classic" });
-	
-	//test
-	$(".searchableUnit").select2({ theme: "classic"}).on("load", function(e) { 
-        $(this).prop('tabindex',19)}).trigger('load');
+      //$(".searchableUnit").select2({ theme: "classic" });
+      
+      $(".searchableUnit").select2({ theme: "classic"}).on("load", function(e) { 
+      $(this).prop('tabindex',19)}).trigger('load');
     
     //test
     // });

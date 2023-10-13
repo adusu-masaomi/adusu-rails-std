@@ -29,8 +29,11 @@ class InventoriesController < ApplicationController
 
     #kaminari用設定
     @inventories  = @inventories.page(params[:page])
-	#
-	
+    #
+    
+    #ログイン中のUser確認(Standard)
+    app_get_session_user
+	  
 	#global set
 	$inventories = @inventories
 	respond_to do |format|
@@ -64,10 +67,15 @@ class InventoriesController < ApplicationController
   # GET /inventories/new
   def new
     @inventory = Inventory.new
+    
+    #ログイン中のUser確認(Standard)
+    app_get_session_user
   end
 
   # GET /inventories/1/edit
   def edit
+    #ログイン中のUser確認(Standard)
+    app_get_session_user
   end
 
   # POST /inventories

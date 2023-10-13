@@ -50,6 +50,13 @@
             inventories_path(@inventory, format: "pdf", :print_flag => "4"),
             :class => 'btn  btn-blue500_ftg', :target=>["_blank"] %>
 
+     <% if @company_id == 1 %>
+       <%= link_to "棚卸表(記入用／除外有)",
+            inventories_path(@inventory, format: "pdf", :print_flag => "3"),
+            :class => 'btn  btn-lightblue100_ftg', :target=>["_blank"] %>
+     <% end %>
+     
+
       <!--標準版はカット
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <%= link_to "在庫一覧表(画像付/数量順)",
