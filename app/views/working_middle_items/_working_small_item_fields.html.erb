@@ -23,8 +23,12 @@
   
   <!--メーカー追加-->
   <%= f.label :maker_master_id, "メーカー:　" %>
+  <!--test-->
+  <!--<%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
+      {class: "searchableMaker" , id: "maker_master_id" , style: 'width:180px;'} %>-->
+  <!-- upd231013 -->
   <%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
-      {class: "searchableMaker" , id: "maker_master_id" , style: 'width:180px;'} %>
+      {class: "searchableMaker" , id: "maker_master_id" << f.options[:child_index].to_s , style: 'width:180px;'} %>
   
   </br>
   <%= f.label :working_small_item_code, "品番手入力:　"%>
@@ -52,8 +56,11 @@
   
   <!--単位追加-->
   <%= f.label :unit_master_id, "単位:　"%>
+  <!--<%= f.collection_select :unit_master_id, UnitMaster.all, :id, :unit_name, {:selected => f.object.unit_master_id || 1} , 
+      {class: "searchableUnit" , id: "unit_master_id" , style: 'width:60px;'} %>-->
+  <!--upd231013-->
   <%= f.collection_select :unit_master_id, UnitMaster.all, :id, :unit_name, {:selected => f.object.unit_master_id || 1} , 
-      {class: "searchableUnit" , id: "unit_master_id" , style: 'width:60px;'} %>
+      {class: "searchableUnit" , id: "unit_master_id" << f.options[:child_index].to_s , style: 'width:60px;'} %>
   
   <!--<%= f.label :unit_price, "単価:" %>-->
   <!--upd180131-->
@@ -128,20 +135,30 @@
 <script type="text/javascript">
 
   //モーダルの場合は、このコードがないとselect2が正常動作しない。
+  //test
   //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
-
+  //$.fn.modal.Constructor.prototype._enforceFocus = function() {};
+   
   //$(document).on('ready page:load', function(){
   $(document).ready(function(){
     
+    //debugger;
+    
     $(".searchableMaterial").select2({ theme: "classic" });
+    
+    
     //$(".searchableMaker").select2({ theme: "classic" });
     //upd180412
       $(".searchableMaker").select2({ theme: "classic", tags: true });
     
     //$(".searchableUnit").select2({ theme: "classic" });
+	
+	//test
 	$(".searchableUnit").select2({ theme: "classic"}).on("load", function(e) { 
         $(this).prop('tabindex',19)}).trigger('load');
     
+    //test
+    // });
     
 	$( ".searchableMaterial" ).change(function(e) {
 	    material_id = $(this)[0].value;

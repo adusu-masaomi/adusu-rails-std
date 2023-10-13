@@ -249,6 +249,7 @@
   
   //モーダルの場合は、このコードがないとselect2が正常動作しない。
   $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+  //$.fn.modal.Constructor.prototype._enforceFocus = function() {};
   
   var sub_form_visivle;
   
@@ -265,6 +266,11 @@
      //単位--select2のタブインデックスはここで指定しておく。
      $(".searchableSelect2_1").select2({ theme: "bootstrap" }).on("load", function(e) { 
         $(this).prop('tabindex',8)}).trigger('load');
+     
+     //$(".searchableSelect2_1").select2({ theme: "classic" });
+        
+     //});  //test
+     
      $( ".searchableSelect2_1" ).on("select2:close", function (e) {
        nextControlSelect2(this);
      });
@@ -322,38 +328,53 @@
     //明細フォームの"品目追加"ボタンクリック時の動作
 	$('form').on ('click', '.add_fields', 
       function(event) {
+  //test
+  //$(document).bind('cocoon:after-insert', function(e,inserted_item) {  
+      
+        //debugger;
+      
+        //test del
+        
         time = new Date().getTime();
         regexp = new RegExp($(this).data('id'), 'g');
-		  
         $(this).before($(this).data('fields').replace(regexp, time));
-		
-		//生成されたselect2をここで制御する(ここで記述しないと動作しない)
-		$(".searchableMaterial").select2({ theme: "classic" });
-		$( ".searchableMaterial" ).change(function(e) {
-		   //material_id
+    
+    //生成されたselect2をここで制御する(ここで記述しないと動作しない)
+    //$(".searchableMaker").select2({ theme: "classic", tags: true });  //test
+    
+    $(".searchableMaterial").select2({ theme: "classic" });
+    
+    
+    $( ".searchableMaterial" ).change(function(e) {
+       //material_id
            material_id = $(this)[0].value;
-		   
-		   var child_index = $(this)[0].id;
+       
+       var child_index = $(this)[0].id;
            child_index = child_index.replace( /working_small_item_id/g , "" ) ;
-		   
-		   if (material_id != undefined){
-			 
-			 material_id =  parseInt(material_id);
-			 
-			 //ajax
-		     $.get("<%= working_small_itemz_material_standard_select_path %>",
+       
+       if (material_id != undefined){
+       
+         material_id =  parseInt(material_id);
+         
+        //ajax
+         $.get("<%= working_small_itemz_material_standard_select_path %>",
                { material_id: material_id },
-			   function(data){ 
+         function(data){ 
                  //各種アイテム情報のセット
-			     //setMaterialDetail(child_index);
+           //setMaterialDetail(child_index);
                  setWorkingSmallItemDetail(child_index, 1);
-			   }
+         }
              );
-		   }
-	   });
+       }
+     });
+       //test
        //$(".searchableMaker").select2({ theme: "classic" });
        //upd180412
        $(".searchableMaker").select2({ theme: "classic", tags: true });
+       
+       //test
+       //$(".searchableMaker").select2({ theme: "bootstrap", tags: true });
+       //$(".searchableMakers").select2({ theme: "classic", tags: true });
       
        $(".searchableUnit").select2({ theme: "classic" });
        
@@ -364,18 +385,18 @@
        });
        
        $( ".searchInsertMaterial" ).on("select2:close", function (e) {
-	     //name属性に埋め込まれているIDを抜き出す
-	     var controlName = $(this)[0].name;
-	     var child_index = 0;
-	     child_index = controlName.slice(52);
+         //name属性に埋め込まれているIDを抜き出す
+         var controlName = $(this)[0].name;
+         var child_index = 0;
+         child_index = controlName.slice(52);
          child_index = child_index.slice(0,-26);
          
          var nm = "working_middle_item[working_small_items_attributes][" + child_index + "][working_small_item_name]"
          if (nm != undefined){
-		   if (document.getElementsByName(nm)[0] != undefined){
+       if (document.getElementsByName(nm)[0] != undefined){
              document.getElementsByName(nm)[0].focus();
-		   }
-		 }
+       }
+     }
          
          e.keyCode = 0;  //キーコードをリセットする（しないと次のコントロールまで進んでしまう）
        });
@@ -383,9 +404,9 @@
        //add end
        
        //
-		//return event.preventDefault();
-		return false;
-	  })
+      //return event.preventDefault();
+      return false;
+    })
   });
   
   //初期設定-モーダル用
