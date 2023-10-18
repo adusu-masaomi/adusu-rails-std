@@ -24,7 +24,20 @@ class InvoiceLandscapePDF
     @report.start_new_page
        
     @flag = nil
-  
+    
+    #インボイス番号を出す
+    company = Company.first
+    
+    if company.present?
+      #請求書番号
+      if company.invoice_number.present?
+        invoice_str = "登録番号　" + company.invoice_number
+       @report.page.item(:invoice_number).value(invoice_str)
+      end
+    end
+    #
+    
+    
     #$invoice_detail_large_classifications.order(:line_number).each do |invoice_detail_large_classification|
     #upd170626
     invoice_detail_large_classifications.order(:line_number).each do |invoice_detail_large_classification| 
@@ -47,6 +60,8 @@ class InvoiceLandscapePDF
       end
 		   
       #---見出し---
+		 
+		  
 		 
       #消費税率
       #consumption_tax = $consumption_tax_only
