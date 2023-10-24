@@ -124,7 +124,7 @@
             "description": "",
             "x": 347,
             "y": 102.7,
-            "width": 40.4,
+            "width": 41.2,
             "height": 14.4,
             "style": {
               "font-family": [
@@ -300,7 +300,7 @@
             "description": "",
             "x": 544,
             "y": 102.7,
-            "width": 41.5,
+            "width": 42,
             "height": 14.4,
             "style": {
               "font-family": [
@@ -501,7 +501,7 @@
               "type": "number",
               "number": {
                 "delimiter": ",",
-                "precision": 0
+                "precision": 1
               }
             }
           },

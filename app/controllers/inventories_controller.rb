@@ -898,10 +898,13 @@ class InventoriesController < ApplicationController
         
         #在庫数量が繰り上がる場合
         if !upd_flag
-          current_warehousing_date = @inventory.next_warehousing_date_1
-          current_history_id = @inventory.next_history_id_1
-          current_unit_price = @inventory.next_unit_price_1
-          current_quantity = @inventory.next_quantity_1
+          #add231019 在庫0になると単価がクリアされてしまう為
+          if @inventory.next_quantity_1.present? && @inventory.next_quantity_1 > 0
+            current_warehousing_date = @inventory.next_warehousing_date_1
+            current_history_id = @inventory.next_history_id_1
+            current_unit_price = @inventory.next_unit_price_1
+            current_quantity = @inventory.next_quantity_1
+          end
         end
 		  end
 		#
