@@ -35,7 +35,8 @@ class QuotationDetailMiddleClassificationsController < ApplicationController
       #add231026
       #内訳が空白行などの場合、明細に他の全ての明細が載ってきてしまう(header_idのみで検索が走る為)ので、あえて記号を入れて検索させる
       if @working_large_item_name.nil?
-        @working_large_item_name = "-"
+        #@working_large_item_name = "-"
+        @working_large_item_name = ["-", ""]
       end
       #
       
