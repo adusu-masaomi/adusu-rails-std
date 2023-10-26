@@ -53,11 +53,14 @@ class PurchaseDatum < ApplicationRecord
   attr_accessor :payment_due_date_hide  
     
   attr_accessor :outsourcing_flag #add230610
-  
   attr_accessor :new_company_flag  #221104
-    
   attr_accessor :company_id_hide   #230914
-    
+  
+  #add231021
+  #attr_accessor :purchase_unit_price_tax
+  attr_accessor :purchase_amount_tax
+  #add end
+  
   #validation
   validates :material_id, presence: true
   validates :material_code, presence: true

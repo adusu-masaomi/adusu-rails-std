@@ -134,7 +134,22 @@ class PurchaseListForOutsourcingPDF
           purchase_amount_tax_in = purchase_datum.purchase_amount * $consumption_tax_include
         else
           #10%の場合(変更があれば更に分岐させる)
-          purchase_amount_tax_in = purchase_datum.purchase_amount * $consumption_tax_include_per_ten
+          #purchase_amount_tax_in = purchase_datum.purchase_amount * $consumption_tax_include_per_ten
+        
+          if purchase_datum.purchase_unit_price_tax.blank?
+            #upd231021
+            #消費税は切り捨てとする(消費税サイト参考)
+            purchase_amount_tax_only = purchase_datum.purchase_amount * $consumption_tax_only_per_ten
+            purchase_amount_tax_only = purchase_amount_tax_only.floor
+            purchase_amount_tax_in = purchase_datum.purchase_amount + purchase_amount_tax_only
+          else
+            #誤差もあるので、税込単価は直接の登録とした(税込単価をまず優先して、そこから税抜きを逆算するため)
+            #数量は通常は1なので、端数処理はしない
+            purchase_amount_tax_in = purchase_datum.purchase_unit_price_tax * purchase_datum.quantity  
+            #消費税=税込金額-税抜金額
+            purchase_amount_tax_only = purchase_amount_tax_in - purchase_datum.purchase_amount
+          end
+          #upd end
         end
           
         @purchase_amount_tax_in_total += purchase_amount_tax_in

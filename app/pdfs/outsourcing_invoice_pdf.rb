@@ -287,8 +287,27 @@ class OutsourcingInvoicePDF
           purchase_amount_tax_in = purchase_data_current.purchase_amount * $consumption_tax_include
         else
         #消費税10%の場合
-          purchase_amount_tax_only = purchase_data_current.purchase_amount * $consumption_tax_only_per_ten
-          purchase_amount_tax_in = purchase_data_current.purchase_amount * $consumption_tax_include_per_ten
+          #del231021
+          #purchase_amount_tax_only = purchase_data_current.purchase_amount * $consumption_tax_only_per_ten
+          #purchase_amount_tax_in = purchase_data_current.purchase_amount * $consumption_tax_include_per_ten
+        
+          if purchase_data_current.purchase_unit_price_tax.blank?
+            #従来の計算方法
+            purchase_amount_tax_only = purchase_data_current.purchase_amount * $consumption_tax_only_per_ten
+            #add231021
+            #小数点以下は切り捨てる(専門サイトが切り捨てを行っている為、それに倣う)
+            purchase_amount_tax_only = purchase_amount_tax_only.floor
+            purchase_amount_tax_in = purchase_data_current.purchase_amount + purchase_amount_tax_only
+          else
+            #インボイス対策・外注値引版
+            #upd231021
+            #誤差もあるので、税込単価は直接の登録とした(税込単価をまず優先して、そこから税抜きを逆算するため)
+            
+            #数量は通常は1なので、端数処理はしない
+            purchase_amount_tax_in = purchase_data_current.purchase_unit_price_tax * purchase_data_current.quantity  
+            #消費税=税込金額-税抜金額
+            purchase_amount_tax_only = purchase_amount_tax_in - purchase_data_current.purchase_amount
+          end
         end
       end
         

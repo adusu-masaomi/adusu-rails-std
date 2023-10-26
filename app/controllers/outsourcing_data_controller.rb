@@ -401,8 +401,9 @@ class OutsourcingDataController < ApplicationController
     #伝票が登録済みかチェック
     check_complete_flag
     
+    #restore231025
     #標準版仕様--会社IDを取得
-    #app_get_session_user
+    app_get_session_user
   end
 
   def check_complete_flag
@@ -429,8 +430,9 @@ class OutsourcingDataController < ApplicationController
     #伝票が登録済みかチェック
     check_complete_flag
     
+    #restore231025
     #標準版仕様--会社IDを取得
-    #app_get_session_user
+    app_get_session_user
   end
 
   # POST /purchase_data
@@ -1708,7 +1710,7 @@ class OutsourcingDataController < ApplicationController
       params.require(:purchase_datum).permit(:purchase_date, :slip_code, :purchase_order_datum_id, :construction_datum_id, 
                      :material_id, :material_code, :material_name, :maker_id, :maker_name, :quantity, :unit_id, :purchase_unit_price, 
                      :purchase_amount, :list_price, :division_id, :supplier_id, :inventory_division_id, :unit_price_not_update_flag, :outsourcing_invoice_flag, 
-                     :notes, :purchase_header_id, :working_end_date, :closing_date, :payment_due_date)
+                     :notes, :purchase_header_id, :working_end_date, :closing_date, :payment_due_date, :purchase_unit_price_tax)
     end
     
     def purchase_unit_prices_params

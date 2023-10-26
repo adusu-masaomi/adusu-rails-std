@@ -38,6 +38,14 @@ class DeliverySlipDetailMiddleClassificationsController < ApplicationController
 	
     #if $delivery_slip_header_id.present?
     if @delivery_slip_header_id.present?
+      
+      #add231026
+      #内訳が空白行などの場合、明細に他の全ての明細が載ってきてしまう(header_idのみで検索が走る為)ので、あえて記号を入れて検索させる
+      if @working_large_item_name.nil?
+        @working_large_item_name = "-"
+      end
+      #
+      
       query = {"delivery_slip_header_id_eq"=>"", "with_header_id"=> @delivery_slip_header_id, "with_large_item"=> @working_large_item_name , 
                    "working_middle_item_name_eq"=>""}
 
