@@ -80,7 +80,7 @@
 <div style="width:1280px;">
 <td>納品金額合計:<%=number_to_currency(@delivery_slip_detail_middle_classifications.sumpriceDeliverySlip,  precision: 0 ) %>
 &nbsp;&nbsp;&nbsp;&nbsp;実行金額合計:<%=number_to_currency(@delivery_slip_detail_middle_classifications.sumpriceExecution,  precision: 0 ) %>
-&nbsp;&nbsp;&nbsp;&nbsp;歩掛計の合計:<%= @delivery_slip_detail_middle_classifications.sumLaborProductivityUnitTotal.to_s + "人" %>
+&nbsp;&nbsp;&nbsp;&nbsp;歩掛計の合計:<%= @delivery_slip_detail_middle_classifications.sumLaborProductivityUnitTotal.round(3).to_s + "人" %>
 </td>
 <!--モバイル対応 add180829-->
 <% if browser.platform.ios? || browser.platform.android? %>
