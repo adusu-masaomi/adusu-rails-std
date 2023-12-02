@@ -88,8 +88,12 @@ class PurchaseListForOutsourcingPDF
          
       if purchase_datum.purchase_order_datum_id.present?
       #注番があればそっちを優先する
+        #outsourcing_cost = OutsourcingCost.where(:purchase_order_datum_id => 
+        #purchase_datum.purchase_order_datum_id).where(:staff_id => staff_id).first
+        #upd231202
         outsourcing_cost = OutsourcingCost.where(:purchase_order_datum_id => 
-        purchase_datum.purchase_order_datum_id).where(:staff_id => staff_id).first
+        purchase_datum.purchase_order_datum_id).where(:supplier_master_id => purchase_datum.supplier_id).first
+        
              
         #注番のないデータなら、工事IDで引っ張る(将来的にはなくなる予定)
         if outsourcing_cost.nil?
@@ -97,7 +101,8 @@ class PurchaseListForOutsourcingPDF
           purchase_datum.construction_datum_id).where(:staff_id => staff_id).first
         end
       end
-         
+      
+      
       if outsourcing_cost.present?
         payment_date = outsourcing_cost.payment_date
         unpaid_payment_date = outsourcing_cost.unpaid_payment_date

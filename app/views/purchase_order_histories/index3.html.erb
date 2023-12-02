@@ -118,8 +118,14 @@
     <% @orders.order("id desc").each do |orders| %>
       <tr>
         <td><%= link_to orders.id, orders_path(orders) %></td>
-        <td><%= orders.purchase_order_history.purchase_order_date %></td>
-        <% if orders.purchase_order_history.purchase_order_datum.present? %>
+        <!--upd231110-->
+        <% if orders.purchase_order_history.present? && orders.purchase_order_history.purchase_order_date.present? %>
+          <td><%= orders.purchase_order_history.purchase_order_date %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
+        <!--upd231110-->
+        <% if orders.purchase_order_history.present? && orders.purchase_order_history.purchase_order_datum.present? %>
           <td><%= orders.purchase_order_history.purchase_order_datum.purchase_order_code %></td>
         <% else %>
           <td>-</td>
@@ -155,7 +161,12 @@
         <% else %>
           <td align="right"><%= orders.list_price %></td>
         <% end %>
-        <td><%= orders.purchase_order_history.supplier_master.supplier_name %></td>
+        <!--upd231110-->
+        <% if orders.purchase_order_history.present? && orders.purchase_order_history.supplier_master.present? %>
+          <td><%= orders.purchase_order_history.supplier_master.supplier_name %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         <!--納品済のチェック-->
         <td><%= check_box("delivery_complete_flag", "active", {checked: check_if_true(orders.delivery_complete_flag) , 
                   :multiple => true, :style => "margin-left: 16px;",  :disabled => false , :class => "delivery_complete_check",  :id => orders.id  }, "true", "false") %></td>

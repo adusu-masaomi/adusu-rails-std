@@ -998,7 +998,8 @@ class QuotationMaterialHeadersController < ApplicationController
         #$order_parameters = params[:purchase_order_history][:orders_attributes]
         detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
 	   
-        if $seq_exists > 0
+        #if $seq_exists > 0
+        if session[:seq_exists] > 0  #upd231116
           #昇順になっている場合は、本来の降順にしておく。
 	        #@detail_parameters = Hash[detail_parameters.sort.reverse]
           #rails6対応

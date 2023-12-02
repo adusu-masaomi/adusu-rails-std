@@ -192,7 +192,9 @@ class PurchaseDatum < ApplicationRecord
   end
     
   def self.payment_check_list 
-    [["未", 0], ["済", 1]] 
+    [["未", 0], ["済", 1]]
+    #[["未", nil], ["済", 1]] 
+    #[["", nil], ["未", 0], ["済", 1]] 
   end
 	
 	#以下、全てcsv用

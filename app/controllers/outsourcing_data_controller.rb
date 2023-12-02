@@ -120,7 +120,7 @@ class OutsourcingDataController < ApplicationController
     end
     
     contain_no_payment_date = false
-        
+     
     if query.present? && query["payment_due_date_lteq"].present? && query["with_construction"].blank?
     #支払予定日で検索した場合、支払予定日未入力のものも加える(or条件)
           

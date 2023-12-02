@@ -125,8 +125,14 @@
         <!--  <td></td> -->
 		<!--<% end %> -->
 		
-        <!--<td><%= @staff[(construction_daily_report.staff_id)-1].staff_name %></td>-->
-        <td><%= construction_daily_report.Staff.staff_name %></td>
+        <!-- upd231111 -->
+        <% if construction_daily_report.Staff.present? %>
+          <!--<td><%= @staff[(construction_daily_report.staff_id)-1].staff_name %></td>-->
+          <td><%= construction_daily_report.Staff.staff_name %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
+        
         <!--<td><%= construction_daily_report.start_time_1.to_s(:start_time_1) %></td>-->
         <td><%= construction_daily_report.start_time_1.strftime("%H:%M") %></td>
         <td><%= construction_daily_report.end_time_1.strftime("%H:%M") %></td>

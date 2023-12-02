@@ -96,7 +96,9 @@ class PurchaseOrderAndEstimatePDF
     #report.page.item(:supplier_responsible_name).value($quotation_material_header.supplier_master.responsible1 + "様")
     #担当は先頭を取ってくる---複数の場合に無理があるかも??
     #report.page.item(:supplier_responsible_name).value($quotation_material_header.supplier_master.supplier_responsibles[0].responsible_name + "様")
-    report.page.item(:supplier_responsible_name).value(@quotation_material_header.supplier_master.supplier_responsibles[0].responsible_name + "様")
+    if @quotation_material_header.supplier_master.supplier_responsibles[0].present?  #upd231111
+      report.page.item(:supplier_responsible_name).value(@quotation_material_header.supplier_master.supplier_responsibles[0].responsible_name + "様")
+    end
     
     #見積依頼/注文日
     #注文日:
