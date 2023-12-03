@@ -120,7 +120,7 @@ class InventoriesController < ApplicationController
 
   #変更前と品番が異なった場合、一旦履歴を削除し在庫マスターも補填する
   def self.destroy_history_on_differ_material(params, purchase_datum_id)
-    nventory_history_before = InventoryHistory.where(purchase_datum_id: purchase_datum_id).first
+    inventory_history_before = InventoryHistory.where(purchase_datum_id: purchase_datum_id).first
     if inventory_history_before.present?
       #if inventory_history_before.material_master_id !=  params[:purchase_datum][:material_id]
       #upd231106
