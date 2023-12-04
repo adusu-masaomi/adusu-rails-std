@@ -59,7 +59,8 @@
   </br>
   <div class="col-xs-5 " , style="margin-left : -15px;">
     <%= f.label :'品番（ﾏｽﾀｰ追加は”＜手入力用＞”に）' , {:class => "my-custom-class-l" ,style: 'color:red;'} %></br>
-    <%= f.collection_select :material_id, MaterialMaster.all, :id, :material_code, {:prompt => "どれか一つを選択して下さい"} , {id:"material_id", class: "searchableItem" , 
+    <!--upd231204 品番のID順に-->
+    <%= f.collection_select :material_id, MaterialMaster.all.order("id"), :id, :material_code, {:prompt => "どれか一つを選択して下さい"} , {id:"material_id", class: "searchableItem" , 
                :tabindex=>"5",style: 'width:220px;'  ,:onchange => "setListPriceAndMakerAndUnit(this.form)"} %>
     <!--<%= f.collection_select :material_id, MaterialMaster.all, :id, :material_code, {:prompt => "どれか一つを選択して下さい"} , {id:"material_id", class: "searchableItem" , 
                :tabindex=>"5",style: 'width:220px;' } %>-->
