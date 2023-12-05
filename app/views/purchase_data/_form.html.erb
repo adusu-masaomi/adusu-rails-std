@@ -85,8 +85,8 @@
     <!--<%= f.hidden_field :material_masters, :value => @material_masters, id:"material_list_price" %>-->
 
   </br>
-
-  <%= f.collection_select :lstMaterialName, MaterialMaster.all,  :id, :material_name,  {:prompt => "どれか一つを選択して下さい",:selected => @purchase_datum.material_id} , 
+  <!--upd231204 品番のID順に-->
+  <%= f.collection_select :lstMaterialName, MaterialMaster.all.order("id"),  :id, :material_name,  {:prompt => "どれか一つを選択して下さい",:selected => @purchase_datum.material_id} , 
   {id:'lstMaterialName',name: 'lstMaterialName' ,:class => "my-custom-class-l", :hidden => true }  %>
 
   </br></br></br></br></br></br>
