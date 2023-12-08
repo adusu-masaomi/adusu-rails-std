@@ -921,9 +921,12 @@ class PurchaseDataController < ApplicationController
       construction_id = params[:construction_id]
       @construction_data = ConstructionDatum.where("id >= ?", construction_id)
 
+      
       #仕入idをセット
       supplier_master_id = params[:supplier_master_id]
       @supplier_master = SupplierMaster.where("id >= ?", supplier_master_id)
+
+      #binding.pry
 
       #外注の注文Noの判定
       #add201229 仕入マスターの外注フラグで判定

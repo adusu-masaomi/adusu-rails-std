@@ -30,7 +30,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
       @invoice_header_name = params[:invoice_header_name]
     end
     #
-	
+
     if @invoice_header_id.present?
       query = {"invoice_header_id_eq"=>"", "with_header_id"=> @invoice_header_id, 
             "with_large_item"=> @working_large_item_name , "working_middle_item_name_eq"=>""}
@@ -43,36 +43,36 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
       query = params[:q]
       query ||= eval(cookies[:recent_search_history].to_s)  	
     end
-	
-	
+
+
     #@q = InvoiceDetailMiddleClassification.ransack(params[:q]) 
     #ransack保持用--上記はこれに置き換える
     @q = InvoiceDetailMiddleClassification.ransack(query)   
     
     #ransack保持用コード
     if @null_flag == "" 
-	  search_history = {
-       value: params[:q],
-       expires: 480.minutes.from_now
+	    search_history = {
+        value: params[:q],
+        expires: 480.minutes.from_now
       }
       cookies[:recent_search_history] = search_history if params[:q].present?
     end
     #
 
     @invoice_detail_middle_classifications = @q.result(distinct: true)
-	
+
     #ビューでのソート処理
     #if (params[:q].present? && params[:q][:s].present?) || $sort_im != nil
     if (params[:q].present? && params[:q][:s].present?) || session[:sort_im] != nil
-	    
+
       #order順のパラメータ(asc/desc)がなぜか１パターンしか入らないので、カラム強制にセットする。
       column_name = "line_number"
       
       #if $not_sort_im != true
       if session[:not_sort_im] != true
-      #ここでにソートを切り替える。（パラメータで入ればベストだが）
-      #（モーダル編集、行ソートでこの処理をしないようにしている）
-		
+        #ここでにソートを切り替える。（パラメータで入ればベストだが）
+        #（モーダル編集、行ソートでこの処理をしないようにしている）
+
         if params[:q].present? 
           #if $sort_im.nil?
           if session[:sort_im].nil?
@@ -87,19 +87,19 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
             #$sort_im = "desc"
             session[:sort_im] = "desc"
           end
-	      end
+        end
       else
         #$not_sort_im = false
         session[:not_sort_im] = false
       end
-		
+
       #並び替えする（降順/昇順）
       #if $sort_im == "asc"
       if session[:sort_im] == "asc"
         @invoice_detail_middle_classifications = @invoice_detail_middle_classifications.order(column_name + " asc")
-      #elsif $sort_im == "desc"
+        #elsif $sort_im == "desc"
       elsif session[:sort_im] == "desc"
-	      @invoice_detail_middle_classifications = @invoice_detail_middle_classifications.order(column_name + " desc")
+        @invoice_detail_middle_classifications = @invoice_detail_middle_classifications.order(column_name + " desc")
       end
     end  #(params[:q].present?~
     #
@@ -118,8 +118,8 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     else 
       row = params[:row].split(",")   
     end
-	 
-	  
+
+
     #row.each_with_index {|row, i| QuotationDetailLargeClassification.update(row, {:seq => i})}
     #行番号へセットするため、配列は１から開始させる。
     row.each_with_index {|row, i| InvoiceDetailMiddleClassification.update(row, {:line_number => i + 1})}
@@ -155,7 +155,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
         @invoice_detail_middle_classification.invoice_detail_large_classification_id ||= params[:invoice_detail_large_classification_id]
       else
         @invoice_detail_middle_classification.invoice_detail_large_classification_id ||= 
-                                 @invoice_detail_large_classification_id
+        @invoice_detail_large_classification_id
       end
     end 
     
@@ -175,14 +175,14 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     
     #作業明細マスターの更新
     update_working_middle_item
-	
+
     #モーダル化対応
     @invoice_detail_middle_classification = InvoiceDetailMiddleClassification.create(invoice_detail_middle_classification_params)
     
     #歩掛りの集計を最新のもので書き換える。
     update_labor_productivity_unit_summary
     recalc_subtotal
-	
+
     #手入力用IDの場合は、単位マスタへも登録する。
     @working_unit = nil
     if @invoice_detail_middle_classification.working_unit_id == 1
@@ -206,7 +206,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     
     #行番号の最終を書き込む
     invoice_dlc_set_last_line_number
-	
+
     if params[:invoice_detail_middle_classification][:invoice_header_id].present?
       @invoice_header_id = params[:invoice_detail_middle_classification][:invoice_header_id]
     end
@@ -216,7 +216,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     #
   
     @invoice_detail_middle_classifications = InvoiceDetailMiddleClassification.where(:invoice_header_id => 
-          @invoice_header_id).where(:invoice_detail_large_classification_id => @invoice_detail_large_classification_id)
+    @invoice_header_id).where(:invoice_detail_large_classification_id => @invoice_detail_large_classification_id)
 
     #
   end
@@ -227,9 +227,9 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
   # PATCH/PUT /invoice_detail_middle_classifications/1.json
   def update
     
-	#作業明細マスターの更新
-	update_working_middle_item
-	
+    #作業明細マスターの更新
+    update_working_middle_item
+
     @invoice_detail_middle_classification.update(invoice_detail_middle_classification_params)
     
     #歩掛りの集計を最新のもので書き換える。
@@ -238,11 +238,11 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
 
     #品目データの金額を更新
     save_price_to_large_classifications
-	
+
     #行挿入する 
     @max_line_number = @invoice_detail_middle_classification.line_number
     if (params[:invoice_detail_middle_classification][:check_line_insert] == 'true')
-       line_insert
+      line_insert
     end
     
     #行番号の最終を書き込む
@@ -250,7 +250,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
 
     #手入力用IDの場合は、単位マスタへも登録する。
     @working_unit = nil
-	
+
     if @invoice_detail_middle_classification.working_unit_id == 1
        
       #既に登録してないかチェック
@@ -273,7 +273,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     #
 
     @invoice_detail_middle_classifications = InvoiceDetailMiddleClassification.
-       where(:invoice_header_id => @invoice_header_id).where(:invoice_detail_large_classification_id => @invoice_detail_large_classification_id)
+    where(:invoice_header_id => @invoice_header_id).where(:invoice_detail_large_classification_id => @invoice_detail_large_classification_id)
 
   end
 
@@ -324,14 +324,14 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
                                 material_cost_total: params[:invoice_detail_middle_classification][:material_cost_total] ,
                                 labor_cost_total: params[:invoice_detail_middle_classification][:labor_cost_total],
                                 other_cost: params[:invoice_detail_middle_classification][:other_cost] 
-                               }
+                              }
     else
       # アイテムのみ更新の場合
       if params[:invoice_detail_middle_classification][:check_update_item] == "true" 
-            large_item_params = { working_middle_item_name: params[:invoice_detail_middle_classification][:working_middle_item_name] , 
-            working_middle_item_short_name: working_middle_item_short_name_manual, 
-            working_middle_specification: params[:invoice_detail_middle_classification][:working_middle_specification] ,
-            working_unit_id: @working_unit_id_params } 
+        large_item_params = { working_middle_item_name: params[:invoice_detail_middle_classification][:working_middle_item_name] , 
+        working_middle_item_short_name: working_middle_item_short_name_manual, 
+        working_middle_specification: params[:invoice_detail_middle_classification][:working_middle_specification] ,
+        working_unit_id: @working_unit_id_params } 
       end
     end
     
@@ -365,11 +365,11 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
     
       format.html {redirect_to invoice_detail_middle_classifications_path( :invoice_header_id => params[:invoice_header_id],
                     :invoice_detail_large_classification_id => params[:invoice_detail_large_classification_id], 
-	                  :invoice_header_name => params[:invoice_header_name],
+                    :invoice_header_name => params[:invoice_header_name],
                     :working_large_item_name => params[:working_large_item_name], :working_large_specification => params[:working_large_specification]
-                   )}
-	  
-	  #品目データの金額を更新
+                  )}
+
+      #品目データの金額を更新
       save_price_to_large_classifications
     
     end  #end do
@@ -378,23 +378,23 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
   #請求金額トータル
   def invoice_total_price
     @execution_total_price = InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
-       @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumpriceInvoice
+    @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumpriceInvoice
   end 
   #実行金額トータル
   def execution_total_price
     @execution_total_price = InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
-       @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumpriceExecution
+    @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumpriceExecution
   end
 
   #歩掛りトータル
   def labor_total
     @labor_total = InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
-      @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumLaborProductivityUnit
+    @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumLaborProductivityUnit
   end
   #歩掛計トータル
   def labor_all_total
     @labor_all_total = InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
-      @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumLaborProductivityUnitTotal 
+    @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id]).sumLaborProductivityUnitTotal 
   end
   
   #トータル(品目→見出保存用)
@@ -416,42 +416,42 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
 
   #ajax
   def subtotal_select
-  #小計を取得、セットする
-     @search_records = InvoiceDetailMiddleClassification.where("invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
-                                                                 params[:invoice_header_id], params[:invoice_detail_large_classification_id] )
-     if @search_records.present?
-       start_line_number = 0
-       end_line_number = 0
-       current_line_number = params[:line_number].to_i
+    #小計を取得、セットする
+    @search_records = InvoiceDetailMiddleClassification.where("invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
+                                                                params[:invoice_header_id], params[:invoice_detail_large_classification_id] )
+    if @search_records.present?
+      start_line_number = 0
+      end_line_number = 0
+      current_line_number = params[:line_number].to_i
         
-       @search_records.order(:line_number).each do |idmc|
-         if idmc.construction_type.to_i != $INDEX_SUBTOTAL &&
-            idmc.construction_type.to_i != $INDEX_DISCOUNT  
-            #小計,値引き以外なら開始行をセット
-           if start_line_number == 0
-             start_line_number = idmc.line_number
-           end
-         else 
-           if idmc.line_number < current_line_number
-             start_line_number = 0   #開始行を初期化
-           end
-         end
+      @search_records.order(:line_number).each do |idmc|
+      if idmc.construction_type.to_i != $INDEX_SUBTOTAL &&
+        idmc.construction_type.to_i != $INDEX_DISCOUNT  
+        #小計,値引き以外なら開始行をセット
+        if start_line_number == 0
+          start_line_number = idmc.line_number
+        end
+      else 
+        if idmc.line_number < current_line_number
+          start_line_number = 0   #開始行を初期化
+        end
+      end
     
-         if idmc.line_number < current_line_number   #更新の場合もあるので現在の行はカウントしない。
-           end_line_number = idmc.line_number  #終了行をセット
-         end
-       end  #end do
+      if idmc.line_number < current_line_number   #更新の場合もあるので現在の行はカウントしない。
+        end_line_number = idmc.line_number  #終了行をセット
+      end
+    end  #end do
         
-        #範囲内の計を集計
-        @invoice_price = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:invoice_price)
-        @execution_price = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:execution_price)
-        @labor_productivity_unit_total = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:labor_productivity_unit_total)
+    #範囲内の計を集計
+    @invoice_price = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:invoice_price)
+    @execution_price = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:execution_price)
+    @labor_productivity_unit_total = @search_records.where("line_number >= ? and line_number <= ?", start_line_number, end_line_number).sum(:labor_productivity_unit_total)
         
-     end  #@search_records.present?
+    end  #@search_records.present?
   end 
   
   def recalc_subtotal_all
-  #すべての小計を再計算する(ajax用)
+    #すべての小計を再計算する(ajax用)
     invoice_price_sum = 0
     execution_price_sum = 0
     labor_productivity_unit_total_sum  = 0
@@ -461,7 +461,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
    
     if @search_records.present?
       @search_records.order(:line_number).each do |idmc|
-	      if idmc.construction_type.to_i != $INDEX_SUBTOTAL
+        if idmc.construction_type.to_i != $INDEX_SUBTOTAL
           if idmc.construction_type.to_i != $INDEX_DISCOUNT
             #小計・値引き以外？
             invoice_price_sum += idmc.invoice_price.to_i
@@ -469,7 +469,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
             labor_productivity_unit_total_sum += idmc.labor_productivity_unit_total.to_f
           end
         else
-        #小計？=>更新
+          #小計？=>更新
           subtotal_params = {invoice_price: invoice_price_sum, execution_price: execution_price_sum, labor_productivity_unit_total: labor_productivity_unit_total_sum}
           idmc.update(subtotal_params)
 
@@ -483,7 +483,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
   end
   
   def recalc_subtotal
-  #小計を再計算する
+    #小計を再計算する
     @search_records = InvoiceDetailMiddleClassification.where("invoice_header_id = ? and invoice_detail_large_classification_id = ?", 
                                                                  params[:invoice_detail_middle_classification][:invoice_header_id], 
                                                                  params[:invoice_detail_middle_classification][:invoice_detail_large_classification_id] )
@@ -496,7 +496,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
       id_saved = 0
       @search_records.order(:line_number).each do |idmc|
         if idmc.construction_type.to_i != $INDEX_SUBTOTAL &&
-              idmc.construction_type.to_i != $INDEX_DISCOUNT  
+          idmc.construction_type.to_i != $INDEX_DISCOUNT  
           #小計,値引き以外なら開始行をセット
           if start_line_number == 0
             start_line_number = idmc.line_number
@@ -512,7 +512,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
             break
           end
         end
-		   
+
         if idmc.line_number >= current_line_number   
           end_line_number = idmc.line_number  #終了行をセット
         end
@@ -599,7 +599,7 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
   end
   #労務費等
   def labor_cost_total_select
-     @labor_cost_total = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:labor_cost_total).flatten.join(" ")
+    @labor_cost_total = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:labor_cost_total).flatten.join(" ")
   end
   #その他
   def other_cost_select
@@ -683,109 +683,109 @@ class InvoiceDetailMiddleClassificationsController < ApplicationController
   #
     
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_invoice_detail_middle_classification
-      @invoice_detail_middle_classification = InvoiceDetailMiddleClassification.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_invoice_detail_middle_classification
+    @invoice_detail_middle_classification = InvoiceDetailMiddleClassification.find(params[:id])
+  end
     
-    #ソート処理（ビュー）
-    def initialize_sort
-      #$not_sort_im = true
-      session[:not_sort_im] = true
-    end
-	
-    #以降のレコードの行番号を全てインクリメントする
-    def line_insert
-      InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ? and line_number >= ? and id != ?", @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id, @invoice_detail_middle_classification.line_number, @invoice_detail_middle_classification.id]).update_all("line_number = line_number + 1")
+  #ソート処理（ビュー）
+  def initialize_sort
+    #$not_sort_im = true
+    session[:not_sort_im] = true
+  end
+
+  #以降のレコードの行番号を全てインクリメントする
+  def line_insert
+    InvoiceDetailMiddleClassification.where(["invoice_header_id = ? and invoice_detail_large_classification_id = ? and line_number >= ? and id != ?", @invoice_detail_middle_classification.invoice_header_id, @invoice_detail_middle_classification.invoice_detail_large_classification_id, @invoice_detail_middle_classification.line_number, @invoice_detail_middle_classification.id]).update_all("line_number = line_number + 1")
        
-      #最終行番号も取得しておく
-      @max_line_number = InvoiceDetailMiddleClassification.
-        where(["invoice_header_id = ? and invoice_detail_large_classification_id = ? and line_number >= ? and id != ?", @invoice_detail_middle_classification.invoice_header_id, 
-        @invoice_detail_middle_classification.invoice_detail_large_classification_id, @invoice_detail_middle_classification.line_number, 
-        @invoice_detail_middle_classification.id]).maximum(:line_number)
+    #最終行番号も取得しておく
+    @max_line_number = InvoiceDetailMiddleClassification.
+    where(["invoice_header_id = ? and invoice_detail_large_classification_id = ? and line_number >= ? and id != ?", @invoice_detail_middle_classification.invoice_header_id, 
+    @invoice_detail_middle_classification.invoice_detail_large_classification_id, @invoice_detail_middle_classification.line_number, 
+    @invoice_detail_middle_classification.id]).maximum(:line_number)
+  end 
+
+  #見積品目データへ合計保存用
+  def save_price_to_large_classifications
+    @invoice_detail_large_classification = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
+
+    if @invoice_detail_large_classification.present?
+      #見積金額
+      @invoice_detail_large_classification.invoice_price = invoice_total_price
+      #実行金額
+      @invoice_detail_large_classification.execution_price = execution_total_price
+      #歩掛り
+      @invoice_detail_large_classification.labor_productivity_unit = labor_total
+      #歩掛計
+      @invoice_detail_large_classification.labor_productivity_unit_total = labor_all_total
+      @invoice_detail_large_classification.save
+      #見出データへも合計保存
+      save_price_to_headers
+    end
+  end
+
+  #見出データへ合計保存用
+  def save_price_to_headers
+    @invoice_header = InvoiceHeader.find(@invoice_detail_large_classification.invoice_header_id)
+       
+    if @invoice_header.present? 
+      #見積金額
+      @invoice_header.billing_amount = invoice_total_price_Large
+    
+      #実行金額
+      @invoice_header.execution_amount = execution_total_price_Large
+      @invoice_header.save
     end 
+  end
 
-    #見積品目データへ合計保存用　
-    def save_price_to_large_classifications
-      @invoice_detail_large_classification = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
+  #見出しデータへ最終行番号保存用
+  def invoice_dlc_set_last_line_number
+    @invoice_detail_large_classifiations = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
 
-      if @invoice_detail_large_classification.present?
-        #見積金額
-        @invoice_detail_large_classification.invoice_price = invoice_total_price
-        #実行金額
-        @invoice_detail_large_classification.execution_price = execution_total_price
-        #歩掛り
-        @invoice_detail_large_classification.labor_productivity_unit = labor_total
-        #歩掛計
-        @invoice_detail_large_classification.labor_productivity_unit_total = labor_all_total
-        @invoice_detail_large_classification.save
-        #見出データへも合計保存
-        save_price_to_headers
-      end
-    end
-
-    #見出データへ合計保存用
-    def save_price_to_headers
-       @invoice_header = InvoiceHeader.find(@invoice_detail_large_classification.invoice_header_id)
-       
-       if @invoice_header.present? 
-       #見積金額
-         @invoice_header.billing_amount = invoice_total_price_Large
-    
-         #実行金額
-         @invoice_header.execution_amount = execution_total_price_Large
-         @invoice_header.save
-       end 
-    end
-
-    #見出しデータへ最終行番号保存用
-    def invoice_dlc_set_last_line_number
-      @invoice_detail_large_classifiations = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
-		
-      check_flag = false
-      if @invoice_detail_large_classifiations.last_line_number.nil? 
+    check_flag = false
+    if @invoice_detail_large_classifiations.last_line_number.nil? 
+      check_flag = true
+    else
+      if (@invoice_detail_large_classifiations.last_line_number < @max_line_number) then
         check_flag = true
-      else
-        if (@invoice_detail_large_classifiations.last_line_number < @max_line_number) then
-          check_flag = true
-        end
       end
-      if (check_flag == true)
-        invoice_dlc_params = { last_line_number:  @max_line_number}
-        if @invoice_detail_large_classifiations.present?
-          @invoice_detail_large_classifiations.attributes = invoice_dlc_params
-             @invoice_detail_large_classifiations.save(:validate => false)
-        end
-      end 
     end
+    if (check_flag == true)
+      invoice_dlc_params = { last_line_number:  @max_line_number}
+      if @invoice_detail_large_classifiations.present?
+        @invoice_detail_large_classifiations.attributes = invoice_dlc_params
+        @invoice_detail_large_classifiations.save(:validate => false)
+      end
+    end 
+  end
     
-    #行番号を取得し、インクリメントする。（新規用）
-    def get_line_number
-      @line_number = 1
+  #行番号を取得し、インクリメントする。（新規用）
+  def get_line_number
+    @line_number = 1
       
-      #binding.pry
+    #binding.pry
       
-      if @invoice_detail_middle_classification.invoice_header_id.present? && @invoice_detail_middle_classification.invoice_detail_large_classification_id.present?
-         @invoice_detail_large_classifiations = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
-        if @invoice_detail_large_classifiations.present?
-          if @invoice_detail_large_classifiations.last_line_number.present?
-            @line_number = @invoice_detail_large_classifiations.last_line_number + 1
-          end
+    if @invoice_detail_middle_classification.invoice_header_id.present? && @invoice_detail_middle_classification.invoice_detail_large_classification_id.present?
+      @invoice_detail_large_classifiations = InvoiceDetailLargeClassification.where(["invoice_header_id = ? and id = ?", @invoice_detail_middle_classification.invoice_header_id,@invoice_detail_middle_classification.invoice_detail_large_classification_id]).first
+      if @invoice_detail_large_classifiations.present?
+        if @invoice_detail_large_classifiations.last_line_number.present?
+          @line_number = @invoice_detail_large_classifiations.last_line_number + 1
         end
       end
+    end
   
-      @invoice_detail_middle_classification.line_number = @line_number
-    end
-	
-	#ストロングパラメータ
-	# Never trust parameters from the scary internet, only allow the white list through.
-    def invoice_detail_middle_classification_params
-      params.require(:invoice_detail_middle_classification).permit(:invoice_header_id, :invoice_detail_large_classification_id,
-            :invoice_item_division_id, :working_middle_item_id, :working_middle_item_name, :working_middle_item_short_name,
-            :line_number, :working_middle_specification, :quantity, :execution_quantity, :working_unit_id, :working_unit_name,
-            :working_unit_price, :invoice_price, :execution_unit_price, :execution_price, :material_id, :working_material_name, 
-            :material_unit_price, :labor_unit_price, :labor_productivity_unit, :labor_productivity_unit_total, :material_quantity, 
-            :accessory_cost, :material_cost_total, :labor_cost_total, :other_cost, :remarks, :construction_type, 
-            :piping_wiring_flag, :equipment_mounting_flag, :labor_cost_flag)
-    end
+    @invoice_detail_middle_classification.line_number = @line_number
+  end
+
+  #ストロングパラメータ
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def invoice_detail_middle_classification_params
+    params.require(:invoice_detail_middle_classification).permit(:invoice_header_id, :invoice_detail_large_classification_id,
+    :invoice_item_division_id, :working_middle_item_id, :working_middle_item_name, :working_middle_item_short_name,
+    :line_number, :working_middle_specification, :quantity, :execution_quantity, :working_unit_id, :working_unit_name,
+    :working_unit_price, :invoice_price, :execution_unit_price, :execution_price, :material_id, :working_material_name, 
+    :material_unit_price, :labor_unit_price, :labor_productivity_unit, :labor_productivity_unit_total, :material_quantity, 
+    :accessory_cost, :material_cost_total, :labor_cost_total, :other_cost, :remarks, :construction_type, 
+    :piping_wiring_flag, :equipment_mounting_flag, :labor_cost_flag)
+  end
 end

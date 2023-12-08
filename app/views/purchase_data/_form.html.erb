@@ -50,7 +50,8 @@
 
   <%= f.label :仕入業者 , {:class => "my-custom-class-l"} %></br>
   <% if @supplier_master.present? %>
-    <%= f.collection_select :supplier_id, @supplier_master, :id, :supplier_name, {},
+    <!-- id順にした -->
+    <%= f.collection_select :supplier_id, @supplier_master.order("id"), :id, :supplier_name, {},
       {id:"supplier_id", :class => "searchableSupplier", style: 'width:220px', :tabindex=>"4", :onchange => "setUnitPrice(this.form)"}  %>
   <% else %>
     <%= f.collection_select :supplier_id, SupplierMaster.all, :id, :supplier_name, {:prompt => "どれか一つを選択して下さい"},
