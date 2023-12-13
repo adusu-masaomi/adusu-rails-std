@@ -27,15 +27,17 @@ class InventoriesController < ApplicationController
     #Rails6
     @inventories = @q.result
 
+    #moved 231208
+    #global set
+    $inventories = @inventories
+
     #kaminari用設定
     @inventories  = @inventories.page(params[:page])
     #
 
     #ログイン中のUser確認(Standard)
     app_get_session_user
-
-    #global set
-    $inventories = @inventories
+    
     respond_to do |format|
       format.html
       #pdf
