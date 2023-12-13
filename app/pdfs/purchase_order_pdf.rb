@@ -271,6 +271,7 @@ class PurchaseOrderPDF
         
           #合計
           #(最終ページにのみ表示)
+          
           if report.page_count >= last_page_count
           #  report.page.item(:page_no).value(page_count)
             
