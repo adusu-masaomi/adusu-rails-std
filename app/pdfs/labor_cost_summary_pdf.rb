@@ -55,14 +55,17 @@ class LaborCostSummaryPDF
         @flag = "1"
     
         @construction_code = "No."  #工事ナンバーに"No"をつける
-        if construction_daily_report.construction_datum.construction_code.present?
+        #if construction_daily_report.construction_datum.construction_code.present?
+        #upd231227
+        if construction_daily_report.construction_datum.present? && construction_daily_report.construction_datum.construction_code.present?
           @construction_code = @construction_code + construction_daily_report.construction_datum.construction_code
         end
        
         report.page.item(:construction_code).value(@construction_code)
-        report.page.item(:construction_name).value(construction_daily_report.construction_datum.construction_name)
-        #report.page.item(:customer_name).value(construction_costs.construction_datum.CustomerMaster.customer_name)
-  
+        if construction_daily_report.construction_datum.present?  #upd231227
+          report.page.item(:construction_name).value(construction_daily_report.construction_datum.construction_name)
+        end
+        
         #発行日
         @gengou = Date.today
            
@@ -147,7 +150,12 @@ class LaborCostSummaryPDF
         page_count = report.page_count.to_s + "ページ"
         report.page.item(:page).value(page_count)
         report.page.item(:construction_code).value(@construction_code)
-        report.page.item(:construction_name).value(construction_daily_report.construction_datum.construction_name)
+        
+        #upd231227
+        if construction_daily_report.construction_datum.present?
+          report.page.item(:construction_name).value(construction_daily_report.construction_datum.construction_name)
+        end
+        
         report.page.item(:issue_date).value(@gengou)
         #
         

@@ -140,7 +140,7 @@
   
   //var data = {'data-format': 'yyyy-MM-dd' };
   
-  $(document).ready(function(){
+  $(document).ready(function() {
     //$(document).on('turbolinks:load', function(){
       
             
@@ -205,17 +205,17 @@
     
     //就業時間の取得 -- 標準版仕様
     //var working_hour = 0;
-    if (document.getElementById('working_hour').value != null){
+    if (document.getElementById('working_hour').value != null) {
       working_hour = parseInt(document.getElementById('working_hour').value);
-    }else{
+    } else {
       working_hour = 27000;  //nullの場合のデフォルト---基本、ないはず..
     }
     //
 
-    if (document.getElementById('working_time_start_time').value != null){
+    if (document.getElementById('working_time_start_time').value != null) {
       working_time_start_time = parseInt(document.getElementById('working_time_start_time').value);
     }
-    if (document.getElementById('working_time_end_time').value != null){
+    if (document.getElementById('working_time_end_time').value != null) {
       working_time_end_time = parseInt(document.getElementById('working_time_end_time').value);
     }
     
@@ -224,12 +224,11 @@
   });
   
   //工事日のセット(デフォルト)
-  function setConstructionDateDefault()
-  {  
+  function setConstructionDateDefault() {  
     obj = document.getElementById("construction_datum_id");
     construction_id = parseInt(obj.value);
      
-    if (!(isNaN(construction_id))){  
+    if (!(isNaN(construction_id))) {  
        
       $.get("<%= construction_daily_reportz_start_day_select_path %>",
         {id: construction_id },
@@ -289,8 +288,7 @@
   var start_time = 0;
   var end_time = 0;
   
-  function calcTimeVarious(f)
-  { 
+  function calcTimeVarious(f) { 
     // 勤務時間を計算
     kinmu_time = 0;
      
@@ -304,10 +302,9 @@
     obj = document.getElementById("end_time_1");
     end_time = obj.value;
      
-    if (end_time != 0) 
-    {
+    if (end_time != 0) {
       end_time = ( parseInt(end_time) * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
-    }else{
+    } else {
       //終了時間24時の場合
       if (start_time > 0) {
         end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
@@ -319,9 +316,9 @@
     company_id = document.getElementById("company_id").value
      
     var tmp_kinmu_time = 0;
-    if (company_id != 1){
+    if (company_id != 1) {
       kinmu_time = calcWorkTime(tmp_kinmu_time); 
-    }else{
+    } else {
       kinmu_time = calcWorkTimeAdusu(tmp_kinmu_time);
     }
     //テキストへセット
@@ -364,11 +361,11 @@
     //休日・残業時間の加算 
     //早出時間(規定)の取得
     overtime_early_start_time = 0;
-    if (document.getElementById('overtime_early_start_time').value != null){
+    if (document.getElementById('overtime_early_start_time').value != null) {
       overtime_early_start_time = parseInt(document.getElementById('overtime_early_start_time').value);
     }
     overtime_early_end_time = 0;
-    if (document.getElementById('overtime_early_end_time').value != null){
+    if (document.getElementById('overtime_early_end_time').value != null) {
       overtime_early_end_time = parseInt(document.getElementById('overtime_early_end_time').value);
     }
    
@@ -377,14 +374,14 @@
       //終了時間が朝５時以降８時までの場合  
       if (start_time >= overtime_early_start_time) {
         overtime_25 = end_time - start_time;
-      }else if(start_time <= overtime_early_start_time || start_time >= working_time_end_time) {
+      } else if(start_time <= overtime_early_start_time || start_time >= working_time_end_time) {
         //開始が前日の定時以降で、当日の早出開始時刻の前の場合
         overtime_25 = end_time - overtime_early_start_time;
       }
-    }else if (end_time >= overtime_early_end_time && start_time >= overtime_early_start_time && start_time <= overtime_early_end_time) {
+    } else if (end_time >= overtime_early_end_time && start_time >= overtime_early_start_time && start_time <= overtime_early_end_time) {
       //終了時時間が８時前、かつ開始時間が５〜８時の間(ex.6~8時)
       overtime_25 = overtime_early_end_time - start_time;
-    }else if (end_time >= overtime_early_end_time && (start_time >= 0 && start_time <= overtime_early_start_time) || 
+    } else if (end_time >= overtime_early_end_time && (start_time >= 0 && start_time <= overtime_early_start_time) || 
       (end_time <= working_time_end_time && end_time >= overtime_early_end_time) && start_time >= working_time_end_time ) {
      
       //終了時間８時以降かつ開始時間８時前、または、終了時間８時から１７時３０、開始時間１７時３０以降の場合
@@ -395,11 +392,11 @@
    
     //残業時間(規定)の取得
     overtime_start_time = 0;
-    if (document.getElementById('overtime_start_time').value != null){
+    if (document.getElementById('overtime_start_time').value != null) {
       overtime_start_time = parseInt(document.getElementById('overtime_start_time').value);
     }
     overtime_end_time = 0;
-    if (document.getElementById('overtime_end_time').value != null){
+    if (document.getElementById('overtime_end_time').value != null) {
       overtime_end_time = parseInt(document.getElementById('overtime_end_time').value);
     }
    
@@ -416,11 +413,11 @@
         //終了時間２２時以前かつ開始時間１８時以降の場合
         tmp_time = end_time - start_time;
         //}else if (end_time < 79200 && start_time >= 18000) { 
-      }else if (end_time < overtime_end_time && start_time >= overtime_early_start_time) { 
+      } else if (end_time < overtime_end_time && start_time >= overtime_early_start_time) { 
         //終了時間２２時以前かつ開始時間５時以降の場合
         tmp_time = end_time - overtime_start_time;
         //}else if (end_time < 86400 && end_time >=79200) {
-      }else if (end_time < 86400 && end_time >= overtime_end_time) {
+      } else if (end_time < 86400 && end_time >= overtime_end_time) {
         //終了時間２２時以降かつ終了時間２４時前の場合
         //if (start_time >= 64800) {
         if (start_time >= overtime_start_time) {
@@ -432,7 +429,7 @@
           tmp_time = overtime_end_time - overtime_start_time;
         }
         //}else if (start_time >= 18000 && end_time > 0) {
-      }else if (start_time >= overtime_early_start_time && end_time > 0) {
+      } else if (start_time >= overtime_early_start_time && end_time > 0) {
         //終了時間０時以降かつ開始時間５時以降の場合
         //tmp_time = 79200 - 64800;
         tmp_time = overtime_end_time - overtime_start_time;
@@ -441,7 +438,7 @@
       overtime_25 += tmp_time;
    
       //}else if (start_time >= 64800 && end_time <= 18000 ) {
-    }else if (start_time >= overtime_start_time && end_time <= overtime_early_start_time ) {
+    } else if (start_time >= overtime_start_time && end_time <= overtime_early_start_time ) {
       //開始時１８時以降、終了時間５時前の場合(add171228)
       //tmp_time = 79200 - start_time;
       tmp_time = overtime_end_time - start_time;
@@ -459,11 +456,11 @@
    
     //深夜残業時間(規定)の取得
     overtime_midnight_start_time = 0;
-    if (document.getElementById('overtime_midnight_start_time').value != null){
+    if (document.getElementById('overtime_midnight_start_time').value != null) {
       overtime_midnight_start_time = parseInt(document.getElementById('overtime_midnight_start_time').value);
     }
     overtime_midnight_end_time = 0;
-    if (document.getElementById('overtime_midnight_end_time').value != null){
+    if (document.getElementById('overtime_midnight_end_time').value != null) {
       overtime_midnight_end_time = parseInt(document.getElementById('overtime_midnight_end_time').value);
     }
    
@@ -476,38 +473,38 @@
 
       //if (start_time >=79200 && (end_time >=79200 && end_time <= 89940) ){
       if (start_time >= overtime_midnight_start_time && (end_time >= overtime_midnight_start_time
-        && end_time <= 89940) ){
+        && end_time <= 89940) ) {
         //開始２２時以降かつ終了時間２２時以降〜０時59分前
         overtime_50 = end_time - start_time;
         //}else if (start_time >= 79200 && end_time <= 18000) {
-      }else if (start_time >= overtime_midnight_start_time && end_time <= overtime_midnight_end_time) {
+      } else if (start_time >= overtime_midnight_start_time && end_time <= overtime_midnight_end_time) {
         //開始２２時以降かつ終了時間５時前
         overtime_50 = 86400 - start_time + end_time;
         //}else if (start_time >= 79200 && end_time > 18000) {
-      }else if (start_time >= overtime_midnight_start_time && end_time > overtime_midnight_end_time) {
+      } else if (start_time >= overtime_midnight_start_time && end_time > overtime_midnight_end_time) {
         //開始２２時以降かつ終了時間５時以降
         //overtime_50 = 86400 - start_time + 18000;
         overtime_50 = 86400 - start_time + overtime_midnight_end_time;
         //}else if (start_time >= 0 && start_time <= 18000 && end_time <= 18000) {
-      }else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
+      } else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
                end_time <= overtime_midnight_end_time) {
         //開始０時以降５時以前
         overtime_50 = end_time - start_time;
         //}else if (start_time >= 0 && start_time <= 18000 && end_time > 18000) {
-      }else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
+      } else if (start_time >= 0 && start_time <= overtime_midnight_end_time && 
                end_time > overtime_midnight_end_time) {
         //開始０時以降５時以降
         //overtime_50 = 18000 - start_time;
         overtime_50 = 86400 - end_time;  //upd230623
         overtime_50 += overtime_midnight_end_time - start_time;
         //}else if (start_time >= 0 && end_time > 79200) {
-      }else if (start_time >= 0 && end_time > overtime_midnight_start_time) {
+      } else if (start_time >= 0 && end_time > overtime_midnight_start_time) {
         //開始０時以降で終了時間が２２時以降
         //overtime_50 = end_time - 79200;
         overtime_50 = end_time - overtime_midnight_start_time;
       }
       //}else if (start_time >= 64800 && end_time <= 18000) {
-    }else if (start_time >= overtime_start_time && end_time <= overtime_midnight_end_time) {
+    } else if (start_time >= overtime_start_time && end_time <= overtime_midnight_end_time) {
       //開始18時以降で終了時間が５時以前 
       midnight_time = 86400 - overtime_midnight_start_time;
      
@@ -534,8 +531,7 @@
     //
   }
  
-  function calcTimeVarious_2(f)
-  { 
+  function calcTimeVarious_2(f) { 
     //calcTimeVariousとほぼ同じ
    
     // 勤務時間を計算
@@ -552,7 +548,7 @@
      
     if (end_time != 0) {
       end_time = ( parseInt(end_time) * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
-    }else{
+    } else {
       //終了時間24時の場合
       if (start_time > 0) {
         end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
@@ -564,7 +560,7 @@
     var tmp_kinmu_time = 0;
     if (company_id != 1){
       kinmu_time_2 = calcWorkTime(tmp_kinmu_time); 
-    }else{
+    } else {
       kinmu_time_2 = calcWorkTimeAdusu(tmp_kinmu_time);
     }
        
@@ -597,8 +593,7 @@
   };
  
   //みなし勤務判定
-  function calcRegardTimeAs(f)
-  {
+  function calcRegardTimeAs(f) {
     //標準版仕様---会社ID取得
     company_id = document.getElementById("company_id").value
     //
@@ -623,13 +618,13 @@
     
     //if (end_time > 64800) {
     
-    if (company_id != "1"){
+    if (company_id != "1") {
       if (end_time > working_time_end_time) {
         //var add_time = end_time - 64800;
         var add_time = end_time - working_time_end_time;
         kinmu_time += add_time
       }
-    }else{
+    } else {
       //(株)アデュース仕様(定時終了17:30だが残業は18:00過ぎてから)
       if (end_time > working_time_end_time + 1800) {
         var add_time = end_time - working_time_end_time;
@@ -641,7 +636,7 @@
     //テキストへセット
     document.getElementById("working_times").value = kinmu_time ;  
     
-    if (document.getElementById("regard_one_day").checked == false && document.getElementById("regard_half_day").checked == false ){
+    if (document.getElementById("regard_one_day").checked == false && document.getElementById("regard_half_day").checked == false ) {
       calcTimeVarious(f)
     }
 
@@ -668,7 +663,7 @@
   holiday_flag = 0;
   
   //土日祝、会社休日を求める。
-  function getHoliday(in_house, num_no_add,num){
+  function getHoliday(in_house, num_no_add,num) {
     // 曜日の表記
     //var weekDayList = [ "日", "月", "火", "水", "木", "金", "土" ] ;
     
@@ -678,7 +673,7 @@
     //var weekDay = weekDayList[ dateObj.getDay() ] ;	// 曜日
     var wday = dateObject.getDay();
 
-    if (wday == 0){
+    if (wday == 0) {
       //日曜？
       holiday_flag = FLAG_SUNDAY_HOLIDAY;
       //休日の判定＆労務費へのセット(必須！)
@@ -699,7 +694,7 @@
 
           $.get("<%= business_holidayz_get_business_holiday_path %>",
             { working_date: working_date },
-            function(data){
+            function(data) {
 
               //jsの動き注意・・・（以下に繋がってjs発動するようにする必要あり!!）
               obj = document.getElementById("holiday_flag").textContent
@@ -736,11 +731,11 @@
   }
  
   //休日の判定＆労務費へのセット(必須！)
-  function addHoliday(holiday_flag, num_no_add,num){
-   //add170801
-   pay_holiday = 0;
+  function addHoliday(holiday_flag, num_no_add,num) {
+    //add170801
+    pay_holiday = 0;
 
-    switch (holiday_flag){
+    switch (holiday_flag) {
       case FLAG_SATURDAY_HOIDAY:
         pay_holiday = num_no_add * 0.25
         num += pay_holiday
@@ -765,23 +760,23 @@
   var staff_id = 0;
   
   // 日給をajaxで取得
-  function getDailyPay(f){
+  function getDailyPay(f) {
     var staff_id = f.staff_id.value;
     calcDailyPay(staff_id);
   }
   
-  function calcDailyPay(staff_id){
+  function calcDailyPay(staff_id) {
     
-    if (staff_id == ""){
+    if (staff_id == "") {
       return false;
     }
     
     $.get("<%= construction_daily_reportz_staff_information_select_path %>",{ id: staff_id },
-      function(data){
+      function(data) {
         //労務費をセット
         obj = document.getElementById("daily_pay");
         index = document.getElementById("daily_pay").selectedIndex;
-        if (index != undefined){
+        if (index != undefined) {
           if (obj.options[index] != undefined){
             daily_pay  = obj.options[index].innerText;
           }
@@ -846,15 +841,15 @@
   }
   
   
-  function calcStartTime(){
+  function calcStartTime() {
     if (start_time >= 0) {
       start_time = ( parseInt(start_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
     }
   }
-  function calcEndTime(){
+  function calcEndTime() {
     if (end_time >= 0) {
       end_time = ( parseInt(end_time) * 3600 ) + ( parseInt(obj.nextElementSibling.value) * 60 );
-    }else{
+    } else {
       //add230623
       end_time = ( 24 * 3600 ) + (parseInt(obj.nextElementSibling.value) * 60 );
     }
@@ -876,12 +871,12 @@
   //};
   
   //標準版仕様-- 休憩時間を考慮して再計算する
-  function recalcBreakTime(f){
+  function recalcBreakTime(f) {
     calcTimeVarious(f);
     calcTimeVarious2(f);
   }
 
-  function calcWorkTime(tmp_kinmu_time){
+  function calcWorkTime(tmp_kinmu_time) {
     // 勤務時間の計算
     
     //debugger;
@@ -896,48 +891,48 @@
     var break_time_3_end_time = 0;
     
     //規定休憩時間を取得
-    if (document.getElementById('break_time_1_start_time').value != null){
+    if (document.getElementById('break_time_1_start_time').value != null) {
       break_time_1_start_time = parseInt(document.getElementById('break_time_1_start_time').value);
     }
-    if (document.getElementById('break_time_1_end_time').value != null){
+    if (document.getElementById('break_time_1_end_time').value != null) {
       break_time_1_end_time = parseInt(document.getElementById('break_time_1_end_time').value);
     }
-    if (document.getElementById('break_time_2_start_time').value != null){
+    if (document.getElementById('break_time_2_start_time').value != null) {
       break_time_2_start_time = parseInt(document.getElementById('break_time_2_start_time').value);
     }
-    if (document.getElementById('break_time_2_end_time').value != null){
+    if (document.getElementById('break_time_2_end_time').value != null) {
       break_time_2_end_time = parseInt(document.getElementById('break_time_2_end_time').value);
     }
-    if (document.getElementById('break_time_3_start_time').value != null){
+    if (document.getElementById('break_time_3_start_time').value != null) {
       break_time_3_start_time = parseInt(document.getElementById('break_time_3_start_time').value);
     }
-    if (document.getElementById('break_time_3_end_time').value != null){
+    if (document.getElementById('break_time_3_end_time').value != null) {
       break_time_3_end_time = parseInt(document.getElementById('break_time_3_end_time').value);
     }
     //
     
     //作業時間より、減算する休憩時間を計算
     break_time_1 = calcBreakTime(break_time_1_start_time, break_time_1_end_time);
-    if (document.getElementById("is_no_break_time_1").checked){
+    if (document.getElementById("is_no_break_time_1").checked) {
       break_time_1 = 0;
     }
     
     break_time_2 = calcBreakTime(break_time_2_start_time, break_time_2_end_time);
-    if (document.getElementById("is_no_break_time_2").checked){
+    if (document.getElementById("is_no_break_time_2").checked) {
       break_time_2 = 0;
     }
     
     break_time_3 = calcBreakTime(break_time_3_start_time, break_time_3_end_time);
-    if (document.getElementById("is_no_break_time_3").checked){
+    if (document.getElementById("is_no_break_time_3").checked) {
       break_time_3 = 0;
     }
     //
     
     //休憩時間を考慮した勤務時間を計算
-    if (end_time < start_time){
+    if (end_time < start_time) {
       //終了時間より開始時間が大きい→日またがりとみなす(ex.22:00~5:00)
       tmp_kinmu_time = (86400 - start_time) + end_time - break_time_1 - break_time_2 - break_time_3;
-    }else{
+    } else {
     //その他は通常とみなす
       //ex.9:00~16:00のような勤務は、Adusuでは小休憩を引かないようにしているが、標準版はそのままマイナスする
       tmp_kinmu_time = end_time - start_time - break_time_1 - break_time_2 - break_time_3;
@@ -974,9 +969,9 @@
   }
    
    
-  function calcWorkTimeAdusu(tmp_kinmu_time){
+  function calcWorkTimeAdusu(tmp_kinmu_time) {
     // 勤務時間の計算
-    if (start_time >= 18000 & start_time <= 32400 & end_time >= 61200 & end_time <= 86400){
+    if (start_time >= 18000 & start_time <= 32400 & end_time >= 61200 & end_time <= 86400) {
       // フルタイム勤務に近ければ、休憩時間を単純にマイナスする。
       tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 7200; 
      
@@ -1008,24 +1003,24 @@
   
   }
    
-  function calcBreakTime(break_time_start_time, break_time_end_time){
+  function calcBreakTime(break_time_start_time, break_time_end_time) {
     break_time = 0;
     //開始時間が休憩開始時間以上?
-    if (start_time >= break_time_start_time){
-      if (start_time > break_time_end_time){
+    if (start_time >= break_time_start_time) {
+      if (start_time > break_time_end_time) {
         break_time = 0;
-      }else{
+      } else {
         //休憩終了-開始時間
         break_time = break_time_end_time - start_time;
       }
     }
   
     //開始時間が休憩開始時間より前?
-    if (start_time < break_time_start_time){
-      if (end_time >= break_time_end_time){
+    if (start_time < break_time_start_time) {
+      if (end_time >= break_time_end_time) {
         break_time = break_time_end_time - break_time_start_time;
-      }else if(end_time >= break_time_start_time && 
-        end_time <= break_time_end_time){
+      } else if(end_time >= break_time_start_time && 
+        end_time <= break_time_end_time) {
         break_time = end_time - break_time_start_time;
         //日付が違う場合？？考慮しない
       }

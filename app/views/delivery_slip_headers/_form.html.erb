@@ -1,31 +1,31 @@
 <%= simple_form_for @delivery_slip_header, :html => { :class => 'well form-horizontal' } do |f| %>
   <% if @delivery_slip_header.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @delivery_slip_header.errors.count %>件のエラーがあります。</h2>
+    <div id="error_explanation">
+      <h2><%= @delivery_slip_header.errors.count %>件のエラーがあります。</h2>
  
-    <ul>
-    <% @delivery_slip_header.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
- <% end %>
+      <ul>
+        <% @delivery_slip_header.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   
   <div class="col-md-3" , style="margin-left : -15px">
-  <%= f.input :delivery_slip_code, input_html:{id:'delivery_slip_code', :tabindex=>"0", style: 'width:150px'} %>
+    <%= f.input :delivery_slip_code, input_html:{id:'delivery_slip_code', :tabindex=>"0", style: 'width:150px'} %>
   </div>
   <div class="col-md-3", style="margin-left : -0px">
-  <%= f.input :quotation_code, input_html:{:tabindex=>"0", style: 'width:150px'} %>
+    <%= f.input :quotation_code, input_html:{:tabindex=>"0", style: 'width:150px'} %>
   </div>
   <div class="col-md-3", style="margin-left : -0px">
-  <%= f.input :invoice_code, input_html:{:tabindex=>"0", style: 'width:150px'} %>
+    <%= f.input :invoice_code, input_html:{:tabindex=>"0", style: 'width:150px'} %>
   </div>
   
   <!-- 納品書コード参照用追加 add180725-->
   <div class="col-md-3", style="margin-left : -0px;margin-top:10px;">
-  <%= f.label :"納品コード（参照）" , {:class => "my-custom-class-l"} %></br>
-  <%= f.collection_select :delivery_slip_header_origin_id, DeliverySlipHeader.order('delivery_slip_code desc').all, :id, :delivery_slip_code, {:include_blank => true} , 
-  {id:"delivery_slip_header_origin_id", :onchange => "CopyDeliverySlipHeader()", class: "searchableDeliverySlipOrigin" , style: 'width:150px' } %>
+    <%= f.label :"納品コード（参照）" , {:class => "my-custom-class-l"} %></br>
+    <%= f.collection_select :delivery_slip_header_origin_id, DeliverySlipHeader.order('delivery_slip_code desc').all, :id, :delivery_slip_code, {:include_blank => true} , 
+    {id:"delivery_slip_header_origin_id", :onchange => "CopyDeliverySlipHeader()", class: "searchableDeliverySlipOrigin" , style: 'width:150px' } %>
   </div>
   </br></br></br></br></br>
   <!-- -->
@@ -44,14 +44,14 @@
   <%= f.label :"敬称", {:class => "my-custom-class-l"}  %></br>
   
   <div class="col-xs-3" ,  style="margin-left : -15px">
-  <%= f.select :honorific_id, CustomerMaster.honorific, {:selected => @delivery_slip_header.honorific_id || 0}, 
+    <%= f.select :honorific_id, CustomerMaster.honorific, {:selected => @delivery_slip_header.honorific_id || 0}, 
         {id:'honorific_id', :tabindex=>"6", :class => "my-custom-class", style: 'width:90px;height:25px;font-size:16px;'} %>
   </div>
   <div class="col-xs-3" ,  style="margin-left : -60px;margin-top : -30px">
-  <%= f.input :responsible1, input_html:{id:'responsible1', :tabindex=>"7", style: "width:220px;"}  %>
+    <%= f.input :responsible1, input_html:{id:'responsible1', :tabindex=>"7", style: "width:220px;"}  %>
   </div>
   <div class="col-xs-3" ,  style="margin-left : 60px;margin-top : -30px">
-  <%= f.input :responsible2, input_html:{id:'responsible2', :tabindex=>"8", style: "width:220px;"} %>
+    <%= f.input :responsible2, input_html:{id:'responsible2', :tabindex=>"8", style: "width:220px;"} %>
   </div>
   </br></br></br>
   <!--<%= f.input :post, label:"郵便番号（得意先※マスターに反映されます）", label_html:{style:"color: brown"}, input_html:{id:"post", :onchange => "formatPost()", :onKeyUp => "AjaxZip3.zip2addr(this,'','address','address');", :tabindex=>"9"} %>-->
@@ -62,7 +62,7 @@
   <%= f.input :post, label:"郵便番号（得意先）", input_html:{id:"post", :onchange => "formatPost()", :onKeyUp => "AjaxZip3.zip2addr(this,'','address','address');", :tabindex=>"9"} %>
   
   <div class="col-lg-6" , style="margin-left : -15px">
-  <%= f.input :address, label:"住所（得意先）", hint: "＊都道府県市区町村のみ入力して下さい。", input_html:{id:"address", style: 'width:320px', name:"address", :tabindex=>"11",
+    <%= f.input :address, label:"住所（得意先）", hint: "＊都道府県市区町村のみ入力して下さい。", input_html:{id:"address", style: 'width:320px', name:"address", :tabindex=>"11",
                         :onkeydown => "setPostAuto($(this).val(), 'post', event)"} %>
   </div>
   
@@ -108,8 +108,8 @@
 
   <div class="col-md-6" , style="margin-left : -15px">
     <%= f.input :construction_place, label:"住所（工事場所）", hint: "＊都道府県市区町村のみ入力して下さい。", 
-	    input_html:{id:"construction_place", style: 'width:320px;', name:"construction_place", :tabindex=>"20", 
-		   :onkeydown => "setPostAuto($(this).val(), 'construction_post', event)"}  %>
+      input_html:{id:"construction_place", style: 'width:320px;', name:"construction_place", :tabindex=>"20", 
+       :onkeydown => "setPostAuto($(this).val(), 'construction_post', event)"}  %>
   </div>
   
   <%= f.input :construction_house_number , hint: "＊番地のみ入力して下さい。", label:"番地（工事場所）", input_html:{id:"construction_house_number",
@@ -117,7 +117,7 @@
   
   <div class="col-lg-7">
   
-  <%= f.input :construction_place2 , hint: "＊建物・部屋名がある場合は、こちらに入力して下さい。", label:"建物（工事場所）", label_html:{style: 'margin-top : -30px;'},  
+    <%= f.input :construction_place2 , hint: "＊建物・部屋名がある場合は、こちらに入力して下さい。", label:"建物（工事場所）", label_html:{style: 'margin-top : -30px;'},  
             input_html:{id:"construction_place2", style: 'width:320px;margin-left:-15px;', :tabindex=>"22"} %>
   </div>
   
@@ -140,12 +140,12 @@
   <!--得意先M-->
   <%= f.simple_fields_for :customer_master, :remote => true do |m| %>
     <%= m.input :honorific_id , input_html:{ id:"honorific_id"}, as: :hidden %>
-	<%= m.input :responsible1 , input_html:{ id:"responsible1"}, as: :hidden %>
-	<%= m.input :responsible2 , input_html:{ id:"responsible2"}, as: :hidden %>
-	<!--add171014-->
-	<%= m.input :tel_main , input_html:{ id:"tel_main"}, as: :hidden %>
-	<%= m.input :fax_main , input_html:{ id:"fax_main"}, as: :hidden %>
-	<!--add end-->
+    <%= m.input :responsible1 , input_html:{ id:"responsible1"}, as: :hidden %>
+    <%= m.input :responsible2 , input_html:{ id:"responsible2"}, as: :hidden %>
+    <!--add171014-->
+    <%= m.input :tel_main , input_html:{ id:"tel_main"}, as: :hidden %>
+    <%= m.input :fax_main , input_html:{ id:"fax_main"}, as: :hidden %>
+    <!--add end-->
   <% end %>
   
   <%= f.input :customer_id_hide, input_html:{id:'customer_id_hide'}, as: :hidden  %>
@@ -162,69 +162,69 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script type="text/javascript">
 
-   $(document).on('ready page:load', function(){
-     //納品コード（参照）
-     //select2のタブインデックスはここで指定する
-	 $(".searchableDeliverySlipOrigin").select2({ theme: "classic", allowClear: true, placeholder: "" }).on("load", function(e) { 
-        $(this).prop('tabindex',0)}).trigger('load');
-     //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。
-	 $( ".searchableDeliverySlipOrigin" ).on("select2:close", function (e) {
-	 //  $('[tabindex=1]').focus(); 
-	 });
+  $(document).on('ready page:load', function() {
+    //納品コード（参照）
+    //select2のタブインデックスはここで指定する
+    $(".searchableDeliverySlipOrigin").select2({ theme: "classic", allowClear: true, placeholder: "" }).on("load", function(e) { 
+    $(this).prop('tabindex',0)}).trigger('load');
+    //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。
+    $( ".searchableDeliverySlipOrigin" ).on("select2:close", function (e) {
+      //  $('[tabindex=1]').focus(); 
+    });
    
-     //検索可能なリストボックス(注文Noの場合)
-     $(".searchableConstructionCode").select2({ theme: "bootstrap" });
+    //検索可能なリストボックス(注文Noの場合)
+    $(".searchableConstructionCode").select2({ theme: "bootstrap" });
 
-     $( ".searchableConstructionCode" ).change(function(e) {
-	     setConstructionDateDefault();
-	 });
-	 
-	 //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。イマイチだが・・
-	 //工事コードの場合
-	 $( ".searchableConstructionCode" ).on("select2:close", function (e) {
-	   $('[tabindex=3]').focus(); 
-	 });
-	 
-	 	 
-	 //検索可能なリストボックス(顧客名の場合)
-     $(".searchableCustomerName").select2({ theme: "bootstrap" });
-	 $( ".searchableCustomerName" ).change(function(e) {
-	     setCustomerInfoDefault();
-     });
-	 
-	 //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。
-	 //顧客名の場合
-	 $( ".searchableCustomerName" ).on("select2:close", function (e) {
-	  　 $('[tabindex=5]').focus(); 
-	 });
-	 //
+    $( ".searchableConstructionCode" ).change(function(e) {
+      setConstructionDateDefault();
+    });
+ 
+    //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。イマイチだが・・
+    //工事コードの場合
+    $( ".searchableConstructionCode" ).on("select2:close", function (e) {
+      $('[tabindex=3]').focus(); 
+    });
+
+
+    //検索可能なリストボックス(顧客名の場合)
+    $(".searchableCustomerName").select2({ theme: "bootstrap" });
+    $( ".searchableCustomerName" ).change(function(e) {
+      setCustomerInfoDefault();
+    });
+
+    //select2をenterキー押下した場合(リストが閉じられた時)のタブ移動。
+    //顧客名の場合
+    $( ".searchableCustomerName" ).on("select2:close", function (e) {
+      $('[tabindex=5]').focus(); 
+    });
+    //
    
-     //datepicker,２個目用。
-     $('.datetimepicker2').datetimepicker(
-    //jQuery('.datetimepicker').datetimepicker(
+    //datepicker,２個目用。
+    $('.datetimepicker2').datetimepicker(
+      //jQuery('.datetimepicker').datetimepicker(
       {
         timepicker:false,
         closeOnDateSelect:true,
         format: 'Y/m/d',
         lang: 'ja'
       }
-     );
+    );
    
-   });
+  });
    
-   //$(function() {
-   //  $( "input[name^=construction_period_date1]" ).datetimepicker({ dateFormat: "yyyy-mm-dd" });
-   //}  );
+  //$(function() {
+  //  $( "input[name^=construction_period_date1]" ).datetimepicker({ dateFormat: "yyyy-mm-dd" });
+  //}  );
    
   //フォームロード時のイベント
-  window.onload = function(){
-  	//得意先名を最新の情報にする
-	var index = document.getElementById("customer_id").selectedIndex;
-	document.getElementById("customer_name").value = 
-	  document.getElementById("customer_id").options[index].innerText;
+  window.onload = function() {
+    //得意先名を最新の情報にする
+    var index = document.getElementById("customer_id").selectedIndex;
+    document.getElementById("customer_name").value = 
+    document.getElementById("customer_id").options[index].innerText;
     
     //顧客情報の初期値もセットする(未入力の場合)
-	setCustomerDefaultBySearch();
+    setCustomerDefaultBySearch();
     
     //add190131
     //担当者の更新
@@ -234,7 +234,7 @@
   
   
   //顧客情報のセット add180206
-  function setCustomerDefaultBySearch(){
+  function setCustomerDefaultBySearch() {
     index = parseInt(document.getElementById("customer_id").value);
     
     if (index > 0){
@@ -248,257 +248,249 @@
     }
   }
   
-   //工事情報のセット
-  function setConstructionDateDefault()
-  {  
+  //工事情報のセット
+  function setConstructionDateDefault() {  
     //工事名のセット(ajax用のjsは、construction_costsのものを共用する)
     obj = document.getElementById("construction_datum_id");
-     construction_id = parseInt(obj.value);
-     //$.get("<%= construction_costz_construction_name_select_path %>",
-	 //upd170218
-	 $.get("<%= construction_dataz_construction_and_customer_select_path %>",
-	   {id: construction_id },
-        function(data){
-          obj = document.getElementById("construction_name").textContent;
-          document.getElementById("construction_name").value = obj;
-		  
-		  //add170830
-		  obj = document.getElementById("construction_post").textContent;
-          document.getElementById("construction_post").value = obj;
-		  
-		  obj = document.getElementById("construction_place").textContent;
-          document.getElementById("construction_place").value = obj;
-		  
-         //番地
-		  obj = document.getElementById("construction_house_number").textContent;
-          document.getElementById("construction_house_number").value = obj;
-		  //建物
-		  obj = document.getElementById("construction_place2").textContent;
-          document.getElementById("construction_place2").value = obj;
-		  
-          //responsible1
-	      //add190131
-          obj = document.getElementById("responsible1").textContent;
-          document.getElementById("responsible1").value = obj;
+    construction_id = parseInt(obj.value);
+    //$.get("<%= construction_costz_construction_name_select_path %>",
+    //upd170218
+    $.get("<%= construction_dataz_construction_and_customer_select_path %>",
+      {id: construction_id },
+      function(data){
+        obj = document.getElementById("construction_name").textContent;
+        document.getElementById("construction_name").value = obj;
+
+        //add170830
+        obj = document.getElementById("construction_post").textContent;
+        document.getElementById("construction_post").value = obj;
+
+        obj = document.getElementById("construction_place").textContent;
+        document.getElementById("construction_place").value = obj;
+
+        //番地
+        obj = document.getElementById("construction_house_number").textContent;
+        document.getElementById("construction_house_number").value = obj;
+        //建物
+        obj = document.getElementById("construction_place2").textContent;
+        document.getElementById("construction_place2").value = obj;
+
+        //responsible1
+        //add190131
+        obj = document.getElementById("responsible1").textContent;
+        document.getElementById("responsible1").value = obj;
           
-		  //顧客情報も合わせてセットする
-		  obj = document.getElementById("customer_id_hide").textContent; 
-          if (obj != null){
-            index = parseInt(obj);
-            $(".searchableCustomerName").val(index).trigger("change");
-          }
+        //顧客情報も合わせてセットする
+        obj = document.getElementById("customer_id_hide").textContent; 
+        if (obj != null) {
+          index = parseInt(obj);
+          $(".searchableCustomerName").val(index).trigger("change");
+        }
           
-          //obj = document.getElementById("customer_id_hide").textContent;
-		  //if (obj != null){
-		  //  index = parseInt(obj);
-          //  $(".searchableCustomerName").val(index).trigger("change");
-	     // }
-		  
-	      }
-	  );
-	  
-   };
+        //obj = document.getElementById("customer_id_hide").textContent;
+        //if (obj != null){
+        //  index = parseInt(obj);
+        //  $(".searchableCustomerName").val(index).trigger("change");
+        // }
+
+      }
+    );
+    
+  };
   //担当者の更新
   //add190131
-  function setResponsibleOnload()
-  {  
+  function setResponsibleOnload() {  
     //工事名のセット(ajax用のjsは、construction_costsのものを共用する)
     obj = document.getElementById("construction_datum_id");
-     construction_id = parseInt(obj.value);
-     if (construction_id != "" && construction_id != "1")
-     {
-        $.get("<%= construction_dataz_construction_and_customer_select_path %>",
-	      {id: construction_id },
-          function(data){
+    construction_id = parseInt(obj.value);
+    if (construction_id != "" && construction_id != "1") {
+      $.get("<%= construction_dataz_construction_and_customer_select_path %>",
+        {id: construction_id },
+        function(data){
           
-            //responsible1
-	        //add190131
-            obj = document.getElementById("responsible1").textContent;
-            if (obj != "" && document.getElementById("responsible1").value != obj)
-            {
-                document.getElementById("responsible1").value = obj;
-            }
+          //responsible1
+          //add190131
+          obj = document.getElementById("responsible1").textContent;
+          if (obj != "" && document.getElementById("responsible1").value != obj)
+          {
+            document.getElementById("responsible1").value = obj;
           }
-	    );
-	 }
-   };
+        }
+      );
+    }
+  };
   //納品一覧データをコピーする
-  function CopyDeliverySlipHeader(){
+  function CopyDeliverySlipHeader() {
     
     var index = document.getElementById("delivery_slip_header_origin_id").selectedIndex;
     
-    if (index > 0){
+    if (index > 0) {
     
-        var delivery_slip_origin_code = 
-	    document.getElementById("delivery_slip_header_origin_id").options[index].innerText;
+      var delivery_slip_origin_code = 
+      document.getElementById("delivery_slip_header_origin_id").options[index].innerText;
    
-	    $.get("<%= delivery_slip_headerz_duplicate_delivery_slip_header_path %>",
+      $.get("<%= delivery_slip_headerz_duplicate_delivery_slip_header_path %>",
         {delivery_slip_code: delivery_slip_origin_code },
-            function(data){
-		  
-		    //工事情報をセット
-		    //setConstructionInfoDefault();
-		  
-		    //請求コード
-            if (document.getElementById("invoice_code") != undefined)
-            {
-		        obj = document.getElementById("invoice_code").textContent;
-                document.getElementById("invoice_code").value = obj;
-            }
+        function(data) {
+
+          //工事情報をセット
+          //setConstructionInfoDefault();
+  
+          //請求コード
+          if (document.getElementById("invoice_code") != undefined) {
+            obj = document.getElementById("invoice_code").textContent;
+            document.getElementById("invoice_code").value = obj;
+          }
           
-		    //見積コード
-		    if (document.getElementById("quotation_code") != undefined)
-            {
-                obj = document.getElementById("quotation_code").textContent;
-                document.getElementById("quotation_code").value = obj;
-		    }
-		    //工事名
-		    obj = document.getElementById("construction_name").textContent;
-            document.getElementById("construction_name").value = obj;
-		  
-		    //顧客名
-		    obj = document.getElementById("customer_name").textContent;
-            document.getElementById("customer_name").value = obj;
-		  
-		    //担当者１
-		    obj = document.getElementById("responsible1").textContent;
-            document.getElementById("responsible1").value = obj;
-		    //担当者2
-		    obj = document.getElementById("responsible2").textContent;
-            document.getElementById("responsible2").value = obj;
-		  
-		    //郵便番号
-		    obj = document.getElementById("post").textContent;
-            document.getElementById("post").value = obj;
-		  
-		    //住所
-		    obj = document.getElementById("address").textContent;
-            document.getElementById("address").value = obj;
-		    obj = document.getElementById("house_number").textContent;
-            document.getElementById("house_number").value = obj;
-		    obj = document.getElementById("address2").textContent;
-            document.getElementById("address2").value = obj;
-		  
-            //tel
-		    obj = document.getElementById("tel").textContent;
-            document.getElementById("tel").value = obj;
-		    //fax
-		    obj = document.getElementById("fax").textContent;
-            document.getElementById("fax").value = obj;
-		    //工事期間
-		    if (document.getElementById("construction_period") != undefined){
-                 obj = document.getElementById("construction_period").textContent;
-                document.getElementById("construction_period").value = obj;
-		    }
-            //郵便番号(工事場所)  
-		    obj = document.getElementById("construction_post").textContent;
-            document.getElementById("construction_post").value = obj;
-		    //住所(工事場所)
-		    obj = document.getElementById("construction_place").textContent;
-            document.getElementById("construction_place").value = obj;
-		    //番地
-		    obj = document.getElementById("construction_house_number").textContent;
-            document.getElementById("construction_house_number").value = obj;
-		   
-            //建物
-		    obj = document.getElementById("construction_place2").textContent;
-            document.getElementById("construction_place2").value = obj;
-		  
-            ////取引方法
-		    //obj = document.getElementById("trading_method").textContent;
-            //document.getElementById("trading_method").value = obj;
-		    ////有効期間
-		    //obj = document.getElementById("effective_period").textContent;
-            //document.getElementById("effective_period").value = obj;
-		    ////NET金額
-		    //obj = document.getElementById("net_amount").textContent;
-            //document.getElementById("net_amount").value = obj;
-		            
-            //納品金額
-		    obj = document.getElementById("delivery_amount").textContent;
-            document.getElementById("delivery_amount").value = obj;
-		    //実行金額
-		    obj = document.getElementById("execution_amount").textContent;
-            document.getElementById("execution_amount").value = obj;
-		  
-		    }
+          //見積コード
+          if (document.getElementById("quotation_code") != undefined) {
+            obj = document.getElementById("quotation_code").textContent;
+            document.getElementById("quotation_code").value = obj;
+          }
+          //工事名
+          obj = document.getElementById("construction_name").textContent;
+          document.getElementById("construction_name").value = obj;
+  
+          //顧客名
+          obj = document.getElementById("customer_name").textContent;
+          document.getElementById("customer_name").value = obj;
+  
+          //担当者１
+          obj = document.getElementById("responsible1").textContent;
+          document.getElementById("responsible1").value = obj;
+          //担当者2
+          obj = document.getElementById("responsible2").textContent;
+          document.getElementById("responsible2").value = obj;
+  
+          //郵便番号
+          obj = document.getElementById("post").textContent;
+          document.getElementById("post").value = obj;
+  
+          //住所
+          obj = document.getElementById("address").textContent;
+          document.getElementById("address").value = obj;
+          obj = document.getElementById("house_number").textContent;
+          document.getElementById("house_number").value = obj;
+          obj = document.getElementById("address2").textContent;
+          document.getElementById("address2").value = obj;
+  
+          //tel
+          obj = document.getElementById("tel").textContent;
+          document.getElementById("tel").value = obj;
+          //fax
+          obj = document.getElementById("fax").textContent;
+          document.getElementById("fax").value = obj;
+          //工事期間
+          if (document.getElementById("construction_period") != undefined) {
+            obj = document.getElementById("construction_period").textContent;
+            document.getElementById("construction_period").value = obj;
+          }
+          //郵便番号(工事場所)  
+          obj = document.getElementById("construction_post").textContent;
+          document.getElementById("construction_post").value = obj;
+          //住所(工事場所)
+          obj = document.getElementById("construction_place").textContent;
+          document.getElementById("construction_place").value = obj;
+          //番地
+          obj = document.getElementById("construction_house_number").textContent;
+          document.getElementById("construction_house_number").value = obj;
+
+          //建物
+          obj = document.getElementById("construction_place2").textContent;
+          document.getElementById("construction_place2").value = obj;
+
+          ////取引方法
+          //obj = document.getElementById("trading_method").textContent;
+          //document.getElementById("trading_method").value = obj;
+          ////有効期間
+          //obj = document.getElementById("effective_period").textContent;
+          //document.getElementById("effective_period").value = obj;
+          ////NET金額
+          //obj = document.getElementById("net_amount").textContent;
+          //document.getElementById("net_amount").value = obj;
+            
+          //納品金額
+          obj = document.getElementById("delivery_amount").textContent;
+          document.getElementById("delivery_amount").value = obj;
+          //実行金額
+          obj = document.getElementById("execution_amount").textContent;
+          document.getElementById("execution_amount").value = obj;
+
+        }
         
-	   );
+      );
     }
    
   }
-   //顧客情報のセット
-  function setCustomerInfoDefault()
-  {  
+  //顧客情報のセット
+  function setCustomerInfoDefault() {  
     obj = document.getElementById("customer_id");
-     customer_id = parseInt(obj.value);
-     $.get("<%= quotation_headerz_customer_info_select_path %>",
-       {id: customer_id },
-        function(data){
-          //顧客名
-		  obj = document.getElementById("customer_name").textContent;
-          document.getElementById("customer_name").value = obj;
-		  
-		  //郵便番号
-	      obj = document.getElementById("post").textContent;
-          document.getElementById("post").value = obj;
-		  //住所
-		  obj = document.getElementById("address").textContent;
-          document.getElementById("address").value = obj;
-		  
-		  //add171012
-		  obj = document.getElementById("house_number").textContent;
-          document.getElementById("house_number").value = obj;
-		  obj = document.getElementById("address2").textContent;
-          document.getElementById("address2").value = obj;
-		  //add end 
-		  
-		  //tel
-	      obj = document.getElementById("tel").textContent;
-          document.getElementById("tel").value = obj;
-          //fax
-	      obj = document.getElementById("fax").textContent;
-          document.getElementById("fax").value = obj;
-		  //del190131
-          //responsible1
-	      //obj = document.getElementById("responsible1").textContent;
-          //document.getElementById("responsible1").value = obj;
-		  //responsible2
-	      obj = document.getElementById("responsible2").textContent;
-          document.getElementById("responsible2").value = obj;
-		  
-		 }
-	  );
-   };
+    customer_id = parseInt(obj.value);
+    $.get("<%= quotation_headerz_customer_info_select_path %>",
+      {id: customer_id },
+      function(data) {
+        //顧客名
+        obj = document.getElementById("customer_name").textContent;
+        document.getElementById("customer_name").value = obj;
+
+        //郵便番号
+        obj = document.getElementById("post").textContent;
+        document.getElementById("post").value = obj;
+        //住所
+        obj = document.getElementById("address").textContent;
+        document.getElementById("address").value = obj;
   
-   //登録時、納品参照コードが入力されていれば、メッセージを出す
-   function alertAfterValidation() {
-     if (document.getElementById("delivery_slip_header_origin_id").selectedIndex > 0){
-       alert('納品書データを参照元コードよりコピーします。');
-     }
-     document.forms[0].submit();
-   }
+        //add171012
+        obj = document.getElementById("house_number").textContent;
+        document.getElementById("house_number").value = obj;
+        obj = document.getElementById("address2").textContent;
+        document.getElementById("address2").value = obj;
+        //add end 
   
- //add200917
- //日付から納品コードを自動的にセットする
- function setCode()
- {
-   var q_year = document.getElementsByName('delivery_slip_header[delivery_slip_date(1i)]')[0].value;
-   var q_month = document.getElementsByName('delivery_slip_header[delivery_slip_date(2i)]')[0].value;
-   var q_day = document.getElementsByName('delivery_slip_header[delivery_slip_date(3i)]')[0].value;
+        //tel
+        obj = document.getElementById("tel").textContent;
+        document.getElementById("tel").value = obj;
+        //fax
+        obj = document.getElementById("fax").textContent;
+        document.getElementById("fax").value = obj;
+        //del190131
+        //responsible1
+        //obj = document.getElementById("responsible1").textContent;
+        //document.getElementById("responsible1").value = obj;
+        //responsible2
+        obj = document.getElementById("responsible2").textContent;
+        document.getElementById("responsible2").value = obj;
+
+      }
+    );
+  };
+  
+  //登録時、納品参照コードが入力されていれば、メッセージを出す
+  function alertAfterValidation() {
+    if (document.getElementById("delivery_slip_header_origin_id").selectedIndex > 0){
+      alert('納品書データを参照元コードよりコピーします。');
+    }
+    document.forms[0].submit();
+  }
+  
+  //add200917
+  //日付から納品コードを自動的にセットする
+  function setCode()
+  {
+    var q_year = document.getElementsByName('delivery_slip_header[delivery_slip_date(1i)]')[0].value;
+    var q_month = document.getElementsByName('delivery_slip_header[delivery_slip_date(2i)]')[0].value;
+    var q_day = document.getElementsByName('delivery_slip_header[delivery_slip_date(3i)]')[0].value;
    
-   if (q_year != "" && q_month != "" && q_day != "")
-   {
-       //ajax
-       $.get("<%= delivery_slip_headerz_set_delivery_slip_code_path %>",
-       {year: q_year, month: q_month, day: q_day },
-       function(data)
-       {
-         obj = document.getElementById("delivery_slip_code").textContent;
-         document.getElementById("delivery_slip_code").value = obj;
-       })
-   }
+    if (q_year != "" && q_month != "" && q_day != "") {
+      //ajax
+      $.get("<%= delivery_slip_headerz_set_delivery_slip_code_path %>",
+      {year: q_year, month: q_month, day: q_day },
+      function(data) {
+        obj = document.getElementById("delivery_slip_code").textContent;
+        document.getElementById("delivery_slip_code").value = obj;
+      })
+    }
    
- }
+  }
  
 </script>

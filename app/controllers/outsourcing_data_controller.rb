@@ -55,7 +55,7 @@ class OutsourcingDataController < ApplicationController
         
     @purchase_order_data_extract = PurchaseOrderDatum.all  
     @construction_code_extract = ConstructionDatum.all     
-        
+    
     #注文番号の絞り込み（登録済みのものだけにする） 
     if query.present? && query[:with_construction].present?
       @purchase_order_data_extract = PurchaseOrderDatum.where(construction_datum_id: query[:with_construction])
@@ -97,6 +97,8 @@ class OutsourcingDataController < ApplicationController
 		  #工事→注文→仕入→注文の場合の分岐
 		    params[:move_flag] = "1"
 		  end
+		  
+		  #binding.pry
 		  
 		  purchase_order_id = params[:purchase_order_id]
       #工事番号のパラメータが存在した場合にセットする

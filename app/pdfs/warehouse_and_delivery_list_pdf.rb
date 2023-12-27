@@ -144,13 +144,28 @@ class WarehouseAndDeliveryListPDF
         if inventory_history.material_master.MakerMaster.present?
           maker_name = inventory_history.material_master.MakerMaster.maker_name
         end
-
+        
+        #upd231227
+        construction_code = ""
+        construction_name = ""
+        customer_name = ""
+        
+        if inventory_history.construction_datum.present?
+          construction_code = inventory_history.construction_datum.construction_code
+          construction_name = inventory_history.construction_datum.construction_name
+        end
+        if inventory_history.construction_datum.present? && inventory_history.construction_datum.CustomerMaster.present?
+          customer_name = inventory_history.construction_datum.CustomerMaster.customer_name
+        end
+        #upd end
+        
         row.values inventory_date: inventory_history.inventory_date,
                    inventory_division_name: InventoryHistory.inventory_division[inventory_history.inventory_division_id][0],
-                   construction_code: inventory_history.construction_datum.construction_code,
-                   construction_name: inventory_history.construction_datum.construction_name,
-                   customer_name: inventory_history.construction_datum.CustomerMaster.customer_name,
-                   #purchase_order_code: purchase_datum.purchase_order_datum.purchase_order_code,
+                   #construction_code: inventory_history.construction_datum.construction_code,
+                   #construction_name: inventory_history.construction_datum.construction_name,
+                   construction_code: construction_code,
+                   construction_name: construction_name,
+                   customer_name: customer_name,
                    material_code: material_code,
                    material_name: material_name,
                    maker_name: maker_name,

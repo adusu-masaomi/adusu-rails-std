@@ -132,7 +132,7 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script type="text/javascript">
 
-  $(document).ready(function(){
+  $(document).ready(function() {
     //$(document).on('turbolinks:load', function(){
     //検索可能なリストボックス(品名の場合)
        
@@ -181,7 +181,7 @@
   });
   
   //住所を一括セットする(ajax)
-  function setAddress(){
+  function setAddress() {
     //郵便番号
     obj = document.getElementById("post").textContent;
     document.getElementById("post").value = obj;
@@ -200,7 +200,7 @@
   }
   
   //工事名→通称名へコピー（初期値として）
-  function copyConstructionNameToAlias(constructionName,e){
+  function copyConstructionNameToAlias(constructionName,e) {
     if (e.keyCode == 13 || e.keyCode == 9) {
       if (constructionName != "") {
         document.getElementById("alias_name").value = constructionName;
@@ -210,8 +210,7 @@
   
   
   //見積書→工事情報のセット
-  function setConstructionDefaultAjax()
-  {  
+  function setConstructionDefaultAjax() {  
     obj = document.getElementById("quotation_header_id");
     quotation_header_id = parseInt(obj.value);
 
@@ -226,8 +225,7 @@
   };
    
   //納品書→工事情報のセット
-  function setConstructionDefaultAjaxD()
-  {  
+  function setConstructionDefaultAjaxD() {  
     obj = document.getElementById("delivery_slip_header_id");
     delivery_slip_header_id = parseInt(obj.value);
 
@@ -242,7 +240,7 @@
   };
   
   //工事情報のセット
-  function setConstructionDetail(){
+  function setConstructionDetail() {
     
     //工事名
     obj = document.getElementById("construction_name").textContent;
@@ -261,10 +259,8 @@
     
   }
   
-  function setCustomerAddress()
-  {
-    if ( document.getElementById("customer_id").value != "")
-    {
+  function setCustomerAddress() {
+    if ( document.getElementById("customer_id").value != "") {
       customer_master_id = document.getElementById("customer_id").value;
       $.get("<%= construction_dataz_get_customer_address_path %>",
       {customer_master_id: customer_master_id }, function(data)
@@ -286,8 +282,7 @@
   }
   
   //請求予定日→入金日のセット
-  function getDepositDueDateAjax()
-  {  
+  function getDepositDueDateAjax() {  
     //obj = document.getElementById("delivery_slip_header_id");
     //delivery_slip_header_id = parseInt(obj.value);
 
@@ -310,15 +305,14 @@
     
     $.get("<%= construction_dataz_get_deposit_due_date_path %>",
       {billing_due_date: billing_due_date, customer_id: customer_id },
-      function(data){
+      function(data) {
           
           
         obj = document.getElementById("deposit_due_date_hide").textContent;
           
         document.getElementById("deposit_due_date_hide").textContent = "";
           
-        if (obj != "")
-        {
+        if (obj != "") {
           //document.getElementById("deposit_due_date").value = obj;
             
           var purchase_date_set = obj;
