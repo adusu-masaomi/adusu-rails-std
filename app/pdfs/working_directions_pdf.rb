@@ -76,7 +76,9 @@ class WorkingDirectionsPDF
     report.page.item(:issue_date).value(working_date)
     report.page.item(:construction_code).value(construction_datum.construction_code)
     report.page.item(:construction_name).value(construction_datum.construction_name)
-    report.page.item(:customer_name).value(construction_datum.CustomerMaster.customer_name)
+    if construction_datum.CustomerMaster.present?  #upd231227
+      report.page.item(:customer_name).value(construction_datum.CustomerMaster.customer_name)
+    end
     report.page.item(:construction_period_start).value(period_start)
     report.page.item(:construction_period_end).value(period_end)
     #report.page.item(:construction_place).value(construction_datum.construction_place)

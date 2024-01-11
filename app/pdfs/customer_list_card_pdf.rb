@@ -8,72 +8,84 @@ class CustomerListCardPDF
     report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/customer_list_card_pdf.tlf")
     
     
-	# 1ページ目を開始
+    # 1ページ目を開始
     report.start_new_page
      
     @flag = nil
-		 
-        #初期化
-        #@purchase_order_code  = ""
-        #@purchase_amount_subtotal = 0
-        #@purchase_amount_total = 0
-        #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum|
-        #$customer.order("construction_code desc").each do |construction_datum|
+
+    #初期化
+    #@purchase_order_code  = ""
+    #@purchase_amount_subtotal = 0
+    #@purchase_amount_total = 0
+    #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum|
+    #$customer.order("construction_code desc").each do |construction_datum|
 
     $customers.each do |customer| 
-	  	 
-		#---見出し---
-        page_count = report.page_count.to_s + "頁"
-		report.page.item(:page_no).value(page_count)
 
-		 #if @flag.nil? 
-		 #   @flag = "1"
-		 #end
-		
-         #if customer.reception_date.present?
-		 #   @reception_date = setGenGouDate(customer.reception_date)
-         #end
-		   
-		    report.list(:default).add_row do |row|
-			     #billed_flag = false
-				 #if customer.billed_flag != nil && customer.billed_flag > 0
-				 #  billed_flag = true
-				 #end
-				 
-				 
-			     row.values ID: customer.id, customer_name: customer.customer_name,
-                            post: customer.post, address: customer.address,
-                            house_number: customer.house_number, tel: customer.tel_main,
+      #---見出し---
+      page_count = report.page_count.to_s + "頁"
+      report.page.item(:page_no).value(page_count)
+
+      #if @flag.nil? 
+      #   @flag = "1"
+      #end
+
+      #if customer.reception_date.present?
+      #   @reception_date = setGenGouDate(customer.reception_date)
+      #end
+       
+      report.list(:default).add_row do |row|
+        #billed_flag = false
+        #if customer.billed_flag != nil && customer.billed_flag > 0
+        #  billed_flag = true
+        #end
+
+        #upd240105 
+        #住所は全て載せる様にする
+        address = customer.address
+        if customer.house_number.present?
+          address += customer.house_number
+        end
+        if customer.address2.present?
+          address += "　" + customer.address2
+        end
+        #
+        #house_number: customer.house_number(抹消)
+        #upd end
+          
+        row.values ID: customer.id, customer_name: customer.customer_name,
+                            post: customer.post, address: address,
+                            tel: customer.tel_main,
                             fax: customer.fax_main, responsible: customer.responsible1
-					        #reception_date: @reception_date,
+        #reception_date: @reception_date,
                             #construction_name: customer.construction_name,
-							#customer_code: customer.CustomerMaster.id,
+        #customer_code: customer.CustomerMaster.id,
                             #customer_name: customer.CustomerMaster.customer_name
-				 
-                 #row.item(:frame).styles(:fill_color => '#F7BE81')  if billed_flag == true
-				 
-                 if $print_flag_customer == "2"
-                 #年賀状確認用
-                    if customer.card_not_flag == 1
-                        row.item(:line_through).visible(true)
-                    end
-                 end
-                 
-				 #縦線は再描画させないと描写されない
-				 #row.item(:line_1).styles(:fill_color => '#F7BE81')
-			     #row.item(:line_2).styles(:fill_color => '#F7BE81')
-				 #row.item(:line_3).styles(:fill_color => '#F7BE81')
-				 #row.item(:line_4).styles(:fill_color => '#F7BE81')
 
-			end 
-			
-		 
-		
-    end	
-		
-        # ThinReports::Reportを返す
-        return report
-		
+        #row.item(:frame).styles(:fill_color => '#F7BE81')  if billed_flag == true
+
+        if $print_flag_customer == "2"
+          #年賀状確認用
+          if customer.card_not_flag == 1
+            row.item(:line_through).visible(true)
+          end
+        end
+
+        #縦線は再描画させないと描写されない
+        #row.item(:line_1).styles(:fill_color => '#F7BE81')
+        #row.item(:line_2).styles(:fill_color => '#F7BE81')
+        #row.item(:line_3).styles(:fill_color => '#F7BE81')
+        #row.item(:line_4).styles(:fill_color => '#F7BE81')
+
+      end 
+
+
+
+    end
+
+    # ThinReports::Reportを返す
+    return report
+
   end  
    
 end
@@ -85,21 +97,21 @@ def setGenGouDate(inDate)
   return gengouDate
 end
    
-    def formatNum()
-	    
-        if @num.present?
-          #整数で四捨五入する
-		  @num  = @num.round
-		  
-		  #桁区切りにする
-		  @num  = @num.to_s(:delimited, delimiter: ',')
-		else
-		  @num  = "0"
-        end
-		# 円マークをつける
-        if @num  == "0"
-		  @num  = ""
-		else
-		  @num  = "￥" + @num 
-		end
-	end  
+def formatNum()
+
+  if @num.present?
+    #整数で四捨五入する
+    @num  = @num.round
+  
+    #桁区切りにする
+    @num  = @num.to_s(:delimited, delimiter: ',')
+  else
+    @num  = "0"
+  end
+  # 円マークをつける
+  if @num  == "0"
+    @num  = ""
+  else
+    @num  = "￥" + @num 
+  end
+end  

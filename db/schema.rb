@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_24_000522) do
+ActiveRecord::Schema.define(version: 2024_01_11_082349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -577,8 +577,8 @@ ActiveRecord::Schema.define(version: 2023_10_24_000522) do
     t.integer "supplier_id"
     t.integer "inventory_division_id"
     t.integer "unit_price_not_update_flag"
-    t.integer "outsourcing_invoice_flag"
-    t.integer "outsourcing_payment_flag"
+    t.integer "outsourcing_invoice_flag", default: 0
+    t.integer "outsourcing_payment_flag", default: 0
     t.integer "purchase_header_id"
     t.date "working_end_date"
     t.date "closing_date"
@@ -974,10 +974,10 @@ ActiveRecord::Schema.define(version: 2023_10_24_000522) do
     t.float "labor_productivity_unit"
     t.float "labor_productivity_unit_total"
     t.integer "material_quantity"
-    t.integer "accessory_cost"
+    t.float "accessory_cost"
     t.integer "material_cost_total"
     t.integer "labor_cost_total"
-    t.integer "other_cost"
+    t.float "other_cost"
     t.integer "seq"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

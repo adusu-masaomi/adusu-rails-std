@@ -4,7 +4,7 @@ class DeliverySlipPDF
   #def self.create delivery_slip	
   #def self.create(delivery_slip_detail_large_classifications, print_type, sort_dm)
   def self.create(delivery_slip_detail_large_classifications, print_type, sort_dm, company_id)
-  #納品書PDF発行
+    #納品書PDF発行
     #新元号対応
     require "date"
     d_heisei_limit = Date.parse("2019/5/1")
@@ -38,7 +38,7 @@ class DeliverySlipPDF
     #  @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
     #     
     #end
-	   
+
     #1ページ目を開始
     @report.start_new_page
     @flag = nil 
@@ -80,7 +80,7 @@ class DeliverySlipPDF
         
         #敬称
         honorific_name = CustomerMaster.honorific[0].find{0}     #"様"
-		   
+
         if @delivery_slip_headers.honorific_id == 1              #"御中?
           id = @delivery_slip_headers.honorific_id
           honorific_name = CustomerMaster.honorific[id].find{id} #"御中"
@@ -89,7 +89,7 @@ class DeliverySlipPDF
       
         #担当1
         if @delivery_slip_headers.ConstructionDatum.present? && 
-                !@delivery_slip_headers.ConstructionDatum.personnel.blank?
+          !@delivery_slip_headers.ConstructionDatum.personnel.blank?
           responsible = @delivery_slip_headers.ConstructionDatum.personnel + "  様"
           @report.page.item(:responsible1).value(responsible)
         end
@@ -119,22 +119,22 @@ class DeliverySlipPDF
         #税込見積合計金額	 
         if @delivery_slip_headers.delivery_amount.present?
           if @delivery_slip_headers.delivery_slip_date.nil? || @delivery_slip_headers.delivery_slip_date < date_per_ten_start
-          #消費税8%
+            #消費税8%
             @delivery_amount_tax_in = @delivery_slip_headers.delivery_amount * $consumption_tax_include  
           else
-          #消費税10%
+            #消費税10%
             @delivery_amount_tax_in = @delivery_slip_headers.delivery_amount * $consumption_tax_include_per_ten
           end
           @report.page.item(:delivery_amount_tax_in).value(@delivery_amount_tax_in) 
         end
-		   
+
         #消費税
         if @delivery_slip_headers.delivery_amount.present?
           if @delivery_slip_headers.delivery_slip_date.nil? || @delivery_slip_headers.delivery_slip_date < date_per_ten_start
-          #消費税8%
+            #消費税8%
             @delivery_amount_tax_only = @delivery_slip_headers.delivery_amount * $consumption_tax_only  
           else
-          #消費税10%
+            #消費税10%
             @delivery_amount_tax_only = @delivery_slip_headers.delivery_amount * $consumption_tax_only_per_ten
           end
           @report.page.item(:delivery_amount_tax_only).value(@delivery_amount_tax_only) 
@@ -206,14 +206,14 @@ class DeliverySlipPDF
           empty_string =  $gengo_name_2 + "　　" + "年" + "　　" + "月" + "　　" + "日"
           @report.page.item(:delivery_slip_date).value(empty_string) 
         end
-		   
+
         #NET金額
         #if @delivery_slip_headers.net_amount.present?
         #  @net_amount = "(" + @delivery_slip_headers.net_amount.to_s(:delimited, delimiter: ',') + ")" 
         #  @report.page.item(:message_net).value("NET")
         #  @report.page.item(:net_amount).value(@net_amount)
         #end
-		   
+
         #小計(見積金額) 
         #本来ならフッターに設定するべきだが、いまいちわからないため・・
         @report.page.item(:delivery_amount).value(@delivery_slip_headers.delivery_amount)
@@ -235,7 +235,7 @@ class DeliverySlipPDF
         else 
           @unit_name = delivery_slip_detail_large_classification.working_unit_name
         end
-					  
+
         if @unit_name == "<手入力>"
           if delivery_slip_detail_large_classification.working_unit_name != "<手入力>"
             @unit_name = delivery_slip_detail_large_classification.working_unit_name
@@ -256,7 +256,7 @@ class DeliverySlipPDF
           unit_price_or_notices = delivery_slip_detail_large_classification.working_unit_price
         end
         #
-					  
+
         #明細欄出力
         row.values working_large_item_name: item_name,
                  working_large_specification: delivery_slip_detail_large_classification.working_large_specification,
@@ -278,7 +278,7 @@ class DeliverySlipPDF
   def self.set_detail_data
     #納品書(表紙)のページ番号をマイナスさせるためのカウンター。
     @estimation_sheet_pages = @report.page_count 
-	 
+
     #内訳データでループ
     @delivery_slip_detail_large_classifications.order(:line_number).each do |delivery_slip_detail_large_classification|
       
@@ -288,7 +288,7 @@ class DeliverySlipPDF
       @delivery_slip_detail_middle_classifications = DeliverySlipDetailMiddleClassification.where(:delivery_slip_header_id => delivery_slip_header_id).
                                                  where(:delivery_slip_detail_large_classification_id => delivery_slip_detail_large_classification_id).where("id is NOT NULL")
 
-	    #内訳書PDF発行(A4横ver)
+      #内訳書PDF発行(A4横ver)
       if @delivery_slip_detail_middle_classifications.present?
         #@sort_dm = sort_dm
         
@@ -307,7 +307,7 @@ class DeliverySlipPDF
       #請求書番号
       if company.invoice_number.present?
         invoice_str = "登録番号　" + company.invoice_number
-       @report.page.item(:invoice_number).value(invoice_str)
+        @report.page.item(:invoice_number).value(invoice_str)
       end
       
       #会社名
@@ -342,7 +342,7 @@ class DeliverySlipPDF
   
   
   def self.delivery_slip_detailed_statement
-  #内訳書PDF発行(A4縦ver)
+    #内訳書PDF発行(A4縦ver)
       
     #新元号対応 190401
     require "date"
@@ -353,7 +353,7 @@ class DeliverySlipPDF
     
     # 1ページ目を開始
     @report.start_new_page layout: "#{Rails.root}/app/pdfs/delivery_slip_detailed_statement_pdf.tlf"
-	   
+
     @flag = nil
     
     #ソートしている場合は、並び順を変える
@@ -361,17 +361,17 @@ class DeliverySlipPDF
     if @sort_dm == "asc"
       sort_string = "line_number desc"
     else
-	    sort_string = "line_number asc"
-	  end
-	  #
-	 
+      sort_string = "line_number asc"
+    end
+    #
+
     #$delivery_slip_detail_middle_classifications.order(:line_number).each do |delivery_slip_detail_middle_classification|
     @delivery_slip_detail_middle_classifications.order(sort_string).each do |delivery_slip_detail_middle_classification| 
       #---見出し---
       if @flag.nil? 
         @flag = "1"
         @delivery_slip_headers = DeliverySlipHeader.find(delivery_slip_detail_middle_classification.delivery_slip_header_id)
-	       
+       
         #件名
         @report.page.item(:construction_name).value(@delivery_slip_headers.construction_name) 
   
@@ -379,10 +379,10 @@ class DeliverySlipPDF
         if @delivery_slip_headers.delivery_slip_code.present?
           @report.page.item(:delivery_slip_code).value(@delivery_slip_headers.delivery_slip_code) 
         else
-        #納品Noが未入力の場合は、見積Noをそのまま出す。
+          #納品Noが未入力の場合は、見積Noをそのまま出す。
           @report.page.item(:delivery_slip_code).value(@delivery_slip_headers.delivery_slip_code)
         end
-		   
+
         if @delivery_slip_headers.delivery_slip_date.present?
           @gengou = ApplicationController.new.WesternToJapaneseCalendar(@delivery_slip_headers.delivery_slip_date)
           @report.page.item(:delivery_slip_date).value(@gengou) 
@@ -391,10 +391,10 @@ class DeliverySlipPDF
           empty_string =  $gengo_name_2 + "　　" + "年" + "　　" + "月" + "　　" + "日"
           @report.page.item(:delivery_slip_date).value(empty_string) 
         end
-		   
+
         #品目名
         @report.page.item(:working_large_item_name).value(delivery_slip_detail_middle_classification.DeliverySlipDetailLargeClassification.working_large_item_name)
-		   
+
         #仕様名
         @report.page.item(:working_large_specification).value(delivery_slip_detail_middle_classification.DeliverySlipDetailLargeClassification.working_large_specification)
       end  #flag.nil?
@@ -414,7 +414,7 @@ class DeliverySlipPDF
         end 
         
         @page_number = @report.page_count - @estimation_sheet_pages
-		   	  
+
         #仕様の場合に数値・単位をnullにする
         @quantity = delivery_slip_detail_middle_classification.quantity
         if @quantity == 0 
@@ -429,7 +429,7 @@ class DeliverySlipPDF
         else 
           @unit_name = delivery_slip_detail_middle_classification.working_unit_name
         end
-				  
+
         if @unit_name == "<手入力>"
           if delivery_slip_detail_middle_classification.working_unit_name != "<手入力>"
             @unit_name = delivery_slip_detail_middle_classification.working_unit_name
@@ -484,7 +484,7 @@ class DeliverySlipPDF
                    #delivery_slip_price: delivery_slip_detail_middle_classification.delivery_slip_price
                    delivery_slip_price: delivery_slip_price
       end  #end report do
-		  
+
       #頁番号
       page_number = @report.page_count - @estimation_sheet_pages
       

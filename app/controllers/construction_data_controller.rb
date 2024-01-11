@@ -35,6 +35,8 @@ class ConstructionDataController < ApplicationController
     #
 	
     @construction_data  = @q.result(distinct: true)
+    #pdf用 add240110
+    @construction_data_list = @construction_data
     
     #kaminari用設定
     @construction_data  = @construction_data .page(params[:page])
@@ -57,7 +59,8 @@ class ConstructionDataController < ApplicationController
         format.pdf do
         
           #report = ConstructionListPDF.create @construction_list
-          report = ConstructionListPDF.create @construction_data   #upd230418
+          #report = ConstructionListPDF.create @construction_data   #upd230418
+          report = ConstructionListPDF.create @construction_data_list  #upd240110
         
           # ブラウザでPDFを表示する
           # disposition: "inline" によりダウンロードではなく表示させている
@@ -258,7 +261,15 @@ class ConstructionDataController < ApplicationController
       @update = nil
       if params[:documents].nil?
         #通常のアップデート
-        @update = @construction_datum.update(construction_datum_params)
+        #add231227
+        if @construction_datum.customer_id.present?
+          @update = @construction_datum.update(construction_datum_params)
+        else
+        #add231227 得意先が入ってないケースの場合、バリエーション回避する
+          @construction_datum.attributes = construction_datum_params
+          @construction_datum.save(validate: false)
+          @update = true
+        end
       else
         #資料のみ更新した場合
         @update = @construction_datum.update_attributes(construction_datum_attachments_params)

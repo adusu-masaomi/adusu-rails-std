@@ -1,5 +1,5 @@
 <style>
- body{margin:30px;padding:10px;}
+  body{margin:30px;padding:10px;}
 </style>
 
 <%- model_class = QuotationMaterialHeader -%>  
@@ -13,281 +13,281 @@
     <h2><%= @quotation_material_header.errors.count %>件のエラーがあります。</h2>
  
     <ul>
-    <% @quotation_material_header.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
+      <% @quotation_material_header.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
     </ul>
   </div>
- <% end %>
+<% end %>
 
 <!--ローカル（テスト環境）-->
 <img src="/images/gif-load.gif" id="loading-indicator" style="display:none" />
 
 <!--本番環境の場合-->
 <!--<img src="/rails/images/gif-load.gif" id="loading-indicator" style="display:none" />-->
-	
-	
-   <div class = "form-inputs">
-    <%= f.input :quotation_code, input_html:{id: "quotation_code", style: 'width:200px' } %>
+
+
+<div class = "form-inputs">
+  <%= f.input :quotation_code, input_html:{id: "quotation_code", style: 'width:200px' } %>
    
-     <%= f.label :工事名：, {style: 'color:blue'} %>
-     <%= f.collection_select :construction_datum_id, ConstructionDatum.all, :id, :construction_name, {} , { id:"construction_datum_id", 
-        class: "searchableId" , style: 'width:400px', :readonly => true} %>
+  <%= f.label :工事名：, {style: 'color:blue'} %>
+  <%= f.collection_select :construction_datum_id, ConstructionDatum.all, :id, :construction_name, {} , { id:"construction_datum_id", 
+  class: "searchableId" , style: 'width:400px', :readonly => true} %>
    
-   <!--
-   <%= f.label :見積コード参照用：, {style: 'color:blue'} %>
-   <%= f.select :quotation_header_origin_id, QuotationMaterialHeader.
-        where(:construction_datum_id => params[:construction_id]).map{|st| [st.quotation_code, st.id]}, {include_blank: true},
-         {id:"quotation_header_origin_id", style: 'width:200px' , class: "searchableQuotationOriginCode" } %>
-   -->
+    <!--
+    <%= f.label :見積コード参照用：, {style: 'color:blue'} %>
+    <%= f.select :quotation_header_origin_id, QuotationMaterialHeader.
+    where(:construction_datum_id => params[:construction_id]).map{|st| [st.quotation_code, st.id]}, {include_blank: true},
+    {id:"quotation_header_origin_id", style: 'width:200px' , class: "searchableQuotationOriginCode" } %>
+    -->
    
-   <!--<%= link_to 'データ呼出', { id: params[:id] , construction_id: params[:construction_id], move_flag: params[:move_flag] }, 
-                                 :onclick=> "dispDiv()", :class => 'btn btn-pink300_rsd'  %>-->
-   </br>
+    <!--<%= link_to 'データ呼出', { id: params[:id] , construction_id: params[:construction_id], move_flag: params[:move_flag] }, 
+                                :onclick=> "dispDiv()", :class => 'btn btn-pink300_rsd'  %>-->
+    </br>
    
    
-   <!--ここは、あくまでも送信前の一時的なフィールドとして扱う-->
-   <%= f.label :依頼先：, {style: 'color:blue'} %>
-   <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {} ,
+    <!--ここは、あくまでも送信前の一時的なフィールドとして扱う-->
+    <%= f.label :依頼先：, {style: 'color:blue'} %>
+    <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {} ,
                         { id:"supplier_master_id", class: "searchableSupplier" , style: 'width:200px', :onchange => "setEmail()"} %>
    
-   <!-- -->
+    <!-- -->
    
-   <!--<%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, input_html:{ id:"requested_date", 
-    :value => f.object.requested_date || Date.today , style: 'width:140px'},as: :date_picker %>-->
-   <%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, as: :string, input_html:{ id:"requested_date", 
-    :value => f.object.requested_date || Date.today , class:"datetimepicker", style: 'width:140px'} %>
+    <!--<%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, input_html:{ id:"requested_date", 
+      :value => f.object.requested_date || Date.today , style: 'width:140px'},as: :date_picker %>-->
+    <%= f.input :requested_date , label:"依頼日", label_html: { style: 'color:blue;' }, as: :string, input_html:{ id:"requested_date", 
+      :value => f.object.requested_date || Date.today , class:"datetimepicker", style: 'width:140px'} %>
     
-   <!--<%= f.input :last_header_number, label:"注文No", label_html: { style: 'color:blue;' }, input_html:{ id:"last_header_number" ,
-         style: 'width:35px', :value => @last_header_number, :readonly => true } %>-->
+    <!--<%= f.input :last_header_number, label:"注文No", label_html: { style: 'color:blue;' }, input_html:{ id:"last_header_number" ,
+        style: 'width:35px', :value => @last_header_number, :readonly => true } %>-->
    
-   <span id = "purchase_order_order_code_set">
-     <!-- イレギュラーな場合もあるので、読込専用を解除 -->
-     <%= f.input :last_header_number, label:"注文No", label_html: { style: 'color:blue;' }, input_html:{ id:"last_header_number" ,
-         style: 'width:35px', :value => @last_header_number } %>
+    <span id = "purchase_order_order_code_set">
+      <!-- イレギュラーな場合もあるので、読込専用を解除 -->
+      <%= f.input :last_header_number, label:"注文No", label_html: { style: 'color:blue;' }, input_html:{ id:"last_header_number" ,
+        style: 'width:35px', :value => @last_header_number } %>
          
-     <%= f.input :purchase_order_code, label: ":", input_html:{ id:"purchase_order_code" , style: 'width:100px' } %>
-   </span>
-   <!--空のテキスト-->
-   <span id = "purchase_order_order_code_empty">
+      <%= f.input :purchase_order_code, label: ":", input_html:{ id:"purchase_order_code" , style: 'width:100px' } %>
+    </span>
+    <!--空のテキスト-->
+    <span id = "purchase_order_order_code_empty">
                            <!--"注文No"-->
-     <%= f.input :empty, label:"　--　", label_html: { style: 'color:blue;' }, input_html:{ style: 'width:42px' } %>
+      <%= f.input :empty, label:"　--　", label_html: { style: 'color:blue;' }, input_html:{ style: 'width:42px' } %>
          
-     <%= f.input :empty, label: ":", input_html:{ style: 'width:100px' } %>
-   </span>
+      <%= f.input :empty, label: ":", input_html:{ style: 'width:100px' } %>
+    </span>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
    
-   <!--仕入先（１〜３）の表示-->
-   <%= f.label :依頼先１：, {style: 'color:blue'} %>
-   <%= f.collection_select :supplier_id_1, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
+    <!--仕入先（１〜３）の表示-->
+    <%= f.label :依頼先１：, {style: 'color:blue'} %>
+    <%= f.collection_select :supplier_id_1, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
                         { id:"supplier_id_1", class: "searchableId1" , style: 'width:200px'} %>
-   <%= f.label :依頼先２：, {style: 'color:blue'} %>
-   <%= f.collection_select :supplier_id_2, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
+    <%= f.label :依頼先２：, {style: 'color:blue'} %>
+    <%= f.collection_select :supplier_id_2, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
                         { id:"supplier_id_2", class: "searchableId2" , style: 'width:200px'} %>
-	<%= f.label :依頼先３：, {style: 'color:blue'} %>
-   <%= f.collection_select :supplier_id_3, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
+    <%= f.label :依頼先３：, {style: 'color:blue'} %>
+    <%= f.collection_select :supplier_id_3, SupplierMaster.all, :id, :supplier_name, {include_blank: true} ,
                         { id:"supplier_id_3", class: "searchableId3" , style: 'width:200px'} %>
    
-   </br>
+    </br>
    
-   <!--
-   <%= f.input :responsible , label:"担当者", label_html: { style: 'color:blue;' }, input_html:{ id:"responsible", style: 'width:200px'} %>
-   -->
+    <!--
+    <%= f.input :responsible , label:"担当者", label_html: { style: 'color:blue;' }, input_html:{ id:"responsible", style: 'width:200px'} %>
+    -->
  
-   <!--コンボに変更-->
-   <!--@supplier_responsible-->
+    <!--コンボに変更-->
+    <!--@supplier_responsible-->
    
-   <%= f.label :担当者：, {:style => "color:blue"} %>
-   <%= f.collection_select :responsible, SupplierResponsible.all, :id, :responsible_name, {include_blank: true}, 
+    <%= f.label :担当者：, {:style => "color:blue"} %>
+    <%= f.collection_select :responsible, SupplierResponsible.all, :id, :responsible_name, {include_blank: true}, 
                  {id:"supplier_responsible_id", class: "searchableResponsible" , style: 'width:200px'} %>
    
-   <!--<%= f.input :email , label:"Email", label_html: { style: 'color:blue;' }, input_html:{ id:"email", style: 'width:350px'} %>-->
-   <!--コンボに変更-->
-   <%= f.label :Email：, {:style => "color:blue"} %>
-   <%= f.collection_select :email, SupplierResponsible.all, :id, :responsible_email, {:include_blank => true
+    <!--<%= f.input :email , label:"Email", label_html: { style: 'color:blue;' }, input_html:{ id:"email", style: 'width:350px'} %>-->
+    <!--コンボに変更-->
+    <%= f.label :Email：, {:style => "color:blue"} %>
+    <%= f.collection_select :email, SupplierResponsible.all, :id, :responsible_email, {:include_blank => true
                  }, 
                  {id:"supplier_responsible_email", class: "searchableEmail" , style: 'width:340px', :tabindex=>"9"} %>
    
-   <%= f.label :納品場所　, {style: 'color:blue'} %>
-   <%= f.select :delivery_place_flag, PurchaseOrderHistory.delivery_place, {:include_blank => true}, 
-       {id:'delivery_place_flag',  style: 'width:90px;height:30px;font-size:16px;margin-top:0px;' } %>
+    <%= f.label :納品場所　, {style: 'color:blue'} %>
+    <%= f.select :delivery_place_flag, PurchaseOrderHistory.delivery_place, {:include_blank => true}, 
+    {id:'delivery_place_flag',  style: 'width:90px;height:30px;font-size:16px;margin-top:0px;' } %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   
-   
-   <%= link_to t('.cancel', :default => t("前の画面に戻る")),
-        quotation_material_headers_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
-                  :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
    
-   <!--メール送信フラグ-->
-   <%= f.check_box :quotation_email_flag_1, :id => "quotation_email_flag_1", :class => "quotation_email_flag_1" %>
+    <%= link_to t('.cancel', :default => t("前の画面に戻る")),
+    quotation_material_headers_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
+                :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-   <!--フラグ１-->
-   <!--<%= f.label :quotation_email_flag_1, '見積Email　　　', { style: 'color:green'}  %>-->
-       <%= f.label :quotation_email_flag_1, '見積依頼済　　', { style: 'color:green'}  %>
+   
+    <!--メール送信フラグ-->
+    <%= f.check_box :quotation_email_flag_1, :id => "quotation_email_flag_1", :class => "quotation_email_flag_1" %>
+   
+    <!--フラグ１-->
+    <!--<%= f.label :quotation_email_flag_1, '見積Email　　　', { style: 'color:green'}  %>-->
+    <%= f.label :quotation_email_flag_1, '見積依頼済　　', { style: 'color:green'}  %>
        
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <!--フラグ２-->
-   <%= f.check_box :quotation_email_flag_2,  :id => "quotation_email_flag_2", :class => "quotation_email_flag_2" %>
-   <!--<%= f.label :quotation_email_flag_2, '見積Email　　　', { style: 'color:green'}  %>-->
-   <%= f.label :quotation_email_flag_2, '見積依頼済　　', { style: 'color:green'}  %>
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;  <!--追加230708-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--フラグ２-->
+    <%= f.check_box :quotation_email_flag_2,  :id => "quotation_email_flag_2", :class => "quotation_email_flag_2" %>
+    <!--<%= f.label :quotation_email_flag_2, '見積Email　　　', { style: 'color:green'}  %>-->
+    <%= f.label :quotation_email_flag_2, '見積依頼済　　', { style: 'color:green'}  %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
-   &nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;  <!--追加230708-->
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-   <!--フラグ３-->
-   <%= f.check_box :quotation_email_flag_3,  :id => "quotation_email_flag_3", :class => "quotation_email_flag_2" %>
-   <!--<%= f.label :quotation_email_flag_3, '見積Email　　　', { style: 'color:green'}  %>-->
-   <%= f.label :quotation_email_flag_3, '見積依頼済　　', { style: 'color:green'}  %>
+    <!--フラグ３-->
+    <%= f.check_box :quotation_email_flag_3,  :id => "quotation_email_flag_3", :class => "quotation_email_flag_2" %>
+    <!--<%= f.label :quotation_email_flag_3, '見積Email　　　', { style: 'color:green'}  %>-->
+    <%= f.label :quotation_email_flag_3, '見積依頼済　　', { style: 'color:green'}  %>
    
-   </br>
+    </br>
 
-   <!--注文フラグ-->
+    <!--注文フラグ-->
 
-   <!--<font color = "red">↑メール送信を行う場合は、必ず依頼先を選択してください。</font>-->
-   <!--標準版はカットし以下にスペース-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <!---->
+    <!--<font color = "red">↑メール送信を行う場合は、必ず依頼先を選択してください。</font>-->
+    <!--標準版はカットし以下にスペース-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!---->
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   
    
-   <!-- -->
+    <!-- -->
    
-   <!--フラグ１-->
-   <%= f.check_box :order_email_flag_1,  :id => "order_email_flag_1" %>
-   <!--<%= f.label :order_email_flag_1, '注文Email　　　', { style: 'color:brown'}  %>-->
-       <%= f.label :order_email_flag_1, '注文済　　　　', { style: 'color:brown'}  %>
+    <!--フラグ１-->
+    <%= f.check_box :order_email_flag_1,  :id => "order_email_flag_1" %>
+    <!--<%= f.label :order_email_flag_1, '注文Email　　　', { style: 'color:brown'}  %>-->
+    <%= f.label :order_email_flag_1, '注文済　　　　', { style: 'color:brown'}  %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;  <!--追加230708-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;  <!--追加230708-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-   <!--フラグ２-->
-   <%= f.check_box :order_email_flag_2,  :id => "order_email_flag_2" %>
-   <!--<%= f.label :order_email_flag_2, '注文Email', { style: 'color:brown'}  %>-->
-   <%= f.label :order_email_flag_2, '注文済　　　　', { style: 'color:brown'}  %>
+    <!--フラグ２-->
+    <%= f.check_box :order_email_flag_2,  :id => "order_email_flag_2" %>
+    <!--<%= f.label :order_email_flag_2, '注文Email', { style: 'color:brown'}  %>-->
+    <%= f.label :order_email_flag_2, '注文済　　　　', { style: 'color:brown'}  %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-   <!--フラグ３-->
-   <%= f.check_box :order_email_flag_3,  :id => "order_email_flag_3" %>
-   <!--<%= f.label :order_email_flag_3, '注文Email　　　', { style: 'color:brown'}  %>-->
-   <%= f.label :order_email_flag_3, '注文済　　　　', { style: 'color:brown'}  %>
+    <!--フラグ３-->
+    <%= f.check_box :order_email_flag_3,  :id => "order_email_flag_3" %>
+    <!--<%= f.label :order_email_flag_3, '注文Email　　　', { style: 'color:brown'}  %>-->
+    <%= f.label :order_email_flag_3, '注文済　　　　', { style: 'color:brown'}  %>
    
-   </br>
-   <!-- -->
+    </br>
+    <!-- -->
    
-   <!--</br></br>-->
-   <%= f.input :notes , label:"備考　", label_html: { style: 'color:blue;' }, input_html:{ id:"notes", style: 'width:595px'} %>
+    <!--</br></br>-->
+    <%= f.input :notes , label:"備考　", label_html: { style: 'color:blue;' }, input_html:{ id:"notes", style: 'width:595px'} %>
    
    
-   <!--全チェック（落札）フラグ-->
+    <!--全チェック（落札）フラグ-->
    
-   <!--スペース用-->
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--スペース用-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-   <%= button_tag "　価格を再判定　", type: 'button', :class => 'btn btn-deeppurple500_rsd btn-xs', onclick: "checkBidAll()" %>
+    <%= button_tag "　価格を再判定　", type: 'button', :class => 'btn btn-deeppurple500_rsd btn-xs', onclick: "checkBidAll()" %>
    
-   &nbsp;&nbsp;&nbsp;&nbsp;
-   <!-- -->
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <!-- -->
    
-   <!--フラグ１-->
-   <%= f.check_box :all_bid_flag_1,  :id => "all_bid_flag_1" , :class => "all_bid_flag_1", :onchange => "setSupplierAll(this)" %>
-   <%= f.label :all_bid_flag_1, '全て落札　　　', { style: 'color:red'}  %>
+    <!--フラグ１-->
+    <%= f.check_box :all_bid_flag_1,  :id => "all_bid_flag_1" , :class => "all_bid_flag_1", :onchange => "setSupplierAll(this)" %>
+    <%= f.label :all_bid_flag_1, '全て落札　　　', { style: 'color:red'}  %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;&nbsp;&nbsp;
-   <!--フラグ２-->
-   <%= f.check_box :all_bid_flag_2,  :id => "all_bid_flag_2", :class => "all_bid_flag_2", :onchange => "setSupplierAll(this)" %>
-   <%= f.label :all_bid_flag_2, '全て落札　　　', { style: 'color:red'}  %>
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <!--フラグ２-->
+    <%= f.check_box :all_bid_flag_2,  :id => "all_bid_flag_2", :class => "all_bid_flag_2", :onchange => "setSupplierAll(this)" %>
+    <%= f.label :all_bid_flag_2, '全て落札　　　', { style: 'color:red'}  %>
    
-   <!--スペース用-->
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   &nbsp;
-   <!--フラグ３-->
-   <%= f.check_box :all_bid_flag_3,  :id => "all_bid_flag_3", :class => "all_bid_flag_3", :onchange => "setSupplierAll(this)" %>
-   <%= f.label :all_bid_flag_3, '全て落札　　　', { style: 'color:red'}  %>
+    <!--スペース用-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;
+    <!--フラグ３-->
+    <%= f.check_box :all_bid_flag_3,  :id => "all_bid_flag_3", :class => "all_bid_flag_3", :onchange => "setSupplierAll(this)" %>
+    <%= f.label :all_bid_flag_3, '全て落札　　　', { style: 'color:red'}  %>
    
-   </br>
-   <!-- -->
+    </br>
+    <!-- -->
 
-   <%= f.input :sent_flag, input_html:{id: "sent_flag", :value => 0 }, as: :hidden %>
-   <%= f.input :quotation_email_flag, input_html:{id: "quotation_email_flag" }, as: :hidden %>
-   <!---->
+    <%= f.input :sent_flag, input_html:{id: "sent_flag", :value => 0 }, as: :hidden %>
+    <%= f.input :quotation_email_flag, input_html:{id: "quotation_email_flag" }, as: :hidden %>
+    <!---->
    
-   <!--ajax受信用-->
-   <%= f.input :material_id_hide, input_html:{id: "material_id_hide" }, as: :hidden %>
+    <!--ajax受信用-->
+    <%= f.input :material_id_hide, input_html:{id: "material_id_hide" }, as: :hidden %>
    
-   <!--add181002-->
-   <%= f.input :id, input_html:{id: "id" }, as: :hidden %>
-   <!--<%= f.hidden_field :id, {id: "id" } %>-->
+    <!--add181002-->
+    <%= f.input :id, input_html:{id: "id" }, as: :hidden %>
+    <!--<%= f.hidden_field :id, {id: "id" } %>-->
    
-   <!--明細フォームに渡すためのもの-->
-   <%= f.hidden_field :id, { id:"quotation_header_id"} %>
+    <!--明細フォームに渡すためのもの-->
+    <%= f.hidden_field :id, { id:"quotation_header_id"} %>
    
-   <!--コントローラ側に画面遷移用のパラメータを渡すためのタグ。-->
-   <%= hidden_field_tag(:construction_id, params[:construction_id]) %>
-   <%= hidden_field_tag(:move_flag, params[:move_flag]) %>
+    <!--コントローラ側に画面遷移用のパラメータを渡すためのタグ。-->
+    <%= hidden_field_tag(:construction_id, params[:construction_id]) %>
+    <%= hidden_field_tag(:move_flag, params[:move_flag]) %>
    
-   <!--会社ID-->
-  <%= f.hidden_field :company_id, :value => @company_id, id:"company_id" %>
-  <!---->
+    <!--会社ID-->
+    <%= f.hidden_field :company_id, :value => @company_id, id:"company_id" %>
+    <!---->
   
-   <%= hidden_field_tag(:format) %>
+    <%= hidden_field_tag(:format) %>
   
    
-   </br></br>
-	 
-	  
-	  
-	  <!-- moved170701 -->
-	   <!--<div id="filter" >--> 
-	    <% if @form_detail_order != "sequential_id DESC" %>
-		  <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
-		        :data => { association_insertion_method: "after" } %> 
-	    <% else %>
-		<!--昇順の場合-->
-		  <!--代わりに「戻る」ボタン入れる-->
-		  <%= link_to t('.cancel', :default => t("前画面に戻る")),
+    </br></br>
+
+
+  
+    <!-- moved170701 -->
+    <!--<div id="filter" >--> 
+    <% if @form_detail_order != "sequential_id DESC" %>
+      <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
+          :data => { association_insertion_method: "after" } %> 
+    <% else %>
+      <!--昇順の場合-->
+      <!--代わりに「戻る」ボタン入れる-->
+      <%= link_to t('.cancel', :default => t("前画面に戻る")),
                 quotation_material_headers_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
                   :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
-		<% end %>
-	   
-	  <!--標準版はアデュースのみ表示-->
+    <% end %>
+     
+    <!--標準版はアデュースのみ表示-->
     <% if @company_id == 1 %>
       <%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
                id: "mail_sent_button", :name => 'send', :onclick => "submitAfterValidationEmailorPdf(1)" %>
@@ -298,171 +298,171 @@
     
     <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
                :onclick => "submitAfterValidation(2)" %>
-		
-		<%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
+
+    <%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
              formtarget: "_blank" , :onclick => "return submitAfterValidation(7)") %>
              
-     <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
+    <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitAfterValidation(8)") %>
      
-		<!-- -->
-		<%= f.button_tag( '見積比較表', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" ,
+    <!-- -->
+    <%= f.button_tag( '見積比較表', :value => 'pdf', :name => 'format', :class => "btn btn-lime500_ftg" ,
                  formtarget: "_blank", :onclick => "return submitAfterValidation(4)" ) %>
-		
-		<!--スペース空ける（誤送信ないように -->
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-        
-        <!--標準版はアデュースのみ表示-->
-        <% if @company_id == 1 %>
-          <span id="filter" >
-		        <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
-               id: "mail_sent_button2", :name => 'sendOrder', :onclick => "submitAfterValidationEmailorPdf(3)" %>
-        
-           <!--<%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-pink100_ftg" ,
-                 formtarget: "_blank", :onclick => "return submitAfterValidation(6)" ) %>-->
-          </span>
-	      <% end %>
-        
-        <!--空ボタン-->
-        <!--標準版はアデュースのみ表示-->
-        <% if @company_id == 1 %>
-          <span id="empty_button" >
-            <%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
-               id: "mail_sent_button2", name: "sendOrder" %>
-            <%= f.button_tag "　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
-               id: "mail_sent_button2", name: "sendOrder" %>
-          </span>
-          
-        <% end %>
-         
-         <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません-->
-	       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         &nbsp;&nbsp;&nbsp;&nbsp;
-         
-	       <% if @company_id != 1 %>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		       
-         <% end %>
-		 
-		 
-     
-		 <!--&nbsp;&nbsp;&nbsp;-->
-     
-		 <!--見積金額合計（１〜３）-->
-		 <%= f.input :total_quotation_price_1 , label:"見積金額計１", label_html: { style: 'color:black;' }, 
-                     input_html:{ id:"total_quotation_price_1", style: 'width:100px;font-weight:bold;', readonly: true} %>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-         <%= f.input :total_quotation_price_2 , label:"見積金額計２", label_html: { style: 'color:black;' }, 
+    <!--スペース空ける（誤送信ないように -->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+    <!--標準版はアデュースのみ表示-->
+    <% if @company_id == 1 %>
+      <span id="filter" >
+        <%= f.button_tag "メール送信（注文）", :type => 'button', :class => "btn btn-red400_ftg", 
+          id: "mail_sent_button2", :name => 'sendOrder', :onclick => "submitAfterValidationEmailorPdf(3)" %>
+        
+        <!--<%= f.button_tag( 'ＦＡＸ', :value => 'pdf', :name => 'format', :class => "btn btn-pink100_ftg" ,
+          formtarget: "_blank", :onclick => "return submitAfterValidation(6)" ) %>-->
+      </span>
+    <% end %>
+        
+    <!--空ボタン-->
+    <!--標準版はアデュースのみ表示-->
+    <% if @company_id == 1 %>
+      <span id="empty_button" >
+        <%= f.button_tag "　　　　　　　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
+            id: "mail_sent_button2", name: "sendOrder" %>
+        <%= f.button_tag "　　　", :type => 'button', :class => "btn btn-grey50_ftg", 
+            id: "mail_sent_button2", name: "sendOrder" %>
+      </span>
+          
+    <% end %>
+         
+    <!--※２回目の登録以降は、Ｅｎｔｅｒ押下による移動はお勧めできません-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+         
+    <% if @company_id != 1 %>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+    <% end %>
+
+
+     
+    <!--&nbsp;&nbsp;&nbsp;-->
+     
+    <!--見積金額合計（１〜３）-->
+    <%= f.input :total_quotation_price_1 , label:"見積金額計１", label_html: { style: 'color:black;' }, 
+                     input_html:{ id:"total_quotation_price_1", style: 'width:100px;font-weight:bold;', readonly: true} %>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <%= f.input :total_quotation_price_2 , label:"見積金額計２", label_html: { style: 'color:black;' }, 
                      input_html:{ id:"total_quotation_price_2", style: 'width:100px;font-weight:bold;', readonly: true} %>
 
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-         <%= f.input :total_quotation_price_3 , label:"見積金額計３", label_html: { style: 'color:black;' }, 
+    <%= f.input :total_quotation_price_3 , label:"見積金額計３", label_html: { style: 'color:black;' }, 
                      input_html:{ id:"total_quotation_price_3", style: 'width:100px;font-weight:bold;', readonly: true} %>
          
-     <!-- -->
+    <!-- -->
      
-     <!--
-     <%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
-             formtarget: "_blank" , :onclick => "return submitAfterValidation(7)") %>
+    <!--
+    <%= f.button_tag( '見積依頼書', :value => 'pdf', :name => 'format', :class => "btn btn-amber200_ftg" , 
+          formtarget: "_blank" , :onclick => "return submitAfterValidation(7)") %>
              
-     <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
-             formtarget: "_blank" , :onclick => "return submitAfterValidation(8)") %>
+    <%= f.button_tag( '注　文　書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
+          formtarget: "_blank" , :onclick => "return submitAfterValidation(8)") %>
      
-     -->
+    -->
      
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 <!---->
-		     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!---->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          
-         <!--標準版はカット アデュースのみ表示-->
-         <% if @company_id == 1 %>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <!--標準版はカット アデュースのみ表示-->
+    <% if @company_id == 1 %>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          
-           <%= f.check_box :force_order_flag, :id => "force_order_flag", :onclick => "changeDispOrderButton(this)" %>
-           <%= f.label :force_order_flag, '見積なしで注文', { style: 'color:grey'}  %>
+      <%= f.check_box :force_order_flag, :id => "force_order_flag", :onclick => "changeDispOrderButton(this)" %>
+      <%= f.label :force_order_flag, '見積なしで注文', { style: 'color:grey'}  %>
            
            
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <% end %>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <% end %>
              
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		 
-		 
-     <!--標準版対応-->
-     <% if @company_id != 1 %>
-       &nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;
-     <% end %>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <!--標準版対応-->
+    <% if @company_id != 1 %>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
+    <% end %>
      
-		 <!--注文金額合計（１〜３）-->
-		 <%= f.input :total_order_price_1 , label:"注文金額計１", label_html: { style: 'color:black;' }, 
+    <!--注文金額合計（１〜３）-->
+    <%= f.input :total_order_price_1 , label:"注文金額計１", label_html: { style: 'color:black;' }, 
                      input_html:{ id:"total_order_price_1", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,1)" } %>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-         <%= f.input :total_order_price_2 , label:"注文金額計２", label_html: { style: 'color:black;' }, 
-                     input_html:{ id:"total_order_price_2", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,2)" } %>
+    <%= f.input :total_order_price_2 , label:"注文金額計２", label_html: { style: 'color:black;' }, 
+                  input_html:{ id:"total_order_price_2", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,2)" } %>
 
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-         <%= f.input :total_order_price_3 , label:"注文金額計３", label_html: { style: 'color:black;' }, 
-                     input_html:{ id:"total_order_price_3", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,3)" } %>
+    <%= f.input :total_order_price_3 , label:"注文金額計３", label_html: { style: 'color:black;' }, 
+                  input_html:{ id:"total_order_price_3", :type=>"text",  style: 'width:100px;font-weight:bold;', :onkeydown => "checkBytesAmount(event,3)" } %>
          
-         <!-- -->
-	   <!--</div>--> 
-	  
-	  
-	<hr style="border-top:3px outset #c0c0c0;width: 100%;height:3;">
-	  
-      </br></br>
-	       <div id="subForms" class="sortDone" >
+    <!-- -->
+    <!--</div>--> 
+  
+    
+    <hr style="border-top:3px outset #c0c0c0;width: 100%;height:3;">
+    
+    </br></br>
+    <div id="subForms" class="sortDone" >
        
-       <!--
-       <% if @quotation_material_header.id == nil %>
-         <% tmp = QuotationMaterialHeader.where(quotation_code: @quotation_material_header.quotation_code).first %>
-         <% if tmp != nil %>
-           <% @quotation_material_header = tmp %>
-         <% end %>
-       <% end %>
-       -->
+      <!--
+      <% if @quotation_material_header.id == nil %>
+        <% tmp = QuotationMaterialHeader.where(quotation_code: @quotation_material_header.quotation_code).first %>
+        <% if tmp != nil %>
+          <% @quotation_material_header = tmp %>
+        <% end %>
+      <% end %>
+      -->
        
-			 <%= f.simple_fields_for :quotation_material_details, @quotation_material_header.quotation_material_details.order(@form_detail_order), :include_id => false  do |orders| %>
-		       
-			   <%= render 'quotation_material_detail_fields', f: orders, cache: true %>
-             <% end %> 
-           </div>
-		   
-		   <!--昇順の場合-->
-		   <% if @form_detail_order == "sequential_id DESC" %>
-		      <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
-		        :data => { association_insertion_method: "after" } %> 
-	       <% end %>
+      <%= f.simple_fields_for :quotation_material_details, @quotation_material_header.quotation_material_details.order(@form_detail_order), :include_id => false  do |orders| %>
+       
+        <%= render 'quotation_material_detail_fields', f: orders, cache: true %>
+      <% end %> 
+    </div>
+   
+    <!--昇順の場合-->
+    <% if @form_detail_order == "sequential_id DESC" %>
+      <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
+      :data => { association_insertion_method: "after" } %> 
+    <% end %>
 
-<% end %>
+  <% end %>
 
-  </div>  
+</div>  
 
 <script type="text/javascript">
 
@@ -473,176 +473,176 @@
   const FLAG_ORDER_EMAIL = 3;       //注文emailの場合のフラグ
   
   //フォーム上の制御
-  $(document).ready(function(){
-  //(document).on('turbolinks:load', function(){
-	  
-	  //$(".sortThese").sortable();
-	  
-	  //$("#filter").on("cocoon:after-insert", function() {
-	  //   $(".sortThese").sortable();
-      //});
-	  
-   //検索可能なリストボックス(品名の場合)
-   $(".searchableId").select2({ theme: "classic" });
-	 
-   $(".searchableSupplier").select2({ theme: "classic" });
+  $(document).ready(function() {
+    //(document).on('turbolinks:load', function(){
+
+    //$(".sortThese").sortable();
+    
+    //$("#filter").on("cocoon:after-insert", function() {
+    //   $(".sortThese").sortable();
+    //});
+    
+    //検索可能なリストボックス(品名の場合)
+    $(".searchableId").select2({ theme: "classic" });
+ 
+    $(".searchableSupplier").select2({ theme: "classic" });
    
-   //del220704
-   //$( ".searchableSupplier" ).change(function(e) {
-     //担当Emailを取得
-     //setEmail()
-   //})
+    //del220704
+    //$( ".searchableSupplier" ).change(function(e) {
+    //担当Emailを取得
+    //setEmail()
+    //})
       
    
-   $(".searchableMaterial").select2({ theme: "classic" });
-	   
-	   $(".searchableQuotationOriginCode").select2({ theme: "classic", allowClear: true , placeholder: "" });
-	   //見積参照コードよりデータを呼び出す
-       $(".searchableQuotationOriginCode").change(function(e) {
-         dispDiv();
-       });  
-	   
-	   //依頼先１〜３
-	   $(".searchableId1").select2({ theme: "classic", allowClear: true , placeholder: "" });
-	   $(".searchableId2").select2({ theme: "classic", allowClear: true , placeholder: "" });
-	   $(".searchableId3").select2({ theme: "classic", allowClear: true , placeholder: "" });
-	   
-	   //商品ID-商品CD
-     //$(".searchableSelect1_1").select2({ theme: "classic", tags: true });  //test
-     //rails6対応
-     //field = $(inserted_item).find(".searchableSelect1_1")
-     //init_select2(field, 4);
-     //debugger;
-     //init_select2(".searchableSelect1_1", 4);   
+    $(".searchableMaterial").select2({ theme: "classic" });
+     
+    $(".searchableQuotationOriginCode").select2({ theme: "classic", allowClear: true , placeholder: "" });
+    //見積参照コードよりデータを呼び出す
+    $(".searchableQuotationOriginCode").change(function(e) {
+      dispDiv();
+    });  
+     
+    //依頼先１〜３
+    $(".searchableId1").select2({ theme: "classic", allowClear: true , placeholder: "" });
+    $(".searchableId2").select2({ theme: "classic", allowClear: true , placeholder: "" });
+    $(".searchableId3").select2({ theme: "classic", allowClear: true , placeholder: "" });
+   
+    //商品ID-商品CD
+    //$(".searchableSelect1_1").select2({ theme: "classic", tags: true });  //test
+    //rails6対応
+    //field = $(inserted_item).find(".searchableSelect1_1")
+    //init_select2(field, 4);
+    //debugger;
+    //init_select2(".searchableSelect1_1", 4);   
      
      
-	   $( ".searchableSelect1_1" ).on("select2:close", function (e) {
-		 //次のコントロールへフォーカスを移す
-		 var control_name = $(this)[0].name;
-		 setNextControlOnSelect(e,control_name, 1);
-	   });
-	   //明細-単位
-	   $( ".searchableSelect1_2" ).on("select2:close", function (e) {
-		 //次のコントロールへフォーカスを移す
-		 var control_name = $(this)[0].name;
-		 setNextControlOnSelect(e,control_name, 2);
-	   });
-	   //明細-メーカー
-       //add180411
-       $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
-	   //add end
-       $( ".searchableSelect1_3" ).on("select2:close", function (e) {
-		 //次のコントロールへフォーカスを移す
-	     var control_name = $(this)[0].name;
-		 setNextControlOnSelect(e,control_name, 3);
-	   });
-	   
+    $( ".searchableSelect1_1" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 1);
+    });
+    //明細-単位
+    $( ".searchableSelect1_2" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 2);
+    });
+    //明細-メーカー
+    //add180411
+    $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
+    //add end
+    $( ".searchableSelect1_3" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 3);
+    });
      
-     //upd220704
-	   //担当者のリセット(未選択状態にする)
-	   resetResponsible();
-	   
-	   //全落札（１）のチェックを押した時の動作
-	   $('.all_bid_flag_1').on('change', function(){
-         if ($(this).is(':checked')) {
-		    //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-			setAllBidFlag(1,true);
-			
-			//他の仕入先のチェックは外す
-			document.getElementById("all_bid_flag_2").checked = false;
-			document.getElementById("all_bid_flag_3").checked = false;
-		 }else{
-		    //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-		    setAllBidFlag(1,false);
-		 }
-       });
-	   
-	   //全落札（2）のチェックを押した時の動作
-	   $('.all_bid_flag_2').on('change', function(){
-         if ($(this).is(':checked')) {
-		    //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-			setAllBidFlag(2,true);
-			
-			//他の仕入先のチェックは外す
-			document.getElementById("all_bid_flag_1").checked = false;
-			document.getElementById("all_bid_flag_3").checked = false;
-		 }else{
-		    //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-		    setAllBidFlag(2,false);
-		 }
-       });
-	   
-	   //全落札（3）のチェックを押した時の動作
-	   $('.all_bid_flag_3').on('change', function(){
-         if ($(this).is(':checked')) {
-		       //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-			     setAllBidFlag(3,true);
-			
-			     //他の仕入先のチェックは外す
-			     document.getElementById("all_bid_flag_1").checked = false;
-			     document.getElementById("all_bid_flag_2").checked = false;
-		     }else{
-		       //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
-		       setAllBidFlag(3,false);
-		     }
-     });
      
-     //add190226
-     //分類
-     //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-"});
-	   $(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
-     $( ".searchableSelect1_4" ).change(function(e) {
-       obj = $(this);
-		   //分類からアイテム抽出する
-		   setMaterialExtractByCategory(obj);
-     });
-     //明細-分類
-	   $( ".searchableSelect1_4" ).on("select2:close", function (e) {
-		   //次のコントロールへフォーカスを移す
-		   var control_name = $(this)[0].name;
-		   setNextControlOnSelect(e,control_name, 6);
-	   });
+    //upd220704
+    //担当者のリセット(未選択状態にする)
+    resetResponsible();
      
-     //担当者
-     $(".searchableResponsible").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
-     $( ".searchableResponsible" ).change(function(e) {
-       //担当Emailを取得
-       getEmail()
-     })
-     $( ".searchableResponsible" ).on("select2:close", function (e) {
-	     //要修正
-       //$('[tabindex=9]').focus()
-	   })
+    //全落札（１）のチェックを押した時の動作
+    $('.all_bid_flag_1').on('change', function() {
+      if ($(this).is(':checked')) {
+        //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(1,true);
+
+        //他の仕入先のチェックは外す
+        document.getElementById("all_bid_flag_2").checked = false;
+        document.getElementById("all_bid_flag_3").checked = false;
+      } else {
+        //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(1,false);
+      }
+    });
+   
+    //全落札（2）のチェックを押した時の動作
+    $('.all_bid_flag_2').on('change', function() {
+      if ($(this).is(':checked')) {
+        //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(2,true);
+
+        //他の仕入先のチェックは外す
+        document.getElementById("all_bid_flag_1").checked = false;
+        document.getElementById("all_bid_flag_3").checked = false;
+      } else {
+        //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(2,false);
+      }
+    });
+   
+    //全落札（3）のチェックを押した時の動作
+    $('.all_bid_flag_3').on('change', function() {
+      if ($(this).is(':checked')) {
+        //全て落札させる(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(3,true);
+
+        //他の仕入先のチェックは外す
+        document.getElementById("all_bid_flag_1").checked = false;
+        document.getElementById("all_bid_flag_2").checked = false;
+      } else {
+        //全てチェック外す(配列の１つ目は仕入先フラグ、２つ目はチェックの場合true、外す場合はfalse
+        setAllBidFlag(3,false);
+      }
+    });
      
-     //担当Email
-     $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+    //add190226
+    //分類
+    //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-"});
+    $(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+    $( ".searchableSelect1_4" ).change(function(e) {
+      obj = $(this);
+      //分類からアイテム抽出する
+      setMaterialExtractByCategory(obj);
+    });
+    //明細-分類
+    $( ".searchableSelect1_4" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 6);
+    });
+     
+    //担当者
+    $(".searchableResponsible").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+    $( ".searchableResponsible" ).change(function(e) {
+      //担当Emailを取得
+      getEmail()
+    })
+    $( ".searchableResponsible" ).on("select2:close", function (e) {
+      //要修正
+      //$('[tabindex=9]').focus()
+    })
+     
+    //担当Email
+    $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
   });  
   
-  function init_select2(selector, type){
-    if (type == 1){
+  function init_select2(selector, type) {
+    if (type == 1) {
       $(selector).select2({
         theme: "classic",
         placeholder: MESSAGE_LIST,
         allowClear: true
       });
-    }else if (type == 2){
+    } else if (type == 2) {
       $(selector).select2({
         theme: "classic",
         tags: true
       });
-    }else if (type == 3){
+    } else if (type == 3) {
       $(selector).select2({
         theme: "classic",
         placeholder: MESSAGE_LIST,
         allowClear: true,
         tags: true
       });
-    }else if (type == 4){
+    } else if (type == 4) {
       //
       $(selector).select2({
         theme: "classic"
       });
-    }else if (type == 5){
+    } else if (type == 5) {
       //分類用
       $(selector).select2({
         theme: "classic",
@@ -678,148 +678,148 @@
     //連番をセットする
     $.get("<%= quotation_material_headerz_set_sequence_path %>",
     {},
-    function(data){
-     //debugger;
+    function(data) {
+      //debugger;
       obj = document.getElementById("sequential_id_hide").textContent;
       controlNum = parseInt(obj);
       controlNum -= 1
        
       var sort_order = document.getElementById("sort_order").textContent;
       
-      debugger;
+      //debugger;
       
       //if (document.querySelectorAll("#sequential_id")[controlNum] == undefined){
-      if (sort_order == "DESC"){
-      //降順
+      if (sort_order == "DESC") {
+        //降順
         document.getElementById("sequential_id").value = obj;
-      }else{
-      //昇順の場合
-        if (document.querySelectorAll("#sequential_id")[controlNum] != undefined){
+      } else {
+        //昇順の場合
+        if (document.querySelectorAll("#sequential_id")[controlNum] != undefined) {
           document.querySelectorAll("#sequential_id")[controlNum].value = obj;
         }
-      //ループでインデックスを作り直す（うまくそろわないため）
-      if (obj != undefined){
-        for (var i = 0; i <= parseInt(obj); i++) {
-          if (document.querySelectorAll("#sequential_id")[i] != undefined){
-            document.querySelectorAll("#sequential_id")[i].value = i + 1
+        //ループでインデックスを作り直す（うまくそろわないため）
+        if (obj != undefined) {
+          for (var i = 0; i <= parseInt(obj); i++) {
+            if (document.querySelectorAll("#sequential_id")[i] != undefined) {
+              document.querySelectorAll("#sequential_id")[i].value = i + 1
+            }
           }
         }
-      }
  
-    }
-  });
+      }
+    });
    
-       //明細フォーム用(追加時のみ、ここが使用されるらしい。)
-	   //検索可能なリストボックス(品名の場合)
-     //$(".searchableSelect1_1").select2({ theme: "classic" });
-     //rails6対応
-     field = $(inserted_item).find(".searchableSelect1_1")
-     init_select2(field, 4);   
+    //明細フォーム用(追加時のみ、ここが使用されるらしい。)
+    //検索可能なリストボックス(品名の場合)
+    //$(".searchableSelect1_1").select2({ theme: "classic" });
+    //rails6対応
+    field = $(inserted_item).find(".searchableSelect1_1")
+    init_select2(field, 4);   
     
       
-	   $( ".searchableSelect1_1" ).change(function(e) {
+    $( ".searchableSelect1_1" ).change(function(e) {
          
-		 gMaterial_id = $(this).val();
-		 control_name = $(this)[0].name;
-		 
-		 //埋め込まれているIDを抜き出す
-		 var selectedIndex = control_name.slice(65);
-		 selectedIndex = selectedIndex.slice(0,-14);
-		 
-		 //コード、名称などを自動セット
-		 setItem(gMaterial_id, selectedIndex);
+      gMaterial_id = $(this).val();
+      control_name = $(this)[0].name;
+
+      //埋め込まれているIDを抜き出す
+      var selectedIndex = control_name.slice(65);
+      selectedIndex = selectedIndex.slice(0,-14);
+
+      //コード、名称などを自動セット
+      setItem(gMaterial_id, selectedIndex);
          
-         //手入力以外はグローバルへセット
-         //if (gMaterial_id != 0) {
-         //   gSelectedIndex = selectedIndex;
-         // }else{
-         //   gSelectedIndex = 0;
-         // }
-       });
+      //手入力以外はグローバルへセット
+      //if (gMaterial_id != 0) {
+      //   gSelectedIndex = selectedIndex;
+      // }else{
+      //   gSelectedIndex = 0;
+      // }
+    });
        
-       //$( ".searchableSelect1_1" ).on("select2:open",(function(e) {
-       //  cIndex = 0;
-       //}));
-	   //商品ID-商品CD
-	   $( ".searchableSelect1_1" ).on("select2:close", function (e) {
-		   //次のコントロールへフォーカスを移す
-		   var control_name = $(this)[0].name;
-		   setNextControlOnSelect(e,control_name, 1);
-	   });
-	   
-	   
-	   //単位
-     $(".searchableSelect1_2").select2({ theme: "classic" });
-       
-	   $( ".searchableSelect1_2" ).on("select2:close", function (e) {
-		 //次のコントロールへフォーカスを移す
-	     var control_name = $(this)[0].name;
-		 setNextControlOnSelect(e,control_name, 2);
-	   });
-	    
-	   //メーカー
-     $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
-     //rails6対応
-     field = $(inserted_item).find(".searchableSelect1_3")
-     init_select2(field, 2);   
-       
-     $( ".searchableSelect1_3" ).on("select2:close", function (e) {
-		 //次のコントロールへフォーカスを移す
-	     var control_name = $(this)[0].name;
-		   setNextControlOnSelect(e,control_name, 3);
-	   });
-	   
-     //分類
-     //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
-     //rails6対応
-     field = $(inserted_item).find(".searchableSelect1_4")
-     init_select2(field, 5);   
+    //$( ".searchableSelect1_1" ).on("select2:open",(function(e) {
+    //  cIndex = 0;
+    //}));
+    //商品ID-商品CD
+    $( ".searchableSelect1_1" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 1);
+    });
      
      
-     $( ".searchableSelect1_4" ).change(function(e) {
-       obj = $(this);
-		   //分類からアイテム抽出する
-		   setMaterialExtractByCategory(obj);
-     });
-     $( ".searchableSelect1_4" ).on("select2:close", function (e) {
-		   //次のコントロールへフォーカスを移す
-		   var control_name = $(this)[0].name;
-		   setNextControlOnSelect(e,control_name, 6);
-	   });
+    //単位
+    $(".searchableSelect1_2").select2({ theme: "classic" });
+       
+    $( ".searchableSelect1_2" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 2);
+    });
+      
+    //メーカー
+    $(".searchableSelect1_3").select2({ theme: "classic", tags: true });
+    //rails6対応
+    field = $(inserted_item).find(".searchableSelect1_3")
+    init_select2(field, 2);   
+       
+    $( ".searchableSelect1_3" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 3);
+    });
+   
+    //分類
+    //$(".searchableSelect1_4").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+    //rails6対応
+    field = $(inserted_item).find(".searchableSelect1_4")
+    init_select2(field, 5);   
      
-     //担当者
-     $(".searchableResponsible").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
-     $( ".searchableResponsible" ).change(function(e) {
-       //担当Emailを取得
-       //getEmail()
-     })
-     $( ".searchableResponsible" ).on("select2:close", function (e) {
-	     //要修正
-       //$('[tabindex=9]').focus()
-	   })
-	   //担当Email
-     $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+     
+    $( ".searchableSelect1_4" ).change(function(e) {
+      obj = $(this);
+      //分類からアイテム抽出する
+      setMaterialExtractByCategory(obj);
+    });
+    $( ".searchableSelect1_4" ).on("select2:close", function (e) {
+      //次のコントロールへフォーカスを移す
+      var control_name = $(this)[0].name;
+      setNextControlOnSelect(e,control_name, 6);
+    });
+     
+    //担当者
+    $(".searchableResponsible").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
+    $( ".searchableResponsible" ).change(function(e) {
+      //担当Emailを取得
+      //getEmail()
+    })
+    $( ".searchableResponsible" ).on("select2:close", function (e) {
+      //要修正
+      //$('[tabindex=9]').focus()
+    })
+    //担当Email
+    $(".searchableEmail").select2({ theme: "classic", allowClear: true , placeholder: "-", tags: true});
   });
-	
 
 
-  window.onload = function(){
+
+  window.onload = function() {
      
     //170719ソート機能は不安定のため、一旦保留に  
     //$(".sortDone").sortable();
 
-	//$("#filter").on("cocoon:after-insert", function() {
-	//   $(".sortThese").parent().sortable();
+    //$("#filter").on("cocoon:after-insert", function() {
+    //   $(".sortThese").parent().sortable();
     //});
-	  
+  
   }
  
  
- //add180412
- //全落札チェックした場合に、送信用の仕入先をセットする
- function setSupplierAll(t){
+  //add180412
+  //全落札チェックした場合に、送信用の仕入先をセットする
+  function setSupplierAll(t) {
     //name属性に埋め込まれているIDを抜き出す
-	var controlId = t.id
+    var controlId = t.id
     
     //var child_index = controlName.slice(65);
     //var child_index = child_index.slice(0,-25);
@@ -828,95 +828,95 @@
     var supplier_number = controlId.substr(-1,1);
     
     var nm_id = "all_bid_flag_" + supplier_number;
-    if (document.getElementById(nm_id).checked == true){
-       //仕入先をセットする
-       nm_id = "supplier_id_" + supplier_number;
-       var supplier_master_index = parseInt(document.getElementById(nm_id).value);
+    if (document.getElementById(nm_id).checked == true) {
+      //仕入先をセットする
+      nm_id = "supplier_id_" + supplier_number;
+      var supplier_master_index = parseInt(document.getElementById(nm_id).value);
             
-       $(".searchableSupplier").val(supplier_master_index).trigger("change");
-     }
-	
- 
+      $(".searchableSupplier").val(supplier_master_index).trigger("change");
+    }
+
+
   
   }
  
- //次のコントロールへフォーカスする（明細フォーム用）
- //プルダウンは明細側のイベントを呼ばない為、フォームに記述
- function setNextControlOnSelect(e, control_name, flag){
+  //次のコントロールへフォーカスする（明細フォーム用）
+  //プルダウンは明細側のイベントを呼ばない為、フォームに記述
+  function setNextControlOnSelect(e, control_name, flag){
    
-   var nm = "";
-   var moveFlag = false;
+    var nm = "";
+    var moveFlag = false;
    
-   switch (flag){
-     case 1:
-	 //商品リスト→商品コード
-	   moveFlag = true;
-	 	  
-	   //埋め込まれているIDを抜き出す
-	   var selectedIndex = control_name.slice(65);
-	   selectedIndex = selectedIndex.slice(0,-14);
-	
-       //フォーカス先のコントロール名をセット
-	   nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_code]";
-	   break;
-	 case 2:
-	 //単位→メーカー
-	   moveFlag = true;
-	 	  
-	   //埋め込まれているIDを抜き出す
-	   var selectedIndex = control_name.slice(65);
-	   selectedIndex = selectedIndex.slice(0,-17);
-	
-	   //フォーカス先のコントロール名をセット
-	   nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][maker_id]";
-	   break;
-	 case 3:
-	 //メーカー→定価
-	   moveFlag = true;
-	 	  
-	   //埋め込まれているIDを抜き出す
-	   var selectedIndex = control_name.slice(65);
-	   selectedIndex = selectedIndex.slice(0,-11);
-	   
-	   //フォーカス先のコントロール名をセット
-	   nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][list_price]";
-	   
-	   break;
-   case 6:
-   //分類
-     moveFlag = true;
-   
-     //埋め込まれているIDを抜き出す
-	   var selectedIndex = control_name.slice(65);
-	   selectedIndex = selectedIndex.slice(0,-23);
-	   
-     //debugger;
+    switch (flag) {
+      case 1:
+        //商品リスト→商品コード
+        moveFlag = true;
+
+        //埋め込まれているIDを抜き出す
+        var selectedIndex = control_name.slice(65);
+        selectedIndex = selectedIndex.slice(0,-14);
+
+        //フォーカス先のコントロール名をセット
+        nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_code]";
+       break;
+      case 2:
+        //単位→メーカー
+        moveFlag = true;
+
+        //埋め込まれているIDを抜き出す
+        var selectedIndex = control_name.slice(65);
+        selectedIndex = selectedIndex.slice(0,-17);
+
+        //フォーカス先のコントロール名をセット
+        nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][maker_id]";
+      break;
+      case 3:
+        //メーカー→定価
+        moveFlag = true;
+
+        //埋め込まれているIDを抜き出す
+        var selectedIndex = control_name.slice(65);
+        selectedIndex = selectedIndex.slice(0,-11);
      
-     //フォーカス先のコントロール名をセット
-	   nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][quotation_unit_price_1]";
-	   break;
-   }
+        //フォーカス先のコントロール名をセット
+        nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][list_price]";
+     
+      break;
+      case 6:
+        //分類
+        moveFlag = true;
    
-   if (moveFlag == true) {
-     //フォーカス移動
-	 document.getElementsByName(nm)[0].focus();
-	 e.keyCode = 0;
-   }
- 
- }
- 
- //入力チェック(eメール・PDF用）
- function submitAfterValidationEmailorPdf(flag){
-   if (flag == 1){
-   //見積メールの場合
-     document.getElementById("sent_flag").value = 1;
-   }else if (flag == FLAG_ORDER_EMAIL){
-   //注文メールの場合
-     document.getElementById("sent_flag").value = 2;
-   }
-   submitAfterValidation(flag);
- }
- //入力チェック後の、更新処理
+        //埋め込まれているIDを抜き出す
+        var selectedIndex = control_name.slice(65);
+        selectedIndex = selectedIndex.slice(0,-23);
+   
+        //debugger;
+     
+        //フォーカス先のコントロール名をセット
+        nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][quotation_unit_price_1]";
+      break;
+    }
+   
+    if (moveFlag == true) {
+      //フォーカス移動
+      document.getElementsByName(nm)[0].focus();
+      e.keyCode = 0;
+    }
+
+  }
+
+  //入力チェック(eメール・PDF用）
+  function submitAfterValidationEmailorPdf(flag) {
+    if (flag == 1) {
+      //見積メールの場合
+       document.getElementById("sent_flag").value = 1;
+    } else if (flag == FLAG_ORDER_EMAIL) {
+      //注文メールの場合
+      document.getElementById("sent_flag").value = 2;
+    }
+    submitAfterValidation(flag);
+  }
+  //入力チェック後の、更新処理
   function submitAfterValidation(flag) {
   
     var ok_flag = true;
@@ -925,24 +925,24 @@
     var after_check = true;
     //add230720
     //明細フォームがない場合は下記のfunctionが読み込まれない為、事前にチェックをする
-    if ($.isFunction(window.checkQuantity)){
+    if ($.isFunction(window.checkQuantity)) {
       //数量チェック
       after_check = checkQuantity(ok_flag);
-    }else{
+    } else {
       alert("「アイテム追加」を行ってください。");
       return false;
     }
    
-   //納品場所チェック((株)アデュースのみ)
-   company_id = document.getElementById("company_id").value;
-   if (company_id == 1){
-      if (after_check == true){
+    //納品場所チェック((株)アデュースのみ)
+    company_id = document.getElementById("company_id").value;
+    if (company_id == 1) {
+      if (after_check == true) {
         after_check = checkDeliveryPlace(ok_flag, flag);   
       }
     }
    
-    if (after_check == true){
-     //var after_check = checkSupplier(flag);
+    if (after_check == true) {
+      //var after_check = checkSupplier(flag);
       after_check = checkSupplier(flag);
     }
     
@@ -950,56 +950,55 @@
     var message = "";
     messageFlag = true;
     
-    if (flag == FLAG_ESTIMATE_EMAIL){
+    if (flag == FLAG_ESTIMATE_EMAIL) {
       message = "見積依頼をメールしますか？"
-    }else if (flag == 2){
+    } else if (flag == 2) {
       message = "登録のみ行いますか？"
       //message = "登録しますか？"
-    }else if (flag == FLAG_ORDER_EMAIL){
+    } else if (flag == FLAG_ORDER_EMAIL) {
       message = "注文依頼をメールしますか？"
-    }else if (flag == 4){
+    } else if (flag == 4) {
       document.getElementById("sent_flag").value = 4;  //add200428
       message = "見積比較表を発行しますか？"
       messageFlag = false;
-   }else if (flag == 5){
+    } else if (flag == 5) {
       document.getElementById("sent_flag").value = 5;  //add200428
       message = "見積依頼をＦＡＸしますか？"
-   }else if (flag == 6){
-     document.getElementById("sent_flag").value = 6;  //add200428
-     message = "注文依頼をＦＡＸしますか？"
-   }else if (flag == 7){
-     //標準版仕様
-     document.getElementById("sent_flag").value = 7;  //add200428
-     message = "見積依頼書を発行しますか？"
+    } else if (flag == 6) {
+      document.getElementById("sent_flag").value = 6;  //add200428
+      message = "注文依頼をＦＡＸしますか？"
+    } else if (flag == 7) {
+      //標準版仕様
+      document.getElementById("sent_flag").value = 7;  //add200428
+      message = "見積依頼書を発行しますか？"
      
-     //アデュース仕様 メッセージは非表示に
-     if (company_id == 1){
-       messageFlag = false;
-     }
-   }else if (flag == 8){
-     //標準版仕様
-     document.getElementById("sent_flag").value = 8;  //add200428
-     message = "注文書を発行しますか？"
-     //アデュース仕様 メッセージは非表示に
-     if (company_id == 1){
-       messageFlag = false;
-     }
-   }else{
-     //それ以外
-     messageFlag = false;
-     document.getElementById("sent_flag").value = flag;
-   }
+      //アデュース仕様 メッセージは非表示に
+      if (company_id == 1) {
+        messageFlag = false;
+      }
+    } else if (flag == 8) {
+      //標準版仕様
+      document.getElementById("sent_flag").value = 8;  //add200428
+      message = "注文書を発行しますか？"
+      //アデュース仕様 メッセージは非表示に
+      if (company_id == 1) {
+        messageFlag = false;
+      }
+    } else {
+      //それ以外
+      messageFlag = false;
+      document.getElementById("sent_flag").value = flag;
+    }
     
-   if (after_check == true){
-     //if (flag != 4){
-     if (messageFlag){
-     //比較表のみメッセージは非表示とする（ややうざいので・・）
-       if (window.confirm(message)) {
+    if (after_check == true) {
+      //if (flag != 4) {
+      if (messageFlag) {
+        //比較表のみメッセージは非表示とする（ややうざいので・・）
+        if (window.confirm(message)) {
           if (flag == FLAG_ESTIMATE_EMAIL ||
-             flag == FLAG_ORDER_EMAIL)
-          {
+          flag == FLAG_ORDER_EMAIL) {
             document.getElementById("format").value = "pdf";
-          }else{
+          } else {
             document.getElementById("format").value = "html";
           }
           reset_value();
@@ -1008,47 +1007,44 @@
           
           //add230912
           //trueを返さないと正常更新されない。
-          if (flag == 2){
+          if (flag == 2) {
             return true;
           }
           
-       }else{
-         return false; 
-       }
+        } else {
+          return false; 
+        }
       }
-   }else
-   {
-     return false;  //add200501
-	 }
+    } else {
+      return false;  //add200501
+    }
    
    
-   //add230722
-   //画面をリフレッシュしておく(印刷後に見積・注文済の状態になるように)
-   //window.location.reload();
+    //add230722
+    //画面をリフレッシュしておく(印刷後に見積・注文済の状態になるように)
+    //window.location.reload();
    
-   //アデュース以外--(必要？？)
-   if (company_id != 1){
-     //4秒待つ（描写されないことがあるため）
-	   setTimeout("reloadDiv()", 4000);
-   }
- }
+    //アデュース以外--(必要？？)
+    if (company_id != 1) {
+      //4秒待つ（描写されないことがあるため）
+      setTimeout("reloadDiv()", 4000);
+    }
+  }
 
-  var checkDeliveryPlace = function(ok_flag, flag){ 
+  var checkDeliveryPlace = function(ok_flag, flag) { 
     delivery_place_flag = document.getElementById("delivery_place_flag").value;
     
     check = false
     if (flag == FLAG_ORDER_EMAIL ||
-        flag == 8)
-    {
+    flag == 8) {
       check = true
     }
     
     
     //if (flag == FLAG_ORDER_EMAIL)  //メール送信時のみ
-    if (check)  //メール送信時、注文書発行時
-    {
-      if (delivery_place_flag == "")
-      {
+    //メール送信時、注文書発行時
+    if (check) {
+      if (delivery_place_flag == "") {
         window.confirm('納品場所を選択して下さい。');
         ok_flag = false;
       }
@@ -1056,187 +1052,184 @@
     return ok_flag;
   }
 
-function checkSupplier(flag){
-  var answer = true;
+  function checkSupplier(flag) {
+    var answer = true;
  
-  //仕入先が１のままかチェック
-  //(登録のみ・比較表は除く)
-  if (flag != 2 && flag != 4){
-    if (document.getElementById("supplier_master_id").value == "1"){
-      answer = false;
-      window.confirm('依頼先を選択してください。');
+    //仕入先が１のままかチェック
+    //(登録のみ・比較表は除く)
+    if (flag != 2 && flag != 4) {
+      if (document.getElementById("supplier_master_id").value == "1") {
+        answer = false;
+        window.confirm('依頼先を選択してください。');
+      }
     }
+    return answer;
   }
-  return answer;
-}
 
 
-//仕入先情報のリセット
-function resetResponsible()
- {
+  //仕入先情報のリセット
+  function resetResponsible() {
     var index = 1;
     
     //add220704
     //このイベントを強制発動させる必要がある->setEmailのパラメータが必要
     var nowId = parseInt($(".searchableSupplier")[0].value);
-    if (nowId != undefined && nowId != 1)
-    {
+    if (nowId != undefined && nowId != 1) {
       index = nowId;
     }
     //
     
     $(".searchableSupplier").val(index).trigger("change");
  
- }
+  }
 
-//仕入先別メアドのセット
-//ひとまず取得できるメアドは１つ(email1)とする。
-function setEmail()
- {
+  //仕入先別メアドのセット
+  //ひとまず取得できるメアドは１つ(email1)とする。
+  function setEmail() {
    
-   var supplier_id = document.getElementById("supplier_master_id").value
-   //add210715
-   var construction_id = document.getElementById("construction_datum_id").value
+    var supplier_id = document.getElementById("supplier_master_id").value
+    //add210715
+    var construction_id = document.getElementById("construction_datum_id").value
    
-   //IDもセット
-   var id = document.getElementById("id").value;
-   
-   
-   //送信フラグ判定用 
-   var supplier_id_1 = document.getElementById("supplier_id_1").value;
-   var supplier_id_2 = document.getElementById("supplier_id_2").value;
-   var supplier_id_3 = document.getElementById("supplier_id_3").value;
-   
-   var quotation_email_flag_1 = document.getElementById("quotation_email_flag_1").checked;
-   var quotation_email_flag_2 = document.getElementById("quotation_email_flag_2").checked;
-   var quotation_email_flag_3 = document.getElementById("quotation_email_flag_3").checked;
-   //
+    //IDもセット
+    var id = document.getElementById("id").value;
    
    
-   //upd180918 quotation_email_flag_1~3追加
-   $.get("<%= quotation_material_headerz_email_select_path %>",
-      { id: id, supplier_id: supplier_id , supplier_id_1: supplier_id_1, supplier_id_2: supplier_id_2, supplier_id_3: supplier_id_3, 
-        quotation_email_flag_1: quotation_email_flag_1, quotation_email_flag_2: quotation_email_flag_2, 
-        quotation_email_flag_3: quotation_email_flag_3, construction_id: construction_id },
-    function(data){ 
+    //送信フラグ判定用 
+    var supplier_id_1 = document.getElementById("supplier_id_1").value;
+    var supplier_id_2 = document.getElementById("supplier_id_2").value;
+    var supplier_id_3 = document.getElementById("supplier_id_3").value;
+   
+    var quotation_email_flag_1 = document.getElementById("quotation_email_flag_1").checked;
+    var quotation_email_flag_2 = document.getElementById("quotation_email_flag_2").checked;
+    var quotation_email_flag_3 = document.getElementById("quotation_email_flag_3").checked;
+    //
+   
+   
+    //upd180918 quotation_email_flag_1~3追加
+    $.get("<%= quotation_material_headerz_email_select_path %>",
+    { id: id, supplier_id: supplier_id , supplier_id_1: supplier_id_1, supplier_id_2: supplier_id_2, supplier_id_3: supplier_id_3, 
+    quotation_email_flag_1: quotation_email_flag_1, quotation_email_flag_2: quotation_email_flag_2, 
+    quotation_email_flag_3: quotation_email_flag_3, construction_id: construction_id },
+      function(data) { 
      
-     //明細の、メールの送信フラグをリセットする。
-	   obj = document.getElementById("quotation_email_flag").textContent;
-     document.getElementById("quotation_email_flag").value = obj;
-	   
-     //備考をセット
-     obj = document.getElementById("notes").textContent;
-     document.getElementById("notes").value = obj;
+        //明細の、メールの送信フラグをリセットする。
+        obj = document.getElementById("quotation_email_flag").textContent;
+        document.getElementById("quotation_email_flag").value = obj;
+     
+        //備考をセット
+        obj = document.getElementById("notes").textContent;
+        document.getElementById("notes").value = obj;
      
        
-	   //注文NOも自動セットする。
-	   setOrderNumber();
-	   
-     //見積済出ない限り注文ボタンを押せないようにする
-     quotation_flag = document.getElementById("quotation_email_flag").value;
+        //注文NOも自動セットする。
+        setOrderNumber();
+     
+        //見積済出ない限り注文ボタンを押せないようにする
+        quotation_flag = document.getElementById("quotation_email_flag").value;
        
-     dispOrderButton();
+        dispOrderButton();
        
        
-	  }
+      }
     );
-		
- }
 
-//注文ナンバーの自動セット
-//add 171023
-function setOrderNumber() {
+  }
+
+  //注文ナンバーの自動セット
+  //add 171023
+  function setOrderNumber() {
   
-   var supplier_master_id = document.getElementById("supplier_master_id").value;
-   var construction_datum_id = document.getElementById("construction_datum_id").value;
-   var last_header_number = document.getElementById("last_header_number").value;
+    var supplier_master_id = document.getElementById("supplier_master_id").value;
+    var construction_datum_id = document.getElementById("construction_datum_id").value;
+    var last_header_number = document.getElementById("last_header_number").value;
   
-   $.get("<%= quotation_material_headerz_get_purchase_order_code_path %>",
-      { supplier_master_id: supplier_master_id, construction_datum_id: construction_datum_id, 
-        last_header_number: last_header_number },
-   function(data){
+    $.get("<%= quotation_material_headerz_get_purchase_order_code_path %>",
+    { supplier_master_id: supplier_master_id, construction_datum_id: construction_datum_id, 
+    last_header_number: last_header_number },
+    function(data) {
      
-     //debugger;
+      //debugger;
      
-	   obj = document.getElementById("purchase_order_code").textContent;
-     document.getElementById("purchase_order_code").value = obj;
-	 
+      obj = document.getElementById("purchase_order_code").textContent;
+      document.getElementById("purchase_order_code").value = obj;
+
        
      
-   });
+    });
 
-}
+  }
 
-function reset_value() {
-//セッション用のパラメータをリセットする
-  sessionStorage.setItem('onvisible', 'false');
-}
+  function reset_value() {
+    //セッション用のパラメータをリセットする
+    sessionStorage.setItem('onvisible', 'false');
+  }
 
 
 
-function dispDiv() {
-  //下記必須（ボタンが消えてしまう）
-  //event.preventDefault();
-  //debugger;
+  function dispDiv() {
+    //下記必須（ボタンが消えてしまう）
+    //event.preventDefault();
+    //debugger;
   
-  //ajax
-  //controllerのイベントを呼び出すため。
-  quotation_header_origin_id = document.getElementById("quotation_header_origin_id").value;
+    //ajax
+    //controllerのイベントを呼び出すため。
+    quotation_header_origin_id = document.getElementById("quotation_header_origin_id").value;
   
-  //purchase_order_datum_id = document.getElementById("purchase_order_datum_id").value;
-  //purchase_order_date = document.getElementById("purchase_order_date").value;
-  //supplier_master_id = document.getElementById("supplier_master_id").value;
+    //purchase_order_datum_id = document.getElementById("purchase_order_datum_id").value;
+    //purchase_order_date = document.getElementById("purchase_order_date").value;
+    //supplier_master_id = document.getElementById("supplier_master_id").value;
+
+    //{purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, supplier_master_id: supplier_master_id},
   
-  //{purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, supplier_master_id: supplier_master_id},
   
+    //debugger;
   
-  //debugger;
-  
-  $.get("<%= quotation_material_headerz_get_data_path %>",
+    $.get("<%= quotation_material_headerz_get_data_path %>",
     {quotation_header_origin_id: quotation_header_origin_id },
-     function(data){
-	   // マウスカーソルの形を変える
-       $("body").css("cursor", "progress");
-	   
-	   // Loadingイメージ表示
-       $('#loading-indicator').show();
-	   
-	   
-	   $("body").css("cursor", "default");
-	   
-	   //2秒待つ（描写されないことがあるため）
-	   //centOS上では必須なようである！
-	   setTimeout("reloadDiv()", 2000);
+      function(data) {
+        // マウスカーソルの形を変える
+        $("body").css("cursor", "progress");
+     
+        // Loadingイメージ表示
+        $('#loading-indicator').show();
+     
+     
+        $("body").css("cursor", "default");
+     
+        //2秒待つ（描写されないことがあるため）
+        //centOS上では必須なようである！
+        setTimeout("reloadDiv()", 2000);
         
-	   
-	   
-	   
-		//setTimeout(reloadDiv(), 30000);  
+     
+     
+     
+        //setTimeout(reloadDiv(), 30000);  
            
-           //reloadDiv();   	   
+        //reloadDiv();   	   
 
-	   //隠れていたボタンをここで表示させる
-       //$('#filter').removeClass('hide');
-       //セッション用のパラメータへセットする
+        //隠れていたボタンをここで表示させる
+        //$('#filter').removeClass('hide');
+        //セッション用のパラメータへセットする
        
-	   //見積もりでは使用しない
-	   //sessionStorage.setItem('onvisible', 'true');
+        //見積もりでは使用しない
+        //sessionStorage.setItem('onvisible', 'true');
   
-	    
-       // Loadingイメージを消す
-      // $('#loading-indicator').hide();
+      
+        // Loadingイメージを消す
+        // $('#loading-indicator').hide();
 
-     }
-   );
-};
+      }
+    );
+  };
 
-//メール送信済みフラグを初期化する
- // function resetMailSentFlag() {
- //   item = document.getElementsByName("mail_sent_flag[]");
- //   var select_index = 0;
-	
+  //メール送信済みフラグを初期化する
+  // function resetMailSentFlag() {
+  //   item = document.getElementsByName("mail_sent_flag[]");
+  //   var select_index = 0;
+
   //for (var index = 0; index < item.length  ; index ++) {
-	 
+
   //  item[index].selectedIndex = 0;
   //}
     
@@ -1245,152 +1238,150 @@ function dispDiv() {
 
   //注文金額計が全角になっていたら半角に変換する
   //add180120
-  function checkBytesAmount(e, amountIndex){
-     if (e.keyCode == 13 || e.keyCode == 9) {
-	 } else {
-       return false;
-	 }
-	 
-	 var value = ""
-	 switch (amountIndex){
+  function checkBytesAmount(e, amountIndex) {
+    if (e.keyCode == 13 || e.keyCode == 9) {
+    } else {
+      return false;
+    }
+ 
+    var value = ""
+    switch (amountIndex) {
       case 1:
         value = document.getElementById("total_order_price_1").value;
-        if (value != ""){
-	      document.getElementById("total_order_price_1").value = toHalfWidth(value);
-	    }
-		break;
+        if (value != "") {
+          document.getElementById("total_order_price_1").value = toHalfWidth(value);
+        }
+      break;
       case 2:
         value = document.getElementById("total_order_price_2").value;
-        if (value != ""){
-	      document.getElementById("total_order_price_2").value = toHalfWidth(value);
-	    }
-        break;
+        if (value != "") {
+          document.getElementById("total_order_price_2").value = toHalfWidth(value);
+        }
+      break;
       case 3:
         value = document.getElementById("total_order_price_3").value;
-        if (value != ""){
-	      document.getElementById("total_order_price_3").value = toHalfWidth(value);
-	    }
-        break;
-     }
-	 
-	
+        if (value != "") {
+          document.getElementById("total_order_price_3").value = toHalfWidth(value);
+        }
+      break;
+    }
+
+
   }
 
-//強制的に注文ボタン表示
-function changeDispOrderButton(t){
-  debugger;
-  if (t.checked == true){
-  //チェックした場合
-    if (quotation_flag == "false"){
-      quotation_flag = "true"
-      dispOrderButton()
-    }
-  }else{
-  //チェック外した場合
-    if (quotation_flag == "true"){
-      quotation_flag = "false"
-      dispOrderButton()
+  //強制的に注文ボタン表示
+  function changeDispOrderButton(t) {
+    debugger;
+    if (t.checked == true) {
+      //チェックした場合
+      if (quotation_flag == "false") {
+        quotation_flag = "true"
+        dispOrderButton()
+      }
+    } else {
+      //チェック外した場合
+      if (quotation_flag == "true") {
+        quotation_flag = "false"
+        dispOrderButton()
+      }
     }
   }
-}
 
-function dispOrderButton(){
+  function dispOrderButton() {
   
-  if (quotation_flag == "true"){
-  //見積済なら、注文ボタン＆注文NO表示
-    $('#filter').removeClass('hide');
-    $('#empty_button').addClass('hide');
-    //
-    $('#purchase_order_order_code_set').removeClass('hide');
-    $('#purchase_order_order_code_empty').addClass('hide');
-  } else {
-  //見積まだなら、非表示
-    $('#filter').addClass('hide');  
-    $('#empty_button').removeClass('hide');
+    if (quotation_flag == "true") {
+      //見積済なら、注文ボタン＆注文NO表示
+      $('#filter').removeClass('hide');
+      $('#empty_button').addClass('hide');
+      //
+      $('#purchase_order_order_code_set').removeClass('hide');
+      $('#purchase_order_order_code_empty').addClass('hide');
+    } else {
+      //見積まだなら、非表示
+      $('#filter').addClass('hide');  
+      $('#empty_button').removeClass('hide');
     
-    //
-    $('#purchase_order_order_code_set').addClass('hide');
-    $('#purchase_order_order_code_empty').removeClass('hide');
+      //
+      $('#purchase_order_order_code_set').addClass('hide');
+      $('#purchase_order_order_code_empty').removeClass('hide');
+    }
   }
-}
 
-function reloadDiv(){
-  //画面再ロードする
-  // debugger;
+  function reloadDiv() {
+    //画面再ロードする
+    // debugger;
 
   
-  window.location.reload();
-  //event.preventDefault();
+    window.location.reload();
+    //event.preventDefault();
        
-	   
-	   
- // resetMailSentFlag() ;
+   
+   
+    // resetMailSentFlag() ;
   
-  //$("body").css("cursor", "default");
-}
-
-  function getEmail()
-  {
-     
-     obj = document.getElementById("supplier_master_id")
-     supplier_master_id = obj.value
-  
-     obj = document.getElementById("supplier_responsible_id")
-     supplier_responsible_id = obj.value
-     
-     //if (supplier_responsible_id != "")
-     if (parseInt(supplier_responsible_id) > 0)
-     {
-       $.get("<%= purchase_order_datum_get_responsible_email_path %>",
-         {supplier_master_id: supplier_master_id, 
-          supplier_responsible_id: supplier_responsible_id},
-           function(data){
-           })
-     }else{
-       //メールはクリアする(新規入力の場合)
-       $(".searchableEmail").val(0).trigger("change");
-     }
+    //$("body").css("cursor", "default");
   }
 
- //保留中
- //分類別にアイテムを抽出する処理
- function setMaterialExtractByCategory(obj){
- //  //name属性に埋め込まれているIDを抜き出す
- //  var controlName = obj[0].name;
- //  var selectedIndex = 0;
- //  selectedIndex = controlName.slice(42);
- //  selectedIndex = selectedIndex.slice(0,-23);
- //	 if (gTrigger == false){
- //  	 var nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_id]";
- //    var material_id = document.getElementsByName(nm)[0].value;
- //    var nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_code]";
- //    var material_category_id = obj[0].value;
- //    material_code = document.getElementsByName(nm)[0].value;
- //    //if (isNaN(material_category_id) == false){  //手入力(未選択)状態の場合のみ有効
- //    if (material_id == "1" || material_id == "" )
- //    {
- //    //メーカーIDから該当する品番リストを取得する
- //      $.get("<%= purchase_order_historiez_material_extract_by_category_path %>",
- //       {material_category_id: material_category_id},
- //       function(data){
- //         if (document.getElementById("material_id_select_hide").innerHTML != "") {
- //            var nm = "purchase_order_history[orders_attributes][" + selectedIndex + "][material_id]";
- //           document.getElementsByName(nm)[0].innerHTML = document.getElementById("material_id_select_hide").innerHTML;
-	//         }
-  //         
-  //         if (material_code == "")
-  //         //商品コードが手入力されていたら、そのままにする
-  //         {
-  //           //商品コード
-  //           if (document.getElementById("material_code_select_hide").innerHTML != "") {
-  //             var nm = "purchase_order_history[orders_attributes][" + selectedIndex + "][material_code]";
-	//             document.getElementsByName(nm)[0].innerHTML = document.getElementById("material_code_select_hide").innerHTML;
-  //           }
-  //         }
-	//     });
-  //   }
-  // }	 
- }
+  function getEmail() {
+     
+    obj = document.getElementById("supplier_master_id")
+    supplier_master_id = obj.value
+  
+    obj = document.getElementById("supplier_responsible_id")
+    supplier_responsible_id = obj.value
+     
+    //if (supplier_responsible_id != "")
+    if (parseInt(supplier_responsible_id) > 0) {
+      $.get("<%= purchase_order_datum_get_responsible_email_path %>",
+      {supplier_master_id: supplier_master_id, 
+      supplier_responsible_id: supplier_responsible_id},
+      function(data) {
+      })
+    } else {
+      //メールはクリアする(新規入力の場合)
+      $(".searchableEmail").val(0).trigger("change");
+    }
+  }
+
+  //保留中
+  //分類別にアイテムを抽出する処理
+  function setMaterialExtractByCategory(obj) {
+    //  //name属性に埋め込まれているIDを抜き出す
+    //  var controlName = obj[0].name;
+    //  var selectedIndex = 0;
+    //  selectedIndex = controlName.slice(42);
+    //  selectedIndex = selectedIndex.slice(0,-23);
+    //  if (gTrigger == false){
+    //    var nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_id]";
+    //    var material_id = document.getElementsByName(nm)[0].value;
+    //    var nm = "quotation_material_header[quotation_material_details_attributes][" + selectedIndex + "][material_code]";
+    //    var material_category_id = obj[0].value;
+    //    material_code = document.getElementsByName(nm)[0].value;
+    //    //if (isNaN(material_category_id) == false){  //手入力(未選択)状態の場合のみ有効
+    //    if (material_id == "1" || material_id == "" )
+    //    {
+    //    //メーカーIDから該当する品番リストを取得する
+    //      $.get("<%= purchase_order_historiez_material_extract_by_category_path %>",
+    //       {material_category_id: material_category_id},
+    //       function(data){
+    //         if (document.getElementById("material_id_select_hide").innerHTML != "") {
+    //            var nm = "purchase_order_history[orders_attributes][" + selectedIndex + "][material_id]";
+    //           document.getElementsByName(nm)[0].innerHTML = document.getElementById("material_id_select_hide").innerHTML;
+    //         }
+    //         
+    //         if (material_code == "")
+    //         //商品コードが手入力されていたら、そのままにする
+    //         {
+    //           //商品コード
+    //           if (document.getElementById("material_code_select_hide").innerHTML != "") {
+    //             var nm = "purchase_order_history[orders_attributes][" + selectedIndex + "][material_code]";
+    //             document.getElementsByName(nm)[0].innerHTML = document.getElementById("material_code_select_hide").innerHTML;
+    //           }
+    //         }
+    //     });
+    //   }
+    // }	 
+  }
 
 </script>
 

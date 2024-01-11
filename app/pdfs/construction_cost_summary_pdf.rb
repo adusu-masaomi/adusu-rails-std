@@ -51,10 +51,19 @@ class ConstructionCostSummaryPDF
 		     construction_code = construction_code + construction_costs.construction_datum.construction_code
 		   end
 		   
+		   #upd231227
+		   customer_name = ""
+		   if construction_costs.construction_datum.CustomerMaster.present?
+         customer_name = construction_costs.construction_datum.CustomerMaster.customer_name
+       end
+		   #upd end
+       
 		   report.page.item(:construction_code).value(construction_code)
 		   report.page.item(:construction_name).value(construction_costs.construction_datum.construction_name)
-		   report.page.item(:customer_name).value(construction_costs.construction_datum.CustomerMaster.customer_name)
-		 
+		   #report.page.item(:customer_name).value(construction_costs.construction_datum.CustomerMaster.customer_name)
+		   #upd231227
+       report.page.item(:customer_name).value(customer_name)
+       
 		   #発行日
 		   @gengou = Date.today
            

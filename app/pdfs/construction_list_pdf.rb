@@ -40,12 +40,21 @@ class ConstructionListPDF
         if construction_datum.billed_flag != nil && construction_datum.billed_flag > 0
           billed_flag = true
         end
-    
+        
+        #upd231227
+        customer_code = ""
+        customer_name = ""
+        if construction_datum.CustomerMaster.present?
+          customer_code = construction_datum.CustomerMaster.id
+          customer_name = construction_datum.CustomerMaster.customer_name
+        end
+        #upd end
+        
         row.values construction_code: construction_datum.construction_code,
                   reception_date: @reception_date,
                   construction_name: construction_datum.construction_name,
-                  customer_code: construction_datum.CustomerMaster.id,
-                  customer_name: construction_datum.CustomerMaster.customer_name
+                  customer_code: customer_code,
+                  customer_name: customer_name
       
         row.item(:frame).styles(:fill_color => '#F7BE81')  if billed_flag == true
       
