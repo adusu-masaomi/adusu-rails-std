@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_11_082349) do
+ActiveRecord::Schema.define(version: 2024_01_12_080229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -975,7 +975,7 @@ ActiveRecord::Schema.define(version: 2024_01_11_082349) do
     t.float "labor_productivity_unit_total"
     t.integer "material_quantity"
     t.float "accessory_cost"
-    t.integer "material_cost_total"
+    t.float "material_cost_total"
     t.integer "labor_cost_total"
     t.float "other_cost"
     t.integer "seq"
