@@ -119,12 +119,15 @@ class WorkingMiddleItemsController < ApplicationController
     i = 0
     newSeq = seq.reverse
     
+    ActiveRecord::Base.record_timestamps = false  #add240112
     
     @working_middle_items.order("seq").each do |working_middle_item|
       #更新する
       working_middle_item.update(seq: newSeq[i])
       i += 1
     end
+    
+    ActiveRecord::Base.record_timestamps = true  #add240112
   end
   
   #ドラッグ＆ドロップによる並び替え機能(seqをセットする)
@@ -140,8 +143,12 @@ class WorkingMiddleItemsController < ApplicationController
       row = params[:row].split(",")
     end
     
+    ActiveRecord::Base.record_timestamps = false  #add240112
+    
     row.each_with_index {|row, i| WorkingMiddleItem.update(row, {:seq => params[:category].to_i + i})}
     render :text => "OK"
+  
+    ActiveRecord::Base.record_timestamps = true  #add240112
   end
   
   # GET /working_middle_items/1
