@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_12_080229) do
+ActiveRecord::Schema.define(version: 2024_01_13_071140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -981,6 +981,13 @@ ActiveRecord::Schema.define(version: 2024_01_12_080229) do
     t.integer "seq"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "accessory_base_cost"
+    t.float "accessory_rate"
+    t.float "miscellaneous_base_cost"
+    t.float "miscellaneous_rate"
+    t.float "miscellaneous_cost"
+    t.float "other_base_cost"
+    t.float "other_rate"
   end
 
   create_table "working_safety_matters", id: :serial, force: :cascade do |t|
