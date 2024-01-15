@@ -35,7 +35,8 @@ class WorkingMiddleItem < ApplicationRecord
   attr_accessor :rate_hide   #add180726
    
   #明細合計用
-  attr_accessor :material_cost_total
+  #attr_accessor :material_cost_total
+  attr_accessor :material_cost_total_s  #upd240113
   attr_accessor :labor_productivity_unit_sum
   attr_accessor :labor_cost
   
