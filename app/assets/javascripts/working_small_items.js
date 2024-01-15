@@ -93,7 +93,9 @@ function setWorkingSmallItemDetail(child_index, form_flag){
      CalcLaborMaterialCostTotal("modal_material_price");
 				
      //歩掛計を算出
-     CalcLaborLaborProductivityUnitSum("modal_labor_productivity_unit_total");
+     //CalcLaborLaborProductivityUnitSum("modal_labor_productivity_unit_total");
+     //upd240113
+     CalcLaborLaborProductivityUnitSum("labor_productivity_unit_total");
 				 
      //労務費を算出
      calcLaborCostTotal();
