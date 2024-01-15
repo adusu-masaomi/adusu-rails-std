@@ -20,7 +20,8 @@ class DeliverySlipPDF
       @is_company_with_pic = true
       #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_signed_pdf.tlf")
       
-      if print_type != "3"
+      #if print_type != "3"
+      if print_type != "3" && print_type != "5"  #upd240115
         @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/delivery_slip_adusu1_pdf.tlf")
       else
         #ハンコ無しVer

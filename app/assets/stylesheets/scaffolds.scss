@@ -22,7 +22,9 @@ a {
   color: #000;
 
   &:visited {
-    color: #666;
+    /* upd240115 */
+    /* color: #666; */
+    color: white;
   }
 
   &:hover {

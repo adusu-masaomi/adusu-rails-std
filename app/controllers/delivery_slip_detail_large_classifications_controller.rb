@@ -126,6 +126,7 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
             #report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
             #                               sort_dm)
             #標準版対応
+            #(アデュースは印有ver)
             report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
                                             sort_dm, @company_id)
 
@@ -134,8 +135,9 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
             #report = DeliverySlipLandscapePDF.create @delivery_slip_detail_large_classifications
             report = DeliverySlipLandscapePDF.create(@delivery_slip_detail_large_classifications,
                                                      sort_dm)
-          when "3"
-            #納品書（印付）
+          when "3","5"  #upd240115
+            ###納品書（印付）
+            #納品書（印なし）
             #report = DeliverySlipPDF.create(@delivery_slip_detail_large_classifications, @print_type,
             #                                sort_dm)
             #標準版対応

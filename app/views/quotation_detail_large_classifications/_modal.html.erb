@@ -135,12 +135,18 @@
 
         <!--単位-->
         <div class="col-xs-2" , style="margin-left : -15px;margin-top : -15px">
-          <%= f.label :"単位" , {} %></br>
+           <!--upd240115-->
+          <%= f.label :"単位" , {style: 'margin-left:-15px;'} %></br>
           <%= f.collection_select :working_unit_id, WorkingUnit.all, :id, :working_unit_name, {:prompt => 'どれか一つを選択して下さい', 
           :selected => @quotation_detail_large_classification.working_unit_id || 1 } , {id:'working_unit_id', :class => "searchableSelect2_4",  style: 'width:120px' } %></br>
         </div>
-        <div style="margin-left : -50px;margin-top : -15px">
-          <%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", :tabindex=>"14", style: 'width:120px',  :value => @quotation_detail_large_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name)   }  %>
+        <!--<div style="margin-left : -50px;margin-top : -15px">-->
+        <!--upd240115-->
+        <div style="margin-left : -50px;margin-top : -16px">
+          <!--<%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", :tabindex=>"14", style: 'width:120px',  :value => @quotation_detail_large_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name)   }  %>-->
+          <!--upd240115-->
+          <%= f.input :working_unit_name , label: "単位名(手入力可)", label_html:{style: 'margin-top:-9px;'}, 
+           input_html:{id:"working_unit_name", :tabindex=>"14", style: 'width:120px;height:33px;margin-top:6px;',  :value => @quotation_detail_large_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name)   }  %>
         </div>
 
         <div class="col-xs-2" , style="margin-left : -15px;margin-top : -15px">
@@ -167,7 +173,9 @@
           <%= f.input :labor_productivity_unit,  :input_html => {id:"labor_productivity_unit", :tabindex=>"19", style: 'width:120px', :onchange => "calcLaborTotal()"}  %>
         </div>
         <!--<div style="margin-top : -15px">-->
-        <div class="col-xs-2", style="margin-left : -0px;margin-top : -20px">
+        <!--<div class="col-xs-2", style="margin-left : -0px;margin-top : -20px">-->
+        <!--upd240115-->
+        <div class="col-xs-2", style="margin-left : -0px;margin-top : -15px">
           <%= f.input :labor_productivity_unit_total,  :input_html => {id:"labor_productivity_unit_total", :tabindex=>"20", style: 'width:120px'}  %>
         </div>
 

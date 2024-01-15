@@ -110,7 +110,10 @@
           {id:'working_unit_id', :class => "searchableSelect2_4",  style: 'width:120px' } %></br>
         </div>
         <div style="margin-left : -50px;margin-top : -27.5px;">
-          <%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", style: 'width:120px', :tabindex=>"14", :value => @delivery_slip_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>
+          <!--upd240115-->
+          <!--<%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", style: 'width:120px', :tabindex=>"14", :value => @delivery_slip_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>-->
+          <%= f.input :working_unit_name , label: "単位名(手入力可)", label_html:{style: 'margin-top:-3px;'},
+          input_html:{id:"working_unit_name", style: 'width:120px;height:33px;margin-top:3px;', :tabindex=>"14", :value => @delivery_slip_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>
         </div>
 
       <div class="col-xs-2" , style="margin-left : -15px;margin-top : -20px">

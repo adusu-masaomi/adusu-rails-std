@@ -126,15 +126,16 @@ class QuotationDetailLargeClassificationsController < ApplicationController
           
           case @print_type
           when "1"
-            #見積書
+            #見積書(アデュースの場合、印有)
             #report = EstimationSheetPDF.create @quotation_detail_large_classifications
             report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm, @company_id)
           when "2"
             #見積書(横)
             #report = EstimationSheetLandscapePDF.create @quotation_detail_large_classifications
             report = EstimationSheetLandscapePDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
-          when "3", "4"
-            #見積書(印あり）
+          when "3", "4", "5"
+            ###見積書(印あり）
+            #見積書(印なし）
             #report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm)
             report = EstimationSheetPDF.create(@quotation_detail_large_classifications, @print_type, sort_qm, @company_id)
           end 

@@ -42,12 +42,14 @@
         <%= f.input :working_middle_item_name, label: "品名(手入力可)", input_html:{id:"working_middle_item_name", style: 'width:420px', :tabindex=>"4" }  %>
 
         <%= f.input :working_middle_specification, label: "仕様(手入力可)", input_html:{id:"working_middle_specification", style: 'width:420px',:tabindex=>"5" }  %>
-
+        
+        <!--upd240115 height設定-->
+        
         <div class="col-xs-2" , style="margin-left : -15px">
-          <%= f.input :quantity, label: "請求数量", input_html:{id:"quantity", style: 'width:120px', :tabindex=>"6", :onchange => "calcMoneyforQuantity(0)"}  %>
+          <%= f.input :quantity, label: "請求数量", input_html:{id:"quantity", style: 'width:120px;height:33px;', :tabindex=>"6", :onchange => "calcMoneyforQuantity(0)"}  %>
         </div>
         <div style="margin-left : -50px">
-          <%= f.input :execution_quantity, input_html:{id:"execution_quantity", style: 'width:120px', :tabindex=>"7", :onchange => "calcMoneyforQuantity(1)"}  %>
+          <%= f.input :execution_quantity, input_html:{id:"execution_quantity", style: 'width:120px;height:33px;', :tabindex=>"7", :onchange => "calcMoneyforQuantity(1)"}  %>
         </div>
 
         <!--単位-->
@@ -57,7 +59,12 @@
           :selected => @invoice_detail_middle_classification.working_unit_id || 1 } , {id:'working_unit_id', :class => "searchableSelect2_4",  style: 'width:120px' } %></br>
         </div>
         <div style="margin-left : -50px;margin-top : -27.5px;">
-          <%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", style: 'width:120px', :tabindex=>"9", :value => @invoice_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>
+          <!--<%= f.input :working_unit_name , label: "単位名(手入力可)", input_html:{id:"working_unit_name", style: 'width:120px', :tabindex=>"9", :value => @invoice_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>-->
+          <!--upd240115-->
+          <%= f.input :working_unit_name , label: "単位名(手入力可)", label_html:{style: 'margin-top:-3px;'},
+          input_html:{id:"working_unit_name", style: 'width:120px;height:33px;margin-top:3px;', :tabindex=>"9",
+           :value => @invoice_detail_middle_classification.working_unit_name || WorkingUnit.where(:id => 1).pluck(:working_unit_name) }  %>
+       
         </div>
         <div class="col-xs-2" , style="margin-left : -15px;margin-top : -20px">
           <%= f.input :working_unit_price, input_html:{id:"working_unit_price", style: 'width:120px', :tabindex=>"10", :onchange => "calcTotalPrice()" } %>

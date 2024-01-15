@@ -1,4 +1,6 @@
 
+/* .btn-info:hover { background-color: white !important; } */
+
 .modal.fade .modal-dialog{
   transition-duration: 0.05s;/*slide out のスピード*/
   transform: translate3d(0, -5%, 0);/*slide開始位置(x,y,z)*/

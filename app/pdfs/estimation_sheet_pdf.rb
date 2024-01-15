@@ -29,7 +29,10 @@ class EstimationSheetPDF
     when 1  #(株)アデュース
       @is_company_with_pic = true
       #@report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_signed_pdf.tlf")
-      if print_type != "3" && print_type != "4"
+      #if print_type != "3" && print_type != "4"
+      #upd240115
+      if print_type != "3" && print_type != "4" && print_type != "5"
+        #ハンコ有りVer
         @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/estimation_sheet_adusu1_pdf.tlf")
       else
         #ハンコ無しVer
