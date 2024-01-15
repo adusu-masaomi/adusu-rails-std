@@ -18,14 +18,15 @@ pre {
   font-size: 11px;
 }
 
+/* upd240115 */
 a {
   color: #000;
 
+  /*
   &:visited {
-    /* upd240115 */
-    /* color: #666; */
-    color: white;
+    color: #666;
   }
+  */
 
   &:hover {
     color: #fff;
