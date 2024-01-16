@@ -28,16 +28,19 @@
 <%= link_to "一覧へ",
             invoice_headers_path(),
             :class => 'btn btn-info keep-disp' %>
+
+<!-- (株)アデュース仕様 ハンコ無しVer -->
+<% if @company_id == 1 %>
+  <%= link_to "　請求書(印無)PDF　",
+            invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "3", format: "pdf"),
+            :class => 'btn btn-yellow200_ftg keep-disp' , :target=>["_blank"] %>
+<% end %>
+
 <!--請求書(提出用)PDFをリネーム-->
 <%= link_to "　　請求書PDF　　",
             invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "1", format: "pdf"),
             :class => 'btn btn-indigo500_ftg keep-disp' , :target=>["_blank"] %>
-<!-- (株)アデュース仕様 ハンコ無しVer -->
-<% if @company_id == 1 %>
-  <%= link_to "　　請求書(２)PDF　　",
-            invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "3", format: "pdf"),
-            :class => 'btn btn-yellow200_ftg keep-disp' , :target=>["_blank"] %>
-<% end %>
+
 <!--
 <%= link_to "請求書(提出／印付)PDF",
             invoice_detail_large_classifications_path($invoice_detail_large_classifications, invoice_header_id: params[:invoice_header_id], print_type: "3", format: "pdf"),

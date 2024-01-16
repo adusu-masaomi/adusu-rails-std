@@ -49,12 +49,14 @@
             :class => 'btn btn-green500_ftg keep-disp' , :target=>["_blank"], :onclick => "submitAfterValidation()" %>
 
 <!-- アデュース仕様 ハンコ無しVer -->
+<!--240116 プレビューがあるのでカット
 <% if @company_id == 1 %>
   <%= link_to "　　見積書(２)PDF　　",
             quotation_detail_large_classifications_path(quotation_header_id: params[:quotation_header_id], print_type: "3", format: "pdf"),
             :class => 'btn btn-yellow200_ftg keep-disp' , :target=>["_blank"], :onclick => "submitAfterValidation()" %>
             
 <% end %>
+-->
 
 <%= link_to "見積書(単価抜)PDF",
             quotation_detail_large_classifications_path(quotation_header_id: params[:quotation_header_id], print_type: "4", format: "pdf"),
