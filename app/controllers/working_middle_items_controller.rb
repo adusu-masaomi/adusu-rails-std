@@ -826,7 +826,7 @@ class WorkingMiddleItemsController < ApplicationController
             :labor_unit_price, :labor_unit_price_standard, :labor_productivity_unit, :material_quantity,
             :accessory_cost, :material_cost_total, :labor_cost_total, :other_cost, :seq, 
             :accessory_base_cost, :accessory_rate, :miscellaneous_base_cost, :miscellaneous_rate, :miscellaneous_cost,
-            :other_base_cost, :other_rate, benefit_rate,
+            :other_base_cost, :other_rate, :benefit_rate,
             working_small_items_attributes:   [:id, :working_specific_middle_item_id, :working_small_item_id, :working_small_item_code, :working_small_item_name, 
             :unit_price, :rate, :quantity, :material_price, :maker_master_id, :unit_master_id, :labor_productivity_unit, :_destroy] )
     end

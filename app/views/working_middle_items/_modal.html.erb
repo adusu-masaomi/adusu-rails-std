@@ -105,74 +105,84 @@
         -->
         <!--240112切替中 start -->
         <!--付属品-->
-          <%= f.input :accessory_base_cost, label: "付属品(A)", input_html:{id:'accessory_base_cost', :tabindex=>"11", 
-          style: 'width:150px;color:blue', :onchange => "calcAccessaryCost()"} %>
+          <%= f.input :accessory_base_cost, label: "資材費計(A)", input_html:{id:'accessory_base_cost', :tabindex=>"11", 
+          style: 'width:120px;color:blue', :onchange => "calcAccessaryCost()"} %>
         </b>
         </div>
-        <div class="col-md-5", style="margin-left:-20px;margin-top:30px">
+        <div class="col-md-5", style="margin-left:-53px;margin-top:35px">
         <%= f.label :"×" %>
         </div>
-        <div class="col-md-5", style="margin-left : 15px;margin-top:-55px">
-          <%= f.input :accessory_rate, label: "*", input_html:{id:'accessory_rate', :tabindex=>"12", 
-          style: 'width:100px;color:black', :onchange => "calcAccessaryCost()"} %> 
+        <div class="col-md-5", style="margin-left : -15px;margin-top:-58px">
+          <%= f.input :accessory_rate, label: "附属品割合(入力)", input_html:{id:'accessory_rate', :tabindex=>"12", 
+          style: 'width:80px;color:black', :onchange => "calcMaterialCost()"} %> 
         </div>
-        <div class="col-md-3", style="margin-left:-110px;margin-top:-20px">
-        <%= f.label :"=" %>
+        <div class="col-md-3", style="margin-left:-130px;margin-top:-20px">
+        <%= f.label :"×" %>
         </div>
-        <div class="col-md-3", style="margin-left:-80px;margin-top:-55px">
-          <%= f.input :accessory_cost, label: "(B)", input_html:{id:'accessory_cost', :tabindex=>"13", 
+        <div class="col-md-3", style="margin-left:-90px;margin-top:-58px">
+          <%= f.input :miscellaneous_rate, label: "雑材料割合(入力)", input_html:{id:'miscellaneous_rate', :tabindex=>"13", 
+          style: 'width:80px;color:black', :onchange => "calcMaterialCost()"} %> 
+        </div>
+        
+        <div class="col-md-3", style="margin-left:-50px;margin-top:-20px">
+        <%= f.label :"×" %>
+        </div>
+        <div class="col-md-3", style="margin-left:-10px;margin-top:-60px">
+          <%= f.input :miscellaneous_cost, label: "材料価格(C)", input_html:{id:'miscellaneous_cost', :tabindex=>"14", 
           style: 'width:100px;color:black', :onchange => ""} %> 
         </div>
         <!--付属品 end-->
         </br></br></br></br></br>
         
-        <!-- 雑材料-->
+        <!-- 雑材料 →労務費へ -->
+        <b>
         <div class="col-md-4", style="margin-left : -15px;margin-top:-10px;">
-          <%= f.input :miscellaneous_base_cost, label: "雑材料(C) (A+B)", input_html:{id:'miscellaneous_base_cost', :tabindex=>"14", 
-          style: 'width:150px;color:black', :onchange => "calcMiscellaneousCost()"} %>
+          <%= f.input :other_base_cost, label: "労務費(B)", input_html:{id:'other_base_cost', :tabindex=>"15", 
+          style: 'width:150px;color:red', :onchange => "calcMiscellaneousCost()"} %>
         </div>
-        <div class="col-md-5", style="margin-left:-20px;margin-top:20px">
+        </b>
+        <div class="col-md-5", style="margin-left:-20px;margin-top:25px">
         <%= f.label :"×" %>
         </div>
-        <div class="col-md-5", style="margin-left : 15px;margin-top:-55px">
-          <%= f.input :miscellaneous_rate, label: "*", input_html:{id:'miscellaneous_rate', :tabindex=>"15", 
-          style: 'width:100px;color:black', :onchange => "calcMiscellaneousCost()"} %> 
+        <div class="col-md-5", style="margin-left : 15px;margin-top:-58px">
+          <%= f.input :other_rate, label: "その他割合(入力)", input_html:{id:'other_rate', :tabindex=>"16", 
+          style: 'width:100px;color:black', :onchange => "calcLaborCost()"} %> 
         </div>
         <div class="col-md-3", style="margin-left:-110px;margin-top:-20px">
         <%= f.label :"=" %>
         </div>
-        <div class="col-md-3", style="margin-left:-80px;margin-top:-55px">
-          <%= f.input :miscellaneous_cost, label: "(D)", input_html:{id:'miscellaneous_cost', :tabindex=>"16", 
+        <div class="col-md-3", style="margin-left:-80px;margin-top:-58px">
+          <%= f.input :other_cost, label: "労務費計(D)", input_html:{id:'other_cost', :tabindex=>"17", 
           style: 'width:100px;color:black', :onchange => ""} %> 
         </div>
-        <!-- 雑材料 end-->
+        <!-- 労務費～ end-->
         
         </br></br></br></br>
         
-        <%= f.input :material_cost_total, label: "材料費計(E) (C+D)", input_html:{id:"material_cost_total", style: 'width:400px', :onchange => "", :tabindex=>"17"} %>
-        
-        <!--その他-->
+        <!--実行単価～-->
         <div class="col-md-4", style="margin-left : -15px;margin-top:-10px;">
           <b>
-          <%= f.input :other_base_cost, label: "その他(F)", input_html:{id:'other_base_cost', :tabindex=>"18", 
-          style: 'width:150px;color:red', :onchange => "calcOtherCost()"} %>
+          <%= f.input :execution_unit_price, label: "実行単価(C+D)", input_html:{id:'execution_unit_price', :tabindex=>"18", 
+          style: 'width:150px;color:black', :onchange => "calcOtherCost()"} %>
           </b>
         </div>
-        <div class="col-md-5", style="margin-left:-20px;margin-top:20px">
+        <div class="col-md-5", style="margin-left:-20px;margin-top:25px">
         <%= f.label :"×" %>
         </div>
-        <div class="col-md-5", style="margin-left : 15px;margin-top:-55px">
-          <%= f.input :other_rate, label: "*", input_html:{id:'other_rate', :tabindex=>"19", 
-          style: 'width:100px;color:black', :onchange => "calcOtherCost()"} %> 
+        <div class="col-md-5", style="margin-left : 15px;margin-top:-58px">
+          <%= f.input :benefit_rate, label: "利益割合(入力)", input_html:{id:'benefit_rate', :tabindex=>"19", 
+          style: 'width:100px;color:black', :onchange => "calcWorkingUnitPrice()"} %> 
         </div>
         <div class="col-md-3", style="margin-left:-110px;margin-top:-20px">
           <%= f.label :"=" %>
         </div>
         
-        <div class="col-md-3", style="margin-left:-80px;margin-top:-55px">
-          <%= f.input :other_cost, label: "(G)", input_html:{id:'other_cost', :tabindex=>"20", 
+        <b>
+        <div class="col-md-3", style="margin-left:-80px;margin-top:-58px">
+          <%= f.input :working_unit_price, label: "見積単価", input_html:{id:'working_unit_price', :tabindex=>"20", 
           style: 'width:100px;color:black', :onchange => ""} %> 
         </div>
+        </b>
         
         <!--その他end-->
         
@@ -206,11 +216,12 @@
         -->
         
         <!--実行単価-->
-        <!--<%= f.input :execution_unit_price, input_html:{id:"execution_unit_price", style: 'width:400px', :tabindex=>"15" }  %>-->
-        <%= f.input :execution_unit_price, label: "実行単価(E+F+G)", input_html:{id:"execution_unit_price", style: 'width:400px', :tabindex=>"21" }  %>
         <!--単価-->
-        <!--<%= f.input :working_unit_price, input_html:{id:"working_unit_price", style: 'width:400px', :tabindex=>"16" }   %>-->
+        
+        <!--抹消
+        <%= f.input :execution_unit_price, label: "実行単価(E+F+G)", input_html:{id:"execution_unit_price", style: 'width:400px', :tabindex=>"21" }  %>
         <%= f.input :working_unit_price, label: "見積単価", input_html:{id:"working_unit_price", style: 'width:400px', :tabindex=>"22" }   %>
+        -->
         
      <!--標準版用-->
      <%= f.input :estimate_material_cost_rate, input_html:{id:'estimate_material_cost_rate'}, as: :hidden  %>
@@ -261,15 +272,16 @@
 	  <% end %>
 	  <!--</p>-->
 	  <!--ボタンのデザインはヘルパー側で指定-->
-	  <%= link_to_add_fields "品目追加", f, :working_small_items %>
+	  <!--<%= link_to_add_fields "品目追加", f, :working_small_items %>-->
+	  <%= link_to_add_fields "追加", f, :working_small_items %>
 	  <!--スペース空ける-->
-	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--> <!--del240117-->
       <!--<%= link_to "←反映", "#" ,
 			:class => 'btn btn-purple400_rsd' , :data => {:confirm => '計算結果を左画面に反映させますか？'} %>-->
 	  <%= link_to "←反映", "#" ,
             :class => 'btn btn-purple400_rsd' , :onclick => 'setDetailTotalToOriginal()' %>
 			
-	  <font color=blue><%= f.label :material_cost_total_s, "資材費計:" %></font>
+	  <font color=blue><%= f.label :material_cost_total_s, "資材費計(A):" %></font>
 	  <font color=blue><b><%= f.text_field :material_cost_total_s , :style => 'width:70px; text-align:right;' , id:'material_cost_total_s' , 
            :tabindex=>"24"  %></b></font> 
       <font color=green><%= f.label :labor_unit_price_standard, "労務単価:" %></font>
@@ -278,7 +290,8 @@
 	  <font color=brown><%= f.label :labor_productivity_unit_sum, "×歩掛合計:" %></font> 
 	  <font color=brown><b><%= f.text_field :labor_productivity_unit_sum , :style => 'width:60px; text-align:right;' , id:'labor_productivity_unit_sum',
                      :onchange => "calcLaborCostTotal()" , :tabindex=>"26"  %></b></font> 
-	  <font color=red><%= f.label :labor_cost, "= 労務費:" %></font> 
+	  &nbsp;
+	  <font color=red><%= f.label :labor_cost, "=労務費 (B):" %></font> 
 	  <font color=red><b><%= f.text_field :labor_cost , :style => 'width:60px; text-align:right;' , id:'labor_cost' , :tabindex=>"27"  %></b></font> 
 	  
 	</div>
@@ -757,10 +770,7 @@
 	if (window.confirm('計算結果を左画面に反映させますか？')) {
 	  //実行材料費
 	  if (document.getElementById("material_cost_total_s") != undefined){
-	    //document.getElementById("execution_material_unit_price").value = 
-      //    document.getElementById("material_cost_total").value;
-	    //upd240103
-      document.getElementById("accessory_base_cost").value = 
+	    document.getElementById("accessory_base_cost").value = 
         document.getElementById("material_cost_total_s").value;
 	  }
 	  //歩掛計
@@ -808,67 +818,133 @@
     document.getElementById("other_cost").value = "";
   }
   
+  //add240117
+  function calcMaterialCost(){
+    var check = false;
+    
+    accessory_base_cost = document.getElementById("accessory_base_cost").value;
+    accessory_rate = document.getElementById("accessory_rate").value;
+    miscellaneous_rate = document.getElementById("miscellaneous_rate").value;
+    
+    if (accessory_base_cost != undefined && accessory_rate != undefined && miscellaneous_rate != undefined){
+      accessory_base_cost = parseInt(accessory_base_cost);
+      accessory_rate = parseFloat(accessory_rate);
+      miscellaneous_rate = parseFloat(miscellaneous_rate);
+      
+      tmp = accessory_base_cost * accessory_rate * miscellaneous_rate;
+      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      
+      document.getElementById("miscellaneous_cost").value = tmp;
+      
+      //実行単価の計算
+      calcExecutionUnitPrice();
+      //見積単価の計算
+      calcWorkingUnitPrice();
+    }
+  }
   
   //add240113
   //付属品の計算
-  function calcAccessaryCost(){
-    accessary_cost = "";
-    
-    rate = document.getElementById("accessory_rate").value;
-    accessory_base_cost = document.getElementById("accessory_base_cost").value;
-    
-    if (accessory_base_cost != undefined && rate != undefined){
-      accessory_base_cost = parseInt(accessory_base_cost);
-      tmp = accessory_base_cost * rate;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
-      
-      accessary_cost = tmp;
-    }
-    
-    document.getElementById("accessory_cost").value = accessary_cost;
-    //雑材料原価も計算
-    if (accessary_cost != ""){
-      if (accessory_base_cost != undefined){
-        document.getElementById("miscellaneous_base_cost").value = accessory_base_cost + accessary_cost;
-        //雑材料の計算(後から変更した場合を考慮)
-        calcMiscellaneousCost();
-      }
-    }
-  }
+  //function calcAccessaryCost(){
+  //  accessary_cost = "";
+  //  rate = document.getElementById("accessory_rate").value;
+  //  accessory_base_cost = document.getElementById("accessory_base_cost").value;
+  //  if (accessory_base_cost != undefined && rate != undefined){
+  //    accessory_base_cost = parseInt(accessory_base_cost);
+  //    tmp = accessory_base_cost * rate;
+  //    tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+  //    accessary_cost = tmp;
+  //  }
+  //  document.getElementById("accessory_cost").value = accessary_cost;
+  //  //雑材料原価も計算
+  //  if (accessary_cost != ""){
+  //    if (accessory_base_cost != undefined){
+  //      document.getElementById("miscellaneous_base_cost").value = accessory_base_cost + accessary_cost;
+  //      //雑材料の計算(後から変更した場合を考慮)
+  //      calcMiscellaneousCost();
+  //    }
+  //  }
+  //}
   
   //add240113
   //雑材料の計算
-  function calcMiscellaneousCost(){
-    miscellaneous_cost = "";
+  //function calcMiscellaneousCost(){
+  //miscellaneous_cost = "";
+  //  rate = document.getElementById("miscellaneous_rate").value;
+  //  miscellaneous_base_cost = document.getElementById("miscellaneous_base_cost").value;
+  //  if (miscellaneous_base_cost != undefined && rate != undefined){
+  //    miscellaneous_base_cost = parseFloat(miscellaneous_base_cost);
+  //    tmp = miscellaneous_base_cost * rate;
+  //    tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+  //    miscellaneous_cost = tmp;
+  //  }
+  //  document.getElementById("miscellaneous_cost").value = miscellaneous_cost;
     
-    rate = document.getElementById("miscellaneous_rate").value;
-    miscellaneous_base_cost = document.getElementById("miscellaneous_base_cost").value;
-    
-    if (miscellaneous_base_cost != undefined && rate != undefined){
-      //miscellaneous_base_cost = parseInt(miscellaneous_base_cost);
-      miscellaneous_base_cost = parseFloat(miscellaneous_base_cost);
+  //  //材料費計も計算
+  //  if (miscellaneous_cost != "" && miscellaneous_base_cost != undefined){
+  //    tmp = miscellaneous_base_cost + miscellaneous_cost;
+  //    tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+  //    document.getElementById("material_cost_total").value = tmp;
+  //    //実行単価を計算
+  //    calcExecutionUnitPrice();
+  //  }
+  //}
+  
+  //add240117
+  //労務費計の計算
+  function calcLaborCost(){
+    other_base_cost = document.getElementById("other_base_cost").value;
+    rate = document.getElementById("other_rate").value;
+    if (other_base_cost != undefined && rate != undefined){
+      other_base_cost = parseInt(other_base_cost);
+      rate = parseFloat(rate);
       
-      tmp = miscellaneous_base_cost * rate;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      tmp = other_base_cost * rate;
+      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入;
       
-      miscellaneous_cost = tmp;
-    }
-    
-    document.getElementById("miscellaneous_cost").value = miscellaneous_cost;
-    
-    //材料費計も計算
-    if (miscellaneous_cost != "" && miscellaneous_base_cost != undefined){
-      tmp = miscellaneous_base_cost + miscellaneous_cost;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
-      
-      document.getElementById("material_cost_total").value = tmp;
-      
-      //実行単価を計算
+      document.getElementById("other_cost").value = tmp;
+      //実行単価の計算
       calcExecutionUnitPrice();
+      //見積単価の計算
+      calcWorkingUnitPrice();
     }
     
   }
-  //add240113
+  
+  //実行単価の計算
+  function calcExecutionUnitPrice(){
+    miscellaneous_cost = document.getElementById("miscellaneous_cost").value;
+    other_cost = document.getElementById("other_cost").value;
+    
+    if (miscellaneous_cost != undefined && other_cost != undefined){
+      miscellaneous_cost = parseFloat(miscellaneous_cost);
+      other_cost = parseFloat(other_cost)
+      
+      tmp = miscellaneous_cost + other_cost;
+      document.getElementById("execution_unit_price").value = tmp;
+    }
+  }
+  
+  //add240117
+  //見積単価の計算
+  function calcWorkingUnitPrice(){
+    execution_unit_price = document.getElementById("execution_unit_price").value;
+    benefit_rate = document.getElementById("benefit_rate").value;
+    
+    if (execution_unit_price != undefined && benefit_rate != undefined){
+      execution_unit_price = parseFloat(execution_unit_price);  //??
+      benefit_rate = parseFloat(benefit_rate);
+    
+      tmp = execution_unit_price * benefit_rate;
+      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      
+      document.getElementById("working_unit_price").value = tmp;
+    }
+    
+  }
+  
+  
+  //add240113 --- del
   //その他の計算
   function calcOtherCost(){
     other_cost = "";
@@ -888,39 +964,38 @@
     document.getElementById("other_cost").value = other_cost;
     
     //実行単価を計算
-    calcExecutionUnitPrice();
+    //calcExecutionUnitPrice();
   }
   
   //実行単価を計算
-  function calcExecutionUnitPrice(){
-    existFlag = false;
-    //E(材料費計)
-    material_cost_total = 0;
-    if (document.getElementById("material_cost_total").value != undefined){
-      existFlag = true;
-      material_cost_total = parseFloat(document.getElementById("material_cost_total").value);
-    }
-    existFlag = false;  //EFG一つでも欠けていたらfalse?要確認
-    //F(その他原価(=労務費))
-    other_base_cost = 0;
-    if (document.getElementById("other_base_cost").value != undefined){
-      existFlag = true;
-      other_base_cost = parseFloat(document.getElementById("other_base_cost").value);
-    }
-    existFlag = false; //EFG一つでも欠けていたらfalse?要確認
-    //G(その他)
-    other_cost = 0;
-    if (document.getElementById("other_cost").value != undefined){
-      existFlag = true;
-      other_cost = parseFloat(document.getElementById("other_cost").value);
-    }
-    if (existFlag == true){
-      tmp = material_cost_total + other_base_cost + other_cost;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
-      
-      document.getElementById("execution_unit_price").value = tmp;
-    }
-  }
+  //function calcExecutionUnitPrice(){
+  //  existFlag = false;
+  //  //E(材料費計)
+  //  material_cost_total = 0;
+  //  if (document.getElementById("material_cost_total").value != undefined){
+  //    existFlag = true;
+  //    material_cost_total = parseFloat(document.getElementById("material_cost_total").value);
+  //  }
+  //  existFlag = false;  //EFG一つでも欠けていたらfalse?要確認
+  //  //F(その他原価(=労務費))
+  //  other_base_cost = 0;
+  //  if (document.getElementById("other_base_cost").value != undefined){
+  //    existFlag = true;
+  //    other_base_cost = parseFloat(document.getElementById("other_base_cost").value);
+  //  }
+  //  existFlag = false; //EFG一つでも欠けていたらfalse?要確認
+  //  //G(その他)
+  //  other_cost = 0;
+  //  if (document.getElementById("other_cost").value != undefined){
+  //    existFlag = true;
+  //    other_cost = parseFloat(document.getElementById("other_cost").value);
+  //  }
+  //  if (existFlag == true){
+  //    tmp = material_cost_total + other_base_cost + other_cost;
+  //    tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+  //    document.getElementById("execution_unit_price").value = tmp;
+  //  }
+  //}
 //  //資材費のセット(明細)
 //  function calcMaterialPrice(child_index,quantity,unit_price){
 //	if (quantity != undefined && unit_price != undefined) {
