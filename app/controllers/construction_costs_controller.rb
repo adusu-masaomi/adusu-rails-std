@@ -336,6 +336,7 @@ class ConstructionCostsController < ApplicationController
       #仕入明細をセット
       purchase_order_amount_select
       
+      
       if @purchase_order_amount.present?
         @construction_costs[0].purchase_order_amount = @purchase_order_amount
       end
@@ -387,13 +388,47 @@ class ConstructionCostsController < ApplicationController
     #group('purchase_order_data.purchase_order_code').order('purchase_data.division_id, purchase_order_data.purchase_order_code').
     #pluck("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name, purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ").flatten.join(",")
     
+    #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
+    #where(:construction_datum_id => params[:construction_datum_id]).
+    #group('purchase_order_data.purchase_order_code, purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name, 
+    #      purchase_data.division_id').
+    #order('purchase_data.division_id, purchase_order_data.purchase_order_code').
+    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
+    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
+          
+    
+    #upd240116
+    #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
+    #where(:construction_datum_id => params[:construction_datum_id]).
+    #group('purchase_order_data.purchase_order_code').
+    #order('purchase_data.division_id, purchase_order_data.purchase_order_code')
+    #.select(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
+    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).first
+    
+    
+    #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
+    #where(:construction_datum_id => params[:construction_datum_id]).
+    #order('purchase_data.division_id, purchase_order_data.purchase_order_code').
+    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
+    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
+    
+    #binding.pry
+    #@purchase_order_amount = @purchase_order_amount.pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
+    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
+    
+    
+    #消さない
+    #これでもいいが、order_codeでまとめられない..
     @purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
     where(:construction_datum_id => params[:construction_datum_id]).
     group('purchase_order_data.purchase_order_code, purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name, 
-          purchase_data.division_id').
+          purchase_data.division_id').group('purchase_order_data.purchase_order_code').
     order('purchase_data.division_id, purchase_order_data.purchase_order_code').
     pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
           purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
+    
+    
+    #binding.pry
   end
   
   def purchase_amount_etc_select

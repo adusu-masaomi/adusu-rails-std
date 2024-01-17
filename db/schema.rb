@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_13_071140) do
+ActiveRecord::Schema.define(version: 2024_01_17_003400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -988,6 +988,7 @@ ActiveRecord::Schema.define(version: 2024_01_13_071140) do
     t.float "miscellaneous_cost"
     t.float "other_base_cost"
     t.float "other_rate"
+    t.float "benefit_rate"
   end
 
   create_table "working_safety_matters", id: :serial, force: :cascade do |t|
