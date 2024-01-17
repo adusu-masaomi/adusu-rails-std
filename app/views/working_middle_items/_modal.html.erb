@@ -125,7 +125,7 @@
         </div>
         
         <div class="col-md-3", style="margin-left:-50px;margin-top:-20px">
-        <%= f.label :"×" %>
+        <%= f.label :"=" %>
         </div>
         <div class="col-md-3", style="margin-left:-10px;margin-top:-60px">
           <%= f.input :miscellaneous_cost, label: "材料価格(C)", input_html:{id:'miscellaneous_cost', :tabindex=>"14", 
@@ -806,16 +806,23 @@
     
     //付属品関連クリア
     document.getElementById("accessory_rate").value = "";
-    document.getElementById("accessory_cost").value = "";
-    //雑材料関連クリア
-    document.getElementById("miscellaneous_base_cost").value = "";
     document.getElementById("miscellaneous_rate").value = "";
     document.getElementById("miscellaneous_cost").value = "";
-    //材料費計クリア
-    document.getElementById("material_cost_total").value = "";
-    //その他関連クリア
+    
+    //労務費関連
     document.getElementById("other_rate").value = "";
     document.getElementById("other_cost").value = "";
+    
+    document.getElementById("benefit_rate").value = "";
+    
+    //雑材料関連クリア
+    //document.getElementById("miscellaneous_base_cost").value = "";
+    //document.getElementById("miscellaneous_cost").value = "";
+    //材料費計クリア
+    //document.getElementById("material_cost_total").value = "";
+    //その他関連クリア
+    //document.getElementById("other_rate").value = "";
+    //document.getElementById("other_cost").value = "";
   }
   
   //add240117
@@ -832,7 +839,8 @@
       miscellaneous_rate = parseFloat(miscellaneous_rate);
       
       tmp = accessory_base_cost * accessory_rate * miscellaneous_rate;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      //tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      tmp = Math.round(tmp*1) / 1    //整数を四捨五入
       
       document.getElementById("miscellaneous_cost").value = tmp;
       
@@ -900,7 +908,8 @@
       rate = parseFloat(rate);
       
       tmp = other_base_cost * rate;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入;
+      //tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入;
+      tmp = Math.round(tmp*1) / 1    //小数点第４位を四捨五入;
       
       document.getElementById("other_cost").value = tmp;
       //実行単価の計算
@@ -936,7 +945,8 @@
       benefit_rate = parseFloat(benefit_rate);
     
       tmp = execution_unit_price * benefit_rate;
-      tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      //tmp = Math.round(tmp*1000) / 1000    //小数点第４位を四捨五入
+      tmp = Math.round(tmp*1) / 1    //整数を四捨五入
       
       document.getElementById("working_unit_price").value = tmp;
     }
