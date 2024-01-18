@@ -462,6 +462,14 @@ class DeliverySlipHeadersController < ApplicationController
 	   @fax = delivery_slip_header.pluck(:fax).flatten.join(" ")
 	   #工事期間
 	   @construction_period = delivery_slip_header.pluck(:construction_period).flatten.join(" ")
+     
+     #add240118
+     #工事期間(開始日)
+     @construction_period_date1 = delivery_slip_header.pluck(:construction_period_date1).flatten.join(" ")
+     #工事期間(終了日)
+     @construction_period_date2 = delivery_slip_header.pluck(:construction_period_date2).flatten.join(" ")
+     #add end
+     
 	   #郵便番号（工事場所）
 	   @construction_post = delivery_slip_header.pluck(:construction_post).flatten.join(" ")
 	   #工事場所

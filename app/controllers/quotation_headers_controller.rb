@@ -530,6 +530,14 @@ class QuotationHeadersController < ApplicationController
       @fax = quotation_header.pluck(:fax).flatten.join(" ")
       #工事期間
       @construction_period = quotation_header.pluck(:construction_period).flatten.join(" ")
+      
+      #add240118
+      #工事期間(開始日)
+      @construction_period_date1 = quotation_header.pluck(:construction_period_date1).flatten.join(" ")
+      #工事期間(終了日)
+      @construction_period_date2 = quotation_header.pluck(:construction_period_date2).flatten.join(" ")
+      #add end
+      
       #郵便番号（工事場所）
       @construction_post = quotation_header.pluck(:construction_post).flatten.join(" ")
       #工事場所
