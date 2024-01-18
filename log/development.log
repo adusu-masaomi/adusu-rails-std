@@ -11112,3 +11112,164 @@ Sent data 見積比較表.pdf (3.9ms)
 Completed 200 OK in 39324ms (Views: 3.5ms | ActiveRecord: 67.0ms | Allocations: 40403742)
 
 
+Started GET "/quotation_material_headerz/get_purchase_order_code?supplier_master_id=2&construction_datum_id=2691&last_header_number=E2300" for ::1 at 2024-01-18 15:48:35 +0900
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by QuotationMaterialHeadersController#get_purchase_order_code as */*
+  Parameters: {"supplier_master_id"=>"2", "construction_datum_id"=>"2691", "last_header_number"=>"E2300"}
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT "purchase_order_data"."purchase_order_code" FROM "purchase_order_data" WHERE "purchase_order_data"."construction_datum_id" = $1 AND "purchase_order_data"."supplier_master_id" = $2 AND (id is NOT NULL)[0m  [["construction_datum_id", 2691], ["supplier_master_id", 2]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:1734:in `get_purchase_order_code'
+  Rendering quotation_material_headers/get_purchase_order_code.js.erb
+  Rendered quotation_material_headers/get_purchase_order_code.js.erb (Duration: 4.3ms | Allocations: 405)
+Completed 200 OK in 100ms (Views: 24.5ms | ActiveRecord: 4.9ms | Allocations: 23843)
+
+
+Started PATCH "/quotation_material_headers/53" for ::1 at 2024-01-18 15:48:40 +0900
+Processing by QuotationMaterialHeadersController#update as PDF
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "quotation_material_header"=>{"quotation_code"=>"2023101201", "construction_datum_id"=>"2691", "supplier_master_id"=>"2", "requested_date"=>"2023/10/12", "last_header_number"=>"E2300", "purchase_order_code"=>"D2387", "empty"=>"", "supplier_id_1"=>"2", "supplier_id_2"=>"4", "supplier_id_3"=>"87", "responsible"=>"1", "email"=>"1", "delivery_place_flag"=>"1", "quotation_email_flag_1"=>"1", "quotation_email_flag_2"=>"1", "quotation_email_flag_3"=>"1", "order_email_flag_1"=>"1", "order_email_flag_2"=>"0", "order_email_flag_3"=>"0", "notes"=>"", "all_bid_flag_1"=>"0", "all_bid_flag_2"=>"0", "all_bid_flag_3"=>"0", "sent_flag"=>"4", "quotation_email_flag"=>"true", "material_id_hide"=>"", "id"=>"53", "company_id"=>"1", "total_quotation_price_1"=>"50", "total_quotation_price_2"=>"100", "total_quotation_price_3"=>"150", "force_order_flag"=>"0", "total_order_price_1"=>"50", "total_order_price_2"=>"0", "total_order_price_3"=>"0", "quotation_material_details_attributes"=>{"0"=>{"sequential_id"=>"1", "sequential_id_hide"=>"", "sort_order"=>"", "quotation_unit_price_1"=>"50", "quotation_unit_price_2"=>"100", "quotation_unit_price_3"=>"150", "material_id"=>"495", "quantity"=>"1", "unit_master_id"=>"5", "_destroy"=>"false", "quotation_price_1"=>"50", "quotation_price_2"=>"100", "quotation_price_3"=>"150", "material_code"=>"WN1001", "material_name"=>"埋込コンセント", "maker_id"=>"2", "list_price"=>"175", "bid_flag_1"=>"1", "bid_flag_2"=>"0", "bid_flag_3"=>"0", "notes"=>"", "material_category_id"=>"2", "quotation_email_flag_1"=>"1", "order_email_flag_1"=>"1", "quotation_email_flag_2"=>"1", "order_email_flag_2"=>"0", "quotation_email_flag_3"=>"1", "order_email_flag_3"=>"0", "maker_id_hide"=>"", "unit_id_hide"=>"", "material_category_id_hide"=>""}}}, "construction_id"=>"2691", "move_flag"=>"1", "material_code_hide"=>"WN1001", "id"=>"53"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  [1m[36mQuotationMaterialHeader Load (0.8ms)[0m  [1m[34mSELECT "quotation_material_headers".* FROM "quotation_material_headers" WHERE "quotation_material_headers"."id" = $1 LIMIT $2[0m  [["id", 53], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:1773:in `set_quotation_material_header'
+  [1m[36mQuotationMaterialDetail Load (0.9ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1[0m  [["quotation_material_header_id", 53]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mQuotationMaterialDetail Destroy (1.2ms)[0m  [1m[31mDELETE FROM "quotation_material_details" WHERE "quotation_material_details"."id" = $1[0m  [["id", 582]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mMakerMaster Load (0.7ms)[0m  [1m[34mSELECT "maker_masters".* FROM "maker_masters" WHERE "maker_masters"."id" = $1 ORDER BY "maker_masters"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:643:in `block in set_params_complement'
+  [1m[36mMaterialCategory Load (0.9ms)[0m  [1m[34mSELECT "material_categories".* FROM "material_categories" WHERE "material_categories"."id" = $1 ORDER BY "material_categories"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:665:in `block in set_params_complement'
+  [1m[36mMaterialMaster Load (1.0ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:684:in `block in set_params_complement'
+  [1m[36mMaterialMaster Load (0.3ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 ORDER BY "material_masters"."id" ASC LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:704:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mMaterialMaster Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "material_masters" WHERE "material_masters"."material_code" = $1 AND "material_masters"."id" != $2 LIMIT $3[0m  [["material_code", "WN1001"], ["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mPurchaseUnitPrice Load (2.7ms)[0m  [1m[34mSELECT "purchase_unit_prices".* FROM "purchase_unit_prices" WHERE (supplier_id = '2' and material_id = '495') ORDER BY "purchase_unit_prices"."supplier_id" ASC, "purchase_unit_prices"."material_id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:725:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+  [1m[36mPurchaseUnitPrice Exists? (2.3ms)[0m  [1m[34mSELECT 1 AS one FROM "purchase_unit_prices" WHERE "purchase_unit_prices"."supplier_id" = $1 AND NOT ("purchase_unit_prices"."supplier_id" = 2 AND "purchase_unit_prices"."material_id" = 495) AND "purchase_unit_prices"."material_id" = $2 LIMIT $3[0m  [["supplier_id", 2], ["material_id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+[31mUnpermitted parameters: :sequential_id_hide, :sort_order, :notes, :material_category_id, :maker_id_hide, :unit_id_hide, :material_category_id_hide[0m
+[31mUnpermitted parameters: :last_header_number, :purchase_order_code, :empty, :notes, :all_bid_flag_1, :all_bid_flag_2, :all_bid_flag_3, :sent_flag, :quotation_email_flag, :material_id_hide, :id, :company_id, :force_order_flag[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mConstructionDatum Load (1.0ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2691], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mSupplierMaster Load (2.0ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mQuotationMaterialDetail Create (0.9ms)[0m  [1m[32mINSERT INTO "quotation_material_details" ("quotation_material_header_id", "material_id", "material_code", "material_name", "maker_id", "maker_name", "quantity", "unit_master_id", "list_price", "quotation_unit_price_1", "quotation_unit_price_2", "quotation_unit_price_3", "quotation_price_1", "quotation_price_2", "quotation_price_3", "bid_flag_1", "bid_flag_2", "bid_flag_3", "quotation_email_flag_1", "quotation_email_flag_2", "quotation_email_flag_3", "order_email_flag_1", "order_email_flag_2", "order_email_flag_3", "sequential_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27) RETURNING "id"[0m  [["quotation_material_header_id", 53], ["material_id", 495], ["material_code", "WN1001"], ["material_name", "埋込コンセント"], ["maker_id", 2], ["maker_name", "パナソニック"], ["quantity", 1], ["unit_master_id", 5], ["list_price", 175], ["quotation_unit_price_1", 50], ["quotation_unit_price_2", 100], ["quotation_unit_price_3", 150], ["quotation_price_1", 50], ["quotation_price_2", 100], ["quotation_price_3", 150], ["bid_flag_1", 1], ["bid_flag_2", 0], ["bid_flag_3", 0], ["quotation_email_flag_1", 1], ["quotation_email_flag_2", 1], ["quotation_email_flag_3", 1], ["order_email_flag_1", 1], ["order_email_flag_2", 0], ["order_email_flag_3", 0], ["sequential_id", 1], ["created_at", "2024-01-18 15:48:40.478737"], ["updated_at", "2024-01-18 15:48:40.478737"]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mSupplierResponsible Load (1.0ms)[0m  [1m[34mSELECT "supplier_responsibles".* FROM "supplier_responsibles" WHERE "supplier_responsibles"."id" = $1 ORDER BY "supplier_responsibles"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:79:in `app_set_responsible'
+  [1m[36mCACHE SupplierResponsible Load (0.0ms)[0m  [1m[34mSELECT "supplier_responsibles".* FROM "supplier_responsibles" WHERE "supplier_responsibles"."id" = $1 ORDER BY "supplier_responsibles"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:100:in `app_set_responsible'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 ORDER BY "supplier_masters"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:835:in `send_email'
+  [1m[36mSupplierMaster Load (0.4ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:70:in `create'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:77:in `create'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 87], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:84:in `create'
+  [1m[36mQuotationMaterialDetail Load (0.3ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1[0m  [["quotation_material_header_id", 53]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:92:in `create'
+  [1m[36mQuotationMaterialDetail Load (0.4ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1 ORDER BY sequential_id desc[0m  [["quotation_material_header_id", 53]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:94:in `create'
+  [1m[36mMakerMaster Load (0.7ms)[0m  [1m[34mSELECT "maker_masters".* FROM "maker_masters" WHERE "maker_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:116:in `block (2 levels) in create'
+  [1m[36mUnitMaster Load (0.6ms)[0m  [1m[34mSELECT "unit_masters".* FROM "unit_masters" WHERE "unit_masters"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:120:in `block (2 levels) in create'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | Allocations: 9)
+Sent data 見積比較表.pdf (38.8ms)
+Completed 200 OK in 882ms (Views: 3.3ms | ActiveRecord: 69.9ms | Allocations: 554837)
+
+
+Started PATCH "/quotation_material_headers/53" for ::1 at 2024-01-18 15:48:49 +0900
+Processing by QuotationMaterialHeadersController#update as PDF
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "quotation_material_header"=>{"quotation_code"=>"2023101201", "construction_datum_id"=>"2691", "supplier_master_id"=>"2", "requested_date"=>"2023/10/12", "last_header_number"=>"E2300", "purchase_order_code"=>"D2387", "empty"=>"", "supplier_id_1"=>"2", "supplier_id_2"=>"4", "supplier_id_3"=>"87", "responsible"=>"1", "email"=>"1", "delivery_place_flag"=>"1", "quotation_email_flag_1"=>"1", "quotation_email_flag_2"=>"1", "quotation_email_flag_3"=>"1", "order_email_flag_1"=>"1", "order_email_flag_2"=>"0", "order_email_flag_3"=>"0", "notes"=>"", "all_bid_flag_1"=>"0", "all_bid_flag_2"=>"0", "all_bid_flag_3"=>"0", "sent_flag"=>"4", "quotation_email_flag"=>"true", "material_id_hide"=>"", "id"=>"53", "company_id"=>"1", "total_quotation_price_1"=>"50", "total_quotation_price_2"=>"100", "total_quotation_price_3"=>"150", "force_order_flag"=>"0", "total_order_price_1"=>"50", "total_order_price_2"=>"0", "total_order_price_3"=>"0", "quotation_material_details_attributes"=>{"0"=>{"sequential_id"=>"1", "sequential_id_hide"=>"", "sort_order"=>"", "quotation_unit_price_1"=>"50", "quotation_unit_price_2"=>"100", "quotation_unit_price_3"=>"150", "material_id"=>"495", "quantity"=>"1", "unit_master_id"=>"5", "_destroy"=>"false", "quotation_price_1"=>"50", "quotation_price_2"=>"100", "quotation_price_3"=>"150", "material_code"=>"WN1001", "material_name"=>"埋込コンセント", "maker_id"=>"2", "list_price"=>"175", "bid_flag_1"=>"1", "bid_flag_2"=>"0", "bid_flag_3"=>"0", "notes"=>"", "material_category_id"=>"2", "quotation_email_flag_1"=>"1", "order_email_flag_1"=>"1", "quotation_email_flag_2"=>"1", "order_email_flag_2"=>"0", "quotation_email_flag_3"=>"1", "order_email_flag_3"=>"0", "maker_id_hide"=>"", "unit_id_hide"=>"", "material_category_id_hide"=>""}}}, "construction_id"=>"2691", "move_flag"=>"1", "material_code_hide"=>"WN1001", "id"=>"53"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  [1m[36mQuotationMaterialHeader Load (0.4ms)[0m  [1m[34mSELECT "quotation_material_headers".* FROM "quotation_material_headers" WHERE "quotation_material_headers"."id" = $1 LIMIT $2[0m  [["id", 53], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:1773:in `set_quotation_material_header'
+  [1m[36mQuotationMaterialDetail Load (0.3ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1[0m  [["quotation_material_header_id", 53]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mQuotationMaterialDetail Destroy (0.3ms)[0m  [1m[31mDELETE FROM "quotation_material_details" WHERE "quotation_material_details"."id" = $1[0m  [["id", 583]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mTRANSACTION (3.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:594:in `destroy_before_update'
+  [1m[36mMakerMaster Load (0.6ms)[0m  [1m[34mSELECT "maker_masters".* FROM "maker_masters" WHERE "maker_masters"."id" = $1 ORDER BY "maker_masters"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:643:in `block in set_params_complement'
+  [1m[36mMaterialCategory Load (0.3ms)[0m  [1m[34mSELECT "material_categories".* FROM "material_categories" WHERE "material_categories"."id" = $1 ORDER BY "material_categories"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:665:in `block in set_params_complement'
+  [1m[36mMaterialMaster Load (0.3ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:684:in `block in set_params_complement'
+  [1m[36mMaterialMaster Load (0.3ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 ORDER BY "material_masters"."id" ASC LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:704:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mMaterialMaster Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "material_masters" WHERE "material_masters"."material_code" = $1 AND "material_masters"."id" != $2 LIMIT $3[0m  [["material_code", "WN1001"], ["id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:713:in `block in set_params_complement'
+  [1m[36mPurchaseUnitPrice Load (0.5ms)[0m  [1m[34mSELECT "purchase_unit_prices".* FROM "purchase_unit_prices" WHERE (supplier_id = '2' and material_id = '495') ORDER BY "purchase_unit_prices"."supplier_id" ASC, "purchase_unit_prices"."material_id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:725:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+  [1m[36mPurchaseUnitPrice Exists? (1.6ms)[0m  [1m[34mSELECT 1 AS one FROM "purchase_unit_prices" WHERE "purchase_unit_prices"."supplier_id" = $1 AND NOT ("purchase_unit_prices"."supplier_id" = 2 AND "purchase_unit_prices"."material_id" = 495) AND "purchase_unit_prices"."material_id" = $2 LIMIT $3[0m  [["supplier_id", 2], ["material_id", 495], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:732:in `block in set_params_complement'
+[31mUnpermitted parameters: :sequential_id_hide, :sort_order, :notes, :material_category_id, :maker_id_hide, :unit_id_hide, :material_category_id_hide[0m
+[31mUnpermitted parameters: :last_header_number, :purchase_order_code, :empty, :notes, :all_bid_flag_1, :all_bid_flag_2, :all_bid_flag_3, :sent_flag, :quotation_email_flag, :material_id_hide, :id, :company_id, :force_order_flag[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mConstructionDatum Load (0.4ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2691], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mSupplierMaster Load (0.4ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mQuotationMaterialDetail Create (1.5ms)[0m  [1m[32mINSERT INTO "quotation_material_details" ("quotation_material_header_id", "material_id", "material_code", "material_name", "maker_id", "maker_name", "quantity", "unit_master_id", "list_price", "quotation_unit_price_1", "quotation_unit_price_2", "quotation_unit_price_3", "quotation_price_1", "quotation_price_2", "quotation_price_3", "bid_flag_1", "bid_flag_2", "bid_flag_3", "quotation_email_flag_1", "quotation_email_flag_2", "quotation_email_flag_3", "order_email_flag_1", "order_email_flag_2", "order_email_flag_3", "sequential_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27) RETURNING "id"[0m  [["quotation_material_header_id", 53], ["material_id", 495], ["material_code", "WN1001"], ["material_name", "埋込コンセント"], ["maker_id", 2], ["maker_name", "パナソニック"], ["quantity", 1], ["unit_master_id", 5], ["list_price", 175], ["quotation_unit_price_1", 50], ["quotation_unit_price_2", 100], ["quotation_unit_price_3", 150], ["quotation_price_1", 50], ["quotation_price_2", 100], ["quotation_price_3", 150], ["bid_flag_1", 1], ["bid_flag_2", 0], ["bid_flag_3", 0], ["quotation_email_flag_1", 1], ["quotation_email_flag_2", 1], ["quotation_email_flag_3", 1], ["order_email_flag_1", 1], ["order_email_flag_2", 0], ["order_email_flag_3", 0], ["sequential_id", 1], ["created_at", "2024-01-18 15:48:49.575675"], ["updated_at", "2024-01-18 15:48:49.575675"]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/quotation_material_headers_controller.rb:512:in `block in update'
+  [1m[36mSupplierResponsible Load (0.4ms)[0m  [1m[34mSELECT "supplier_responsibles".* FROM "supplier_responsibles" WHERE "supplier_responsibles"."id" = $1 ORDER BY "supplier_responsibles"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:79:in `app_set_responsible'
+  [1m[36mCACHE SupplierResponsible Load (0.0ms)[0m  [1m[34mSELECT "supplier_responsibles".* FROM "supplier_responsibles" WHERE "supplier_responsibles"."id" = $1 ORDER BY "supplier_responsibles"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:100:in `app_set_responsible'
+  [1m[36mSupplierMaster Load (1.1ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 ORDER BY "supplier_masters"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/quotation_material_headers_controller.rb:835:in `send_email'
+  [1m[36mSupplierMaster Load (0.5ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:70:in `create'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:77:in `create'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 87], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:84:in `create'
+  [1m[36mQuotationMaterialDetail Load (0.4ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1[0m  [["quotation_material_header_id", 53]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:92:in `create'
+  [1m[36mQuotationMaterialDetail Load (1.4ms)[0m  [1m[34mSELECT "quotation_material_details".* FROM "quotation_material_details" WHERE "quotation_material_details"."quotation_material_header_id" = $1 ORDER BY sequential_id desc[0m  [["quotation_material_header_id", 53]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:94:in `create'
+  [1m[36mMakerMaster Load (0.6ms)[0m  [1m[34mSELECT "maker_masters".* FROM "maker_masters" WHERE "maker_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:116:in `block (2 levels) in create'
+  [1m[36mUnitMaster Load (0.4ms)[0m  [1m[34mSELECT "unit_masters".* FROM "unit_masters" WHERE "unit_masters"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/pdfs/bid_comparison_list_pdf.rb:120:in `block (2 levels) in create'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | Allocations: 6)
+Sent data 見積比較表.pdf (1.7ms)
+Completed 200 OK in 518ms (Views: 1.5ms | ActiveRecord: 19.3ms | Allocations: 374555)
+
+
