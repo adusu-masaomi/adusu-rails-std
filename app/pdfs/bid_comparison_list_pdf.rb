@@ -4,7 +4,8 @@ class BidComparisonListPDF
   @cheaper_flag_2 = false
   
   #def self.create bid_comparison_list
-  def self.create quotation_material_header
+  #def self.create quotation_material_header
+  def self.create(quotation_material_header)  #upd240118
     #見積比較表PDF発行
  
     #@@page_number = 0

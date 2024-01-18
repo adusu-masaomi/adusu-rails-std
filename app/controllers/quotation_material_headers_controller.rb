@@ -57,7 +57,9 @@ class QuotationMaterialHeadersController < ApplicationController
     
       format.pdf do
         #report = BidComparisonListPDF.create @bid_comparison_list
-        report = BidComparisonListPDF.create @quotation_material_header
+        #report = BidComparisonListPDF.create @quotation_material_header
+        #upd240118
+        report = BidComparisonListPDF.create(@quotation_material_header)
         
         # ブラウザでPDFを表示する
         # disposition: "inline" によりダウンロードではなく表示させている
