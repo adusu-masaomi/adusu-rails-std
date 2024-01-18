@@ -10,6 +10,8 @@ class BidComparisonListPDF
     #@@page_number = 0
     #report = ThinReports::Report.create do |report|
 
+    binding.pry
+
     # tlfファイルを読み込む
     report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/bid_comparison_list_pdf.tlf")
    
@@ -32,7 +34,7 @@ class BidComparisonListPDF
     @total_low_price = 0
   
     #restore 240118
-    quotation_material_header = $quotation_material_header
+    #quotation_material_header = $quotation_material_header
     
     #---見出し---
     page_count = report.page_count.to_s + "頁"
@@ -41,6 +43,7 @@ class BidComparisonListPDF
 
       @flag = "1"
        
+      #report.page.item(:quotation_code).value(quotation_material_header.quotation_code)
       report.page.item(:quotation_code).value(quotation_material_header.quotation_code)
        
       #      construction_code = "No."  #工事ナンバーに"No"をつける
