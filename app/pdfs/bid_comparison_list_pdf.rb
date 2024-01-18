@@ -31,8 +31,8 @@ class BidComparisonListPDF
     @total_high_price = 0
     @total_low_price = 0
   
-    
-    #quotation_material_header = $quotation_material_header
+    #restore 240118
+    quotation_material_header = $quotation_material_header
     
     #---見出し---
     page_count = report.page_count.to_s + "頁"
