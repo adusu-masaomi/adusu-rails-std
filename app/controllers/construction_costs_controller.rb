@@ -388,6 +388,7 @@ class ConstructionCostsController < ApplicationController
     #group('purchase_order_data.purchase_order_code').order('purchase_data.division_id, purchase_order_data.purchase_order_code').
     #pluck("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name, purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ").flatten.join(",")
     
+    #これで一応動くが...
     #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
     #where(:construction_datum_id => params[:construction_datum_id]).
     #group('purchase_order_data.purchase_order_code, purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name, 
@@ -396,21 +397,6 @@ class ConstructionCostsController < ApplicationController
     #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
     #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
           
-    
-    #upd240116
-    #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
-    #where(:construction_datum_id => params[:construction_datum_id]).
-    #group('purchase_order_data.purchase_order_code').
-    #order('purchase_data.division_id, purchase_order_data.purchase_order_code')
-    #.select(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
-    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).first
-    
-    
-    #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
-    #where(:construction_datum_id => params[:construction_datum_id]).
-    #order('purchase_data.division_id, purchase_order_data.purchase_order_code').
-    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
-    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
     
     #test
     #@purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).
@@ -424,19 +410,11 @@ class ConstructionCostsController < ApplicationController
     #@purchase_order_amount.each do|a, b, c, d|
     #  binding.pry
     #end
+    #--これで一応データは取れるが...
+     
+                  
     
-    #select("purchase_order_data.purchase_order_code").distinct.
-    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name"))
-    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
-    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
-          
-    #order('purchase_data.division_id, purchase_order_data.purchase_order_code').
-    #pluck(Arel.sql("purchase_divisions.purchase_division_long_name, supplier_masters.supplier_name,
-    #      purchase_order_data.purchase_order_code, SUM(purchase_data.purchase_amount) ")).flatten.join(",")
-              
-    
-    #test del
-    #消さない
+    #以下は消さないこと
     #これでもいいが、order_codeでまとめられない..
     #PDF側で操作することにした。
     @purchase_order_amount = PurchaseDatum.joins(:purchase_order_datum).joins(:SupplierMaster).joins(:PurchaseDivision).

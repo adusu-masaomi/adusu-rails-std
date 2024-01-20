@@ -576,15 +576,29 @@ class WorkingMiddleItemsController < ApplicationController
           else
           #手入力以外--特定のデータを更新
             @material_master = MaterialMaster.find(item[:working_small_item_id])
-      
+            
+            #upd240120
+            #古いデータを更新した場合、古くて安い定価は更新されないようにする
+            list_price_quotation = @material_master.list_price_quotation
+            #見積定価が直近単価以上の場合のみ更新させる
+            if @material_master.last_unit_price  <= item[:unit_price].to_i
+              list_price_quotation = item[:unit_price]
+            end
+            #...数量は、どうする..!?
+            #
+            
             if @material_master.present?
               #品名・メーカーのみ登録とする
               #material_master_params = {material_name: item[:working_small_item_name], 
               #    maker_id: item[:maker_master_id] }    
               #upd240113
+              #material_master_params = {material_name: item[:working_small_item_name], 
+              #  maker_id: item[:maker_master_id], standard_quantity: item[:quantity], unit_id: item[:unit_master_id],
+              #  list_price_quotation: item[:unit_price], standard_labor_productivity_unit: item[:labor_productivity_unit] }
+              #upd240120
               material_master_params = {material_name: item[:working_small_item_name], 
                 maker_id: item[:maker_master_id], standard_quantity: item[:quantity], unit_id: item[:unit_master_id],
-                list_price_quotation: item[:unit_price], standard_labor_productivity_unit: item[:labor_productivity_unit] }
+                list_price_quotation: list_price_quotation, standard_labor_productivity_unit: item[:labor_productivity_unit] }
               
               @material_master.update(material_master_params)
             end

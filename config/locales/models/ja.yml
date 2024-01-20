@@ -265,6 +265,7 @@ ja:
        material_master:
          standard_quantity: 標準数量
          standard_labor_productivity_unit: 標準歩掛
+         list_price_quotation: 見積定価
        material_category:
          name: 分類名
        inventory_category:

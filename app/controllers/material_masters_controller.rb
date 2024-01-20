@@ -38,10 +38,15 @@ class MaterialMastersController < ApplicationController
   # GET /material_masters/new
   def new
     @material_master = MaterialMaster.new
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /material_masters/1/edit
   def edit
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /material_masters
@@ -122,7 +127,8 @@ class MaterialMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def material_master_params
-      params.require(:material_master).permit(:material_code, :internal_code, :material_name, :maker_id, :unit_id, :list_price, :standard_quantity, :standard_labor_productivity_unit, 
-                                              :last_unit_price, :last_unit_price_update_at, :inventory_category_id, :material_category_id, :notes)
+      params.require(:material_master).permit(:material_code, :internal_code, :material_name, :maker_id, :unit_id, :list_price, :standard_quantity,
+                                              :standard_labor_productivity_unit, :last_unit_price, :last_unit_price_update_at, :inventory_category_id,
+                                              :material_category_id, :notes, :list_price_quotation)
     end
 end

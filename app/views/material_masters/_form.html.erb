@@ -66,16 +66,21 @@
    <!--add180509-->
    <%= f.input :notes, input_html:{ :tabindex=>"7" } %>
 
-   <!--標準版はカット
-   <%= f.input :standard_quantity, input_html:{ :tabindex=>"9" } %>
-   <%= f.input :standard_labor_productivity_unit, input_html:{ :tabindex=>"10" } %>
-	 -->
+   <!-- 標準版はカット → アデュースのみ復活　240119 -->
+   <% @tab_index = 7 %>
+   <% if @company_id == 1 %>
+     <%= f.input :standard_quantity, input_html:{ :tabindex=> @tab_index + 1 } %>
+     <%= f.input :standard_labor_productivity_unit, input_html:{ :tabindex=> @tab_index + 2 } %>
+     <%= f.input :list_price_quotation, input_html:{ :tabindex=> @tab_index + 3 } %>
+     
+     <% @tab_index = 10 %>
+   <% end %>
    
-  <%= f.input :last_unit_price, hint: "*仕入データ登録後に自動反映されるので（原則的に）入力不要です。", input_html:{ :tabindex=>"8"} %>
+  <%= f.input :last_unit_price, hint: "*仕入データ登録後に自動反映されるので（原則的に）入力不要です。", input_html:{ :tabindex=> @tab_index + 1} %>
   <%= f.input :last_unit_price_update_at, default: Date.strptime("2000/01/01", "%Y/%m/%d"), 
      hint: "*仕入データ登録後に自動反映されるので入力不要です。", input_html:{ :readonly => true } %>
 
-  <%= f.button :submit, :class => 'btn-primary', :tabindex=>"9" %>
+  <%= f.button :submit, :class => 'btn-primary', :tabindex=> @tab_index + 2 %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 material_masters_path, :class => 'btn btn-white_rsd' %>
     
