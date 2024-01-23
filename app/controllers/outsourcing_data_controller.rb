@@ -294,7 +294,7 @@ class OutsourcingDataController < ApplicationController
           #report = PurchaseListForOutsourcingPDF.create @purchase_list_for_outsourcing
           report = PurchaseListForOutsourcingPDF.create(@purchase_data, supplier_flag, no_color)
         when "4"
-          #外注用請求(色なし)
+          #外注用請求(色なし)--アデュース仕様
           #$no_color = true
           no_color = true
           #report = PurchaseListForOutsourcingPDF.create @purchase_list_for_outsourcing

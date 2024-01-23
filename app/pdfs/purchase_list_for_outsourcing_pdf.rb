@@ -33,7 +33,9 @@ class PurchaseListForOutsourcingPDF
       sort_key = "purchase_data.purchase_date, purchase_order_data.purchase_order_code, purchase_data.id"
     else
     #会計士用の場合、支払日・仕入日・注番でソート
-      sort_key = "payment_date, purchase_date, purchase_order_code, id"
+      #sort_key = "payment_date, purchase_date, purchase_order_code, id"
+      #upd240123
+      sort_key = "payment_date, purchase_date, purchase_order_code, purchase_data.id"
     end
     
     #$purchase_data.joins(:purchase_order_datum).order(sort_key).each do |purchase_datum|
