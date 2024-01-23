@@ -249,7 +249,7 @@ class PurchaseListForOutsourcingPDF
         source_bank_str = ""
         #if $no_color
         if no_color
-          if outsourcing_cost.nil? || outsourcing_cost.source_bank_id == 1
+          if outsourcing_cost.source_bank_id.nil? || outsourcing_cost.source_bank_id == 1
             source_bank_str = "北"
           else
             source_bank_str = "さ"

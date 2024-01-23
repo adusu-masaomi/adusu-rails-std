@@ -3811,3 +3811,50 @@ Sent data purchase_list.pdf (2.1ms)
 Completed 200 OK in 580ms (Views: 1.9ms | ActiveRecord: 38.0ms | Allocations: 428829)
 
 
+Started GET "/system/index" for ::1 at 2024-01-23 11:44:36 +0900
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SystemController#index as HTML
+Redirected to http://localhost:3000/login
+Filter chain halted as :logged_in_user rendered or redirected
+Completed 302 Found in 19ms (ActiveRecord: 0.0ms | Allocations: 4192)
+
+
+Started GET "/login" for ::1 at 2024-01-23 11:44:37 +0900
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 15.8ms | Allocations: 1872)
+DEPRECATION WARNING: The asset "apple-touch-icon-144x144-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-114x114-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-72x72-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "favicon.ico" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+  Rendered layout layouts/application.html.erb (Duration: 5781.8ms | Allocations: 2084171)
+Completed 200 OK in 5799ms (Views: 5797.7ms | ActiveRecord: 0.0ms | Allocations: 2086948)
+
+
