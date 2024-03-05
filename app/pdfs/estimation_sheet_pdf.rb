@@ -577,7 +577,8 @@ class EstimationSheetPDF
         if quote_price.present?
           quote_price = quotation_detail_middle_classification.quote_price
         else
-          quote_price = quotation_detail_middle_classification.remarks
+          #del240305 備考：アスティ等、不要なため抹消
+          #quote_price = quotation_detail_middle_classification.remarks
         end
         #
         
