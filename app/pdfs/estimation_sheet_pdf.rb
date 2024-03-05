@@ -577,8 +577,12 @@ class EstimationSheetPDF
         if quote_price.present?
           quote_price = quotation_detail_middle_classification.quote_price
         else
-          #del240305 備考：アスティ等、不要なため抹消
-          #quote_price = quotation_detail_middle_classification.remarks
+          
+          #binding.pry
+          #240305 "単価抜"以外の場合に表記する
+          if @print_type != "4"
+            quote_price = quotation_detail_middle_classification.remarks
+          end
         end
         #
         
