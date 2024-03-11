@@ -1099,7 +1099,7 @@ class PurchaseOrderHistoriesController < ApplicationController
         $mail_flag = 1
         #PDFを作成
         #report = PurchaseOrderPDF.create @purchase_order
-        report = PurchaseOrderPDF.create(@purchase_order, @company_id)
+        report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id])
         
         # PDFファイルのバイナリデータを生成する
         #$attachment = report.generate
