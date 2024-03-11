@@ -1044,7 +1044,7 @@ class QuotationMaterialHeadersController < ApplicationController
             #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
             #                                            @supplier, request_type, purchase_order_code, mail_flag)
             report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
-                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id)
+                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
             
             # ブラウザでPDFを表示する
             # disposition: "inline" によりダウンロードではなく表示させている
@@ -1064,7 +1064,7 @@ class QuotationMaterialHeadersController < ApplicationController
           #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
           #                                            @supplier, request_type, purchase_order_code, mail_flag)
           report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
-                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id)
+                                           @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
           
             
           # PDFファイルのバイナリデータを生成する

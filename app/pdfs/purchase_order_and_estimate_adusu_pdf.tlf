@@ -555,7 +555,7 @@
       "x": 430,
       "y": 122.4,
       "width": 137,
-      "height": 12.5,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -658,7 +658,7 @@
       "description": "",
       "x": 430,
       "y": 188.2,
-      "width": 51.7,
+      "width": 26.4,
       "height": 15.9,
       "style": {
         "font-family": [
@@ -674,7 +674,7 @@
         "font-style": []
       },
       "texts": [
-        "担当:薄田"
+        "担当:"
       ]
     },
     {
@@ -700,7 +700,7 @@
       "x": 52.3,
       "y": 160,
       "width": 53,
-      "height": 11.6,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -726,7 +726,7 @@
       "x": 52,
       "y": 190,
       "width": 53.1,
-      "height": 12.3,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1308,7 +1308,7 @@
       "x": 275,
       "y": 769,
       "width": 26,
-      "height": 12.5,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1366,7 +1366,7 @@
       "x": 409,
       "y": 740.6,
       "width": 50.1,
-      "height": 12.5,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1520,7 +1520,7 @@
       "x": 52.5,
       "y": 175,
       "width": 40,
-      "height": 10.5,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1644,7 +1644,7 @@
       "x": 50,
       "y": 738,
       "width": 40,
-      "height": 11.7,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAPGothic"
@@ -1893,6 +1893,38 @@
         "letter-spacing": "",
         "font-style": [],
         "overflow": "truncate",
+        "word-wrap": "none"
+      },
+      "reference-id": "",
+      "value": "",
+      "multiple-line": false,
+      "format": {
+        "base": "",
+        "type": ""
+      }
+    },
+    {
+      "id": "responsible_name",
+      "type": "text-block",
+      "display": true,
+      "description": "",
+      "x": 458.1,
+      "y": 188.2,
+      "width": 33.3,
+      "height": 14.4,
+      "style": {
+        "font-family": [
+          "IPAPGothic"
+        ],
+        "font-size": 10,
+        "color": "#000000",
+        "text-align": "left",
+        "vertical-align": "top",
+        "line-height": "",
+        "line-height-ratio": "",
+        "letter-spacing": "",
+        "font-style": [],
+        "overflow": "fit",
         "word-wrap": "none"
       },
       "reference-id": "",

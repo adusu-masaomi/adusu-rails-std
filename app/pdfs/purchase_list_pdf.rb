@@ -11,7 +11,6 @@ class PurchaseListPDF
     report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_list_pdf.tlf")
 
 
-
     # Thin ReportsでPDFを作成
     #report = ThinReports::Report.create do |r|
 

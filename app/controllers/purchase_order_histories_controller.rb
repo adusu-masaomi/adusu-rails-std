@@ -1079,7 +1079,11 @@ class PurchaseOrderHistoriesController < ApplicationController
       if params[:purchase_order_history][:sent_flag] != "1" 
         format.pdf do
           #report = PurchaseOrderPDF.create @purchase_order
-          report = PurchaseOrderPDF.create(@purchase_order, @company_id)
+          #binding.pry
+          
+          #report = PurchaseOrderPDF.create(@purchase_order, @company_id)
+          #upd240311
+          report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id])
           
           #report = PurchaseOrderAndEstimatePDF.create @purchase_order
           # ブラウザでPDFを表示する

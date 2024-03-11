@@ -9,7 +9,7 @@ class PurchaseOrderAndEstimatePDF
   #def self.create purchase_order
   #def self.create(quotation_material_header, detail_parameters, supplier, request_type, purchase_order_code, mail_flag)
   def self.create(quotation_material_header, detail_parameters, supplier, request_type, purchase_order_code, 
-                  mail_flag, company_id)
+                  mail_flag, company_id, user_id)
   #注文書PDF発行
     @quotation_material_header = quotation_material_header
     @supplier = supplier
@@ -184,6 +184,20 @@ class PurchaseOrderAndEstimatePDF
       end
     end
     ##
+    
+    #add240311
+    #アデュース仕様　担当名を切り分け
+    if company_id == 1
+      #if user_id == 5  #test
+      if user_id == 1
+        #ユーザー"adusu"で入った場合は高野とする
+        name = "高野"
+      else
+        #ユーザー"masami"で入った場合は社長とする
+        name = "薄田"
+      end
+      report.page.item(:responsible_name).value(name)
+    end
     
     #備考
     #要切り分け
