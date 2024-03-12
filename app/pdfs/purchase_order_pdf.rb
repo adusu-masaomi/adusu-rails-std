@@ -161,10 +161,13 @@ class PurchaseOrderPDF
       if user_id == 1
         #ユーザー"adusu"で入った場合は高野とする
         name = "高野"
+        responsible_email = "adusu-info@eos.ocn.ne.jp"
       else
         #ユーザー"masami"で入った場合は社長とする
         name = "薄田"
+        responsible_email = "adusu@coda.ocn.ne.jp"
       end
+      report.page.item(:responsible_email).value(responsible_email)
       report.page.item(:responsible_name).value(name)
     end
         

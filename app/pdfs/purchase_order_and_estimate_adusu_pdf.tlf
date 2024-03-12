@@ -632,7 +632,7 @@
       "description": "",
       "x": 431,
       "y": 171.5,
-      "width": 142.6,
+      "width": 35.2,
       "height": 20,
       "style": {
         "font-family": [
@@ -648,7 +648,7 @@
         "font-style": []
       },
       "texts": [
-        "E-Mail:adusu@coda.ocn.ne.jp"
+        "E-Mail:"
       ]
     },
     {
@@ -1643,7 +1643,7 @@
       "description": "",
       "x": 50,
       "y": 738,
-      "width": 40,
+      "width": 40.1,
       "height": 14.4,
       "style": {
         "font-family": [
@@ -1908,7 +1908,7 @@
       "type": "text-block",
       "display": true,
       "description": "",
-      "x": 458.1,
+      "x": 455,
       "y": 188.2,
       "width": 33.3,
       "height": 14.4,
@@ -1917,6 +1917,38 @@
           "IPAPGothic"
         ],
         "font-size": 10,
+        "color": "#000000",
+        "text-align": "left",
+        "vertical-align": "top",
+        "line-height": "",
+        "line-height-ratio": "",
+        "letter-spacing": "",
+        "font-style": [],
+        "overflow": "fit",
+        "word-wrap": "none"
+      },
+      "reference-id": "",
+      "value": "",
+      "multiple-line": false,
+      "format": {
+        "base": "",
+        "type": ""
+      }
+    },
+    {
+      "id": "responsible_email",
+      "type": "text-block",
+      "display": true,
+      "description": "",
+      "x": 464.9,
+      "y": 172.5,
+      "width": 110.3,
+      "height": 9.6,
+      "style": {
+        "font-family": [
+          "IPAPGothic"
+        ],
+        "font-size": 9,
         "color": "#000000",
         "text-align": "left",
         "vertical-align": "top",
