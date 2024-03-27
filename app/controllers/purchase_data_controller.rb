@@ -222,6 +222,10 @@ class PurchaseDataController < ApplicationController
     if @supplier_master_extract.blank?
       @supplier_master_extract = SupplierMaster.all
     end
+    
+    #moved 240327
+    #global set
+    $purchase_data = @purchase_data
 
     #kaminari用設定。
     if !single_record
@@ -256,7 +260,7 @@ class PurchaseDataController < ApplicationController
     @purchase_unit_prices = PurchaseUnitPrice.none  
 
     #global set
-    $purchase_data = @purchase_data
+    #$purchase_data = @purchase_data
 
     #binding.pry
 
