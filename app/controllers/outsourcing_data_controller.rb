@@ -1273,7 +1273,10 @@ class OutsourcingDataController < ApplicationController
       outsourcing_cost = OutsourcingCost.create(outsourcing_params)
     else
     #更新(請求書コードも変更)
-      outsourcing_params = {invoice_code: invoice_code, purchase_order_datum_id: @purchase_order_datum_id, labor_cost: construction_labor_cost, billing_amount: billing_amount, closing_date: @closing_date, 
+      #upd240401  工事ID、仕入先IDも更新(後から変更になった場合を考慮)
+      outsourcing_params = {invoice_code: invoice_code, purchase_order_datum_id: @purchase_order_datum_id, 
+                            construction_datum_id: @construction_datum_id, supplier_master_id: supplier_master_id,
+                            labor_cost: construction_labor_cost, billing_amount: billing_amount, closing_date: @closing_date, 
                             payment_due_date: @payment_due_date, working_start_date: working_start_date, 
                             working_end_date: @working_end_date}
       

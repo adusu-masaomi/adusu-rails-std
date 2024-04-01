@@ -20,7 +20,11 @@ class PurchaseDatum < ApplicationRecord
   belongs_to :CustomerMaster, optional: true, :foreign_key => "customer_id"
   belongs_to :PurchaseDivision, optional: true, :foreign_key => "division_id"
   belongs_to :purchase_header , optional: true
-    
+  
+  #add240328
+  attribute :changed_quantity, :integer
+  #add end
+  
   #has_many :SupplierMaster,  :foreign_key => "supplier_id"
     
   #belongs_to :outsourcing_cost    #add190213

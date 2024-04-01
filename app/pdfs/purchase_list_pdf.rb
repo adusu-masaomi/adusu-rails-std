@@ -200,6 +200,15 @@ class PurchaseListPDF
             quantity = sprintf("%.0f", purchase_datum.quantity)
           end
         end
+        
+        #add240328
+        #アデュース仕様
+        if purchase_datum.changed_quantity.present?
+          #binding.pry
+          quantity = sprintf("%.2f", purchase_datum.changed_quantity)
+        end
+        #
+        #
         #
 
         #binding.pry
