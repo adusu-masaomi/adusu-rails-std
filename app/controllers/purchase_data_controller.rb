@@ -262,8 +262,7 @@ class PurchaseDataController < ApplicationController
     #global set
     #$purchase_data = @purchase_data
 
-    #binding.pry
-
+    
     #####
     #検索用のパラメータがセットされていたら、グローバルにもセットする
     #if params[:q].present?
@@ -298,12 +297,13 @@ class PurchaseDataController < ApplicationController
     app_get_session_user
     
     #入庫の場合の処理
-    if @company_id == 1
-      if params[:print_type] == "2"
-        addition_for_list
-        $purchase_data = @purchase_data_addition
-      end
-    end
+    #改良中 240401
+    #if @company_id == 1
+    #  if params[:print_type] == "2"
+    #    addition_for_list
+    #    $purchase_data = @purchase_data_addition
+    #  end
+    #end
     
     respond_to do |format|
 
