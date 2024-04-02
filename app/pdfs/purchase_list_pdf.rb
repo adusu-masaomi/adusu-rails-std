@@ -55,7 +55,8 @@ class PurchaseListPDF
       report.page.item(:line_3).style(:border_color, 'red')
     end
       
-    #binding.pry
+    #タイトル
+    report.page.item(:print_title).value("仕入表")
       
     #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum| 
     #postgreSQL仕様

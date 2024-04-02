@@ -298,12 +298,12 @@ class PurchaseDataController < ApplicationController
     
     #入庫の場合の処理
     #改良中 240401
-    #if @company_id == 1
-    #  if params[:print_type] == "2"
-    #    addition_for_list
-    #    $purchase_data = @purchase_data_addition
-    #  end
-    #end
+    if @company_id == 1
+      if params[:print_type] == "2"
+        addition_for_list
+        #$purchase_data = @purchase_data_addition
+      end
+    end
     
     respond_to do |format|
 
@@ -330,7 +330,10 @@ class PurchaseDataController < ApplicationController
           if @company_id != 1
             report = PurchaseListBySupplierPDF.create @purchase_list_by_supplier
           else
-            report = PurchaseListPDF.create(@purchase_list, @company_id)
+            #report = PurchaseListPDF.create(@purchase_list, @company_id)
+            #アデュース仕様
+            report = PurchaseListAdditionPDF.create(@purchase_list, @company_id, 
+                        @changed_item, @changed_quantity, @changed_amount)
           end
         when "3"
           #外注用請求
@@ -357,116 +360,66 @@ class PurchaseDataController < ApplicationController
 
   #リスト用に積算させる
   def addition_for_list
-    #Marshal.load(Marshal.dump(list3))   
+    
+    #リスト変更用
+    @changed_item = Hash.new
+    @changed_quantity = Hash.new
+    @changed_amount = Hash.new
+    #
+    
     @purchase_data_clone = @purchase_data.dup
     
-    #@purchase_data_addition = @purchase_data.clone
-    #@purchase_data_addition = @purchase_data.dup
-    #@purchase_data_addition = []
-    @purchase_data_addition = nil
+    #@purchase_data_addition = nil
     
-    @purchase_data.each do |purchase_datum|
-      #binding.pry
+    @purchase_data.each do |purchase_datum_store|
       
       #入庫でマイナスの仕入データを検索
-      if purchase_datum.inventory_division_id == $INDEX_INVENTORY_STOCK && 
-         purchase_datum.quantity.to_i < 0
+      if purchase_datum_store.inventory_division_id == $INDEX_INVENTORY_STOCK && 
+         purchase_datum_store.quantity.to_i < 0
          
          #入庫と一致する仕入データを検索
          @purchase_data_clone.each do |purchase_datum_clone|
            
-           #まずそのままクローンをセット
-           purchase_data_dup = purchase_datum_clone.clone
-           if @purchase_data_addition.nil?
-             #これはまあまあ
-             #@purchase_data_addition = @purchase_data.where(id: purchase_datum_clone.id)
-             #purchase_data_addition = @purchase_data.find(purchase_datum_clone.id)
-           end
+           #purchase_data_dup = purchase_datum_clone.clone
            
            if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK
              #資材コード一致？
-             if purchase_datum.material_code == purchase_datum_clone.material_code
+             if purchase_datum_store.material_code == purchase_datum_clone.material_code
            
-               in_quantity = purchase_datum.quantity.to_i
+               in_quantity = purchase_datum_store.quantity.to_i
                current_quantity = purchase_datum_clone.quantity.to_i
                
                #入庫のマイナス数量と仕入数量を加算
                total_quantity = in_quantity + current_quantity
                
-               if total_quantity >= 0
-                 #test del
-                 #@purchase_data_addition.find(purchase_datum.id).destroy
+               if total_quantity > 0
+                 
+                 @changed_item[purchase_datum_store.id] = "D"  #入庫のアイテムは削除(フラグを立てる)
                  
                  #金額を再計算
                  amount = purchase_datum_clone.purchase_unit_price.to_i * total_quantity
                  
-                 #binding.pry
+                 #
+                 @changed_item[purchase_datum_clone.id] = "1"  #数量・金額を変更させる場合のフラグ
+                 @changed_quantity[purchase_datum_clone.id] = total_quantity
+                 @changed_amount[purchase_datum_clone.id] = amount
+                 #
                  
-                 #@purchase_data_addition.find(purchase_datum_clone.id).assign_attributes({ quantity: total_quantity, purchase_amount: amount })
-                 #@purchase_data_addition.find(purchase_datum_clone.id).write_attribute(:quantity, total_quantity)
-
-                 purchase_data_dup.update(quantity: total_quantity, purchase_amount: amount)
-                 
-                 #@purchase_data_addition.find(purchase_datum_clone.id).update(quantity: total_quantity, purchase_amount: amount)
-                 #@purchase_data_addition.find(purchase_datum_clone.id).update_attribute(:changed_quantity, total_quantity)
-                 #purchase_data_dup.quantity = total_quantity
-                 #purchase_data_dup.purchase_amount = amount
-                 
-                 #tmp = @purchase_data_addition.find(purchase_datum_clone.id).clone
-                 #tmp = @purchase_data_addition.find(purchase_datum_clone.id)
-                 #tmp.update(changed_quantity: total_quantity)
-                 
-                 
-                                  
-                 #change_data(purchase_datum_clone, total_quantity)
                elsif total_quantity == 0
                #仕入が０になった場合は、どちらも削除する
-                 @purchase_data_addition.find(purchase_datum.id).destroy
-                 @purchase_data_addition.find(purchase_datum_clone.id).destroy
+               #(但しマイナスの場合は、未処理とする)
+                 @changed_item[purchase_datum_store.id] = "D"
+                 @changed_item[purchase_datum_clone.id] = "D"
                end
              end
            end
            
-           #@purchase_data_addition << purchase_data_dup
-           #@purchase_data_addition.push(purchase_data_dup)
-           #@purchase_data_addition + [purchase_data_dup]
-           @purchase_data_addition += [purchase_data_dup]
-           
-           #binding.pry
-           
-           #binding.pry
          end
          
       end
     end
-    
-    #binding.pry
-   
-    #a = {}
-    
-    #削除
-    #User.find(3).destroy
-    #MyModel.where(id: 1).update_all('times_used = times_used + 1')
-    #User.where("age <= 21").update(age: 23)
-    
   end
   
-  
-  #消す予定....
-  def change_data(purchase_datum_clone, total_quantity)
-    @purchase_data_addition.each do |purchase_datum|
-      if purchase_datum_clone.id == purchase_datum.id
-         #binding.pry
-         #数量を合算したものにし、金額を再計算
-         amount = purchase_datum_clone.purchase_unit_price.to_i * total_quantity
-         purchase_datum.quantity = total_quantity
-         purchase_datum.purchase_amount = amount
-      end
-    end
-    
-    tmp = @purchase_data_addition.find(27392)
-    #binding.pry
-  end
   
   #伝票一括変更処理
   def all_convert_delivery_slip(params)

@@ -66,39 +66,13 @@
       }
     },
     {
-      "id": "",
-      "type": "text",
-      "display": true,
-      "description": "",
-      "x": 796,
-      "y": 61,
-      "width": 33.9,
-      "height": 16,
-      "style": {
-        "font-family": [
-          "Helvetica"
-        ],
-        "font-size": 10,
-        "color": "#000000",
-        "text-align": "left",
-        "vertical-align": "top",
-        "line-height": "",
-        "line-height-ratio": "",
-        "letter-spacing": "",
-        "font-style": []
-      },
-      "texts": [
-        "仕入表"
-      ]
-    },
-    {
       "id": "customer_name",
       "type": "text-block",
       "display": true,
       "description": "",
       "x": 535,
       "y": 61,
-      "width": 240.4,
+      "width": 225.1,
       "height": 12.2,
       "style": {
         "font-family": [
@@ -1341,6 +1315,38 @@
       "y1": 74.7,
       "x2": 69,
       "y2": 93.1
+    },
+    {
+      "id": "print_title",
+      "type": "text-block",
+      "display": true,
+      "description": "",
+      "x": 765,
+      "y": 60.4,
+      "width": 60.7,
+      "height": 11.2,
+      "style": {
+        "font-family": [
+          "Helvetica"
+        ],
+        "font-size": 10,
+        "color": "#000000",
+        "text-align": "right",
+        "vertical-align": "top",
+        "line-height": "",
+        "line-height-ratio": "",
+        "letter-spacing": "",
+        "font-style": [],
+        "overflow": "fit",
+        "word-wrap": "none"
+      },
+      "reference-id": "",
+      "value": "",
+      "multiple-line": false,
+      "format": {
+        "base": "",
+        "type": ""
+      }
     }
   ],
   "state": {
