@@ -5,6 +5,7 @@
   <!-- 追加箇所開始 -->
   <%= page_entries_info @orders %>
   <!-- 追加箇所終了 -->
+  
   <%= search_form_for @q ,:url => {:action => "index2"} do |f| %>
     <!--<%= f.label :material_code, '品番：' %>-->
     <!--<%= f.select :material_code_eq, options_from_collection_for_select(MaterialMaster.all, "id", "material_code") , {include_blank: true}, {style: 'width:220px' , class: "searchablePurchaseOrderCode" } %>-->
@@ -21,7 +22,6 @@
       <%= f.submit '検索する', :class => 'btn btn-white_rsd' %>
       
       <!--<% if params[:move_flag] == "1" %>-->
-      
         <%= link_to t('.cancel', :default => t("前の画面に戻る")),
                 purchase_order_data_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), :class => 'btn btn-success' %>
       <!--標準版はカット
@@ -76,13 +76,16 @@
     <th><%= model_class.human_attribute_name(:order_price) %></th>
     <th><%= model_class.human_attribute_name(:list_price) %></th>
 	  <th><%= model_class.human_attribute_name(:created_at) %></th>
-	  
+    <!--
+	  <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    -->
     </tr>
   </thead>
   <tbody>
     <% @orders.order("id desc").each do |orders| %>
       <tr>
-        <td><%= link_to orders.id, orders_path(orders) %></td>
+        <!--<td><%= link_to orders.id, orders_path(orders) %></td>-->
+        <td><%= link_to orders.id, order_path(orders, construction_id: params[:construction_id], move_flag: params[:move_flag]) %></td>
         <td><%= orders.purchase_order_history.purchase_order_date %></td>
         <td><%= orders.material_code %></td>
         <td><%= orders.material_name %></td>
@@ -117,6 +120,16 @@
         <% end %>
         
         <td><%= orders.created_at.in_time_zone('Tokyo') %></td>
+        
+        <!--削除は機能するが(本来有り得ないので)非表示にしておく
+        <td>
+        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      order_path(orders, list: "1", construction_id: params[:construction_id], move_flag: params[:move_flag]),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+        -->
       </tr>
     <% end %>
     <!-- 追加箇所開始 -->

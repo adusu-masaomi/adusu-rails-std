@@ -64,6 +64,19 @@ class OrdersController < ApplicationController
         format.html {redirect_to purchase_order_histories_detail_path( :construction_id => params[:construction_id],
                         :move_flag => params[:move_flag] , :q => params[:q]) }
       
+      elsif params[:list] == "1"
+        #明細が全て削除されたら、見出しも削除する
+        count = Order.where(purchase_order_history_id: @order.purchase_order_history_id).count
+        
+        if count == 0
+          purchase_order_history = PurchaseOrderHistory.find(@order.purchase_order_history_id)
+          purchase_order_history.destroy
+        end
+        #
+      
+        format.html {redirect_to purchase_order_histories_list_path( :construction_id => params[:construction_id],
+                        :move_flag => params[:move_flag] , :q => params[:q]) }
+        
       else
         format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       
