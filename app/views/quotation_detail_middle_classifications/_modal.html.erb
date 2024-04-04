@@ -12,7 +12,8 @@
         <%= f.input :quotation_items_division_id, input_html:{id:"quotation_items_division_id",  :value => 1 } , as: :hidden %>
         <!--行番号-->
         <%= f.label :"行番号" , {:class => "my-custom-class-l" } %></br>
-        <div class="col-md-7" , style="margin-left : -15px">
+        <!--<div class="col-md-7" , style="margin-left : -15px">-->
+        <div class="col-md-9" , style="margin-left : -15px">
           <%= f.select :line_number, QuotationDetailMiddleClassification.serial_number, {}, 
           { id:"line_number", :tabindex=>"0", class: "searchableSelect2_1" , style: 'width:100px' } %>
           <%= f.check_box :check_line_insert, {}, "true", "false" %>
@@ -21,6 +22,10 @@
           <!--upd170308 WorkingUnitから種別取得-->
           <%= f.select :construction_type, WorkingUnit.types, {:selected => @quotation_detail_middle_classification.construction_type || 0}, 
           {id:'construction_type', :class => "my-custom-class", style: 'width:120px;margin-left:8px;font-size:14px;', :onchange => "setLaborType()" } %>
+          
+          <!--add240403-->
+          <%= f.text_field :updated_at_master, id: :updated_at_master, style: 'width:140px;', disabled: true %>
+          
         </div></br></br>
   
         <!--記号-->
@@ -250,7 +255,7 @@
     });
     $( ".searchableSelect2_3" ).change(function(e) {
       setWorkingMiddleItem();
-         
+      setWorkingItemUpdatedAt();
       //add190723;
       setUnitPriceThenCalc();  //単価・金額を計算
     });
@@ -309,6 +314,9 @@
     //呼出用カテゴリーの初期設定
     //setItemExtractByCategoryInitial();
     
+    //add240404
+    //作業明細の更新時間を表示
+    setWorkingItemUpdatedAt();
   });
   
   
@@ -659,6 +667,24 @@
     //   }
     //); 
   };  
+  
+  //add240404
+  //作業明細の更新時間を表示する
+  function setWorkingItemUpdatedAt(){
+    //obj = ""
+    //if (flag == 1){
+      obj = document.getElementById("working_middle_item_id");
+    //}
+    working_middle_item_id = parseInt(obj.value);
+
+    $.get("<%= quotation_detail_middle_classificationz_working_item_updated_at_select_path %>",
+      {id: working_middle_item_id },
+      function(data){
+        obj = document.getElementById("updated_at_master").textContent;
+        document.getElementById("updated_at_master").value = obj;
+      }
+    );
+  }
 
   //(ajax)項目・単価のセット(材料Mより取得)
   function setItemNameAndPrice()

@@ -23,6 +23,10 @@ class QuotationDetailLargeClassification < ApplicationRecord
   attr_accessor :quotation_large_item_id
   attr_accessor :master_insert_flag
   
+  #add240403
+  #更新日時
+  attr_accessor :updated_at_master
+  
   #ajax用（リスト）
   
   attr_accessor :working_middle_item_id_select_hide

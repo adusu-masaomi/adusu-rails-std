@@ -19,6 +19,10 @@ class QuotationDetailMiddleClassification < ApplicationRecord
   #短縮名手入力用(add170822)
   attr_accessor :working_middle_item_short_name_manual
   
+   #add240403
+  #更新日時
+  attr_accessor :updated_at_master
+  
   #add 1711004
   #attr_accessor :category
   attr_accessor :quotation_middle_item_id

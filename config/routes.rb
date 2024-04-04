@@ -239,7 +239,9 @@ Rails.application.routes.draw do
   get '/purchase_datum/unit_select' => 'purchase_data#unit_select'
   get '/purchase_datum/supplier_item_select' => 'purchase_data#supplier_item_select'
   
-  #add201229
+  #add240403
+  get '/purchase_datum/get_unit_price_on_return' => 'purchase_data#get_unit_price_on_return'
+  
   get '/purchase_order_datum/get_supplier_by_character' => 'purchase_order_data#get_supplier_by_character'
   
   get '/purchase_datum/material_category_select' => 'purchase_data#material_category_select'
@@ -249,7 +251,6 @@ Rails.application.routes.draw do
   get '/purchase_datum/get_header_id' => 'purchase_data#get_header_id'
   
   get '/purchase_datum/clear_cookies' => 'purchase_data#clear_cookies'
-  #add190124
   get '/purchase_datum/get_labor_cost' => 'purchase_data#get_labor_cost'
   get '/purchase_datum/set_ajax_outsourcing_default_data' => 'purchase_data#set_ajax_outsourcing_default_data'
   
@@ -355,6 +356,8 @@ Rails.application.routes.draw do
   #  add161003
   # upd170131
   get '/quotation_detail_large_classificationz/working_large_item_select' => 'quotation_detail_large_classifications#working_large_item_select'
+  #add240404
+  get '/quotation_detail_large_classificationz/working_item_updated_at_select' => 'quotation_detail_large_classifications#working_item_updated_at_select'
   get '/quotation_detail_large_classificationz/working_large_specification_select' => 'quotation_detail_large_classifications#working_large_specification_select'
   #見積書内訳D単位名
   #upd170130
@@ -485,6 +488,9 @@ Rails.application.routes.draw do
 
   #見積明細D,見積内訳M連動用
   get '/quotation_detail_middle_classificationz/working_middle_item_select' => 'quotation_detail_middle_classifications#working_middle_item_select'
+  #add240404
+  get '/quotation_detail_middle_classificationz/working_item_updated_at_select' => 'quotation_detail_middle_classifications#working_item_updated_at_select'
+  
   get '/quotation_detail_middle_classificationz/working_middle_specification_select' => 'quotation_detail_middle_classifications#working_middle_specification_select'
   #見積書明細D単位ID
   get '/quotation_detail_middle_classificationz/working_unit_id_select' => 'quotation_detail_middle_classifications#working_unit_id_select'

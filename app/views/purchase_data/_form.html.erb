@@ -670,7 +670,9 @@
       //debugger;
 
       getInventoryUnitPricesAndSupplier(company_id);
-
+      
+      //add240403
+      
       //add200701
       //出庫時の単価の計算
       calcMoneyOnInventoryShipping();
@@ -681,6 +683,10 @@
       visibleOffOnShipping(true);
      
       document.getElementById("division_id").value = INDEX_DIVISION_PURCHASE;
+    
+      //240403 作成中...
+      //マイナス入庫の場合の単価の取得
+      //getUnitPriceOnReturn()
     }
 
 
@@ -696,6 +702,26 @@
 
     //在庫品目なら件名を自動セットする(マイナス登録もあるので保留)
     //setConstructionOnStocked();
+  }
+  
+  //マイナス入庫の場合、在庫か仕入単価から取得する(ajax)
+  function getUnitPriceOnReturn(){
+    construction_datum_id = document.getElementById("construction_datum_id").value;
+    material_id = document.getElementById("material_id").value;
+    
+    quantity = parseInt(document.getElementById("quantity").value);
+    //inventory_division_id = document.getElementById("inventory_division_id").value;
+    
+    if (quantity < 0 ){
+      
+      $.get("<%= purchase_datum_get_unit_price_on_return_path %>",
+        { construction_datum_id: construction_datum_id, material_id: material_id },
+        function(data) {
+          //obj = document.getElementById("construction_datum_id_hide").textContent;
+        }
+      );
+    }
+    
   }
 
   //在庫Mより現在単価・業者を取得する（出庫の場合に取得する）--ajax利用

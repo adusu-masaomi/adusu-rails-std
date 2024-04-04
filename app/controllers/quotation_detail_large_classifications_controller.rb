@@ -736,7 +736,15 @@ class QuotationDetailLargeClassificationsController < ApplicationController
  
   def working_large_item_select
     @working_large_item_name = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:working_middle_item_name).flatten.join(" ")
+    #add240404
+    #@updated_at = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:updated_at).flatten.join(" ")
   end
+  
+  #add240404
+  def working_item_updated_at_select
+    @updated_at = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:updated_at).flatten.join(" ")
+  end
+  
   def working_large_specification_select
     @working_large_specification = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:working_middle_specification).flatten.join(" ")
   

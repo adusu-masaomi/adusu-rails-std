@@ -1565,6 +1565,40 @@ class PurchaseDataController < ApplicationController
       @maker_masters = MakerMaster.all.pluck("maker_masters.maker_name, maker_masters.id")
     end 
   end
+  
+  #ajax
+  #マイナス入庫の場合の単価取得
+  def get_unit_price_on_return
+    #
+    #工事ID&品番で検索、日付を降順ループ(?)
+    #出庫データがあれば在庫より単価・仕入先取得
+    #
+    
+    construction_datum_id = params[:construction_datum_id].to_i
+    material_id = params[:material_id].to_i
+    
+    purchase_data = PurchaseDatum.where(construction_datum_id: construction_datum_id, 
+                                        material_id: material_id)
+    
+    #作成中...
+    if purchase_data.present?
+      
+      #まず出庫データより検索
+      #入庫等、仕入or出庫に該当しない場合も考慮
+      purchase_data.order(purchase_date: "DESC").each do |purchase_datum|
+        
+        #if purchase_datum.inventory_division_id == 
+        #end
+      end
+      #
+      
+    else
+      #まだ仕入も出庫もない場合....直近の仕入業者＆単価で取得？
+    end
+    
+  end
+  
+  
   def unit_select
     @unit_masters  = PurchaseUnitPrice.with_unit.where(:supplier_id => params[:supplier_id], :material_id => params[:material_id]).where("supplier_id is NOT NULL").where("material_id is NOT NULL").pluck("unit_masters.unit_name, unit_masters.id")
 
