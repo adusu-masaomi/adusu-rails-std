@@ -373,8 +373,10 @@ class PurchaseDataController < ApplicationController
     
     @purchase_data.each do |purchase_datum_store|
       
-      #入庫でマイナスの仕入データを検索
-      if purchase_datum_store.inventory_division_id == $INDEX_INVENTORY_STOCK && 
+      #入庫or仕入でマイナス数量の仕入データを検索
+      #if purchase_datum_store.inventory_division_id == $INDEX_INVENTORY_STOCK && 
+      #   purchase_datum_store.quantity.to_i < 0
+      if purchase_datum_store.inventory_division_id != $INDEX_INVENTORY_SHIPPING && 
          purchase_datum_store.quantity.to_i < 0
          
          #入庫と一致する仕入データを検索
@@ -382,7 +384,9 @@ class PurchaseDataController < ApplicationController
            
            #purchase_data_dup = purchase_datum_clone.clone
            
-           if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK
+           #if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK
+           if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK && 
+              purchase_datum_clone.quantity.to_i > 0
              #資材コード一致？
              if purchase_datum_store.material_code == purchase_datum_clone.material_code
            
