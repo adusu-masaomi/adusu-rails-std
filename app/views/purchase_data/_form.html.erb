@@ -187,6 +187,9 @@
   <!--add180223-->
   <%= f.input :complete_flag_hide, input_html:{id:'complete_flag_hide'}, as: :hidden  %>
   <%= f.input :outsourcing_flag_hide, input_html:{id:'outsourcing_flag_hide'}, as: :hidden  %>
+  
+  <!--add240404-->
+  <%= f.input :unit_hide, input_html:{id:'unit_hide'}, as: :hidden  %>
 
   <!-- 標準版判定用-->
   <%= f.input :company_id_hide, input_html:{id:'company_id_hide', :value => @company_id} , as: :hidden %>
@@ -215,6 +218,7 @@
 
 <script type="text/javascript">
 
+  $no_unit_price_change = false;
   var item_index = 0;
 
   $(document).ready(function() {
@@ -684,11 +688,11 @@
      
       document.getElementById("division_id").value = INDEX_DIVISION_PURCHASE;
     
-      //240403 作成中...
-      //マイナス入庫の場合の単価の取得
-      //getUnitPriceOnReturn()
     }
-
+    //240403 
+    //マイナス入庫の場合の単価の取得
+    getUnitPriceOnReturn()
+      
 
     if (inventory_division_id != "" && inventory_division_id == INDEX_INVENTORY_STOCK || 
     inventory_division_id == INDEX_INVENTORY_SHIPPING) {
@@ -708,16 +712,48 @@
   function getUnitPriceOnReturn(){
     construction_datum_id = document.getElementById("construction_datum_id").value;
     material_id = document.getElementById("material_id").value;
+    company_id = document.getElementById("company_id_hide").value;
+    
+    inventory_division_id = document.getElementById("inventory_division_id").value;
     
     quantity = parseInt(document.getElementById("quantity").value);
     //inventory_division_id = document.getElementById("inventory_division_id").value;
-    
-    if (quantity < 0 ){
+        
+    if (quantity < 0 && inventory_division_id != "" && inventory_division_id == INDEX_INVENTORY_STOCK ){
       
       $.get("<%= purchase_datum_get_unit_price_on_return_path %>",
-        { construction_datum_id: construction_datum_id, material_id: material_id },
+        { construction_datum_id: construction_datum_id, material_id: material_id, company_id: company_id },
         function(data) {
-          //obj = document.getElementById("construction_datum_id_hide").textContent;
+          //仕入先を変更
+          obj = document.getElementById("supplier_id_hide").textContent;
+          if (obj != null) {
+            index = parseInt(obj);
+            
+            $no_unit_price_change = true;
+            $(".searchableSupplier").val(index).trigger("change"); 
+            //document.getElementById("supplier_id").value = index;
+          }
+          //単価を変更
+          obj = document.getElementById("unit_price_hide").textContent;
+          document.getElementById("purchase_unit_price").value = obj;
+          //金額の計算も行う
+          if (document.getElementById("quantity") != undefined && document.getElementById("purchase_unit_price") != undefined) {
+            var num = document.getElementById("quantity").value * document.getElementById("purchase_unit_price").value ;
+            //小数点以下を切り捨て
+            document.getElementById("purchase_amount").value = Math.floor(num);
+          }
+          
+          //単位
+          obj = document.getElementById("unit_hide").textContent;
+          if (obj != null) {
+            index = parseInt(obj);
+            
+            $(".searchableUnit").val(index).trigger("change"); 
+          }
+          
+          //$(".searchableUnit").val(index_set).trigger("change");
+          //
+          
         }
       );
     }
@@ -953,9 +989,15 @@
     }
    
   }
-
+  
   //仕入先単価のセット
   function setUnitPrice() {
+    
+    if ($no_unit_price_change == true){
+      $no_unit_price_change = false;
+      return;
+    }
+  
     //仕入単価のセット
     //var supplier_id = f.supplier_id.value;
     //var material_id = f.material_id.value;
@@ -1109,6 +1151,11 @@
     //add200701
     //出庫時の単価の計算
     calcMoneyOnInventoryShipping();
+    
+    //add240404
+    //マイナス入庫時の単価の計算
+    getUnitPriceOnReturn();
+    
   }
   //金額計算(フォーム経由しないver)
   //区分を出庫から仕入に切り替えた場合を想定

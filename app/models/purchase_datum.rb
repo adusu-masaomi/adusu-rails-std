@@ -37,6 +37,7 @@ class PurchaseDatum < ApplicationRecord
   attr_accessor :supplier_material_code
   attr_accessor :supplier_id_hide
   attr_accessor :unit_price_hide
+  attr_accessor :unit_hide  #add240404
   attr_accessor :supplier_material_code
     
   #add180223登録フラグ

@@ -1567,6 +1567,7 @@ class PurchaseDataController < ApplicationController
   end
   
   #ajax
+  #240404
   #マイナス入庫の場合の単価取得
   def get_unit_price_on_return
     #
@@ -1576,24 +1577,79 @@ class PurchaseDataController < ApplicationController
     
     construction_datum_id = params[:construction_datum_id].to_i
     material_id = params[:material_id].to_i
+    company_id =  params[:company_id]
     
     purchase_data = PurchaseDatum.where(construction_datum_id: construction_datum_id, 
                                         material_id: material_id)
     
-    #作成中...
+    @unit_price = 0
+    @unit_master_id = 0
+    
     if purchase_data.present?
       
       #まず出庫データより検索
       #入庫等、仕入or出庫に該当しない場合も考慮
       purchase_data.order(purchase_date: "DESC").each do |purchase_datum|
         
-        #if purchase_datum.inventory_division_id == 
-        #end
+        if purchase_datum.inventory_division_id == $INDEX_INVENTORY_SHIPPING
+        #出庫の場合
+          #
+          inventory = Inventory.where(material_master_id: material_id).first
+          
+          #自社の仕入先を取得
+          company_id =  params[:company_id]  
+          if company_id != "1"
+            supplier_own_company = $SUPPLIER_MASER_ID_OWN_COMPANY
+          else
+          #アデュース仕様
+            supplier_own_company = 10
+          end
+          #
+          
+          if inventory.present?
+            if inventory.current_unit_price > 0
+              #在庫の単価をセット
+              @unit_price = inventory.current_unit_price
+            else
+              #在庫単価ない場合、資材マスタの直近単価にする
+              material_master = MaterialMaster.where(id: material_id).first
+              if material_master.present?
+                @unit_price = material_master.last_unit_price
+              end
+            end
+            
+            #単位をセット
+            @unit_master_id = inventory.unit_master_id
+          
+          else
+            #在庫Mがない場合は考慮しない(出庫があるので、基本存在しているはず)
+          end
+          
+          #仕入先をセット
+          @supplier_id = supplier_own_company
+          
+          #
+          break  #抜ける
+        elsif purchase_datum.division_id == $INDEX_DIVISION_PURCHASE
+        #仕入の場合
+          @unit_price = purchase_datum.purchase_unit_price
+          @supplier_id = purchase_datum.supplier_id
+          @unit_master_id = purchase_datum.unit_id
+          
+          break  #抜ける
+        end
       end
       #
       
     else
-      #まだ仕入も出庫もない場合....直近の仕入業者＆単価で取得？
+      #まだ仕入も出庫もない場合....直近の仕入業者＆単価で取得
+      purchase_data_last = PurchaseDatum.where(material_id: material_id).
+                            where(division_id: $INDEX_DIVISION_PURCHASE).order(purchase_date: :desc).limit(1).first
+      if purchase_data_last.present?
+        @unit_price = purchase_data_last.purchase_unit_price
+        @supplier_id = purchase_data_last.supplier_id
+        @unit_master_id = purchase_data_last.unit_id
+      end
     end
     
   end
