@@ -440,7 +440,7 @@ class PurchaseDataController < ApplicationController
                  end
                end
                
-               break  #ここで抜ける
+               next  #次へ
              end
            end
            
