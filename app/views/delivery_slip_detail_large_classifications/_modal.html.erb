@@ -13,7 +13,8 @@
       <%= f.input :delivery_slip_items_division_id, input_html:{id:"delivery_slip_items_division_id",  :value => 1 } , as: :hidden %>
       <!---->
       <%= f.label :"行番号" , { :class => "my-custom-class-l"} %></br>
-      <div class="col-md-7" , style="margin-left : -15px">
+      <!--<div class="col-md-7" , style="margin-left : -15px">-->
+      <div class="col-md-9" , style="margin-left : -15px">
         <%= f.select :line_number, DeliverySlipDetailLargeClassification.serial_number, {}, { id:"line_number", class: "searchableSelect2_1", 
         style: 'width:100px' } %>
         <%= f.check_box :check_line_insert, {}, "true", "false" %>
@@ -21,6 +22,9 @@
         <%= f.label_tag :construction_type, '工事種別：' %>
         <%= f.select :construction_type, WorkingUnit.types, {:selected => @delivery_slip_detail_large_classification.construction_type || 0}, 
         {id:'construction_type', :class => "my-custom-class", style: 'width:120px;margin-left:8px;font-size:14px;', :onchange => "setLaborType()" } %>
+        
+        <!--add240403-->
+        <%= f.text_field :updated_at_master, id: :updated_at_master, style: 'width:140px; border: none;', disabled: true %>
       </div></br></br>
       <!--記号-->
       <!--upd170822-->
@@ -264,6 +268,7 @@
       //clearQuantity();
       //
       setWorkingLargeItemName();
+      setWorkingItemUpdatedAt();   //add240404
       setWorkingLarageSpecification();
       setUnit();
       setWorkingUnitPrice();
@@ -334,7 +339,10 @@
     //add180210
     //呼出用カテゴリーの初期設定
     setItemExtractByCategoryInitial();
-
+    
+    //add240404
+    //作業明細の更新時間を表示
+    setWorkingItemUpdatedAt();
   });
   
   //各値の自動セット(固有)-ajax
@@ -715,6 +723,24 @@
         }
       );
     };  
+    
+  //add240404
+  //作業明細の更新時間を表示する
+  function setWorkingItemUpdatedAt(){
+    //obj = ""
+    //if (flag == 1){
+      obj = document.getElementById("working_large_item_id");
+    //}
+    working_large_item_id = parseInt(obj.value);
+
+    $.get("<%= delivery_slip_detail_large_classificationz_working_item_updated_at_select_path %>",
+      {id: working_large_item_id },
+      function(data){
+        obj = document.getElementById("updated_at_master").textContent;
+        document.getElementById("updated_at_master").value = obj;
+      }
+    );
+  }
   //仕様のセット
   function setWorkingLarageSpecification()
   {  

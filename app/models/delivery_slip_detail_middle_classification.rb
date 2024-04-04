@@ -8,6 +8,10 @@ class DeliverySlipDetailMiddleClassification < ApplicationRecord
   #行挿入用
   attr_accessor :check_line_insert
   
+  #add240403
+  #更新日時
+  attr_accessor :updated_at_master
+  
   #マスターセット用
   attr_accessor :check_update_item
   attr_accessor :check_update_all

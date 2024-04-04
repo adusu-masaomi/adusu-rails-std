@@ -749,6 +749,12 @@ class DeliverySlipDetailMiddleClassificationsController < ApplicationController
   def working_middle_item_select
     @working_middle_item_name = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:working_middle_item_name).flatten.join(" ")
   end
+  
+  #add240404
+  def working_item_updated_at_select
+    @updated_at = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:updated_at).flatten.join(" ")
+  end
+  
   def working_middle_specification_select
     @working_middle_specification = WorkingMiddleItem.where(:id => params[:id]).where("id is NOT NULL").pluck(:working_middle_specification).flatten.join(" ")
 

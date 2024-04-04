@@ -466,6 +466,8 @@ Rails.application.routes.draw do
   
   #納品書内訳D関連
   get '/delivery_slip_detail_large_classificationz/working_large_item_select' => 'delivery_slip_detail_large_classifications#working_large_item_select'
+  #add240404
+  get '/delivery_slip_detail_large_classificationz/working_item_updated_at_select' => 'delivery_slip_detail_large_classifications#working_item_updated_at_select'
   get '/delivery_slip_detail_large_classificationz/working_large_specification_select' => 'delivery_slip_detail_large_classifications#working_large_specification_select'
   #納品書内訳D単位名
   get '/delivery_slip_detail_large_classificationz/working_unit_name_select' => 'delivery_slip_detail_large_classifications#working_unit_name_select'
@@ -568,10 +570,11 @@ Rails.application.routes.draw do
   get '/invoice_detail_middle_classificationz/invoice_detail_large_classification_id_select' => 'invoice_detail_middle_classifications#invoice_detail_large_classification_id_select'
   ########
   
-  #add170203
   ########
   #納品明細D,納品内訳M連動用
   get '/delivery_slip_detail_middle_classificationz/working_middle_item_select' => 'delivery_slip_detail_middle_classifications#working_middle_item_select'
+  #add240404
+  get '/delivery_slip_detail_middle_classificationz/working_item_updated_at_select' => 'delivery_slip_detail_middle_classifications#working_item_updated_at_select'  
   get '/delivery_slip_detail_middle_classificationz/working_middle_specification_select' => 'delivery_slip_detail_middle_classifications#working_middle_specification_select'
   #納品明細D-単位ID
   get '/delivery_slip_detail_middle_classificationz/working_unit_id_select' => 'delivery_slip_detail_middle_classifications#working_unit_id_select'

@@ -23,6 +23,10 @@ class DeliverySlipDetailLargeClassification < ApplicationRecord
   attr_accessor :check_update_item
   attr_accessor :check_update_all
   
+  #add240403
+  #更新日時
+  attr_accessor :updated_at_master
+  
   #短縮名手入力用(add170822)
   attr_accessor :working_large_item_short_name_manual
   
