@@ -383,15 +383,15 @@ class PurchaseDataController < ApplicationController
          @purchase_data_clone.each do |purchase_datum_clone|
            
            #purchase_data_dup = purchase_datum_clone.clone
+           no_count = false
            
            #if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK
            if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK && 
               purchase_datum_clone.quantity.to_i > 0
              
-             no_count == false
              if @changed_item[purchase_datum_clone.id] == "D" || 
                 @changed_item[purchase_datum_clone.id] == "1"
-               no_count == true
+               no_count = true
              end
              
              #資材コード一致？

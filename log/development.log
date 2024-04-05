@@ -1,0 +1,159 @@
+Started GET "/purchase_data?utf8=%E2%9C%93&q%5Bpurchase_date_gteq%5D=&q%5Bpurchase_date_lteq%5D=&q%5Bmaker_id_eq%5D=&q%5Bslip_code_eq%5D=&q%5Bsupplier_id_eq%5D=&q%5Bpurchase_order_datum_id_eq%5D=&q%5Bdivision_id_eq%5D=&q%5Binventory_division_id_eq%5D=&q%5Bwith_construction%5D=2691&q%5Bwith_customer%5D=&q%5Bwith_material_code%5D=&q%5Bwith_material_category%5D=&q%5Bwith_material_code_include%5D=&q%5Bwith_material_name_include%5D=&q%5Bmaterial_name_cont%5D=&commit=%E6%A4%9C%E7%B4%A2%28%E9%9B%86%E8%A8%88%29&old_slip_code%5Bvalue%5D=&new_slip_code%5Bvalue%5D=&new_purchase_date%5Bnew_date%281i%29%5D=&new_purchase_date%5Bnew_date%282i%29%5D=&new_purchase_date%5Bnew_date%283i%29%5D=&new_purchase_order_datum_id%5Bvalue%5D=&new_notes%5Bvalue%5D=&new_notes_check%5Bvalue%5D=0" for ::1 at 2024-04-05 09:26:06 +0900
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PurchaseDataController#index as HTML
+  Parameters: {"utf8"=>"✓", "q"=>{"purchase_date_gteq"=>"", "purchase_date_lteq"=>"", "maker_id_eq"=>"", "slip_code_eq"=>"", "supplier_id_eq"=>"", "purchase_order_datum_id_eq"=>"", "division_id_eq"=>"", "inventory_division_id_eq"=>"", "with_construction"=>"2691", "with_customer"=>"", "with_material_code"=>"", "with_material_category"=>"", "with_material_code_include"=>"", "with_material_name_include"=>"", "material_name_cont"=>""}, "commit"=>"検索(集計)", "old_slip_code"=>{"value"=>""}, "new_slip_code"=>{"value"=>""}, "new_purchase_date"=>{"new_date(1i)"=>"", "new_date(2i)"=>"", "new_date(3i)"=>""}, "new_purchase_order_datum_id"=>{"value"=>""}, "new_notes"=>{"value"=>""}, "new_notes_check"=>{"value"=>"0"}}
+  [1m[36mUser Load (3.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  [1m[36mSupplierMaster Load (16.3ms)[0m  [1m[34mSELECT DISTINCT "supplier_masters".* FROM "supplier_masters" INNER JOIN "purchase_data" ON "purchase_data"."supplier_id" = "supplier_masters"."id" WHERE (purchase_data.construction_datum_id = '2691')[0m
+  ↳ app/controllers/purchase_data_controller.rb:222:in `index'
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (id = 5) ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:372:in `app_get_session_user'
+  Rendering layout layouts/application.html.erb
+  Rendering purchase_data/index.html.erb within layouts/application
+  [1m[35m (5.0ms)[0m  [1m[34mSELECT COUNT(*) FROM (SELECT 1 AS one FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') LIMIT $1 OFFSET $2) subquery_for_count[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/purchase_data/index.html.erb:9
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691')[0m
+  ↳ app/views/purchase_data/index.html.erb:9
+  [1m[36mMakerMaster Load (2.8ms)[0m  [1m[34mSELECT "maker_masters".* FROM "maker_masters"[0m
+  ↳ app/views/purchase_data/index.html.erb:24:in `map'
+  [1m[36mSupplierMaster Load (1.2ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters"[0m
+  ↳ app/views/purchase_data/index.html.erb:31:in `map'
+  [1m[36mPurchaseOrderDatum Load (4.8ms)[0m  [1m[34mSELECT "purchase_order_data".* FROM "purchase_order_data" WHERE "purchase_order_data"."construction_datum_id" = $1[0m  [["construction_datum_id", 2691]]
+  ↳ app/views/purchase_data/index.html.erb:48:in `map'
+  [1m[36mPurchaseDivision Load (1.8ms)[0m  [1m[34mSELECT "purchase_divisions".* FROM "purchase_divisions"[0m
+  ↳ app/views/purchase_data/index.html.erb:56:in `map'
+  [1m[36mConstructionDatum Load (12.3ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" ORDER BY construction_code desc[0m
+  ↳ app/views/purchase_data/index.html.erb:66:in `map'
+  [1m[36mCACHE ConstructionDatum Load (0.0ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" ORDER BY construction_code desc[0m
+  ↳ app/views/purchase_data/index.html.erb:67:in `map'
+  [1m[36mCustomerMaster Load (4.7ms)[0m  [1m[34mSELECT "customer_masters".* FROM "customer_masters"[0m
+  ↳ app/views/purchase_data/index.html.erb:76
+  [1m[36mCACHE CustomerMaster Load (0.0ms)[0m  [1m[34mSELECT "customer_masters".* FROM "customer_masters"[0m
+  ↳ app/views/purchase_data/index.html.erb:77:in `map'
+  [1m[36mMaterialMaster Load (18.5ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters"[0m
+  ↳ app/views/purchase_data/index.html.erb:85
+  [1m[36mMaterialCategory Load (2.0ms)[0m  [1m[34mSELECT "material_categories".* FROM "material_categories" ORDER BY seq asc[0m
+  ↳ app/views/purchase_data/index.html.erb:94:in `map'
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT SUM("purchase_data"."purchase_amount") FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/models/purchase_datum.rb:179:in `sumprice'
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT SUM("purchase_data"."quantity") FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') AND "purchase_data"."division_id" != $1 LIMIT $2 OFFSET $3[0m  [["division_id", 4], ["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/models/purchase_datum.rb:186:in `sumQuantity'
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT SUM("purchase_data"."quantity") FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') AND "purchase_data"."division_id" = $1 LIMIT $2 OFFSET $3[0m  [["division_id", 4], ["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/models/purchase_datum.rb:190:in `sumShipQuantity'
+  [1m[36mPurchaseOrderDatum Load (5.5ms)[0m  [1m[34mSELECT "purchase_order_data".* FROM "purchase_order_data"[0m
+  ↳ app/views/purchase_data/index.html.erb:184
+  [1m[36mPurchaseDatum Load (2.6ms)[0m  [1m[34mSELECT "purchase_data".* FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') ORDER BY id desc LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/views/purchase_data/index.html.erb:258
+  [1m[36mPurchaseOrderDatum Load (1.0ms)[0m  [1m[34mSELECT "purchase_order_data".* FROM "purchase_order_data" WHERE "purchase_order_data"."id" = $1 LIMIT $2[0m  [["id", 1525], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:263
+  [1m[36mConstructionDatum Load (0.5ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2691], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:268
+  [1m[36mCustomerMaster Load (0.4ms)[0m  [1m[34mSELECT "customer_masters".* FROM "customer_masters" WHERE "customer_masters"."id" = $1 LIMIT $2[0m  [["id", 86], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:291
+  [1m[36mMaterialMaster Load (0.7ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:299
+  [1m[36mUnitMaster Load (1.3ms)[0m  [1m[34mSELECT "unit_masters".* FROM "unit_masters" WHERE "unit_masters"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:321
+  [1m[36mSupplierMaster Load (0.7ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:341
+  [1m[36mPurchaseDivision Load (0.5ms)[0m  [1m[34mSELECT "purchase_divisions".* FROM "purchase_divisions" WHERE "purchase_divisions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:347
+  [1m[36mMaterialCategory Load (0.4ms)[0m  [1m[34mSELECT "material_categories".* FROM "material_categories" WHERE "material_categories"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/purchase_data/index.html.erb:377
+  Rendered purchase_data/index.html.erb within layouts/application (Duration: 1178.6ms | Allocations: 823105)
+DEPRECATION WARNING: The asset "apple-touch-icon-144x144-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-114x114-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-72x72-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "apple-touch-icon-precomposed.png" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+DEPRECATION WARNING: The asset "favicon.ico" is not present in the asset pipeline.
+Falling back to an asset that may be in the public folder.
+This behavior is deprecated and will be removed.
+To bypass the asset pipeline and preserve this behavior,
+use the `skip_pipeline: true` option.
+ (called from asset_path at C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/actionview-6.1.6/lib/action_view/helpers/asset_url_helper.rb:203)
+  Rendered layout layouts/application.html.erb (Duration: 6504.6ms | Allocations: 2905946)
+Completed 200 OK in 6784ms (Views: 6407.1ms | ActiveRecord: 154.0ms | Allocations: 2970459)
+
+
+Started GET "/purchase_data.pdf?print_type=2" for ::1 at 2024-04-05 09:26:16 +0900
+Processing by PurchaseDataController#index as PDF
+  Parameters: {"print_type"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (id = 5) ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:372:in `app_get_session_user'
+  [1m[36mPurchaseDatum Load (1.3ms)[0m  [1m[34mSELECT "purchase_data".* FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/controllers/purchase_data_controller.rb:374:in `addition_for_list'
+  [1m[36mPurchaseDatum Load (3.4ms)[0m  [1m[34mSELECT purchase_data.*, purchase_order_data.purchase_order_code FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" INNER JOIN "purchase_order_data" ON "purchase_order_data"."id" = "purchase_data"."purchase_order_datum_id" WHERE (construction_data.id = '2691') ORDER BY purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id[0m
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:34:in `create'
+  [1m[36mConstructionDatum Load (0.4ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2691], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:45:in `block in create'
+  [1m[36mCustomerMaster Load (1.9ms)[0m  [1m[34mSELECT "customer_masters".* FROM "customer_masters" WHERE "customer_masters"."id" = $1 LIMIT $2[0m  [["id", 86], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:49:in `block in create'
+  [1m[36mPurchaseOrderDatum Load (0.5ms)[0m  [1m[34mSELECT "purchase_order_data".* FROM "purchase_order_data" WHERE "purchase_order_data"."id" = $1 LIMIT $2[0m  [["id", 1525], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:111:in `block in create'
+  [1m[36mMaterialMaster Load (0.4ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:144:in `block (2 levels) in create'
+  [1m[36mPurchaseDivision Load (0.4ms)[0m  [1m[34mSELECT "purchase_divisions".* FROM "purchase_divisions" WHERE "purchase_divisions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:206:in `block (2 levels) in create'
+  [1m[36mUnitMaster Load (0.8ms)[0m  [1m[34mSELECT "unit_masters".* FROM "unit_masters" WHERE "unit_masters"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:220:in `block (2 levels) in create'
+  [1m[36mSupplierMaster Load (0.4ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:235:in `block (2 levels) in create'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | Allocations: 9)
+Sent data purchase_list.pdf (4.6ms)
+Completed 200 OK in 468ms (Views: 4.3ms | ActiveRecord: 10.4ms | Allocations: 502393)
+
+
+Started GET "/purchase_data.pdf?print_type=2" for ::1 at 2024-04-05 09:26:22 +0900
+Processing by PurchaseDataController#index as PDF
+  Parameters: {"print_type"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/helpers/sessions_helper.rb:10:in `current_user'
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (id = 5) ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:372:in `app_get_session_user'
+  [1m[36mPurchaseDatum Load (1.2ms)[0m  [1m[34mSELECT "purchase_data".* FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" WHERE (construction_data.id = '2691') LIMIT $1 OFFSET $2[0m  [["LIMIT", 200], ["OFFSET", 0]]
+  ↳ app/controllers/purchase_data_controller.rb:374:in `addition_for_list'
+  [1m[36mPurchaseDatum Load (2.3ms)[0m  [1m[34mSELECT purchase_data.*, purchase_order_data.purchase_order_code FROM "purchase_data" INNER JOIN "construction_data" ON "construction_data"."id" = "purchase_data"."construction_datum_id" INNER JOIN "purchase_order_data" ON "purchase_order_data"."id" = "purchase_data"."purchase_order_datum_id" WHERE (construction_data.id = '2691') ORDER BY purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id[0m
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:34:in `create'
+  [1m[36mConstructionDatum Load (0.3ms)[0m  [1m[34mSELECT "construction_data".* FROM "construction_data" WHERE "construction_data"."id" = $1 LIMIT $2[0m  [["id", 2691], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:45:in `block in create'
+  [1m[36mCustomerMaster Load (0.3ms)[0m  [1m[34mSELECT "customer_masters".* FROM "customer_masters" WHERE "customer_masters"."id" = $1 LIMIT $2[0m  [["id", 86], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:49:in `block in create'
+  [1m[36mPurchaseOrderDatum Load (0.3ms)[0m  [1m[34mSELECT "purchase_order_data".* FROM "purchase_order_data" WHERE "purchase_order_data"."id" = $1 LIMIT $2[0m  [["id", 1525], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:111:in `block in create'
+  [1m[36mMaterialMaster Load (0.6ms)[0m  [1m[34mSELECT "material_masters".* FROM "material_masters" WHERE "material_masters"."id" = $1 LIMIT $2[0m  [["id", 495], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:144:in `block (2 levels) in create'
+  [1m[36mPurchaseDivision Load (0.3ms)[0m  [1m[34mSELECT "purchase_divisions".* FROM "purchase_divisions" WHERE "purchase_divisions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:206:in `block (2 levels) in create'
+  [1m[36mUnitMaster Load (0.3ms)[0m  [1m[34mSELECT "unit_masters".* FROM "unit_masters" WHERE "unit_masters"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:220:in `block (2 levels) in create'
+  [1m[36mSupplierMaster Load (0.3ms)[0m  [1m[34mSELECT "supplier_masters".* FROM "supplier_masters" WHERE "supplier_masters"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/pdfs/purchase_list_addition_pdf.rb:235:in `block (2 levels) in create'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | Allocations: 6)
+Sent data purchase_list.pdf (1.6ms)
+Completed 200 OK in 506ms (Views: 1.4ms | ActiveRecord: 6.5ms | Allocations: 461005)
+
+
