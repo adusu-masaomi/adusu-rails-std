@@ -389,67 +389,73 @@ class PurchaseDataController < ApplicationController
            if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK && 
               purchase_datum_clone.quantity.to_i > 0
              
-             if @changed_item[purchase_datum_clone.id] == "D" || 
-                @changed_item[purchase_datum_clone.id] == "1"
-               no_count = true
-             end
+             #if @changed_item[purchase_datum_clone.id] == "D" || 
+             #   @changed_item[purchase_datum_clone.id] == "1"
+             #  no_count = true
+             #end
              
              #資材コード一致？
-             if purchase_datum_store.material_code == purchase_datum_clone.material_code && 
-                no_count == false
-                
-               in_quantity = purchase_datum_store.quantity.to_i
-               #金額を計算(入庫時)
-               in_amount = purchase_datum_store.quantity.to_i * purchase_datum_store.purchase_unit_price.to_i
-               #
-               
-               current_quantity = purchase_datum_clone.quantity.to_i
-               #
-               current_amount = purchase_datum_clone.quantity.to_i * purchase_datum_clone.purchase_unit_price.to_i
-               #
-               
-               #入庫のマイナス数量と仕入数量を加算
-               total_quantity = in_quantity + current_quantity
-               
-               if total_quantity > 0
-                 
-                 @changed_item[purchase_datum_store.id] = "D"  #入庫のアイテムは削除(フラグを立てる)
-                 
-                 #金額を再計算
-                 #amount = purchase_datum_clone.purchase_unit_price.to_i * total_quantity
-                 amount = in_amount + current_amount
-                 
-                 #
-                 @changed_item[purchase_datum_clone.id] = "1"  #数量・金額を変更させる場合のフラグ
-                 @changed_quantity[purchase_datum_clone.id] = total_quantity
-                 @changed_amount[purchase_datum_clone.id] = amount
-                 #
-                 
-               elsif total_quantity == 0
-               #仕入が０になった場合は、どちらも削除する
-               #(但しマイナスの場合は、未処理とする)
-                 @changed_item[purchase_datum_store.id] = "D"
-                 
-                 #
+             if purchase_datum_store.material_code == purchase_datum_clone.material_code 
+               if @changed_item[purchase_datum_clone.id] == "D" || 
+                 @changed_item[purchase_datum_clone.id] == "1"
+                 no_count = true
+               end
+             
+               if no_count == false
+                 in_quantity = purchase_datum_store.quantity.to_i
+                 #金額を計算(入庫時)
                  in_amount = purchase_datum_store.quantity.to_i * purchase_datum_store.purchase_unit_price.to_i
-                 current_amount = purchase_datum_clone.quantity.to_i * purchase_datum_clone.purchase_unit_price.to_i
-                 amount = in_amount + current_amount
                  #
+               
+                 current_quantity = purchase_datum_clone.quantity.to_i
+                 #
+                 current_amount = purchase_datum_clone.quantity.to_i * purchase_datum_clone.purchase_unit_price.to_i
+                 #
+               
+                 #入庫のマイナス数量と仕入数量を加算
+                 total_quantity = in_quantity + current_quantity
+               
+                 if total_quantity > 0
                  
-                 if amount == 0  #金額がちょうど０の場合は、アイテムを非表示とさせる
-                                 #入庫時、出庫時などで金額が違う場合は数量０でも表示させる
-                   @changed_item[purchase_datum_clone.id] = "D"
-                 else
+                   @changed_item[purchase_datum_store.id] = "D"  #入庫のアイテムは削除(フラグを立てる)
+                 
+                   #金額を再計算
+                   #amount = purchase_datum_clone.purchase_unit_price.to_i * total_quantity
+                   amount = in_amount + current_amount
+                 
                    #
                    @changed_item[purchase_datum_clone.id] = "1"  #数量・金額を変更させる場合のフラグ
                    @changed_quantity[purchase_datum_clone.id] = total_quantity
                    @changed_amount[purchase_datum_clone.id] = amount
                    #
+                 
+                 elsif total_quantity == 0
+                 #仕入が０になった場合は、どちらも削除する
+                 #(但しマイナスの場合は、未処理とする)
+                   @changed_item[purchase_datum_store.id] = "D"
+                 
+                   #
+                   in_amount = purchase_datum_store.quantity.to_i * purchase_datum_store.purchase_unit_price.to_i
+                   current_amount = purchase_datum_clone.quantity.to_i * purchase_datum_clone.purchase_unit_price.to_i
+                   amount = in_amount + current_amount
+                   #
+                 
+                   if amount == 0  #金額がちょうど０の場合は、アイテムを非表示とさせる
+                                 #入庫時、出庫時などで金額が違う場合は数量０でも表示させる
+                     @changed_item[purchase_datum_clone.id] = "D"
+                   else
+                     #
+                     @changed_item[purchase_datum_clone.id] = "1"  #数量・金額を変更させる場合のフラグ
+                     @changed_quantity[purchase_datum_clone.id] = total_quantity
+                     @changed_amount[purchase_datum_clone.id] = amount
+                     #
+                   end
                  end
-               end
                
-               #next  #次へ
-               break  #抜ける
+                 #next  #次へ
+                 break  #抜ける
+               end
+                              
              end
            end
            
