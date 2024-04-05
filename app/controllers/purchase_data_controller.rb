@@ -387,9 +387,17 @@ class PurchaseDataController < ApplicationController
            #if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK
            if purchase_datum_clone.inventory_division_id != $INDEX_INVENTORY_STOCK && 
               purchase_datum_clone.quantity.to_i > 0
+             
+             no_count == false
+             if @changed_item[purchase_datum_clone.id] == "D" || 
+                @changed_item[purchase_datum_clone.id] == "1"
+               no_count == true
+             end
+             
              #資材コード一致？
-             if purchase_datum_store.material_code == purchase_datum_clone.material_code
-           
+             if purchase_datum_store.material_code == purchase_datum_clone.material_code && 
+                no_count == false
+                
                in_quantity = purchase_datum_store.quantity.to_i
                #金額を計算(入庫時)
                in_amount = purchase_datum_store.quantity.to_i * purchase_datum_store.purchase_unit_price.to_i
@@ -440,7 +448,8 @@ class PurchaseDataController < ApplicationController
                  end
                end
                
-               next  #次へ
+               #next  #次へ
+               break  #抜ける
              end
            end
            
