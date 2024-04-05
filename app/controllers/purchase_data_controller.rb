@@ -414,9 +414,13 @@ class PurchaseDataController < ApplicationController
                
                  #入庫のマイナス数量と仕入数量を加算
                  total_quantity = in_quantity + current_quantity
-               
-                 if total_quantity > 0
                  
+                 is_changed = false
+                 
+                 if total_quantity > 0
+                   
+                   is_changed = true
+                   
                    @changed_item[purchase_datum_store.id] = "D"  #入庫のアイテムは削除(フラグを立てる)
                  
                    #金額を再計算
@@ -432,6 +436,8 @@ class PurchaseDataController < ApplicationController
                  elsif total_quantity == 0
                  #仕入が０になった場合は、どちらも削除する
                  #(但しマイナスの場合は、未処理とする)
+                   is_changed = true
+                   
                    @changed_item[purchase_datum_store.id] = "D"
                  
                    #
@@ -453,7 +459,9 @@ class PurchaseDataController < ApplicationController
                  end
                
                  #next  #次へ
-                 break  #抜ける
+                 if is_changed
+                   break  #抜ける
+                 end
                end
                               
              end
