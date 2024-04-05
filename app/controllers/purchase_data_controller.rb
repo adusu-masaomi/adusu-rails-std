@@ -398,7 +398,14 @@ class PurchaseDataController < ApplicationController
              if purchase_datum_store.material_code == purchase_datum_clone.material_code 
                if @changed_item[purchase_datum_clone.id] == "D" || 
                  @changed_item[purchase_datum_clone.id] == "1"
-                 no_count = true
+                 
+                 if @changed_item[purchase_datum_clone.id] == "1" && 
+                   @changed_quantity[purchase_datum_clone.id] >= purchase_datum_store.quantity.to_i
+                   #既に引いていた仕入でも、数量がまだ余る場合はそこから引くようにする
+                   purchase_datum_clone.quantity = @changed_quantity[purchase_datum_clone.id]
+                 else
+                   no_count = true
+                 end
                end
              
                if no_count == false
