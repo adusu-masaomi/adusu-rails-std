@@ -91,11 +91,12 @@
 <!--<table class="table table-striped", style="font-size : 12px;width:1880px;">-->			
   <thead>
     <tr>
-      <th><%= sort_link(@q, :seq, 'seq') %></th>
-	  <th><%= model_class.human_attribute_name(:working_middle_item_category_id) %></th>
+      <!--<th><%= sort_link(@q, :seq, 'seq') %></th>--> <!--誤操作の可能性があるので機能停止 240408-->
+      <th><%= model_class.human_attribute_name(:seq) %></th>
+      <th><%= model_class.human_attribute_name(:working_middle_item_category_id) %></th>
       <th><%= model_class.human_attribute_name(:working_subcategory_id) %></th>
-	  <th><%= model_class.human_attribute_name(:working_middle_item_short_name) %></th>
-	  <th><%= model_class.human_attribute_name(:working_middle_item_name) %></th>
+      <th><%= model_class.human_attribute_name(:working_middle_item_short_name) %></th>
+      <th><%= model_class.human_attribute_name(:working_middle_item_name) %></th>
       <th><%= model_class.human_attribute_name(:working_middle_specification) %></th>
       <th><%= model_class.human_attribute_name(:working_unit_id) %></th>
       <th><%= model_class.human_attribute_name(:working_unit_price) %></th>
@@ -103,14 +104,14 @@
       <!--<th><%= model_class.human_attribute_name(:material_unit_price) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:labor_unit_price) %></th>-->
       <th><%= model_class.human_attribute_name(:labor_productivity_unit) %></th>
-	  <!--del170406-->
+      <!--del170406-->
       <!--<th><%= model_class.human_attribute_name(:labor_productivity_unit_total) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:material_quantity) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:accessory_cost) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:material_cost_total) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:labor_cost_total) %></th>-->
       <!--<th><%= model_class.human_attribute_name(:other_cost) %></th>-->
-	  <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:id) %></th>
       <!--<th><%= model_class.human_attribute_name(:created_at) %></th>-->
       <th><%= model_class.human_attribute_name(:updated_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>

@@ -81,6 +81,7 @@ class WorkingMiddleItemsController < ApplicationController
     if query.nil?  
       @working_middle_items  = @working_middle_items.order('seq DESC') 
     else
+      
       if query["s"].present?
         if query["s"] == "seq asc"
           #$sort = "normal"
