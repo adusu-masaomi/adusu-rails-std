@@ -108,8 +108,26 @@ class ConstructionDailyReportsController < ApplicationController
           #労務費集計表
           #縦型PDF（外注のいない場合）
           #report = LaborCostSummaryPDF.create @construction_daily_reports
-          report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
-            
+          
+          is_landscape = false
+          if @company_id == 1  #アデュース仕様
+            if confirm_outsourcing == true
+              is_landscape = true
+            end
+          end
+          
+          if !is_landscape
+            report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
+          else
+             #アデュース仕様　横型
+             if exist_takano == false
+               report = LaborCostSummaryLandscapePDF.create @construction_daily_reports
+             else
+             #外注＆高野いる場合(ただし、小柳・須戸・高野のペアはないものとする)
+               report = LaborCostSummaryOutsourcingTakanoPDF.create(@construction_daily_reports, @outsourcing_staff)
+             end
+          
+          end
           #if confirm_outsourcing == false
             #縦型PDF（外注のいない場合）
             #if exist_takano == false

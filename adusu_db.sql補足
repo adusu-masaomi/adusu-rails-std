@@ -1,6 +1,9 @@
 postgreSQLのバックアップ方法
 pg_dump -U adusu -Fp adusu_db > adusu_db.sql
 
+※リストア
+pg_restore -U adusu -d adusu_db < adusu_db.sql
+(ロール周りでエラーが出るが、無視...)
 
 ----以下、mysqlの場合の情報
 

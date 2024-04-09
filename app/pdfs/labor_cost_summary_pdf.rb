@@ -146,6 +146,8 @@ class LaborCostSummaryPDF
         clear_total #合計をリセット
         report.start_new_page
         
+        #binding.pry
+        
         #ヘッダー
         page_count = report.page_count.to_s + "ページ"
         report.page.item(:page).value(page_count)
@@ -271,7 +273,9 @@ class LaborCostSummaryPDF
   
   def self.get_staff_position(staff_id)
     
-    #binding.pry
+    if @staff_count == 4
+    #  binding.pry
+    end
     
     if @staffs[staff_id].nil?
       @staff_count += 1
@@ -288,7 +292,19 @@ class LaborCostSummaryPDF
       @staff_position = pos
       
     else
-      @staff_position = @staffs[staff_id]
+      #@staff_position = @staffs[staff_id]
+      
+      #upd240409
+      if @staffs[staff_id] > 3
+        pos = @staff_count.modulo(3)
+        if pos == 0
+          pos = 3
+        end
+        @staff_position = pos
+      else
+        @staff_position = @staffs[staff_id]
+      end
+      
     end
     
     #if @staffs == 0
