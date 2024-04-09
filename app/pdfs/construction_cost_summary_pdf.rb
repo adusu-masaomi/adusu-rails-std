@@ -165,11 +165,12 @@ class ConstructionCostSummaryPDF
        
        
        #(株)アデュース仕様　色を変える
-       if company_id == 1
-		     footer.item(:line_3).style(:border_color, 'red')
-         footer.item(:line_4).style(:border_color, 'red')
-         footer.item(:line_5).style(:border_color, 'red')
-       end
+       #del240409
+       #if company_id == 1
+		   #  footer.item(:line_3).style(:border_color, 'red')
+       #  footer.item(:line_4).style(:border_color, 'red')
+       #  footer.item(:line_5).style(:border_color, 'red')
+       #end
      end
 	
 			#i = 0
@@ -221,21 +222,22 @@ class ConstructionCostSummaryPDF
     #end	
 	   
 	   
-	   #(株)アデュース仕様　色を変える
-    if company_id == 1
-      #縦線
-      report.page.item(:line_1).style(:border_color, 'red')
-      report.page.item(:line_2).style(:border_color, 'red')
-      #
-      report.page.item(:line_6).style(:border_color, 'red')
-      report.page.item(:line_7).style(:border_color, 'red')
-      report.page.item(:line_8).style(:border_color, 'red')
-      report.page.item(:line_9).style(:border_color, 'red')
-      report.page.item(:line_10).style(:border_color, 'red')
-      report.page.item(:line_11).style(:border_color, 'red')
-      report.page.item(:line_12).style(:border_color, 'red')
-      report.page.item(:line_13).style(:border_color, 'red')
-    end
+	  #(株)アデュース仕様　色を変える
+    #del240409
+    #if company_id == 1
+    #  #縦線
+    #  report.page.item(:line_1).style(:border_color, 'red')
+    #  report.page.item(:line_2).style(:border_color, 'red')
+    #  #
+    #  report.page.item(:line_6).style(:border_color, 'red')
+    #  report.page.item(:line_7).style(:border_color, 'red')
+    #  report.page.item(:line_8).style(:border_color, 'red')
+    #  report.page.item(:line_9).style(:border_color, 'red')
+    #  report.page.item(:line_10).style(:border_color, 'red')
+    #  report.page.item(:line_11).style(:border_color, 'red')
+    #  report.page.item(:line_12).style(:border_color, 'red')
+    #  report.page.item(:line_13).style(:border_color, 'red')
+    #end
     #
     
 	#end
