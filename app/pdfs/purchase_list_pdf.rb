@@ -51,9 +51,10 @@ class PurchaseListPDF
     @purchase_amount_total = 0
 
     #ヘッダの線の色を変える(アデュース仕様)
-    if company_id == 1
-      report.page.item(:line_3).style(:border_color, 'red')
-    end
+    #del240409
+    #if company_id == 1
+    #  report.page.item(:line_3).style(:border_color, 'red')
+    #end
       
     #タイトル
     report.page.item(:print_title).value("仕入表")
@@ -103,22 +104,22 @@ class PurchaseListPDF
                            row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
                                        purchase_amount: @purchase_amount_subtotal
                            row2.item(:lbl_unit_price_multi).visible(false)  #add200716
+            #del240409
+            #if company_id == 1
 
-            if company_id == 1
-
-              row2.item(:line_2).style(:border_color, 'red')
-              row2.item(:line_14).style(:border_color, 'red')
-              row2.item(:line_15).style(:border_color, 'red')
-              row2.item(:line_16).style(:border_color, 'red')
-              row2.item(:line_17).style(:border_color, 'red')
-              row2.item(:line_18).style(:border_color, 'red')
-              row2.item(:line_19).style(:border_color, 'red')
-              row2.item(:line_20).style(:border_color, 'red')
-              row2.item(:line_21).style(:border_color, 'red')
-              row2.item(:line_22).style(:border_color, 'red')
-              row2.item(:line_23).style(:border_color, 'red')
-              row2.item(:line_24).style(:border_color, 'red')
-            end
+            #  row2.item(:line_2).style(:border_color, 'red')
+            #  row2.item(:line_14).style(:border_color, 'red')
+            #  row2.item(:line_15).style(:border_color, 'red')
+            #  row2.item(:line_16).style(:border_color, 'red')
+            #  row2.item(:line_17).style(:border_color, 'red')
+            #  row2.item(:line_18).style(:border_color, 'red')
+            #  row2.item(:line_19).style(:border_color, 'red')
+            #  row2.item(:line_20).style(:border_color, 'red')
+            #  row2.item(:line_21).style(:border_color, 'red')
+            #  row2.item(:line_22).style(:border_color, 'red')
+            #  row2.item(:line_23).style(:border_color, 'red')
+            #  row2.item(:line_24).style(:border_color, 'red')
+            #end
           end
           @purchase_amount_subtotal = 0
         end
@@ -132,20 +133,21 @@ class PurchaseListPDF
       end
 
       #ヘッダの線の色を変える(アデュース仕様)
-      if company_id == 1
-        report.list(:default).header.item(:line_1).style(:border_color, 'red')
+      #del240409
+      #if company_id == 1
+      #  report.list(:default).header.item(:line_1).style(:border_color, 'red')
         #
-        report.list(:default).header.item(:line_4).style(:border_color, 'red')
-        report.list(:default).header.item(:line_5).style(:border_color, 'red')
-        report.list(:default).header.item(:line_6).style(:border_color, 'red')
-        report.list(:default).header.item(:line_7).style(:border_color, 'red')
-        report.list(:default).header.item(:line_8).style(:border_color, 'red')
-        report.list(:default).header.item(:line_9).style(:border_color, 'red')
-        report.list(:default).header.item(:line_10).style(:border_color, 'red')
-        report.list(:default).header.item(:line_11).style(:border_color, 'red')
-        report.list(:default).header.item(:line_12).style(:border_color, 'red')
-        report.list(:default).header.item(:line_13).style(:border_color, 'red')
-      end
+      #  report.list(:default).header.item(:line_4).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_5).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_6).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_7).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_8).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_9).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_10).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_11).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_12).style(:border_color, 'red')
+      #  report.list(:default).header.item(:line_13).style(:border_color, 'red')
+      #end
       #
 
       #for i in 0..29   #29行分(for test)
@@ -253,21 +255,22 @@ class PurchaseListPDF
 
 
         #(株)アデュース仕様　色を変える(明細側)
-        if company_id == 1
-          row.item(:line_2).style(:border_color, 'red')
+        #del240409
+        #if company_id == 1
+        #  row.item(:line_2).style(:border_color, 'red')
 
-          row.item(:line_14).style(:border_color, 'red')
-          row.item(:line_15).style(:border_color, 'red')
-          row.item(:line_16).style(:border_color, 'red')
-          row.item(:line_17).style(:border_color, 'red')
-          row.item(:line_18).style(:border_color, 'red')
-          row.item(:line_19).style(:border_color, 'red')
-          row.item(:line_20).style(:border_color, 'red')
-          row.item(:line_21).style(:border_color, 'red')
-          row.item(:line_22).style(:border_color, 'red')
-          row.item(:line_23).style(:border_color, 'red')
-          row.item(:line_24).style(:border_color, 'red')
-        end
+        #  row.item(:line_14).style(:border_color, 'red')
+        #  row.item(:line_15).style(:border_color, 'red')
+        #  row.item(:line_16).style(:border_color, 'red')
+        #  row.item(:line_17).style(:border_color, 'red')
+        #  row.item(:line_18).style(:border_color, 'red')
+       #   row.item(:line_19).style(:border_color, 'red')
+        #  row.item(:line_20).style(:border_color, 'red')
+        #  row.item(:line_21).style(:border_color, 'red')
+        #  row.item(:line_22).style(:border_color, 'red')
+        #  row.item(:line_23).style(:border_color, 'red')
+        #  row.item(:line_24).style(:border_color, 'red')
+        #end
 
       end
 
@@ -291,21 +294,20 @@ class PurchaseListPDF
       row2.item(:lbl_unit_price_multi).visible(false)  #add200716
 
       #(株)アデュース仕様　色を変える(明細側)
-      if company_id == 1
-
-        row2.item(:line_2).style(:border_color, 'red')
-        row2.item(:line_14).style(:border_color, 'red')
-        row2.item(:line_15).style(:border_color, 'red')
-        row2.item(:line_16).style(:border_color, 'red')
-        row2.item(:line_17).style(:border_color, 'red')
-        row2.item(:line_18).style(:border_color, 'red')
-        row2.item(:line_19).style(:border_color, 'red')
-        row2.item(:line_20).style(:border_color, 'red')
-        row2.item(:line_21).style(:border_color, 'red')
-        row2.item(:line_22).style(:border_color, 'red')
-        row2.item(:line_23).style(:border_color, 'red')
-        row2.item(:line_24).style(:border_color, 'red')
-      end
+      #if company_id == 1
+      #  row2.item(:line_2).style(:border_color, 'red')
+      #  row2.item(:line_14).style(:border_color, 'red')
+      #  row2.item(:line_15).style(:border_color, 'red')
+      #  row2.item(:line_16).style(:border_color, 'red')
+      #  row2.item(:line_17).style(:border_color, 'red')
+      #  row2.item(:line_18).style(:border_color, 'red')
+      #  row2.item(:line_19).style(:border_color, 'red')
+      #  row2.item(:line_20).style(:border_color, 'red')
+      #  row2.item(:line_21).style(:border_color, 'red')
+      #  row2.item(:line_22).style(:border_color, 'red')
+      #  row2.item(:line_23).style(:border_color, 'red')
+      #  row2.item(:line_24).style(:border_color, 'red')
+      #end
     end
 
 
@@ -322,22 +324,23 @@ class PurchaseListPDF
                   purchase_amount: @purchase_amount_total
       row2.item(:lbl_unit_price_multi).visible(false)  #add200716
 
+      #del240409
       #(株)アデュース仕様  色を変える(明細側)
-      if company_id == 1
+      #if company_id == 1
 
-        row2.item(:line_2).style(:border_color, 'red')
-        row2.item(:line_14).style(:border_color, 'red')
-        row2.item(:line_15).style(:border_color, 'red')
-        row2.item(:line_16).style(:border_color, 'red')
-        row2.item(:line_17).style(:border_color, 'red')
-        row2.item(:line_18).style(:border_color, 'red')
-        row2.item(:line_19).style(:border_color, 'red')
-        row2.item(:line_20).style(:border_color, 'red')
-        row2.item(:line_21).style(:border_color, 'red')
-        row2.item(:line_22).style(:border_color, 'red')
-        row2.item(:line_23).style(:border_color, 'red')
-        row2.item(:line_24).style(:border_color, 'red')
-      end
+      #  row2.item(:line_2).style(:border_color, 'red')
+      #  row2.item(:line_14).style(:border_color, 'red')
+      #  row2.item(:line_15).style(:border_color, 'red')
+      #  row2.item(:line_16).style(:border_color, 'red')
+      #  row2.item(:line_17).style(:border_color, 'red')
+      #  row2.item(:line_18).style(:border_color, 'red')
+      #  row2.item(:line_19).style(:border_color, 'red')
+      #  row2.item(:line_20).style(:border_color, 'red')
+      #  row2.item(:line_21).style(:border_color, 'red')
+      #  row2.item(:line_22).style(:border_color, 'red')
+      #  row2.item(:line_23).style(:border_color, 'red')
+      #  row2.item(:line_24).style(:border_color, 'red')
+      #end
     end
  
     # ThinReports::Reportを返す

@@ -101,37 +101,38 @@ class WorkingDirectionsPDF
     #end	
     
     #(株)アデュース仕様　色を変える
-    if company_id == 1
-      report.page.item(:line_1).style(:border_color, 'red')
-      report.page.item(:line_2).style(:border_color, 'red')
-      report.page.item(:line_3).style(:border_color, 'red')
-      report.page.item(:line_4).style(:border_color, 'red')
-      report.page.item(:line_5).style(:border_color, 'red')
-      report.page.item(:line_6).style(:border_color, 'red')
-      report.page.item(:line_7).style(:border_color, 'red')
-      report.page.item(:line_8).style(:border_color, 'red')
-      report.page.item(:line_9).style(:border_color, 'red')
-      report.page.item(:line_10).style(:border_color, 'red')
-      report.page.item(:line_11).style(:border_color, 'red')
-      report.page.item(:line_12).style(:border_color, 'red')
-      report.page.item(:line_13).style(:border_color, 'red')
-      report.page.item(:line_14).style(:border_color, 'red')
-      report.page.item(:line_15).style(:border_color, 'red')
-      report.page.item(:line_16).style(:border_color, 'red')
-      report.page.item(:line_17).style(:border_color, 'red')
-      report.page.item(:line_18).style(:border_color, 'red')
-      report.page.item(:line_19).style(:border_color, 'red')
-      report.page.item(:line_20).style(:border_color, 'red')
-      report.page.item(:line_21).style(:border_color, 'red')
-      report.page.item(:line_22).style(:border_color, 'red')
-      report.page.item(:line_23).style(:border_color, 'red')
-      report.page.item(:line_24).style(:border_color, 'red')
+    #del240409
+    #if company_id == 1
+    #  report.page.item(:line_1).style(:border_color, 'red')
+    #  report.page.item(:line_2).style(:border_color, 'red')
+    #  report.page.item(:line_3).style(:border_color, 'red')
+    #  report.page.item(:line_4).style(:border_color, 'red')
+    #  report.page.item(:line_5).style(:border_color, 'red')
+    #  report.page.item(:line_6).style(:border_color, 'red')
+    #  report.page.item(:line_7).style(:border_color, 'red')
+    #  report.page.item(:line_8).style(:border_color, 'red')
+    #  report.page.item(:line_9).style(:border_color, 'red')
+    #  report.page.item(:line_10).style(:border_color, 'red')
+    #  report.page.item(:line_11).style(:border_color, 'red')
+    #  report.page.item(:line_12).style(:border_color, 'red')
+    #  report.page.item(:line_13).style(:border_color, 'red')
+    #  report.page.item(:line_14).style(:border_color, 'red')
+    #  report.page.item(:line_15).style(:border_color, 'red')
+    #  report.page.item(:line_16).style(:border_color, 'red')
+    #  report.page.item(:line_17).style(:border_color, 'red')
+    #  report.page.item(:line_18).style(:border_color, 'red')
+    #  report.page.item(:line_19).style(:border_color, 'red')
+    #  report.page.item(:line_20).style(:border_color, 'red')
+    #  report.page.item(:line_21).style(:border_color, 'red')
+    #  report.page.item(:line_22).style(:border_color, 'red')
+    #  report.page.item(:line_23).style(:border_color, 'red')
+    #  report.page.item(:line_24).style(:border_color, 'red')
       
       #印鑑欄
-      report.page.item(:line_sign_1).style(:border_color, 'red')
-      report.page.item(:line_sign_2).style(:border_color, 'red')
-      report.page.item(:line_sign_3).style(:border_color, 'red')
-    end
+    #  report.page.item(:line_sign_1).style(:border_color, 'red')
+    #  report.page.item(:line_sign_2).style(:border_color, 'red')
+    #  report.page.item(:line_sign_3).style(:border_color, 'red')
+    #end
     #
     
     # ThinReports::Reportを返す
