@@ -215,22 +215,23 @@ class LaborCostSummaryPDF
     set_last_row_and_footer(report)
     
     #(株)アデュースの場合は罫線を赤色にする
-    if company_id == 1
-      report.page.item(:line_1).style(:border_color, 'red')
-      report.page.item(:line_2).style(:border_color, 'red')
-      report.page.item(:line_3).style(:border_color, 'red')
-      report.page.item(:line_4).style(:border_color, 'red')
-      report.page.item(:line_5).style(:border_color, 'red')
-      report.page.item(:line_6).style(:border_color, 'red')
-      report.page.item(:line_7).style(:border_color, 'red')
-      report.page.item(:line_8).style(:border_color, 'red')
-      report.page.item(:line_9).style(:border_color, 'red')
-      report.page.item(:line_10).style(:border_color, 'red')
-      report.page.item(:line_11).style(:border_color, 'red')
-      report.page.item(:line_12).style(:border_color, 'red')
-      report.page.item(:line_13).style(:border_color, 'red')
-      report.page.item(:line_14).style(:border_color, 'red')
-    end
+    #del240410
+    #if company_id == 1
+    #  report.page.item(:line_1).style(:border_color, 'red')
+    #  report.page.item(:line_2).style(:border_color, 'red')
+    #  report.page.item(:line_3).style(:border_color, 'red')
+    #  report.page.item(:line_4).style(:border_color, 'red')
+    #  report.page.item(:line_5).style(:border_color, 'red')
+    #  report.page.item(:line_6).style(:border_color, 'red')
+    #  report.page.item(:line_7).style(:border_color, 'red')
+    #  report.page.item(:line_8).style(:border_color, 'red')
+    #  report.page.item(:line_9).style(:border_color, 'red')
+    #  report.page.item(:line_10).style(:border_color, 'red')
+    #  report.page.item(:line_11).style(:border_color, 'red')
+    #  report.page.item(:line_12).style(:border_color, 'red')
+    #  report.page.item(:line_13).style(:border_color, 'red')
+    #  report.page.item(:line_14).style(:border_color, 'red')
+    #end
     #
     
     # Thinrs::Reportを返す
