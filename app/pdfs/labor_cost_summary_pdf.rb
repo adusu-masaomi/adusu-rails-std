@@ -44,8 +44,9 @@ class LaborCostSummaryPDF
     @page_count_staff_only = 1  #(行数オーバーによる改ページは含まない)
         
   
-    #construction_daily_reports.order(:working_date).each do |construction_daily_report|
-    construction_daily_reports.order(:staff_id, :working_date).each do |construction_daily_report|
+    #upd240410
+    construction_daily_reports.order(:working_date).each do |construction_daily_report|
+    #construction_daily_reports.order(:staff_id, :working_date).each do |construction_daily_report|
  	    
       #---見出し---
       page_count = report.page_count.to_s + "ページ"
@@ -88,35 +89,50 @@ class LaborCostSummaryPDF
 	
       #binding.pry
     
-      #if @working_date != "" && @working_date != construction_daily_report.working_date then
-      if (@working_date != "" && @working_date != construction_daily_report.working_date) ||
-         (@staff_id != 0 && @staff_id != construction_daily_report.staff_id)
+      #upd240410
+      if @working_date != "" && @working_date != construction_daily_report.working_date then
+      #if (@working_date != "" && @working_date != construction_daily_report.working_date) ||
+      #   (@staff_id != 0 && @staff_id != construction_daily_report.staff_id)
         
         
         #明細出力
         setRow()
         
-        case @staff_position 
-        when 1
-          report.list(:default).add_row do |row|
+        #case @staff_position 
+        #when 1
+        #  report.list(:default).add_row do |row|
+        #    row.values working_date_1: @tmp_working_date_1,
+        #      man_month_1: @tmp_man_month_1,
+        #      labor_cost_1: @tmp_labor_cost_1
+        #  end 
+        #when 2
+        #  report.list(:default2).add_row do |row|
+        #    row.values working_date_2: @tmp_working_date_2,
+        #      man_month_2: @tmp_man_month_2,
+        #      labor_cost_2: @tmp_labor_cost_2
+        #  end 
+        #when 3
+        #  report.list(:default3).add_row do |row|
+        #    row.values working_date_3: @tmp_working_date_3,
+        #      man_month_3: @tmp_man_month_3,
+        #      labor_cost_3: @tmp_labor_cost_3
+        #  end  
+        #end
+		    
+		    report.list(:default).add_row do |row|
             row.values working_date_1: @tmp_working_date_1,
               man_month_1: @tmp_man_month_1,
-              labor_cost_1: @tmp_labor_cost_1
-          end 
-        when 2
-          report.list(:default2).add_row do |row|
-            row.values working_date_2: @tmp_working_date_2,
+              labor_cost_1: @tmp_labor_cost_1,
+              working_date_2: @tmp_working_date_2,
               man_month_2: @tmp_man_month_2,
-              labor_cost_2: @tmp_labor_cost_2
-          end 
-        when 3
-          report.list(:default3).add_row do |row|
-            row.values working_date_3: @tmp_working_date_3,
+              labor_cost_2: @tmp_labor_cost_2,
+              working_date_3: @tmp_working_date_3,
               man_month_3: @tmp_man_month_3,
               labor_cost_3: @tmp_labor_cost_3
-          end
         end
-		  
+
+		    
+		    
         #トータルへカウント
         countTotal
 		  
@@ -207,7 +223,15 @@ class LaborCostSummaryPDF
       @working_date = construction_daily_report.working_date
       #サブルーチン用に社員IDをセットする
       @staff_id = construction_daily_report.staff_id
-     
+      
+      #add240410
+      #これだと既に改ページしてるのでNGのようだ....
+      #if report.list.overflow?
+      #  @no_last_row = true
+      #  set_last_row_and_footer(report)
+      #  clear_total
+      #  report.start_new_page
+      #end
     end	 #end do
     
     #最終行と、フッターの表示
@@ -267,8 +291,17 @@ class LaborCostSummaryPDF
 		#社員３
     ##村山さん
     #トータルへカウント
-      @man_month_3_total += @man_month_3
-      @labor_cost_3_total += @labor_cost_3
+      #binding.pry
+      if @man_month_3.present?  #add240410
+        #if @no_last_row.present?
+        #  binding.pry
+        #end
+        
+        @man_month_3_total += @man_month_3
+      end
+      if @labor_cost_3.present?
+        @labor_cost_3_total += @labor_cost_3
+      end
     end
   end
   
@@ -294,9 +327,9 @@ class LaborCostSummaryPDF
       
     else
       #@staff_position = @staffs[staff_id]
-      
       #upd240409
       if @staffs[staff_id] > 3
+        
         pos = @staff_count.modulo(3)
         if pos == 0
           pos = 3
@@ -381,31 +414,53 @@ class LaborCostSummaryPDF
   
   #最終行と、フッターの表示
   def self.set_last_row_and_footer(report)
+    #binding.pry
+    
     #明細出力(最終日)
-    setRow()
-    case @staff_position 
-    when 1  #1列目
-      report.list(:default).add_row do |row|
+    #if !@no_last_row
+      setRow()
+    
+    #else
+      #upd240410
+    #  @no_last_row = false
+    #end
+    #case @staff_position 
+    #when 1  #1列目
+    #  report.list(:default).add_row do |row|
+    #    
+    #    row.values working_date_1: @tmp_working_date_1,
+    #             man_month_1: @tmp_man_month_1,
+    #             labor_cost_1: @tmp_labor_cost_1
+    #  end 
+    #when 2 #2列目
+    #  report.list(:default2).add_row do |row|
+    #    
+    #    row.values working_date_2: @tmp_working_date_2,
+    #             man_month_2: @tmp_man_month_2,
+    #             labor_cost_2: @tmp_labor_cost_2
+    #  end
+    #when 3 #３列目
+    #  report.list(:default3).add_row do |row|
         
+    #    row.values working_date_3: @tmp_working_date_3,
+    #             man_month_3: @tmp_man_month_3,
+    #             labor_cost_3: @tmp_labor_cost_3
+    #  end
+    #end
+    
+    report.list(:default).add_row do |row|
         row.values working_date_1: @tmp_working_date_1,
                  man_month_1: @tmp_man_month_1,
-                 labor_cost_1: @tmp_labor_cost_1
-      end 
-    when 2 #2列目
-      report.list(:default2).add_row do |row|
-        
-        row.values working_date_2: @tmp_working_date_2,
+                 labor_cost_1: @tmp_labor_cost_1,
+                 working_date_2: @tmp_working_date_2,
                  man_month_2: @tmp_man_month_2,
-                 labor_cost_2: @tmp_labor_cost_2
-      end
-    when 3 #３列目
-      report.list(:default3).add_row do |row|
-        
-        row.values working_date_3: @tmp_working_date_3,
+                 labor_cost_2: @tmp_labor_cost_2,
+                 working_date_3: @tmp_working_date_3,
                  man_month_3: @tmp_man_month_3,
-                 labor_cost_3: @tmp_labor_cost_3
-      end
+                  labor_cost_3: @tmp_labor_cost_3
     end
+    
+    
     #トータルへカウント
     countTotal
   
@@ -449,6 +504,7 @@ class LaborCostSummaryPDF
       report.page.item(:man_month_2_total).value(@man_month_2_total)
       #標準版仕様--社員名、給与
       #get_staff(2)
+      #binding.pry
       get_staff(2 + ((@page_count_staff_only -1) * 3))
       if @staff.present?
         report.page.item(:staff_name_2).value(@staff.staff_name)

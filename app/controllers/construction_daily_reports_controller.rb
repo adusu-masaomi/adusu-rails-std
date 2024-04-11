@@ -117,7 +117,18 @@ class ConstructionDailyReportsController < ApplicationController
           end
           
           if !is_landscape
-            report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
+            
+            if @company_id == 1 && exist_takano
+              #アデュース仕様
+              report = LaborCostSummaryMasaomiPDF.create @construction_daily_reports
+            else
+              if @company_id != 1
+                report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
+              else
+                #アデュース仕様の縦バージョン
+                report = LaborCostSummaryAdusuPDF.create(@construction_daily_reports)
+              end
+            end
           else
              #アデュース仕様　横型
              if exist_takano == false
