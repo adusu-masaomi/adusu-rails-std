@@ -582,7 +582,8 @@ class WorkingMiddleItemsController < ApplicationController
             #古いデータを更新した場合、古くて安い定価は更新されないようにする
             list_price_quotation = @material_master.list_price_quotation
             #見積定価が直近単価以上の場合のみ更新させる
-            if @material_master.last_unit_price  <= item[:unit_price].to_i
+            #if @material_master.last_unit_price  <= item[:unit_price].to_i
+            if (@material_master.last_unit_price.nil?) || (@material_master.last_unit_price  <= item[:unit_price].to_i)
               list_price_quotation = item[:unit_price]
             end
             #...数量は、どうする..!?

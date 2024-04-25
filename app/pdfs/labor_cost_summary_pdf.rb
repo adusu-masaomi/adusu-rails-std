@@ -43,10 +43,12 @@ class LaborCostSummaryPDF
     @page_staff_count = 0
     @page_count_staff_only = 1  #(行数オーバーによる改ページは含まない)
         
-  
-    #upd240410
-    construction_daily_reports.order(:working_date).each do |construction_daily_report|
-    #construction_daily_reports.order(:staff_id, :working_date).each do |construction_daily_report|
+    @data_count = 0
+   
+    #construction_daily_reports.order(:working_date).each do |construction_daily_report|
+    construction_daily_reports.order(:staff_id, :working_date).each do |construction_daily_report|
+ 	    
+ 	    @data_count += 1
  	    
       #---見出し---
       page_count = report.page_count.to_s + "ページ"
@@ -89,53 +91,44 @@ class LaborCostSummaryPDF
 	
       #binding.pry
     
-      #upd240410
-      if @working_date != "" && @working_date != construction_daily_report.working_date then
-      #if (@working_date != "" && @working_date != construction_daily_report.working_date) ||
-      #   (@staff_id != 0 && @staff_id != construction_daily_report.staff_id)
+      #if @working_date != "" && @working_date != construction_daily_report.working_date then
+      if (@working_date != "" && @working_date != construction_daily_report.working_date) ||
+         (@staff_id != 0 && @staff_id != construction_daily_report.staff_id)
         
         
         #明細出力
         setRow()
         
-        #case @staff_position 
-        #when 1
-        #  report.list(:default).add_row do |row|
-        #    row.values working_date_1: @tmp_working_date_1,
-        #      man_month_1: @tmp_man_month_1,
-        #      labor_cost_1: @tmp_labor_cost_1
-        #  end 
-        #when 2
-        #  report.list(:default2).add_row do |row|
-        #    row.values working_date_2: @tmp_working_date_2,
-        #      man_month_2: @tmp_man_month_2,
-        #      labor_cost_2: @tmp_labor_cost_2
-        #  end 
-        #when 3
-        #  report.list(:default3).add_row do |row|
-        #    row.values working_date_3: @tmp_working_date_3,
-        #      man_month_3: @tmp_man_month_3,
-        #      labor_cost_3: @tmp_labor_cost_3
-        #  end  
-        #end
-		    
-		    report.list(:default).add_row do |row|
-            row.values working_date_1: @tmp_working_date_1,
-              man_month_1: @tmp_man_month_1,
-              labor_cost_1: @tmp_labor_cost_1,
-              working_date_2: @tmp_working_date_2,
-              man_month_2: @tmp_man_month_2,
-              labor_cost_2: @tmp_labor_cost_2,
-              working_date_3: @tmp_working_date_3,
-              man_month_3: @tmp_man_month_3,
-              labor_cost_3: @tmp_labor_cost_3
+        case @staff_position 
+        when 1
+          if @tmp_working_date_1.present?
+            report.list(:default).add_row do |row|
+              row.values working_date_1: @tmp_working_date_1,
+                man_month_1: @tmp_man_month_1,
+                labor_cost_1: @tmp_labor_cost_1
+            end  
+          end
+        when 2
+          if @tmp_working_date_2.present?
+            report.list(:default2).add_row do |row|
+              row.values working_date_2: @tmp_working_date_2,
+                man_month_2: @tmp_man_month_2,
+                labor_cost_2: @tmp_labor_cost_2
+            end  
+          end
+        when 3
+          if @tmp_working_date_3.present?
+            report.list(:default3).add_row do |row|
+              row.values working_date_3: @tmp_working_date_3,
+                man_month_3: @tmp_man_month_3,
+                labor_cost_3: @tmp_labor_cost_3
+            end    
+          end
         end
 
-		    
-		    
         #トータルへカウント
         countTotal
-		  
+  
         #値をクリア
         @man_month_1 = 0
         @man_month_2 = 0
@@ -161,9 +154,7 @@ class LaborCostSummaryPDF
         set_last_row_and_footer(report)
         clear_total #合計をリセット
         report.start_new_page
-        
-        #binding.pry
-        
+                
         #ヘッダー
         page_count = report.page_count.to_s + "ページ"
         report.page.item(:page).value(page_count)
@@ -214,7 +205,6 @@ class LaborCostSummaryPDF
       end
         
       #総計をカウント（３人以外は、ないものとする）
-      #binding.pry
       
       if construction_daily_report.labor_cost.present?
         @labor_cost_total += construction_daily_report.labor_cost
@@ -225,13 +215,18 @@ class LaborCostSummaryPDF
       @staff_id = construction_daily_report.staff_id
       
       #add240410
-      #これだと既に改ページしてるのでNGのようだ....
-      #if report.list.overflow?
-      #  @no_last_row = true
-      #  set_last_row_and_footer(report)
-      #  clear_total
-      #  report.start_new_page
-      #end
+      #自動改ページは上手くいかないので、手動で改ページさせる。
+      if report.list(:default).overflow? || 
+         report.list(:default2).overflow? || 
+         report.list(:default3).overflow?
+         
+        @flag = nil
+        @no_last_row = true
+        set_last_row_and_footer(report)
+        
+        #clear_total
+      end
+      
     end	 #end do
     
     #最終行と、フッターの表示
@@ -279,29 +274,50 @@ class LaborCostSummaryPDF
     #社員１
     ##社長
     #トータルへカウント
+      #改ページにより、合計が文字列化されている場合は、元に戻す。
+      if !(@man_month_1_total.is_a?(Integer))
+        if @man_month_1_total != ""
+          @man_month_1_total = @man_month_1_total.to_f
+        else
+          @man_month_1_total = 0
+        end
+      end
+      #
+    
       @man_month_1_total += @man_month_1
       @labor_cost_1_total += @labor_cost_1
     when 2 
     #社員２
     ##岡戸
     #トータルへカウント
+      #改ページにより、合計が文字列化されている場合は、元に戻す。
+      if !(@man_month_2_total.is_a?(Integer))
+        if @man_month_2_total != ""
+          @man_month_2_total = @man_month_2_total.to_f
+        else
+          @man_month_2_total = 0
+        end
+      end
+      
       @man_month_2_total += @man_month_2
       @labor_cost_2_total += @labor_cost_2
     when 3 
 		#社員３
     ##村山さん
     #トータルへカウント
-      #binding.pry
-      if @man_month_3.present?  #add240410
-        #if @no_last_row.present?
-        #  binding.pry
-        #end
-        
-        @man_month_3_total += @man_month_3
+    
+      #改ページにより、合計が文字列化されている場合は、元に戻す。
+      if !(@man_month_3_total.is_a?(Integer))
+        if @man_month_3_total != ""
+          @man_month_3_total = @man_month_3_total.to_f
+        else
+          @man_month_3_total = 0
+        end
       end
-      if @labor_cost_3.present?
-        @labor_cost_3_total += @labor_cost_3
-      end
+      #
+      
+      @man_month_3_total += @man_month_3
+      @labor_cost_3_total += @labor_cost_3
     end
   end
   
@@ -327,9 +343,9 @@ class LaborCostSummaryPDF
       
     else
       #@staff_position = @staffs[staff_id]
+      
       #upd240409
       if @staffs[staff_id] > 3
-        
         pos = @staff_count.modulo(3)
         if pos == 0
           pos = 3
@@ -397,9 +413,12 @@ class LaborCostSummaryPDF
       #@labor_cost_3_total = ""
       @labor_cost_3_total_print = ""
     else
-      @man_month_3_total = sprintf( "%.3f", @man_month_3_total )
-      #@labor_cost_3_total = "￥" + @labor_cost_3_total.to_s(:delimited)
-      @labor_cost_3_total_print = "￥" + @labor_cost_3_total.to_s(:delimited)
+      if @man_month_3_total != ""  #add240411
+      
+        @man_month_3_total = sprintf( "%.3f", @man_month_3_total )
+        #@labor_cost_3_total = "￥" + @labor_cost_3_total.to_s(:delimited)
+        @labor_cost_3_total_print = "￥" + @labor_cost_3_total.to_s(:delimited)
+      end
     end
     
     #労務費トータル計
@@ -414,51 +433,48 @@ class LaborCostSummaryPDF
   
   #最終行と、フッターの表示
   def self.set_last_row_and_footer(report)
-    #binding.pry
     
-    #明細出力(最終日)
-    #if !@no_last_row
+    if !@no_last_row 
+      #明細出力(最終日)
       setRow()
-    
-    #else
-      #upd240410
-    #  @no_last_row = false
-    #end
-    #case @staff_position 
-    #when 1  #1列目
-    #  report.list(:default).add_row do |row|
-    #    
-    #    row.values working_date_1: @tmp_working_date_1,
-    #             man_month_1: @tmp_man_month_1,
-    #             labor_cost_1: @tmp_labor_cost_1
-    #  end 
-    #when 2 #2列目
-    #  report.list(:default2).add_row do |row|
-    #    
-    #    row.values working_date_2: @tmp_working_date_2,
-    #             man_month_2: @tmp_man_month_2,
-    #             labor_cost_2: @tmp_labor_cost_2
-    #  end
-    #when 3 #３列目
-    #  report.list(:default3).add_row do |row|
+    else
+      #行あふれにより改ページした場合
+      
+      @no_last_row = false
+      setRow()
+      #改ページ前にヘッダを出力
+      setHeaderOnOverFlow(report)
+      #clear_total  
+      
+      report.start_new_page
+    end
+  
+    case @staff_position 
+    when 1  #1列目
+      report.list(:default).add_row do |row|
         
-    #    row.values working_date_3: @tmp_working_date_3,
-    #             man_month_3: @tmp_man_month_3,
-    #             labor_cost_3: @tmp_labor_cost_3
-    #  end
-    #end
-    
-    report.list(:default).add_row do |row|
         row.values working_date_1: @tmp_working_date_1,
                  man_month_1: @tmp_man_month_1,
-                 labor_cost_1: @tmp_labor_cost_1,
-                 working_date_2: @tmp_working_date_2,
+                 labor_cost_1: @tmp_labor_cost_1
+      end 
+    when 2 #2列目
+      report.list(:default2).add_row do |row|
+        
+        row.values working_date_2: @tmp_working_date_2,
                  man_month_2: @tmp_man_month_2,
-                 labor_cost_2: @tmp_labor_cost_2,
-                 working_date_3: @tmp_working_date_3,
+                 labor_cost_2: @tmp_labor_cost_2
+      end
+    when 3 #３列目
+      
+      report.list(:default3).add_row do |row|
+        
+        row.values working_date_3: @tmp_working_date_3,
                  man_month_3: @tmp_man_month_3,
-                  labor_cost_3: @tmp_labor_cost_3
+                 labor_cost_3: @tmp_labor_cost_3
+      end
     end
+   
+   
     
     
     #トータルへカウント
@@ -504,7 +520,6 @@ class LaborCostSummaryPDF
       report.page.item(:man_month_2_total).value(@man_month_2_total)
       #標準版仕様--社員名、給与
       #get_staff(2)
-      #binding.pry
       get_staff(2 + ((@page_count_staff_only -1) * 3))
       if @staff.present?
         report.page.item(:staff_name_2).value(@staff.staff_name)
@@ -551,6 +566,83 @@ class LaborCostSummaryPDF
     end
     #
   end
+  
+  #add240411
+  def self.setHeaderOnOverFlow(report)
+    
+    adjustSummary
+    
+    #社員１人目
+    ###社長
+    if @man_month_1_total != ""
+      #行あふれの場合のみここを通るので、合計は出力しない
+      #(小計として使えるかもしれないので、消さないでおく)
+      #report.page.item(:man_month_1_total).value(@man_month_1_total)
+      
+      #標準版仕様--社員名、給与
+      #get_staff(1)
+      get_staff(1 + ((@page_count_staff_only -1) * 3))
+      if @staff.present?
+        report.page.item(:staff_name_1).value(@staff.staff_name)
+        @num = @staff.daily_pay
+        formatNum()
+        report.page.item(:staff_salary_1).value(@num)
+      end
+      #
+    end
+    
+    #行あふれの場合のみここを通るので、合計は出力しない
+    #(小計として使えるかもしれないので、消さないでおく)
+    #if @labor_cost_1_total != ""
+    #  report.page.item(:labor_cost_1_total).value(@labor_cost_1_total_print)
+    #end
+    #社員２人目
+    ###岡戸
+    if @man_month_2_total != ""
+      #行あふれの場合のみここを通るので、合計は出力しない
+      #(小計として使えるかもしれないので、消さないでおく)
+      #report.page.item(:man_month_2_total).value(@man_month_2_total)
+      #標準版仕様--社員名、給与
+      #get_staff(2)
+      get_staff(2 + ((@page_count_staff_only -1) * 3))
+      if @staff.present?
+        report.page.item(:staff_name_2).value(@staff.staff_name)
+        @num = @staff.daily_pay
+        formatNum()
+        report.page.item(:staff_salary_2).value(@num)
+      end
+      #
+    end
+    #行あふれの場合のみここを通るので、合計は出力しない
+    #(小計として使えるかもしれないので、消さないでおく)
+    #if @labor_cost_2_total != ""
+    #  report.page.item(:labor_cost_2_total).value(@labor_cost_2_total_print)
+    #end
+    #社員３人目
+    ###村山さん
+    if @man_month_3_total != ""
+      #行あふれの場合のみここを通るので、合計は出力しない
+      #(小計として使えるかもしれないので、消さないでおく)
+      #report.page.item(:man_month_3_total).value(@man_month_3_total)
+      
+      #標準版仕様--社員名、給与
+      #get_staff(3)
+      get_staff(3 + ((@page_count_staff_only -1) * 3))
+      if @staff.present?
+        report.page.item(:staff_name_3).value(@staff.staff_name)
+        @num = @staff.daily_pay
+        formatNum()
+        report.page.item(:staff_salary_3).value(@num)
+      end
+      #
+    end
+    #行あふれの場合のみここを通るので、合計は出力しない
+    #(小計として使えるかもしれないので、消さないでおく)
+    #if @labor_cost_3_total != ""
+    #  report.page.item(:labor_cost_3_total).value(@labor_cost_3_total_print)
+    #end
+  end
+  
   
   def self.setRow()
     
