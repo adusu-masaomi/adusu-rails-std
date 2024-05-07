@@ -269,6 +269,8 @@ ja:
          list_price_quotation: 見積定価
        material_category:
          name: 分類名
+       storage_inventory:
+         unit_price: 参考単価
        inventory_category:
          name: 分類名
        working_large_item:

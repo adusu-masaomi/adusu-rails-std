@@ -226,6 +226,8 @@ Rails.application.routes.draw do
   
   post '/material_categoriez/reorder' => 'material_categories#reorder'
   
+  #add231228
+  get '/storage_inventoriez/get_material_unit_price' => 'storage_inventories#get_material_unit_price'
   get '/material_masterz/get_material_id' => 'material_masters#get_material_id'
   
   get '/outsourcing_datum/update_all_purchase_date' => 'outsourcing_data#update_all_purchase_date'
