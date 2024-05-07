@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  warehouse_id: 1
+  location_id: 1
+  material_master_id: 1
+  quantity: 1
+  unit_master_id: 1
+  unit_price: 1.5
+
+two:
+  warehouse_id: 1
+  location_id: 1
+  material_master_id: 1
+  quantity: 1
+  unit_master_id: 1
+  unit_price: 1.5

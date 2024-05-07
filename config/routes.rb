@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :storage_inventories
   get 'sessions/new'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :working_times
@@ -655,6 +656,7 @@ Rails.application.routes.draw do
   
   # 保留
   # ExcelReport::Application.routes.draw do
+  resources :storage_inventories
   get 'sessions/new'
   resources :working_times
   resources :companies

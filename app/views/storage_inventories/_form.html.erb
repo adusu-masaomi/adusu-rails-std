@@ -1,0 +1,16 @@
+<%= simple_form_for(@storage_inventory) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :warehouse_id %>
+    <%= f.input :location_id %>
+    <%= f.input :material_master_id %>
+    <%= f.input :quantity %>
+    <%= f.input :unit_master_id %>
+    <%= f.input :unit_price %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

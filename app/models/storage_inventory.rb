@@ -1,0 +1,2 @@
+class StorageInventory < ApplicationRecord
+end
