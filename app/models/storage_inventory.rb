@@ -6,6 +6,7 @@ class StorageInventory < ActiveRecord::Base
   belongs_to :unit_master , optional: true
   
   #validates :warehouse_id, presence: true
+  validates :material_master_id, presence: true, uniqueness: true
   
   #倉庫
   def self.warehouse
