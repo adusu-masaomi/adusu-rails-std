@@ -7,12 +7,14 @@
   <!-- <dt><strong><%= model_class.human_attribute_name(:material_master_id) %>:</strong></dt> -->
   <!-- <dd><%= @storage_inventory.material_master_id %></dd> -->
   
+  <!--
   <dt><strong>保管場所</strong></dt>
   <% if @storage_inventory.warehouse_id.present? %>
   <dd><%= StorageInventory.warehouse[@storage_inventory.warehouse_id][0] %></dd>
   <% else %>
   <dd>-</dd>
   <% end %>
+  -->
   
   <dt><strong><%= model_class.human_attribute_name(:material_code) %>:</strong></dt>
   <dd><%= @storage_inventory.material_master.material_code %></dd>
@@ -22,8 +24,17 @@
   <dd><%= @storage_inventory.quantity %></dd>
   
   <dt><strong>単位</strong></dt>
-  <% if @storage_inventory.unit_master_id.present? %>
-    <dd><%= @storage_inventory.unit_master.unit_name %></dd>
+  <% if @storage_inventory.material_master.unit_id.present? %>
+    <% @unit_master = UnitMaster.find(@storage_inventory.material_master.unit_id)%>
+    <% @unit_name = @unit_master.unit_name %>
+    <dd><%= @unit_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
+  
+  <dt><strong>カテゴリー</strong></dt>
+  <% if @storage_inventory.material_master.inventory_category.present? %>
+    <dd><%= @storage_inventory.material_master.inventory_category.name %></dd>
   <% else %>
     <dd>-</dd>
   <% end %>

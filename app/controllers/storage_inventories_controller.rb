@@ -20,7 +20,9 @@ class StorageInventoriesController < ApplicationController
     cookies[:recent_search_history] = search_history if params[:q].present?
     #
 	
-    @storage_inventories  = @q.result(distinct: true)
+    #@storage_inventories  = @q.result(distinct: true)
+    #rails6
+    @storage_inventories  = @q.result
     
     #pdf用にセット
     @storage_inventory_list = @storage_inventories
