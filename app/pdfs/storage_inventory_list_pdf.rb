@@ -141,7 +141,8 @@ class StorageInventoryListPDF
         #単位...必要か
         unit_name = ""
         if storage_inventory.material_master.present?
-          unit_master = UnitMaster.find(storage_inventory.material_master.unit_id)
+          #unit_master = UnitMaster.find(storage_inventory.material_master.unit_id)
+          unit_master = UnitMaster.where(id: storage_inventory.material_master.unit_id).first
           if unit_master.present?
             unit_name = unit_master.unit_name
           end
