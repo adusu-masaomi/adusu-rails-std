@@ -152,6 +152,12 @@ class StorageInventoryListPDF
         #  unit_name = ""
         #end
         
+        #メーカー
+        maker_name = ""
+        if storage_inventory.material_master.present?
+          maker_name = storage_inventory.material_master.MakerMaster.maker_name
+        end
+        
         #カテゴリー
         category_name = ""
         if storage_inventory.material_master.present? &&
@@ -175,6 +181,7 @@ class StorageInventoryListPDF
                           material_name: material_name, unit_name: unit_name,
                           quantity: inventory_quantity,
                           unit_price: unit_price,
+                          maker: maker_name,
                           category: category_name
                           #inventory_amount: inventory_amount,
                           #list_price: list_price
