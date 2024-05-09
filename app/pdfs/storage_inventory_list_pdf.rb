@@ -38,13 +38,6 @@ class StorageInventoryListPDF
     end
     #
     
-    #カテゴリー
-    if category_name.present?
-      report.page.item(:category_name).value(category_name)
-    else 
-      report.page.item(:lbl_category_name).visible(false)
-    end
-    #
     
     #ソート順は仕入日、注文ナンバーの順とする。
     
@@ -60,7 +53,17 @@ class StorageInventoryListPDF
   
       page_count = report.page_count.to_s + "頁"
       report.page.item(:pageno).value(page_count)
-
+      
+      
+      #カテゴリー
+      if category_name.present?
+        report.page.item(:category_name).value(category_name)
+      else 
+        report.page.item(:lbl_category_name).visible(false)
+      end
+      #
+      
+      
       if @flag.nil? 
         @flag = "1"
     
