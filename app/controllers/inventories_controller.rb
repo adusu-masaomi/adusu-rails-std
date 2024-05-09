@@ -276,9 +276,11 @@ class InventoriesController < ApplicationController
             end
             ####
             #
-
+            
             #@differ_inventory_quantity = quantity - @inventory_history.quantity
-            @differ_inventory_quantity = (quantity - quantity2) - (@inventory_history.quantity - tmp_next_quantity_1)
+            #@differ_inventory_quantity = (quantity - quantity2) - (@inventory_history.quantity - tmp_next_quantity_1)
+            #upd240509
+            @differ_inventory_quantity = (quantity - quantity2) - (@inventory_history.quantity.abs - tmp_next_quantity_1)
             ##
           else 
             #add170413
@@ -531,8 +533,8 @@ class InventoriesController < ApplicationController
 
         #
       end
-
-      #add170508
+      
+      #最終単価(初期値)
       last_unit_price = @inventory.last_unit_price
       last_warehousing_date = @inventory.last_warehousing_date
 
@@ -554,9 +556,11 @@ class InventoriesController < ApplicationController
         #current_quantity = @inventory_history.quantity
         #upd231106
         current_quantity = @inventory_history.quantity.abs
-
-        #add170508
-        last_unit_price = @inventory_history.unit_price
+                
+        if params[:purchase_datum][:quantity].to_i > 0
+        #upd240509 マイナス入庫以外の場合のみ、単価は更新する(修正時)
+          last_unit_price = @inventory_history.unit_price
+        end
         last_warehousing_date = @inventory_history.inventory_date
       else
 
@@ -1119,24 +1123,31 @@ class InventoriesController < ApplicationController
       if @sameUnitPriceFlag
         #現在単価と同一？
         if @inventory_history.inventory_division_id == $INDEX_INVENTORY_STOCK
-          current_quantity = @inventory.current_quantity - @inventory_history.quantity
+          #current_quantity = @inventory.current_quantity - @inventory_history.quantity
+          #upd240509 以下、全てabsとする(マイナス入庫を考慮)
+          current_quantity = @inventory.current_quantity - @inventory_history.quantity.abs
         else
-          current_quantity = @inventory.current_quantity + @inventory_history.quantity
+          #current_quantity = @inventory.current_quantity + @inventory_history.quantity
+          current_quantity = @inventory.current_quantity + @inventory_history.quantity.abs
         end
       elsif @inventory_history.unit_price == @inventory.next_unit_price_1
         #次の単価と同一？
         if @inventory_history.inventory_division_id == $INDEX_INVENTORY_STOCK
-          @next_quantity_1 = @inventory.next_quantity_1 - @inventory_history.quantity
+          #@next_quantity_1 = @inventory.next_quantity_1 - @inventory_history.quantity
+          @next_quantity_1 = @inventory.next_quantity_1 - @inventory_history.quantity.abs
         else
-          @next_quantity_1 = @inventory.next_quantity_1 + @inventory_history.quantity
+          #@next_quantity_1 = @inventory.next_quantity_1 + @inventory_history.quantity
+          @next_quantity_1 = @inventory.next_quantity_1 + @inventory_history.quantity.abs
         end
       elsif @inventory_history.unit_price == @inventory.next_unit_price_2
         #次の次の単価と同一？
         ###
         if @inventory_history.inventory_division_id == $INDEX_INVENTORY_STOCK
-          @next_quantity_2 = @inventory.next_quantity_2 - @inventory_history.quantity
+          #@next_quantity_2 = @inventory.next_quantity_2 - @inventory_history.quantity
+          @next_quantity_2 = @inventory.next_quantity_2 - @inventory_history.quantity.abs
         else
-          @next_quantity_2 = @inventory.next_quantity_2 + @inventory_history.quantity
+          #@next_quantity_2 = @inventory.next_quantity_2 + @inventory_history.quantity
+          @next_quantity_2 = @inventory.next_quantity_2 + @inventory_history.quantity.abs
         end
       else
         #現、次と単価不一致の場合は旧ロットとみなす(出庫の場合のみ)
