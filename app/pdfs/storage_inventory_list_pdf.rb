@@ -2,7 +2,8 @@ class StorageInventoryListPDF
     
   
   #def self.create inventory_list
-  def self.create(storage_inventories, warehouse_name, category_name)
+  #def self.create(storage_inventories, warehouse_name, category_name)]
+  def self.create(storage_inventories, warehouse_name, search_category_name)
   #預かり在庫表PDF発行
       
     # tlfファイルを読み込む
@@ -56,8 +57,8 @@ class StorageInventoryListPDF
       
       
       #カテゴリー
-      if category_name.present?
-        report.page.item(:category_name).value(category_name)
+      if search_category_name.present?
+        report.page.item(:category_name).value(search_category_name)
       else 
         report.page.item(:lbl_category_name).visible(false)
       end
