@@ -71,8 +71,7 @@ class InventoryListPDF
         #   report.page.item(:inventory_quantity).value(inventory_history.inventories.pluck("inventory_quantity")[0])
         #end
       end
-
-    
+      
       #小計出力（品番が変わった場合）
       #if material_code  != ""
       #  if material_code  != inventory_history.material_master.material_code
@@ -94,7 +93,18 @@ class InventoryListPDF
         inventory_amount_total += inventory.inventory_amount
       end
 
-
+      #add240511
+      #在庫調査表、ゼロ除外を選択した場合
+      if $print_flag == "6"
+        if inventory.inventory_quantity.present? && 
+           inventory.inventory_quantity <= 0
+          #数量ゼロは除外
+          next
+        end
+      end
+      #add end
+       
+       
       report.list(:default).add_row do |row|
         #品名(手入力は考慮しない）
         material_name = inventory.material_master.material_name
@@ -151,7 +161,8 @@ class InventoryListPDF
               list_price: list_price
               
         #add221221
-        if $print_flag == "3"
+        #if $print_flag == "3"
+        if $print_flag == "3" || $print_flag == "6"
           if inventory.no_stocktake_flag == 1
             row.item(:exclude_line).visible(true)
           else

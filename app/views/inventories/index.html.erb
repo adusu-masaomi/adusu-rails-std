@@ -56,6 +56,11 @@
             :class => 'btn  btn-lightblue100_ftg', :target=>["_blank"] %>
      <% end %>
      
+     <% if @company_id == 1 %>
+       <%= link_to "棚卸表(記入用／数ゼロ除外)",
+            inventories_path(@inventory, format: "pdf", :print_flag => "6"),
+            :class => 'btn  btn-yellow100_ftg', :target=>["_blank"] %>
+     <% end %>
 
       <!--標準版はカット
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
