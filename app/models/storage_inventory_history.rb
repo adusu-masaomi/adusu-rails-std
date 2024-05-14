@@ -1,0 +1,2 @@
+class StorageInventoryHistory < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_07_042514) do
+ActiveRecord::Schema.define(version: 2024_05_14_230823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -905,6 +905,21 @@ ActiveRecord::Schema.define(version: 2024_05_07_042514) do
     t.integer "quantity"
     t.integer "unit_master_id"
     t.float "unit_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "storage_inventory_histories", force: :cascade do |t|
+    t.date "occurred_date"
+    t.string "slip_code"
+    t.integer "purchase_order_datum_id"
+    t.integer "construction_datum_id"
+    t.integer "material_master_id"
+    t.float "quantity"
+    t.float "unit_price"
+    t.integer "amount"
+    t.integer "supplier_master_id"
+    t.integer "invenrtory_division_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
