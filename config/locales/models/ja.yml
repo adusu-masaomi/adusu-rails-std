@@ -204,6 +204,7 @@ ja:
        contact: 連絡先マスター
        site: 現場マスター
        storage_inventory: 支給品在庫マスター
+       storage_inventory_history: 支給品在庫入出庫データ
        working_category: カテゴリーマスター
        working_subcategory: カテゴリーサブマスター
        working_time: 勤務時間マスター
@@ -353,6 +354,11 @@ ja:
          book_quantity: 帳簿数量
          book_amount: 帳簿金額
          unit_price: 単価
+       storage_inventory_history:
+         occurred_date: 発生日
+         unit_price: 単価
+         amount: 金額
+         inventory_division: 入出庫区分
        supplier_master:
          bank_name: 銀行名
          bank_branch_name: 銀行支店名

@@ -65,6 +65,6 @@ class StorageInventoryHistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def storage_inventory_history_params
-      params.require(:storage_inventory_history).permit(:occurred_date, :slip_code, :purchase_order_datum_id, :construction_datum_id, :material_master_id, :quantity, :unit_price, :amount, :supplier_master_id, :invenrtory_division_id)
+      params.require(:storage_inventory_history).permit(:occurred_date, :slip_code, :purchase_order_datum_id, :construction_datum_id, :material_master_id, :quantity, :unit_price, :amount, :supplier_master_id, :inventory_division_id)
     end
 end

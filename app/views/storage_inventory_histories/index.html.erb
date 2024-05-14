@@ -1,6 +1,6 @@
 <%- model_class = StorageInventoryHistory -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -15,7 +15,7 @@
       <th><%= model_class.human_attribute_name(:unit_price) %></th>
       <th><%= model_class.human_attribute_name(:amount) %></th>
       <th><%= model_class.human_attribute_name(:supplier_master_id) %></th>
-      <th><%= model_class.human_attribute_name(:invenrtory_division_id) %></th>
+      <th><%= model_class.human_attribute_name(:inventory_division_id) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -33,7 +33,7 @@
         <td><%= storage_inventory_history.unit_price %></td>
         <td><%= storage_inventory_history.amount %></td>
         <td><%= storage_inventory_history.supplier_master_id %></td>
-        <td><%= storage_inventory_history.invenrtory_division_id %></td>
+        <td><%= storage_inventory_history.inventory_division_id %></td>
         <td><%=l storage_inventory_history.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
