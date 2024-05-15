@@ -91,6 +91,20 @@ class StorageInventoryHistoriesController < ApplicationController
     end
   end
 
+  # DELETE /storage_inventory_histories/1 or /storage_inventory_histories/1.json
+  def destroy
+    
+    #支給品在庫も更新する
+    update_storage_inventory
+    
+    @storage_inventory_history.destroy
+
+    respond_to do |format|
+      format.html { redirect_to storage_inventory_histories_url, notice: "Storage inventory history was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+  
   #支給品在庫を加減する
   def update_storage_inventory
     if params[:action] != "destroy"
@@ -106,7 +120,7 @@ class StorageInventoryHistoriesController < ApplicationController
     
     if storage_inventory.present?
       if params[:action] == "create"
-        #新規の場合
+        #新規
         storage_inventory.quantity -= quantity  #出庫分をマイナスする
         storage_inventory.save!
       
@@ -127,21 +141,7 @@ class StorageInventoryHistoriesController < ApplicationController
     end
   end
   #
-
-  # DELETE /storage_inventory_histories/1 or /storage_inventory_histories/1.json
-  def destroy
-    
-    #支給品在庫も更新する
-    update_storage_inventory
-    
-    @storage_inventory_history.destroy
-
-    respond_to do |format|
-      format.html { redirect_to storage_inventory_histories_url, notice: "Storage inventory history was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_storage_inventory_history
