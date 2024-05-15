@@ -115,9 +115,10 @@ class StorageInventoryHistoriesController < ApplicationController
         quantity_before = @storage_inventory_history.quantity
         differ_quantity = (quantity_before - quantity).to_i
         
-        storage_inventory.quantity += differ_quantity  #差分を加える
-        storage_inventory.save!
-      
+        if differ_quantity.abs != 0 #差異がある場合のみ更新
+          storage_inventory.quantity += differ_quantity  #差分を加える
+          storage_inventory.save!
+        end
       elsif params[:action] == "destroy"
         #削除
         storage_inventory.quantity += quantity   #出庫した分を加える
