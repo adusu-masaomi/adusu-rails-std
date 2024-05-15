@@ -379,7 +379,9 @@ class PurchaseListPDF
      # 1ページ目を開始
     @report.start_new_page layout: "#{Rails.root}/app/pdfs/purchase_list_pdf.tlf"
     
+    #タイトル
     @report.page.item(:lbl_storage_inventory).visible(true)
+    @report.page.item(:print_title).value("仕入表")
     
     @storage_inventory_histories.joins(:purchase_order_datum).select("storage_inventory_histories.*, purchase_order_data.purchase_order_code").
           order("storage_inventory_histories.purchase_order_datum_id, storage_inventory_histories.occurred_date, storage_inventory_histories.id").each do |storage_inventory_history|
