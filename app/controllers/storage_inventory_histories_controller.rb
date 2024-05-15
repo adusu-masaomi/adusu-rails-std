@@ -3,7 +3,29 @@ class StorageInventoryHistoriesController < ApplicationController
 
   # GET /storage_inventory_histories or /storage_inventory_histories.json
   def index
-    @storage_inventory_histories = StorageInventoryHistory.all
+    #@storage_inventory_histories = StorageInventoryHistory.all
+    
+    #ransack保持用コード
+    query = params[:q]
+    query ||= eval(cookies[:recent_search_history].to_s)
+    
+    #ransack保持用-
+    @q = StorageInventoryHistory.ransack(query)
+    
+    #ransack保持用コード
+    search_history = {
+    value: params[:q],
+    expires: 24.hours.from_now
+    }
+    cookies[:recent_search_history] = search_history if params[:q].present?
+    #
+    
+    #rails6
+    @storage_inventory_histories  = @q.result
+    
+    #kaminari用設定
+    @storage_inventory_histories  = @storage_inventory_histories.page(params[:page])
+    
   end
 
   # GET /storage_inventory_histories/1 or /storage_inventory_histories/1.json

@@ -272,6 +272,11 @@ ja:
          name: 分類名
        storage_inventory:
          unit_price: 参考単価
+       storage_inventory_history:
+         occurred_date: 発生日
+         unit_price: 単価
+         amount: 金額
+         inventory_division_id: 入出庫区分
        inventory_category:
          name: 分類名
        working_large_item:
@@ -354,11 +359,6 @@ ja:
          book_quantity: 帳簿数量
          book_amount: 帳簿金額
          unit_price: 単価
-       storage_inventory_history:
-         occurred_date: 発生日
-         unit_price: 単価
-         amount: 金額
-         inventory_division: 入出庫区分
        supplier_master:
          bank_name: 銀行名
          bank_branch_name: 銀行支店名

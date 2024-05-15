@@ -1,16 +1,72 @@
 <%= simple_form_for @storage_inventory_history, :html => { :class => 'well form-horizontal' } do |f| %>
-  <%= f.input :occurred_date %>
-  <%= f.input :slip_code %>
-  <%= f.input :purchase_order_datum_id %>
-  <%= f.input :construction_datum_id %>
-  <%= f.input :material_master_id %>
-  <%= f.input :quantity %>
+  <%= f.input :occurred_date, input_html: { id:"occurred_date", :tabindex=>"0" } %>
+  <%= f.input :slip_code, input_html: { id:"slip_code", :tabindex=>"1" } %>
+  
+  <%= f.label :注文Ｎｏ , {:class => "my-custom-class-l"}  %></br>
+  <%= f.collection_select :purchase_order_datum_id, PurchaseOrderDatum.all, :id, :p_num_cd, {:prompt => "どれか一つを選択して下さい"} , {id:"purchase_order_datum_id", 
+          class: "searchableSelect1_1" , :tabindex=>"2", style: 'width:220px !important; margin-left: -15px;'} %>
+  
+  </br></br>
+  <%= f.label :工事名 , {:class => "my-custom-class-l"}  %></br>
+  <!--<%= f.input :construction_datum_id, input_html: { id:"construction_datum_id", :tabindex=>"3" } %>-->
+  <%= f.collection_select :construction_datum_id, ConstructionDatum.order('construction_code DESC').all, :id, :p_cd_name, {:prompt => "どれか一つを選択して下さい"} , 
+      {id:"construction_datum_id",  class: "searchableSelect1_2" , style: 'width:400px', :tabindex=>"3" } %>
+      
+  <!--<%= f.input :material_master_id, input_html: { id:"material_master_id", :tabindex=>"4" } %>-->
+  </br></br>
+  <%= f.label :品名, {:class => "my-custom-class-l"}  %></br>
+  <%= f.collection_select :material_master_id, MaterialMaster.all,  :id, :p_material_code_name,  
+      {:prompt => "どれか一つを選択して下さい"} , 
+      {id:'material_master_id', :class => "searchableSelect2_1" }  %>
+  </br></br>
+  
+  <%= f.input :quantity, input_html: { id:"quantity", :tabindex=>"5" } %>
+  
+  <!-- 単価・金額はひとまずカット
   <%= f.input :unit_price %>
   <%= f.input :amount %>
-  <%= f.input :supplier_master_id %>
-  <%= f.input :inventory_division_id %>
+  -->
+  
+  <!--<%= f.input :supplier_master_id, input_html: { id:"supplier_master_id", :tabindex=>"6" } %>-->
+  
+  <%= f.label :仕入業者 , {:class => "my-custom-class-l"} %></br>
+  <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name, {:prompt => "どれか一つを選択して下さい"},
+      {id:"supplier_master_id", :class => "searchableSelect1_3", style: 'width:220px', :tabindex=>"6"}  %>
+      
+  <!--
+  <%= f.input :inventory_division_id, input_html: { id:"inventory_division_id", :tabindex=>"7" } %>-->
+  
+  </br></br>
+  <%= f.label :入出庫区分 , {:class => "my-custom-class-l"} %></br>
+  <%= f.select :inventory_division_id, InventoryHistory.inventory_division, {:include_blank => true}, 
+    {id:'inventory_division_id', :class => "my-custom-class",
+    style: 'width:120px;margin-left:-15px;font-size:18px;', :tabindex=>"7" } %>
+  </br></br>
+      
   
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 storage_inventory_histories_path, :class => 'btn btn-default' %>
 <% end %>
+
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+    setDefaultValue();
+    
+    //$(".select1_1").select2({ theme: "bootstrap" });
+  });
+  
+  //初期値をセット
+  function setDefaultValue(){
+    index = 1;
+    $(".searchableSelect1_1").val(index).trigger("change");
+    
+    index = 10;  //アデュース仕様(自社)
+    $(".searchableSelect1_3").val(index).trigger("change");
+    
+    //区分(出庫)
+    document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;
+  }
+  
+</script>

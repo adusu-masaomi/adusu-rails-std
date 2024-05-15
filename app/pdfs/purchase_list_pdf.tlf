@@ -1347,6 +1347,34 @@
         "base": "",
         "type": ""
       }
+    },
+    {
+      "id": "lbl_storage_inventory",
+      "type": "text",
+      "display": false,
+      "description": "",
+      "x": 25.3,
+      "y": 40,
+      "width": 56.8,
+      "height": 15.2,
+      "style": {
+        "font-family": [
+          "IPAGothic"
+        ],
+        "font-size": 14,
+        "color": "#000000",
+        "text-align": "left",
+        "vertical-align": "top",
+        "line-height": "",
+        "line-height-ratio": "",
+        "letter-spacing": "",
+        "font-style": [
+          "bold"
+        ]
+      },
+      "texts": [
+        "※支給品"
+      ]
     }
   ],
   "state": {

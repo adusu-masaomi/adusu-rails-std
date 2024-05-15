@@ -8,22 +8,67 @@
   <dd><%= @storage_inventory_history.occurred_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:slip_code) %>:</strong></dt>
   <dd><%= @storage_inventory_history.slip_code %></dd>
+  
+  <!--
   <dt><strong><%= model_class.human_attribute_name(:purchase_order_datum_id) %>:</strong></dt>
   <dd><%= @storage_inventory_history.purchase_order_datum_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:construction_datum_id) %>:</strong></dt>
-  <dd><%= @storage_inventory_history.construction_datum_id %></dd>
+  -->
+  
+  <dt>注文No:</dt>
+  <% if @storage_inventory_history.purchase_order_datum.present? %>
+    <dd><%= @storage_inventory_history.purchase_order_datum.purchase_order_code %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
+  
+  <!--<dt><strong><%= model_class.human_attribute_name(:construction_datum_id) %>:</strong></dt>-->
+  <!--<dd><%= @storage_inventory_history.construction_datum_id %></dd>-->
+  
+  <dt><strong>工事No:</strong></dt>
+  <dd><%= @storage_inventory_history.construction_datum.construction_code %></dd>
+  <dt><strong>工事名:</strong></dt>
+  <dd><%= @storage_inventory_history.construction_datum.construction_name %></dd>
+  
+  <!--
   <dt><strong><%= model_class.human_attribute_name(:material_master_id) %>:</strong></dt>
   <dd><%= @storage_inventory_history.material_master_id %></dd>
+  -->
+  <dt><strong><%= model_class.human_attribute_name(:material_code) %>:</strong></dt>
+  <dd><%= @storage_inventory_history.material_master.material_code %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:material_name) %>:</strong></dt>
+  <dd><%= @storage_inventory_history.material_master.material_name %></dd>
+  
   <dt><strong><%= model_class.human_attribute_name(:quantity) %>:</strong></dt>
   <dd><%= @storage_inventory_history.quantity %></dd>
+  
+  <!-- 単価・金額はひとまずカット
   <dt><strong><%= model_class.human_attribute_name(:unit_price) %>:</strong></dt>
   <dd><%= @storage_inventory_history.unit_price %></dd>
   <dt><strong><%= model_class.human_attribute_name(:amount) %>:</strong></dt>
   <dd><%= @storage_inventory_history.amount %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:supplier_master_id) %>:</strong></dt>
-  <dd><%= @storage_inventory_history.supplier_master_id %></dd>
+  -->
+  
+  <!--<dt><strong><%= model_class.human_attribute_name(:supplier_master_id) %>:</strong></dt>-->
+  <!--<dd><%= @storage_inventory_history.supplier_master_id %></dd>-->
+  
+  <dt><strong>仕入業者</strong></dt>
+  <% if @storage_inventory_history.supplier_master.present? %>
+    <dd><%= @storage_inventory_history.supplier_master.supplier_name %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
+  
+  <!--
   <dt><strong><%= model_class.human_attribute_name(:inventory_division_id) %>:</strong></dt>
   <dd><%= @storage_inventory_history.inventory_division_id %></dd>
+  -->
+  
+  <dt><strong>入出庫区分</strong></dt>
+  <% if @storage_inventory_history.inventory_division_id.present? %>
+    <dd><%= InventoryHistory.inventory_division[@storage_inventory_history.inventory_division_id][0] %></dd>
+  <% else %>
+    <dd>-</dd>
+  <% end %>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

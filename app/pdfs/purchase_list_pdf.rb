@@ -8,7 +8,7 @@ class PurchaseListPDF
     #@@page_number = 0
 
     # tlfファイルを読み込む
-    report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_list_pdf.tlf")
+    @report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/purchase_list_pdf.tlf")
 
 
     # Thin ReportsでPDFを作成
@@ -30,7 +30,7 @@ class PurchaseListPDF
 	  #end
 
     # 1ページ目を開始
-    report.start_new_page
+    @report.start_new_page
     #r.start_new_page
 
 
@@ -57,7 +57,7 @@ class PurchaseListPDF
     #end
       
     #タイトル
-    report.page.item(:print_title).value("仕入表")
+    @report.page.item(:print_title).value("仕入表")
       
     #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum| 
     #postgreSQL仕様
@@ -65,8 +65,8 @@ class PurchaseListPDF
     #upd230919
     $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
       #---見出し---
-      page_count = report.page_count.to_s + "頁"
-      report.page.item(:pageno).value(page_count)
+      page_count = @report.page_count.to_s + "頁"
+      @report.page.item(:pageno).value(page_count)
      
      
       if @flag.nil? 
@@ -77,11 +77,14 @@ class PurchaseListPDF
        
         #@construction_data = ConstructionDatum.find(purchase_datum.construction_datum_id)
         if $construction_flag == true
-          report.page.item(:construction_code).value(purchase_datum.construction_datum.construction_code)
-          report.page.item(:construction_name).value(purchase_datum.construction_datum.construction_name)
+          @report.page.item(:construction_code).value(purchase_datum.construction_datum.construction_code)
+          @report.page.item(:construction_name).value(purchase_datum.construction_datum.construction_name)
+          
+          #支給品用処理追加 add240515
+          @construction_datum_id = purchase_datum.construction_datum_id
         end
         if $customer_flag == true
-          report.page.item(:customer_name).value(purchase_datum.construction_datum.CustomerMaster.customer_name)
+          @report.page.item(:customer_name).value(purchase_datum.construction_datum.CustomerMaster.customer_name)
         end
         #小計(見積金額) 
         #本来ならフッターに設定するべきだが、いまいちわからないため・・
@@ -100,7 +103,7 @@ class PurchaseListPDF
           @purchase_amount_subtotal = @num
           #report.list(:default).add_row purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
           #                              purchase_amount: @purchase_amount_subtotal
-          report.list(:default).add_row do |row2|
+          @report.list(:default).add_row do |row2|
                            row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
                                        purchase_amount: @purchase_amount_subtotal
                            row2.item(:lbl_unit_price_multi).visible(false)  #add200716
@@ -151,7 +154,7 @@ class PurchaseListPDF
       #
 
       #for i in 0..29   #29行分(for test)
-      report.list(:default).add_row do |row|
+      @report.list(:default).add_row do |row|
 
 
         #品名のセット
@@ -278,8 +281,8 @@ class PurchaseListPDF
     end
     #end
     #add170302 最終ページの出力はここで定義する
-    page_count = report.page_count.to_s + "頁"
-    report.page.item(:pageno).value(page_count)
+    page_count = @report.page_count.to_s + "頁"
+    @report.page.item(:pageno).value(page_count)
 
     #小計(ラスト分)
     @num = @purchase_amount_subtotal
@@ -288,7 +291,7 @@ class PurchaseListPDF
     #report.list(:default).add_row purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
     #                                  purchase_amount: @purchase_amount_subtotal
 
-    report.list(:default).add_row do |row2| 
+    @report.list(:default).add_row do |row2| 
       row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
                   purchase_amount: @purchase_amount_subtotal
       row2.item(:lbl_unit_price_multi).visible(false)  #add200716
@@ -319,7 +322,7 @@ class PurchaseListPDF
     @purchase_amount_total = @num
     #report.list(:default).add_row  purchase_unit_price: "合計", 
     #                                  purchase_amount: @purchase_amount_total
-    report.list(:default).add_row do |row2|
+    @report.list(:default).add_row do |row2|
       row2.values purchase_unit_price: "合計", 
                   purchase_amount: @purchase_amount_total
       row2.item(:lbl_unit_price_multi).visible(false)  #add200716
@@ -342,12 +345,137 @@ class PurchaseListPDF
       #  row2.item(:line_24).style(:border_color, 'red')
       #end
     end
- 
+    
+    #支給品用処理追加　add240515
+    if @construction_datum_id.present?
+      
+      @storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: @construction_datum_id)
+      
+      if @storage_inventory_histories.present?
+        #binding.pry
+        inventory_history_list
+      end
+            
+    end
+    
+    #add end 
+    
     # ThinReports::Reportを返す
-    return report
+    return @report
 
   end
-
+  
+  
+  #add240515
+  #支給品入出庫表出力
+  def self.inventory_history_list
+    
+    #初期化
+    @flag = nil
+    @purchase_order_code  = ""
+    @purchase_amount_subtotal = 0
+    @purchase_amount_total = 0
+    
+     # 1ページ目を開始
+    @report.start_new_page layout: "#{Rails.root}/app/pdfs/purchase_list_pdf.tlf"
+    
+    @report.page.item(:lbl_storage_inventory).visible(true)
+    
+    @storage_inventory_histories.joins(:purchase_order_datum).select("storage_inventory_histories.*, purchase_order_data.purchase_order_code").
+          order("storage_inventory_histories.purchase_order_datum_id, storage_inventory_histories.occurred_date, storage_inventory_histories.id").each do |storage_inventory_history|
+       page_count = @report.page_count.to_s + "頁"
+       @report.page.item(:pageno).value(page_count)
+       
+      if @flag.nil? 
+        @flag = "1"
+        if $construction_flag == true
+          @report.page.item(:construction_code).value(storage_inventory_history.construction_datum.construction_code)
+          @report.page.item(:construction_name).value(storage_inventory_history.construction_datum.construction_name)
+          
+          #支給品用処理追加 add240515
+          #@construction_datum_id = purchase_datum.construction_datum_id
+        end
+        if $customer_flag == true
+          @report.page.item(:customer_name).value(storage_inventory_history.construction_datum.CustomerMaster.customer_name)
+        end
+      
+      end
+       #小計(不要？)
+        #if @purchase_order_code  != ""
+        #  if @purchase_order_code  != purchase_datum.purchase_order_datum.purchase_order_code
+        #    @num = @purchase_amount_subtotal
+        #    formatNum()
+        #    @purchase_amount_subtotal = @num
+        #    @report.list(:default).add_row do |row2|
+        #                   row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
+        #                               purchase_amount: @purchase_amount_subtotal
+        #                   row2.item(:lbl_unit_price_multi).visible(false)  #add200716
+        #    end
+        #    @purchase_amount_subtotal = 0
+        #  end
+        #end 
+      #小計end
+      
+      @purchase_order_code  = storage_inventory_history.purchase_order_datum.purchase_order_code
+      #金額小計・合計をセット(0だが)
+      #if storage_inventory_history.amount.present?
+      @purchase_amount_subtotal = @purchase_amount_subtotal + 0
+      @purchase_amount_total = @purchase_amount_total + 0
+      #end
+      
+      #明細印刷
+      @report.list(:default).add_row do |row|
+        #各値をセット
+        material_code = storage_inventory_history.material_master.material_code
+        material_name = storage_inventory_history.material_master.material_name
+        quantity = sprintf("%.0f", storage_inventory_history.quantity)
+        #単位名
+        unit_name = "-"
+        if storage_inventory_history.material_master.present?
+          unit_master = UnitMaster.where(id: storage_inventory_history.material_master.unit_id).first
+          if unit_master.present?
+            unit_name = unit_master.unit_name
+          end
+        else
+          unit_name = "-"
+        end
+        #単価
+        unit_price = sprintf("%.0f", 0)  #単価は0とする
+        #金額
+        amount = sprintf("%.0f", 0)  #金額は0とする
+        #定価
+        @num = storage_inventory_history.material_master.list_price
+        formatNum()
+        list_price = @num
+        #入出庫区分
+        division_name = InventoryHistory.inventory_division[storage_inventory_history.inventory_division_id.to_i][0]
+        #
+        
+        row.item(:lbl_unit_price_multi).visible(false)  #単価の＊印は非表示にする
+        
+        row.values purchase_date: storage_inventory_history.occurred_date,
+                   purchase_order_code: storage_inventory_history.purchase_order_datum.purchase_order_code,
+                   material_code: material_code, material_name: material_name,
+                   maker_name: storage_inventory_history.material_master.MakerMaster.maker_name,
+                   quantity: quantity, unit_name: unit_name, purchase_unit_price: unit_price,
+                   purchase_amount: amount, list_price: list_price,
+                   supplier_name: storage_inventory_history.supplier_master.supplier_name,
+                   purchase_division_name: division_name
+      end  #@report.list do end           
+                 
+    end  #end do           
+    #合計
+    #@num = @purchase_amount_total
+    #formatNum()
+    #@purchase_amount_total = @num
+    @report.list(:default).add_row do |row2|
+        row2.values purchase_unit_price: "合計", 
+                  purchase_amount: @purchase_amount_total
+        row2.item(:lbl_unit_price_multi).visible(false) 
+    end
+    #
+  end
+  
 end
 
 
