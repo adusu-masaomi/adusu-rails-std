@@ -61,6 +61,10 @@ class StorageInventoryHistoriesController < ApplicationController
 
     respond_to do |format|
       if @storage_inventory_history.save
+        
+        #支給品在庫も更新する
+        update_storage_inventory
+        
         format.html { redirect_to storage_inventory_history_url(@storage_inventory_history), notice: "Storage inventory history was successfully created." }
         format.json { render :show, status: :created, location: @storage_inventory_history }
       else
@@ -72,6 +76,10 @@ class StorageInventoryHistoriesController < ApplicationController
 
   # PATCH/PUT /storage_inventory_histories/1 or /storage_inventory_histories/1.json
   def update
+    
+    #支給品在庫も更新する
+    update_storage_inventory
+    
     respond_to do |format|
       if @storage_inventory_history.update(storage_inventory_history_params)
         format.html { redirect_to storage_inventory_history_url(@storage_inventory_history), notice: "Storage inventory history was successfully updated." }
@@ -83,8 +91,48 @@ class StorageInventoryHistoriesController < ApplicationController
     end
   end
 
+  #支給品在庫を加減する
+  def update_storage_inventory
+    if params[:action] != "destroy"
+      material_master_id = params[:storage_inventory_history][:material_master_id].to_i
+      quantity = params[:storage_inventory_history][:quantity].to_i
+    else
+      #削除の場合
+      material_master_id = @storage_inventory_history.material_master_id
+      quantity = @storage_inventory_history.quantity.to_i
+    end
+    
+    storage_inventory = StorageInventory.where(material_master_id: material_master_id).first
+    
+    if storage_inventory.present?
+      if params[:action] == "create"
+        #新規の場合
+        storage_inventory.quantity -= quantity  #出庫分をマイナスする
+        storage_inventory.save!
+      
+      elsif params[:action] == "update"
+        #更新
+        quantity_before = @storage_inventory_history.quantity
+        differ_quantity = (quantity_before - quantity).to_i
+        
+        storage_inventory.quantity += differ_quantity  #差分を加える
+        storage_inventory.save!
+      
+      elsif params[:action] == "destroy"
+        #削除
+        storage_inventory.quantity += quantity   #出庫した分を加える
+        storage_inventory.save!
+      end
+    end
+  end
+  #
+
   # DELETE /storage_inventory_histories/1 or /storage_inventory_histories/1.json
   def destroy
+    
+    #支給品在庫も更新する
+    update_storage_inventory
+    
     @storage_inventory_history.destroy
 
     respond_to do |format|

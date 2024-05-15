@@ -9,16 +9,15 @@
   <%= search_form_for @q, :html => {:style=> 'width:1920px' } do |f| %>
     
     <div>
+       <%= f.label :construction_code, '工事名：：' %>
+       <%= f.select :with_construction,  ConstructionDatum.order("construction_code desc").map{|st| [st.p_cd_name, st.id]}, {include_blank: true}, 
+       {id: 'id', style: 'width:440px' , class: "searchableSelect1_1" } %>
+       <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearConstruction()" %>
+       
        <%= f.label :slip_code, '伝票No' %>
        <%= f.text_field :slip_code_eq, include_blank: true, id: 'slip_code'  %>
        <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearSlipCode()" %>
        
-       <%= f.label :construction_code, '工事名：：' %>
-       <%= f.select :with_construction,  ConstructionDatum.order("construction_code desc").map{|st| [st.p_cd_name, st.id]}, {include_blank: true}, 
-       {id: 'id', style: 'width:440px' , class: "searchableSelect1_1" } %>
-       
-       <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearConstruction()" %>
-
        </br>
        <%= f.submit '検索(集計)', :class => 'btn btn-default' %>
        
@@ -50,7 +49,6 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:occurred_date) %></th>
-      <th><%= model_class.human_attribute_name(:slip_code) %></th>
       <th><%= model_class.human_attribute_name(:purchase_order_datum_id) %></th>
       <th><%= model_class.human_attribute_name(:construction_code) %></th>
       <th><%= model_class.human_attribute_name(:construction_name) %></th>
@@ -58,10 +56,15 @@
       <th><%= model_class.human_attribute_name(:material_code) %></th>
       <th><%= model_class.human_attribute_name(:material_name) %></th>
       <th><%= model_class.human_attribute_name(:quantity) %></th>
+      <th><%= model_class.human_attribute_name(:unit_name) %></th>
+      <!--
       <th><%= model_class.human_attribute_name(:unit_price) %></th>
       <th><%= model_class.human_attribute_name(:amount) %></th>
+      -->
+      <th><%= model_class.human_attribute_name(:list_price) %></th>
       <th><%= model_class.human_attribute_name(:supplier_master_id) %></th>
       <th><%= model_class.human_attribute_name(:inventory_division_id) %></th>
+      <th><%= model_class.human_attribute_name(:slip_code) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -71,7 +74,6 @@
       <tr>
         <td><%= link_to storage_inventory_history.id, storage_inventory_history_path(storage_inventory_history) %></td>
         <td><%= storage_inventory_history.occurred_date %></td>
-        <td><%= storage_inventory_history.slip_code %></td>
         <!--<td><%= storage_inventory_history.purchase_order_datum_id %></td>-->
         <td><%= storage_inventory_history.purchase_order_datum.purchase_order_code %></td>
         <!--<td><%= storage_inventory_history.construction_datum_id %></td>-->
@@ -92,9 +94,27 @@
           <td>-</td>
         <% end %>
          
-        <td><%= storage_inventory_history.quantity %></td>
+        <td align="right"><%= number_with_precision(storage_inventory_history.quantity, :precision => 0 ) %></td>
+        
+        <% if storage_inventory_history.material_master.unit_id.present? %>
+          <% @unit_master = UnitMaster.where(id: storage_inventory_history.material_master.unit_id).first %>
+          <% if @unit_master.present? %>
+            <td><%= @unit_master.unit_name %></td>
+          <% else %>
+            <td>-</td>
+          <% end %>
+        <% else %>
+          <td>-</td>
+        <% end %>
+        <!--
         <td><%= storage_inventory_history.unit_price %></td>
         <td><%= storage_inventory_history.amount %></td>
+        -->
+        <% if storage_inventory_history.material_master.list_price.present? %>
+          <td align="right"><%= number_to_currency(storage_inventory_history.material_master.list_price, :precision => 0) %></td>
+        <% else %>
+          <td>-</td>
+        <% end %>
         
         <!--<td><%= storage_inventory_history.supplier_master_id %></td>-->
         
@@ -111,7 +131,7 @@
         <% else %>
            <td>-</td>
         <% end %>
-        
+        <td><%= storage_inventory_history.slip_code %></td>
         <td><%=l storage_inventory_history.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),

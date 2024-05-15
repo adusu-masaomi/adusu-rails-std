@@ -1,6 +1,6 @@
 class StorageInventoryHistory < ApplicationRecord
   
-  paginates_per 200  # 1ページあたり項目表示
+  paginates_per 100  # 1ページあたり項目表示
   
   belongs_to :construction_datum, optional: true
   belongs_to :material_master, optional: true

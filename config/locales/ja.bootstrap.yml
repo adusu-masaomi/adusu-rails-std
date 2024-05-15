@@ -6,6 +6,7 @@ ja:
       cancel: "キャンセル"
       confirm: "よろしいですか？"
       edit: 編集
+      show: "詳細"
       destroy: "削除"
       new: "新規作成"
       sending: 送信中...
