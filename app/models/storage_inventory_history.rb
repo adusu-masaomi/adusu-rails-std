@@ -12,7 +12,8 @@ class StorageInventoryHistory < ApplicationRecord
   validates :construction_datum_id, presence: true
   validates :material_master_id, presence: true
   validates :supplier_master_id, presence: true
-  validates_numericality_of :quantity, :only_integer => true, :allow_nil => false
+  #validates_numericality_of :quantity, :allow_nil => false
+  validates :quantity, numericality: true
   
   scope :with_construction, -> (storage_inventory_histories_construction_datum_id=1) { joins(:construction_datum).
          where("construction_data.id = ?", storage_inventory_histories_construction_datum_id )}
