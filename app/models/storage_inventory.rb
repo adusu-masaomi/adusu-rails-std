@@ -7,6 +7,7 @@ class StorageInventory < ActiveRecord::Base
   
   #validates :warehouse_id, presence: true
   validates :material_master_id, presence: true, uniqueness: true
+  validates_numericality_of :quantity, :only_integer => true, :allow_nil => false
   
   #倉庫
   def self.warehouse

@@ -3,10 +3,16 @@ class StorageInventoryHistory < ApplicationRecord
   paginates_per 200  # 1ページあたり項目表示
   
   belongs_to :construction_datum, optional: true
-  belongs_to :material_master
+  belongs_to :material_master, optional: true
   belongs_to :supplier_master, optional: true
   belongs_to :purchase_order_datum , optional: true
   #belongs_to :inventory_division, optional: true
+  
+  #バリデーション
+  validates :construction_datum_id, presence: true
+  validates :material_master_id, presence: true
+  validates :supplier_master_id, presence: true
+  validates_numericality_of :quantity, :only_integer => true, :allow_nil => false
   
   scope :with_construction, -> (storage_inventory_histories_construction_datum_id=1) { joins(:construction_datum).
          where("construction_data.id = ?", storage_inventory_histories_construction_datum_id )}

@@ -1,4 +1,16 @@
 <%= simple_form_for @storage_inventory_history, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @storage_inventory_history.errors.any? %>
+   <div id="error_explanation">
+     <h2><%= @storage_inventory_history.errors.count %>件のエラーがあります。</h2>
+ 
+     <ul>
+     <% @storage_inventory_history.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+     <% end %>
+     </ul>
+   </div>
+  <% end %>
+  
   <%= f.input :occurred_date, input_html: { id:"occurred_date", :tabindex=>"0" } %>
   <%= f.input :slip_code, input_html: { id:"slip_code", :tabindex=>"1" } %>
   
@@ -65,8 +77,9 @@
     $(".searchableSelect1_1").val(index).trigger("change");
     
     //仕入業者
+    index = 1;
     if (document.getElementById("company_id_hide").value != 1) {
-      index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
+      //index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
     } else {
       index = 10;  //(株)アデュース仕様 自社のID
     }
