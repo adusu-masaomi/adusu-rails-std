@@ -14,7 +14,7 @@
       
   <!--<%= f.input :material_master_id, input_html: { id:"material_master_id", :tabindex=>"4" } %>-->
   </br></br>
-  <%= f.label :品名, {:class => "my-custom-class-l"}  %></br>
+  <%= f.label :品番, {:class => "my-custom-class-l"}  %></br>
   <%= f.collection_select :material_master_id, MaterialMaster.all,  :id, :p_material_code_name,  
       {:prompt => "どれか一つを選択して下さい"} , 
       {id:'material_master_id', :class => "searchableSelect2_1" }  %>
@@ -43,7 +43,9 @@
     style: 'width:120px;margin-left:-15px;font-size:18px;', :tabindex=>"7" } %>
   </br></br>
       
-  
+  <!-- 標準版判定用-->
+  <%= f.input :company_id_hide, input_html:{id:'company_id_hide', :value => @company_id} , as: :hidden %>
+
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 storage_inventory_histories_path, :class => 'btn btn-default' %>
@@ -62,8 +64,14 @@
     index = 1;
     $(".searchableSelect1_1").val(index).trigger("change");
     
-    index = 10;  //アデュース仕様(自社)
+    //仕入業者
+    if (document.getElementById("company_id_hide").value != 1) {
+      index = INDEX_SUPPLIER_OWN_COMPANY;  //自社のコードにする
+    } else {
+      index = 10;  //(株)アデュース仕様 自社のID
+    }
     $(".searchableSelect1_3").val(index).trigger("change");
+    //
     
     //区分(出庫)
     document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;

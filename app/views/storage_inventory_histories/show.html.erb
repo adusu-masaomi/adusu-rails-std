@@ -75,6 +75,8 @@
               storage_inventory_histories_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_storage_inventory_history_path(@storage_inventory_history), :class => 'btn btn-default' %>
+<%= link_to t('.new', :default => t("helpers.links.new")), new_storage_inventory_history_path(:new_flag => "1", 
+                                  :id => @storage_inventory_history.id), :class => 'btn btn-primary' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               storage_inventory_history_path(@storage_inventory_history),
               :method => 'delete',

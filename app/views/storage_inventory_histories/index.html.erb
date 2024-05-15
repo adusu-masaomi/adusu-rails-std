@@ -67,7 +67,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @storage_inventory_histories.each do |storage_inventory_history| %>
+    <% @storage_inventory_histories.order("id desc").each do |storage_inventory_history| %>
       <tr>
         <td><%= link_to storage_inventory_history.id, storage_inventory_history_path(storage_inventory_history) %></td>
         <td><%= storage_inventory_history.occurred_date %></td>

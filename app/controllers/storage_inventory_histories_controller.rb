@@ -35,10 +35,24 @@ class StorageInventoryHistoriesController < ApplicationController
   # GET /storage_inventory_histories/new
   def new
     @storage_inventory_history = StorageInventoryHistory.new
+    
+    #初期値をセット(show画面からの遷移時のみ)
+    if params[:new_flag] == "1"
+      storage_inventory_history_prev = StorageInventoryHistory.where(id: params[:id]).first
+      if storage_inventory_history_prev.present?
+        @storage_inventory_history.slip_code = storage_inventory_history_prev.slip_code
+        @storage_inventory_history.construction_datum_id = storage_inventory_history_prev.construction_datum_id
+      end
+    end
+    
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # GET /storage_inventory_histories/1/edit
   def edit
+    #標準版仕様--会社IDを取得
+    app_get_session_user
   end
 
   # POST /storage_inventory_histories or /storage_inventory_histories.json

@@ -54,7 +54,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @storage_inventories.each do |storage_inventory| %>
+    <% @storage_inventories.joins(:material_master).select("storage_inventories.*, material_masters.material_code").order("material_code").each do |storage_inventory| %>
       <tr>
         <td><%= link_to storage_inventory.id, storage_inventory_path(storage_inventory) %></td>
         <!--<td><%= storage_inventory.material_master_id %></td>-->
