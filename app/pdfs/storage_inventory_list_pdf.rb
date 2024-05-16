@@ -75,8 +75,15 @@ class StorageInventoryListPDF
         #   report.page.item(:inventory_quantity).value(inventory_history.inventories.pluck("inventory_quantity")[0])
         #end
       end
-    
-    
+      
+      #数ゼロは除くVer
+      if $print_flag == "2"
+        if storage_inventory.quantity <= 0
+          next
+        end
+      end
+      #
+      
       #小計出力（品番が変わった場合）
       #if material_code  != ""
       #  if material_code  != inventory_history.material_master.material_code

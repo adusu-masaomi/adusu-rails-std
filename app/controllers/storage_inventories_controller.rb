@@ -59,6 +59,7 @@ class StorageInventoriesController < ApplicationController
       format.pdf do
         
         $print_flag = params[:print_flag]
+        
         #report = StorageInventoryListPDF.create @inventory_list
         #report = StorageInventoryListPDF.create @storage_inventory_list
         report = StorageInventoryListPDF.create(@storage_inventory_list, cookies[:warehouse], cookies[:category_name])
