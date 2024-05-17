@@ -762,7 +762,7 @@
     
   }
 
-  //在庫Mより現在単価・業者を取得する（出庫の場合に取得する）--ajax利用
+  //在庫Mより現在単価・業者・単位を取得する（出庫の場合に取得する）--ajax利用
   function getInventoryUnitPricesAndSupplier(company_id) {
     material_id = document.getElementById("material_id").value;
 
@@ -776,7 +776,7 @@
         //obj = document.getElementById("unit_price_hide").textContent;
         document.getElementById("purchase_unit_price").value = obj;
 
-        //debugger;
+        //業者・単位はajaxから取得
 
         //add200630
         //在庫登録されてない場合

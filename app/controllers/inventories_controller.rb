@@ -1288,8 +1288,6 @@ class InventoriesController < ApplicationController
   def get_unit_price
     record = Inventory.where(material_master_id: params[:material_id]).first
 
-    #binding.pry
-
     company_id =  params[:company_id]   #標準仕様
     if company_id != "1"
       supplier_own_company = $SUPPLIER_MASER_ID_OWN_COMPANY
@@ -1307,10 +1305,19 @@ class InventoriesController < ApplicationController
       #upd200701
       if record.inventory_quantity.present? && record.inventory_quantity > 0
         @current_unit_price = record.current_unit_price
+      
       else
         #数量がなければ、単価は入れないでおく(警告メッセージを出すため)
         @current_unit_price = nil
       end
+            
+      #add240517
+      #if record.unit_master_id.present?
+      #  #単位もセット
+      #  @unit_master = UnitMaster.where(:id => record.unit_master_id).pluck("unit_name, id")
+      #  @unit_master += UnitMaster.all.where.not(id: record.unit_master_id).pluck("unit_name, id")
+      #end
+            
       #@supplier  = SupplierMaster.where(:id => record.supplier_master_id).where("id is NOT NULL").pluck("supplier_name, id")
       #200627
       #ここで仕入先を自社にする。
@@ -1322,9 +1329,23 @@ class InventoriesController < ApplicationController
       @supplier  = SupplierMaster.where(:id => supplier_own_company).where("id is NOT NULL").pluck("supplier_name, id")
     
       @supplier += SupplierMaster.all.pluck("supplier_name, id")
-      #@supplier = SupplierMaster.all.pluck("supplier_name, id")
+      
+      #単位
+      #@unit_master = UnitMaster.all.pluck("unit_name, id")
     end
-
+    
+    #add240517
+    #単位を資材マスターから取得
+    material_master = MaterialMaster.where(id: params[:material_id]).first
+    
+    if material_master.present? && material_master.unit_id.present?
+      @unit_master = UnitMaster.where(:id => material_master.unit_id).pluck("unit_name, id")
+      @unit_master += UnitMaster.all.where.not(id: material_master.unit_id).pluck("unit_name, id")
+    else
+      @unit_master = UnitMaster.all.pluck("unit_name, id")
+    end
+    #add end
+    
   end
 
   ###
