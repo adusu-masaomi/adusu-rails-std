@@ -144,11 +144,21 @@ class PurchaseOrderDataController < ApplicationController
   def create
     @purchase_order_datum = PurchaseOrderDatum.new(purchase_order_datum_params)
     
-    #コンスタントへ注文番号を書き込む(先頭記号が変わった時)
-    update_constant
+    #add240521 
+    #事前バリデーション追加
+    @valid = true
+    if !(@purchase_order_datum.valid?)
+      @valid = false
+    end
+      
     
-    #工事データの住所を更新
-    update_address_to_construction
+    if @valid  #add240521
+      #コンスタントへ注文番号を書き込む(先頭記号が変わった時)
+      update_constant
+    
+      #工事データの住所を更新
+      update_address_to_construction
+    end
     
     #標準版仕様--会社IDを取得
     app_get_session_user
@@ -164,30 +174,31 @@ class PurchaseOrderDataController < ApplicationController
     #
     
     #メール送信する(メール送信ボタン押した場合)
-    if params[:send].present?
+    if @valid  #add240521
+      if params[:send].present?
       
-      #画面のメアドをグローバルへセット
-      set_responsible
+        #画面のメアドをグローバルへセット
+        set_responsible
     
-      #メール送信フラグをセット
-      params[:purchase_order_datum][:mail_sent_flag] = 1
-	    @purchase_order_datum = PurchaseOrderDatum.new(purchase_order_datum_params)  #add170922
+        #メール送信フラグをセット
+        params[:purchase_order_datum][:mail_sent_flag] = 1
+	      @purchase_order_datum = PurchaseOrderDatum.new(purchase_order_datum_params)  #add170922
    
-      #標準仕様--会社名を載せる
-      #company = Company.first
-      #@company_name = ""
-      #if company.present?
-      #  @company_name = company.name
-      #else
-      #  @company_name = "送信者"  #ここは基本、通らない
-      #end
-      #
-   
-      PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
+        #標準仕様--会社名を載せる
+        #company = Company.first
+        #@company_name = ""
+        #if company.present?
+        #  @company_name = company.name
+        #else
+        #  @company_name = "送信者"  #ここは基本、通らない
+        #end
+        #
+            
+        PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
                                   @email_responsible2).deliver
-      
+      end
     end
-	
+    
     respond_to do |format|
       if @purchase_order_datum.save
         
@@ -218,11 +229,11 @@ class PurchaseOrderDataController < ApplicationController
   # PATCH/PUT /purchase_order_data/1.json
   def update
    
+    #moved 240521
     #コンスタントへ注文番号を書き込む(先頭記号が変わった時)
-    update_constant
-   
+    #update_constant
     #工事データの住所を更新
-    update_address_to_construction
+    #update_address_to_construction
    
     #標準版仕様--会社IDを取得
     app_get_session_user
@@ -253,9 +264,16 @@ class PurchaseOrderDataController < ApplicationController
     #
    
     respond_to do |format|
-      
-      
+            
       if @purchase_order_datum.update(purchase_order_datum_params)
+        
+        
+        #moved 240521
+        #コンスタントへ注文番号を書き込む(先頭記号が変わった時)
+        update_constant
+        #工事データの住所を更新(この注文データ画面で直すケースを考慮)
+        update_address_to_construction
+        #moved end
         
         #
         #メール送信する(メール送信ボタン押した場合)
