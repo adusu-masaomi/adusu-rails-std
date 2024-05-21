@@ -40,6 +40,7 @@ class StorageInventoryHistoriesController < ApplicationController
     if params[:new_flag] == "1"
       storage_inventory_history_prev = StorageInventoryHistory.where(id: params[:id]).first
       if storage_inventory_history_prev.present?
+        @storage_inventory_history.occurred_date = storage_inventory_history_prev.occurred_date
         @storage_inventory_history.slip_code = storage_inventory_history_prev.slip_code
         @storage_inventory_history.construction_datum_id = storage_inventory_history_prev.construction_datum_id
       end
@@ -63,7 +64,8 @@ class StorageInventoryHistoriesController < ApplicationController
       if @storage_inventory_history.save
         
         #支給品在庫も更新する
-        update_storage_inventory
+        update_storage_inventory_on_storing   #入庫時
+        update_storage_inventory_on_shipping  #出庫時
         
         format.html { redirect_to storage_inventory_history_url(@storage_inventory_history), notice: "Storage inventory history was successfully created." }
         format.json { render :show, status: :created, location: @storage_inventory_history }
@@ -78,7 +80,8 @@ class StorageInventoryHistoriesController < ApplicationController
   def update
     
     #支給品在庫も更新する
-    update_storage_inventory
+    update_storage_inventory_on_storing   #入庫時
+    update_storage_inventory_on_shipping   #出庫時
     
     respond_to do |format|
       if @storage_inventory_history.update(storage_inventory_history_params)
@@ -95,7 +98,8 @@ class StorageInventoryHistoriesController < ApplicationController
   def destroy
     
     #支給品在庫も更新する
-    update_storage_inventory
+    update_storage_inventory_on_storing   #入庫時
+    update_storage_inventory_on_shipping  #出庫時
     
     @storage_inventory_history.destroy
 
@@ -105,8 +109,16 @@ class StorageInventoryHistoriesController < ApplicationController
     end
   end
   
-  #支給品在庫を加減する
-  def update_storage_inventory
+  #支給品在庫を加減する(出庫時)
+  def update_storage_inventory_on_shipping
+    
+    #入庫以外の場合は抜ける
+    if params[:storage_inventory_history].present? && params[:storage_inventory_history][:inventory_division_id].to_i == $INDEX_INVENTORY_STOCK
+      return
+    elsif @storage_inventory_history.inventory_division_id == $INDEX_INVENTORY_STOCK
+      return
+    end
+    
     if params[:action] != "destroy"
       material_master_id = params[:storage_inventory_history][:material_master_id].to_i
       quantity = params[:storage_inventory_history][:quantity].to_i
@@ -139,6 +151,53 @@ class StorageInventoryHistoriesController < ApplicationController
         storage_inventory.save!
       end
     end
+  end
+  #
+  
+  #支給品在庫へ加算する(入庫時)
+  def update_storage_inventory_on_storing
+    
+     
+    #入庫以外の場合は抜ける
+    if params[:storage_inventory_history].present? && params[:storage_inventory_history][:inventory_division_id].to_i != $INDEX_INVENTORY_STOCK
+      return
+    elsif @storage_inventory_history.inventory_division_id != $INDEX_INVENTORY_STOCK
+      return
+    end
+    
+    if params[:action] != "destroy"
+      material_master_id = params[:storage_inventory_history][:material_master_id].to_i
+      quantity = params[:storage_inventory_history][:quantity].to_i
+    else
+      #削除の場合
+      material_master_id = @storage_inventory_history.material_master_id
+      quantity = @storage_inventory_history.quantity.to_i
+    end
+    
+    storage_inventory = StorageInventory.where(material_master_id: material_master_id).first
+    
+    if storage_inventory.present?
+      if params[:action] == "create"
+        #登録
+        storage_inventory.quantity += quantity  #入庫分をプラスする
+        storage_inventory.save!
+      elsif params[:action] == "update"
+        #更新
+        
+        quantity_before = @storage_inventory_history.quantity
+        differ_quantity = (quantity - quantity_before ).to_i
+        
+        if differ_quantity.abs != 0 #差異がある場合のみ更新
+          storage_inventory.quantity += differ_quantity  #差分を加える
+          storage_inventory.save!
+        end
+      elsif params[:action] == "destroy"
+        #削除
+        storage_inventory.quantity -= quantity   #入庫した分を引く
+        storage_inventory.save!
+      end
+    end
+        
   end
   #
   

@@ -87,7 +87,9 @@
     //
     
     //区分(出庫)
-    document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;
+    if (document.getElementById("inventory_division_id").value == ''){
+      document.getElementById("inventory_division_id").value = INDEX_INVENTORY_SHIPPING;
+    }
   }
   
 </script>
