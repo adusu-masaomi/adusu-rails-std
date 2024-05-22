@@ -150,6 +150,12 @@
        
        <!--<%= link_to "CSV", purchase_data_path(format: "csv" , params: params.to_unsafe_h) ,:class => 'btn btn-default'%>-->
        <td><font size="3">合計金額:<%=number_to_currency(@purchase_data.sumprice,  precision: 0 ) %></font></td>
+       
+       <!--支給品のみある場合にメッセージ表示する-->
+       <% if @storage_info.present? %>
+         <td><font size="3" color=red><b><%= @storage_info %></b></font></td>
+       <% end %>
+       
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <td><font size="2">合計数量(在庫確認用):<%= number_with_delimiter(@purchase_data.sumQuantity + @purchase_data.sumShipQuantity) %></font></td>
        

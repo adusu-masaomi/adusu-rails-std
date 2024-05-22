@@ -306,6 +306,20 @@ class PurchaseDataController < ApplicationController
       end
     end
     
+    #add240522
+    #支給品のみ存在する場合のアラート用
+    #binding.pry
+    @storage_info = ""
+    if params[:format] != "pdf"
+      if @purchase_list.blank? && construction_id.present?
+        storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: construction_id)
+        if storage_inventory_histories.present?
+          @storage_info = "※支給品有"
+        end
+      end
+    end
+    #add end 
+    
     respond_to do |format|
 
       format.html
