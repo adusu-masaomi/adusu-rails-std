@@ -326,7 +326,7 @@ class PurchaseDataController < ApplicationController
         case @print_type
         when "1"
           #report = PurchaseListPDF.create @purchase_list
-          report = PurchaseListPDF.create(@purchase_list, @company_id)
+          report = PurchaseListPDF.create(@purchase_list, @company_id, construction_id)
         when "2"
           if @company_id != 1
             report = PurchaseListBySupplierPDF.create @purchase_list_by_supplier
