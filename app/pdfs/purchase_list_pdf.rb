@@ -31,6 +31,8 @@ class PurchaseListPDF
 
     #支給品のみ存在しているかチェック
     @only_history_flag = false
+    @construction_datum_id = nil
+    
     if purchase_list.blank? && construction_id.present?
       storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: construction_id)
       if storage_inventory_histories.present?
