@@ -1,3 +1,13 @@
+/*文字点滅用*/
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 /* .btn-info:hover { background-color: white !important; } */
 
