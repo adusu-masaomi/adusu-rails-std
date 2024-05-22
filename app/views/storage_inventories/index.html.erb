@@ -23,10 +23,10 @@
     <div>
        <%= f.submit '検索(集計)', :class => 'btn btn-default' %>
        <%= link_to "支給品在庫一覧表",
-            storage_inventories_path(@storage_inventory, format: "pdf", :print_flag => "1"),
+            storage_inventories_path(@storage_inventories, format: "pdf", :print_flag => "1"),
             :class => 'btn  btn-teal600_ftg', :target=>["_blank"] %>
        <%= link_to "支給品一覧(数ゼロ除外)",
-            storage_inventories_path(@storage_inventory, format: "pdf", :print_flag => "2"),
+            storage_inventories_path(@storage_inventories, format: "pdf", :print_flag => "2"),
             :class => 'btn  btn-orange400_ftg', :target=>["_blank"] %>
     </div>
   <% end %>

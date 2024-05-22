@@ -226,6 +226,7 @@ class PurchaseDataController < ApplicationController
     #moved 240327
     #global set
     $purchase_data = @purchase_data
+    @purchase_list = @purchase_data  #add240522
 
     #kaminari用設定。
     if !single_record

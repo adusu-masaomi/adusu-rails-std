@@ -22,9 +22,33 @@ class StorageInventoryHistoriesController < ApplicationController
     
     #rails6
     @storage_inventory_histories  = @q.result
+    @storage_inventory_history_list = @storage_inventory_histories  #レポート用に保持
     
     #kaminari用設定
     @storage_inventory_histories  = @storage_inventory_histories.page(params[:page])
+    
+    
+    #
+    respond_to do |format|
+      format.html
+      #pdf
+      format.pdf do
+        
+        $print_flag = params[:print_flag]
+        
+        report = StorageInventoryHistoryListPDF.create(@storage_inventory_history_list)
+       
+        # ブラウザでPDFを表示する
+        # disposition: "inline" によりダウンロードではなく表示させている
+        send_data(
+          report.generate,
+          filename:  "storage_inventory_history_list.pdf",
+          type:        "application/pdf",
+          disposition: "inline")
+      end
+      #
+    end
+    #
     
   end
 

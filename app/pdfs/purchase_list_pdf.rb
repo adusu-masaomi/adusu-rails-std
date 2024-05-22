@@ -63,7 +63,10 @@ class PurchaseListPDF
     #postgreSQL仕様
     #$purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.*").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
     #upd230919
-    $purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
+    #$purchase_data.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
+    #upd240522
+    purchase_list.joins(:purchase_order_datum).select("purchase_data.*, purchase_order_data.purchase_order_code").order("purchase_order_data.purchase_order_code, purchase_data.purchase_date, purchase_data.id").each do |purchase_datum|
+        
       #---見出し---
       page_count = @report.page_count.to_s + "頁"
       @report.page.item(:pageno).value(page_count)
