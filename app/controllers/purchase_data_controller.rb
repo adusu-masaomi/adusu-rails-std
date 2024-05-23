@@ -124,11 +124,12 @@ class PurchaseDataController < ApplicationController
     when "2"
 
       #注文一覧画面から遷移した場合
-      if params[:construction_id].present?
+      #del40523
+      #if params[:construction_id].present?
         #工事→注文→仕入→注文の場合の分岐
-        params[:move_flag] = "1"
-      end
-
+        #params[:move_flag] = "1"
+      #end
+      
       purchase_order_id = params[:purchase_order_id]
       #工事番号のパラメータが存在した場合にセットする
       query = {"purchase_order_datum_id_eq"=> purchase_order_id }
@@ -184,6 +185,8 @@ class PurchaseDataController < ApplicationController
     #Rails6
     @purchase_data = @q.result
 
+    #binding.pry
+
     #add180324
     ###
     #仕入区分のみで検索をした場合は、"入庫"は除外する(在庫区分がヌルの場合のみ検索)。納品書チェックしたい場合等。
@@ -227,7 +230,8 @@ class PurchaseDataController < ApplicationController
     #global set
     $purchase_data = @purchase_data
     @purchase_list = @purchase_data  #add240522
-
+    
+    
     #kaminari用設定。
     if !single_record
       #binding.pry
@@ -311,7 +315,7 @@ class PurchaseDataController < ApplicationController
     #binding.pry
     @storage_info = ""
     if params[:format] != "pdf"
-      if @purchase_list.blank? && construction_id.present?
+      if @purchase_list.blank? && purchase_order_id.blank? && construction_id.present?
         storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: construction_id)
         if storage_inventory_histories.present?
           @storage_info = "※支給品有"

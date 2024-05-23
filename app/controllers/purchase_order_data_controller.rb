@@ -29,7 +29,8 @@ class PurchaseOrderDataController < ApplicationController
     $delivery_place_flag = nil
     
     case params[:move_flag] 
-    when "1"
+    #when "1"
+    when "1", "2"  #upd240523
       #工事一覧画面から遷移した場合
       construction_id = params[:construction_id]
       query = {"construction_datum_id_eq"=> construction_id }
