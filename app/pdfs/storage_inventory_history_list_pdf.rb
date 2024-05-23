@@ -46,21 +46,6 @@ class StorageInventoryHistoryListPDF
         #end
       
       end
-       #小計(不要？)
-        #if @purchase_order_code  != ""
-        #  if @purchase_order_code  != purchase_datum.purchase_order_datum.purchase_order_code
-        #    @num = @purchase_amount_subtotal
-        #    formatNum()
-        #    @purchase_amount_subtotal = @num
-        #    @report.list(:default).add_row do |row2|
-        #                   row2.values purchase_order_code: @purchase_order_code, purchase_unit_price: "小計", 
-        #                               purchase_amount: @purchase_amount_subtotal
-        #                   row2.item(:lbl_unit_price_multi).visible(false)  #add200716
-        #    end
-        #    @purchase_amount_subtotal = 0
-        #  end
-        #end 
-      #小計end
       
       @purchase_order_code  = storage_inventory_history.purchase_order_datum.purchase_order_code
       #金額小計・合計をセット(0だが)
@@ -127,9 +112,6 @@ class StorageInventoryHistoryListPDF
 
   end
  
-  
- 
-  
 end
 
 

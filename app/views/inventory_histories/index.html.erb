@@ -29,9 +29,9 @@
   <%= f.select :with_customer, CustomerMaster.all.map{|st| [st.customer_name, st.id]}, {include_blank: true}, {style: 'width:440px' , class: "searchableCustomerName" } %></br>
   <%= f.label :material_code, '品番：：' %>
   <!--<%= f.select :with_material_code, MaterialMaster.all.map{|st| [st.material_code, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableMaterialCode" } %>-->
-  <% if f.object.material_master_id.present? %>
+  
     <%= f.select :with_material_code, InventoryHistory.group(:id, :material_master_id).all.map{|st| [st.material_master.material_code, st.material_master.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableMaterialCode" } %>
-  <% end %>
+  
   <%= f.label :material_code, '　品番(キーワード)：' %>
   <%= f.text_field :with_material_code_include, include_blank: true , id: 'material_code' %>
   <%= f.label :material_code, '品名：' %>

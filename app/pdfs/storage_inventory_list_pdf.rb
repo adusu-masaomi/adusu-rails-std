@@ -230,26 +230,41 @@ class StorageInventoryListPDF
   end  
   
   
-   
+  def self.formatNum()
+    if @num.present?
+      #整数で四捨五入する
+      @num  = @num.round
+      #桁区切りにする
+      @num  = @num.to_s(:delimited, delimiter: ',')
+    else
+      @num  = "0"
+    end
+    # 円マークをつける
+    if @num  == "0"
+      @num  = ""
+    else
+      @num  = "￥" + @num 
+    end
+  end
+    
 end
    
   
    
-    def formatNum()
-	    
-        if @num.present?
-          #整数で四捨五入する
-		  @num  = @num.round
-		  
-		  #桁区切りにする
-		  @num  = @num.to_s(:delimited, delimiter: ',')
-		else
-		  @num  = "0"
-        end
-		# 円マークをつける
-        if @num  == "0"
-		  @num  = ""
-		else
-		  @num  = "￥" + @num 
-		end
-	end  
+#    def formatNum()
+#       if @num.present?
+#          #整数で四捨五入する
+#		  @num  = @num.round
+#		  
+#		  #桁区切りにする
+#		  @num  = @num.to_s(:delimited, delimiter: ',')
+#		else
+#		  @num  = "0"
+#        end
+#		# 円マークをつける
+#        if @num  == "0"
+#		  @num  = ""
+#		else
+#		  @num  = "￥" + @num 
+#		end
+#	end  
