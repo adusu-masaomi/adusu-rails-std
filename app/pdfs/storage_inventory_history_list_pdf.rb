@@ -2,7 +2,7 @@ class StorageInventoryHistoryListPDF
     
   
   #def self.create purchase_list
-  def self.create(storage_inventory_histories)	
+  def self.create(storage_inventory_histories, search_flag)	
 	  
     #初期化
     @flag = nil
@@ -28,6 +28,8 @@ class StorageInventoryHistoryListPDF
        
       if @flag.nil? 
         @flag = "1"
+        
+        if search_flag
         #if $construction_flag == true
           @report.page.item(:construction_code).value(storage_inventory_history.construction_datum.construction_code)
           @report.page.item(:construction_name).value(storage_inventory_history.construction_datum.construction_name)
@@ -38,6 +40,9 @@ class StorageInventoryHistoryListPDF
         
         #if $customer_flag == true
           @report.page.item(:customer_name).value(storage_inventory_history.construction_datum.CustomerMaster.customer_name)
+        
+        end
+        
         #end
       
       end

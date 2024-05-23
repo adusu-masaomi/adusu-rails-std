@@ -27,6 +27,7 @@ class StorageInventoryHistoriesController < ApplicationController
     #kaminari用設定
     @storage_inventory_histories  = @storage_inventory_histories.page(params[:page])
     
+    #binding.pry
     
     #
     respond_to do |format|
@@ -36,7 +37,11 @@ class StorageInventoryHistoriesController < ApplicationController
         
         $print_flag = params[:print_flag]
         
-        report = StorageInventoryHistoryListPDF.create(@storage_inventory_history_list)
+        #PDF用の得意先情報をセット
+        set_customer_info_for_pdf(query)
+        
+        #report = StorageInventoryHistoryListPDF.create(@storage_inventory_history_list)
+        report = StorageInventoryHistoryListPDF.create(@storage_inventory_history_list, @search_flag)
        
         # ブラウザでPDFを表示する
         # disposition: "inline" によりダウンロードではなく表示させている
@@ -130,6 +135,15 @@ class StorageInventoryHistoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to storage_inventory_histories_url, notice: "Storage inventory history was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+  
+  #PDF用の得意先情報をセット
+  def set_customer_info_for_pdf(query)
+    @search_flag = false
+    #工事No,伝票Noで絞っていればフラグをセット
+    if query["with_construction"].present? || query["slip_code_eq"].present?
+      @search_flag = true
     end
   end
   
