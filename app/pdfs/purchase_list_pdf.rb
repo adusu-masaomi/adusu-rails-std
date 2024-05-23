@@ -2,7 +2,7 @@ class PurchaseListPDF
     
   
   #def self.create purchase_list
-  def self.create(purchase_list, company_id, construction_id)	
+  def self.create(purchase_list, company_id, construction_id, purchase_order_id)	
 	  #仕入表PDF発行
 
     #@@page_number = 0
@@ -33,7 +33,8 @@ class PurchaseListPDF
     @only_history_flag = false
     @construction_datum_id = nil
     
-    if purchase_list.blank? && construction_id.present?
+    #if purchase_list.blank? && construction_id.present?
+    if purchase_list.blank? && purchase_order_id.blank? && construction_id.present?
       storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: construction_id)
       if storage_inventory_histories.present?
         @construction_datum_id = construction_id
@@ -366,7 +367,8 @@ class PurchaseListPDF
     end  #if !@only_history_flag
   
     #支給品用処理追加　add240515
-    if @construction_datum_id.present?
+    #if @construction_datum_id.present?
+    if purchase_order_id.blank? && @construction_datum_id.present?
       
       @storage_inventory_histories = StorageInventoryHistory.where(construction_datum_id: @construction_datum_id)
       
