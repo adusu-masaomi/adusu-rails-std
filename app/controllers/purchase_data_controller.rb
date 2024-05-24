@@ -482,6 +482,19 @@ class PurchaseDataController < ApplicationController
                      @changed_amount[purchase_datum_clone.id] = amount
                      #
                    end
+                 
+                 elsif total_quantity < 0
+                 #マイナスの場合  add240524
+                   is_changed = true
+                   @changed_item[purchase_datum_clone.id] = "D"  #出庫・仕入のアイテムは削除(フラグを立てる)
+                   amount = in_amount + current_amount
+                   
+                   #
+                   @changed_item[purchase_datum_store.id] = "1"  #数量・金額を変更させる場合のフラグ
+                   @changed_quantity[purchase_datum_store.id] = total_quantity
+                   @changed_amount[purchase_datum_store.id] = amount
+                   #
+                   
                  end
                
                  #next  #次へ
