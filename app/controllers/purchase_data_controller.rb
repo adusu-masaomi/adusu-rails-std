@@ -169,7 +169,11 @@ class PurchaseDataController < ApplicationController
     
     #@q = PurchaseDatum.ransack(params[:q]) 
     #ransack保持用--上記はこれに置き換える
-    #@q = PurchaseDatum.ransack(query)
+    if query.present?
+      @q = PurchaseDatum.ransack(query)
+    else
+      @q = PurchaseDatum.where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
+    end
     
     #upd240527
     #N+1対応
@@ -192,15 +196,15 @@ class PurchaseDataController < ApplicationController
     #      :purchase_header, :purchase_order_datum, :PurchaseDivision
     #       ]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
     
-    if query.present?
-      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-          construction_datum: :CustomerMaster]).ransack(query)
-    else
-      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-          construction_datum: :CustomerMaster]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
-    end
+    #if query.present?
+    #  @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+    #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+    #      construction_datum: :CustomerMaster]).ransack(query)
+    #else
+    #  @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+    #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+    #      construction_datum: :CustomerMaster]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
+    #end
     
     #ransack保持用コード
     search_history = {
