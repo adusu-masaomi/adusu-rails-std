@@ -162,9 +162,9 @@ class PurchaseDataController < ApplicationController
       end
     end
 
-    #@q = PurchaseDatum.ransack(params[:q]) 
+    @q = PurchaseDatum.ransack(params[:q]) 
     #ransack保持用--上記はこれに置き換える
-    #@q = PurchaseDatum.ransack(query)
+    @q = PurchaseDatum.ransack(query)
     #upd240527
     #N+1対応
     #@q = PurchaseDatum.includes(:MaterialMaster).includes(:construction_datum).
@@ -177,9 +177,9 @@ class PurchaseDataController < ApplicationController
     #     includes(:purchase_order_datum).includes(:PurchaseDivision).includes(MaterialMaster: :material_category).
     #     includes(construction_datum: :CustomerMaster).ransack(query)
          
-    @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-          construction_datum: :CustomerMaster]).ransack(query)
+    #@q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+    #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+    #      construction_datum: :CustomerMaster]).ransack(query)
     
     #ransack保持用コード
     search_history = {
