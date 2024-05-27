@@ -200,12 +200,12 @@ class PurchaseDataController < ApplicationController
 
     #@purchase_data = @q.result(distinct: true)
     #Rails6
-    #@purchase_data = @q.result
-    result = @q.result
+    @purchase_data = @q.result
     
-    @purchase_data = result.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-          construction_datum: :CustomerMaster])
+    #result = @q.result
+    #@purchase_data = result.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+    #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+    #      construction_datum: :CustomerMaster])
     
  
     #binding.pry
