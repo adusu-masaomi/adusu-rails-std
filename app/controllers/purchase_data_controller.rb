@@ -162,10 +162,14 @@ class PurchaseDataController < ApplicationController
       end
     end
     
-    @q = PurchaseDatum.ransack(params[:q]) 
-        
+    ##
+    #N+1
+    
+    ##
+    
+    #@q = PurchaseDatum.ransack(params[:q]) 
     #ransack保持用--上記はこれに置き換える
-    @q = PurchaseDatum.ransack(query)
+    #@q = PurchaseDatum.ransack(query)
     
     #upd240527
     #N+1対応
@@ -178,10 +182,25 @@ class PurchaseDataController < ApplicationController
     #     includes(:unit_master).includes(:SupplierMaster).includes(:purchase_header).
     #     includes(:purchase_order_datum).includes(:PurchaseDivision).includes(MaterialMaster: :material_category).
     #     includes(construction_datum: :CustomerMaster).ransack(query)
-         
+    
+    #N+1テスト中...
     #@q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
     #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
     #      construction_datum: :CustomerMaster]).ransack(query)
+   
+    #@q = PurchaseDatum.eager_load([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+    #      :purchase_header, :purchase_order_datum, :PurchaseDivision
+    #       ]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
+    
+    if query.present?
+      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+          construction_datum: :CustomerMaster]).ransack(query)
+    else
+      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+          construction_datum: :CustomerMaster]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
+    end
     
     #ransack保持用コード
     search_history = {
@@ -399,6 +418,30 @@ class PurchaseDataController < ApplicationController
     #  format.html # index.html.erb
 
   end
+
+  #空の検索の場合は、3年前までのデータを読み込むようにする
+  def set_purchase_on_null_search
+    #purchase_date_gteq
+    #purchase_date_lteq
+    #maker_id_eq
+    #slip_code_eq
+    #supplier_id_eq
+    #purchase_order_datum_id_eq
+    #division_id_eq
+    #inventory_division_id_eq
+    #with_construction
+    #with_customer
+    #with_material_code
+    #with_material_category
+    #with_material_code_include
+    #with_material_name_include
+    #material_name_cont
+    
+    #if query[:slip_code_eq].present? 
+    
+    #end
+  end
+  
 
   #リスト用に積算させる
   def addition_for_list
