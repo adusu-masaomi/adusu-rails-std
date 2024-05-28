@@ -179,15 +179,25 @@ class PurchaseDataController < ApplicationController
     else
       #add240528
       #検索条件がなければ、3年前までのデータを表示する
+      #require 'objspace'
+      #ObjectSpace.memsize_of_all
+      
       now = Time.current 
       default_date = now.ago(3.years)
-      @q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
+      #@q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
+      
+      #test
+      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+          construction_datum: :CustomerMaster]).where('purchase_date >= ?', default_date ).ransack(query)
+      
     end
     
     #upd240527
     #N+1対応
    
     #N+1テスト中...
+    #(メモリを逆に消費してしまうため保留)
     #if query.present?
     #  @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
     #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
