@@ -184,12 +184,11 @@ class PurchaseDataController < ApplicationController
       
       now = Time.current 
       default_date = now.ago(3.years)
-      #@q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
+      @q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
       
-      #test
-      @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-          :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-          construction_datum: :CustomerMaster]).where('purchase_date >= ?', default_date ).ransack(query)
+      #@q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
+      #    :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
+      #    construction_datum: :CustomerMaster]).where('purchase_date >= ?', default_date ).ransack(query)
       
     end
     
