@@ -416,17 +416,19 @@ class PurchaseDataController < ApplicationController
   #空で検索しているかのチェック
   def check_purchase_on_null_search(query)
     @null_search = false
-  
-    if query[:purchase_date_gteq].blank? && query[:purchase_date_lteq].blank? &&
-       query[:maker_id_eq].blank? && query[:slip_code_eq].blank? &&
-       query[:supplier_id_eq].blank? && query[:purchase_order_datum_id_eq].blank? &&
-       query[:purchase_order_datum_id_eq].blank? && query[:division_id_eq].blank? &&
-       query[:inventory_division_id_eq].blank? && query[:with_construction].blank? &&
-       query[:with_customer].blank? && query[:with_material_code].blank? &&
-       query[:with_material_category].blank? && query[:with_material_code_include].blank? &&
-       query[:with_material_name_include].blank? && query[:material_name_cont].blank? 
+    
+    if query.present?
+      if query[:purchase_date_gteq].blank? && query[:purchase_date_lteq].blank? &&
+         query[:maker_id_eq].blank? && query[:slip_code_eq].blank? &&
+         query[:supplier_id_eq].blank? && query[:purchase_order_datum_id_eq].blank? &&
+         query[:purchase_order_datum_id_eq].blank? && query[:division_id_eq].blank? &&
+         query[:inventory_division_id_eq].blank? && query[:with_construction].blank? &&
+         query[:with_customer].blank? && query[:with_material_code].blank? &&
+         query[:with_material_category].blank? && query[:with_material_code_include].blank? &&
+         query[:with_material_name_include].blank? && query[:material_name_cont].blank? 
        
-       @null_search = true
+         @null_search = true
+      end 
     end
   end
   
