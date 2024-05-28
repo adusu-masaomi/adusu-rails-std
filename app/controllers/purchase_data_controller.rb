@@ -169,10 +169,19 @@ class PurchaseDataController < ApplicationController
     
     #@q = PurchaseDatum.ransack(params[:q]) 
     #ransack保持用--上記はこれに置き換える
-    if query.present?
+    #binding.pry
+    check_purchase_on_null_search(query)
+    
+    #if query.present?
+    if query.present? && !@null_search
+      #何らかの検索条件があった場合
       @q = PurchaseDatum.ransack(query)
     else
-      @q = PurchaseDatum.where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
+      #add240528
+      #検索条件がなければ、2年前までのデータを表示する
+      now = Time.current 
+      default_date = now.ago(2.years)
+      @q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
     end
     
     #upd240527
@@ -424,7 +433,9 @@ class PurchaseDataController < ApplicationController
   end
 
   #空の検索の場合は、3年前までのデータを読み込むようにする
-  def set_purchase_on_null_search
+  def check_purchase_on_null_search(query)
+    @null_search = false
+    
     #purchase_date_gteq
     #purchase_date_lteq
     #maker_id_eq
@@ -441,9 +452,17 @@ class PurchaseDataController < ApplicationController
     #with_material_name_include
     #material_name_cont
     
-    #if query[:slip_code_eq].present? 
-    
-    #end
+    if query[:purchase_date_gteq].blank? && query[:purchase_date_lteq].blank? &&
+       query[:maker_id_eq].blank? && query[:slip_code_eq].blank? &&
+       query[:supplier_id_eq].blank? && query[:purchase_order_datum_id_eq].blank? &&
+       query[:purchase_order_datum_id_eq].blank? && query[:division_id_eq].blank? &&
+       query[:inventory_division_id_eq].blank? && query[:with_construction].blank? &&
+       query[:with_customer].blank? && query[:with_material_code].blank? &&
+       query[:with_material_category].blank? && query[:with_material_code_include].blank? &&
+       query[:with_material_name_include].blank? && query[:material_name_cont].blank? 
+       
+       @null_search = true
+    end
   end
   
 
