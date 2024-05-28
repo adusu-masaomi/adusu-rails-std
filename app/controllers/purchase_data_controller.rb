@@ -178,33 +178,16 @@ class PurchaseDataController < ApplicationController
       @q = PurchaseDatum.ransack(query)
     else
       #add240528
-      #検索条件がなければ、2年前までのデータを表示する
+      #検索条件がなければ、3年前までのデータを表示する
       now = Time.current 
-      default_date = now.ago(2.years)
+      default_date = now.ago(3.years)
       @q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
     end
     
     #upd240527
     #N+1対応
-    #@q = PurchaseDatum.includes(:MaterialMaster).includes(:construction_datum).
-    #     includes(:unit_master).includes(:SupplierMaster).includes(:purchase_header).
-    #     includes(:purchase_order_datum).includes(:PurchaseDivision).includes(MaterialMaster: :material_category).
-    #     includes(construction_datum: :CustomerMaster).ransack(query)
    
-    #@q = PurchaseDatum.includes(:MaterialMaster).includes(:construction_datum).
-    #     includes(:unit_master).includes(:SupplierMaster).includes(:purchase_header).
-    #     includes(:purchase_order_datum).includes(:PurchaseDivision).includes(MaterialMaster: :material_category).
-    #     includes(construction_datum: :CustomerMaster).ransack(query)
-    
     #N+1テスト中...
-    #@q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-    #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
-    #      construction_datum: :CustomerMaster]).ransack(query)
-   
-    #@q = PurchaseDatum.eager_load([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
-    #      :purchase_header, :purchase_order_datum, :PurchaseDivision
-    #       ]).where('purchase_date >= ?', "2020-01-01 00:00:00" ).ransack(query)
-    
     #if query.present?
     #  @q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
     #      :purchase_header, :purchase_order_datum, :PurchaseDivision, MaterialMaster: :material_category,
@@ -240,8 +223,6 @@ class PurchaseDataController < ApplicationController
     #      construction_datum: :CustomerMaster])
     
  
-    #binding.pry
-
     #add180324
     ###
     #仕入区分のみで検索をした場合は、"入庫"は除外する(在庫区分がヌルの場合のみ検索)。納品書チェックしたい場合等。
@@ -432,26 +413,10 @@ class PurchaseDataController < ApplicationController
 
   end
 
-  #空の検索の場合は、3年前までのデータを読み込むようにする
+  #空で検索しているかのチェック
   def check_purchase_on_null_search(query)
     @null_search = false
-    
-    #purchase_date_gteq
-    #purchase_date_lteq
-    #maker_id_eq
-    #slip_code_eq
-    #supplier_id_eq
-    #purchase_order_datum_id_eq
-    #division_id_eq
-    #inventory_division_id_eq
-    #with_construction
-    #with_customer
-    #with_material_code
-    #with_material_category
-    #with_material_code_include
-    #with_material_name_include
-    #material_name_cont
-    
+  
     if query[:purchase_date_gteq].blank? && query[:purchase_date_lteq].blank? &&
        query[:maker_id_eq].blank? && query[:slip_code_eq].blank? &&
        query[:supplier_id_eq].blank? && query[:purchase_order_datum_id_eq].blank? &&
