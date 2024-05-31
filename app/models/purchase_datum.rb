@@ -61,10 +61,11 @@ class PurchaseDatum < ApplicationRecord
   attr_accessor :new_company_flag  #221104
   attr_accessor :company_id_hide   #230914
   
-  #add231021
   #attr_accessor :purchase_unit_price_tax
   attr_accessor :purchase_amount_tax
-  #add end
+  
+  #add240531
+  attr_accessor :no_input_flag
   
   #validation
   validates :material_id, presence: true

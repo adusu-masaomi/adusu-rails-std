@@ -189,9 +189,10 @@
   <!--add180223-->
   <%= f.input :complete_flag_hide, input_html:{id:'complete_flag_hide'}, as: :hidden  %>
   <%= f.input :outsourcing_flag_hide, input_html:{id:'outsourcing_flag_hide'}, as: :hidden  %>
-  
-  <!--add240404-->
   <%= f.input :unit_hide, input_html:{id:'unit_hide'}, as: :hidden  %>
+  
+  <!--add240531-->
+  <%= f.input :no_input_flag, input_html:{id:'no_input_flag'}, as: :hidden  %>
 
   <!-- 標準版判定用-->
   <%= f.input :company_id_hide, input_html:{id:'company_id_hide', :value => @company_id} , as: :hidden %>
@@ -753,6 +754,10 @@
             $(".searchableUnit").val(index).trigger("change"); 
           }
           
+          obj = document.getElementById("no_input_flag").textContent;
+          if (obj != null && obj == "1") {
+            alert('このアイテムは仕入未登録です。仕入もしくは出庫の入力をまず先に行ってから\n登録して下さい。' );
+          }
           //$(".searchableUnit").val(index_set).trigger("change");
           //
           

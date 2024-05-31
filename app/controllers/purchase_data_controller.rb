@@ -1739,6 +1739,7 @@ class PurchaseDataController < ApplicationController
     
     @unit_price = 0
     @unit_master_id = 0
+    @no_input_flag = 0
     
     if purchase_data.present?
       
@@ -1798,6 +1799,8 @@ class PurchaseDataController < ApplicationController
       
     else
       #まだ仕入も出庫もない場合....直近の仕入業者＆単価で取得
+      @no_input_flag = 1
+      
       purchase_data_last = PurchaseDatum.where(material_id: material_id).
                             where(division_id: $INDEX_DIVISION_PURCHASE).order(purchase_date: :desc).limit(1).first
       if purchase_data_last.present?
