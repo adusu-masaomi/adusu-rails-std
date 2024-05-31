@@ -504,8 +504,15 @@ class PurchaseDataController < ApplicationController
                  #
                
                  #入庫のマイナス数量と仕入数量を加算
-                 total_quantity = in_quantity + current_quantity
-                 
+                 is_minus = false
+                 #binding.pry
+                 if @changed_item[purchase_datum_store.id] != "1"  
+                   total_quantity = in_quantity + current_quantity
+                 else
+                   #ad240530
+                   is_minus = true
+                   total_quantity =  @changed_quantity[purchase_datum_store.id] + current_quantity
+                 end
                  is_changed = false
                  
                  if total_quantity > 0
@@ -516,8 +523,14 @@ class PurchaseDataController < ApplicationController
                  
                    #金額を再計算
                    #amount = purchase_datum_clone.purchase_unit_price.to_i * total_quantity
-                   amount = in_amount + current_amount
-                 
+                   if !is_minus
+                     amount = in_amount + current_amount
+                   else
+                     is_minus = false
+                     #ad240530
+                     amount = @changed_amount[purchase_datum_store.id] + current_amount
+                   end
+                   
                    #
                    @changed_item[purchase_datum_clone.id] = "1"  #数量・金額を変更させる場合のフラグ
                    @changed_quantity[purchase_datum_clone.id] = total_quantity
@@ -534,7 +547,11 @@ class PurchaseDataController < ApplicationController
                    #
                    in_amount = purchase_datum_store.quantity.to_i * purchase_datum_store.purchase_unit_price.to_i
                    current_amount = purchase_datum_clone.quantity.to_i * purchase_datum_clone.purchase_unit_price.to_i
-                   amount = in_amount + current_amount
+                   if !is_minus
+                     amount = in_amount + current_amount
+                   else
+                     amount = @changed_amount[purchase_datum_store.id] + current_amount
+                   end
                    #
                  
                    if amount == 0  #金額がちょうど０の場合は、アイテムを非表示とさせる
@@ -548,18 +565,22 @@ class PurchaseDataController < ApplicationController
                      #
                    end
                  
-                 #elsif total_quantity < 0
-                 #保留....(2行あった場合に対応できない)
+                 elsif total_quantity < 0
                  ##マイナスの場合  add240524
                  #  is_changed = true
-                 #  @changed_item[purchase_datum_clone.id] = "D"  #出庫・仕入のアイテムは削除(フラグを立てる)
-                 #  amount = in_amount + current_amount
+                   @changed_item[purchase_datum_clone.id] = "D"  #出庫・仕入のアイテムは削除(フラグを立てる)
+                   if !is_minus
+                     amount = in_amount + current_amount
+                   else
+                     #binding.pry
+                     amount = @changed_amount[purchase_datum_store.id] + current_amount
+                   end
                    
-                 #  #
-                 #  @changed_item[purchase_datum_store.id] = "1"  #数量・金額を変更させる場合のフラグ
-                 #  @changed_quantity[purchase_datum_store.id] = total_quantity
-                 #  @changed_amount[purchase_datum_store.id] = amount
-                 #  #
+                   #
+                   @changed_item[purchase_datum_store.id] = "1"  #数量・金額を変更させる場合のフラグ
+                   @changed_quantity[purchase_datum_store.id] = total_quantity
+                   @changed_amount[purchase_datum_store.id] = amount
+                   #
                    
                  end
                
