@@ -18,10 +18,11 @@ class PostMailer < ApplicationMailer
      end
     
      #現場住所
+     #upd240703 建物名の前にスペース追加(3Fなど、重なると紛らわしいものがあるため)
      @construction_place = "現場住所:"
      if user.construction_datum.address.present?
        @construction_place += user.construction_datum.post + "　" +
-       user.construction_datum.address + user.construction_datum.house_number + 
+       user.construction_datum.address + user.construction_datum.house_number + "　" +
        user.construction_datum.address2
      else
        @construction_place += "※ご確認下さい"
