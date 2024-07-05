@@ -994,8 +994,10 @@
       //(旧) 9:30~10:30 ~ の勤務は、昼と、１５時休憩をマイナスする。
       //9時過ぎ～10:30までの勤務は、昼と、１５時休憩をマイナスする。
       tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 5400; 
-    } else if (start_time >= 39600 & start_time <= 43200 & end_time >= 55800 & end_time <= 86400){
-      //add170328  11:00 ~ の勤務は、昼休憩のみをマイナスする。→しない！！
+    //} else if (start_time >= 39600 & start_time <= 43200 & end_time >= 55800 & end_time <= 86400){
+    } else if (start_time > 37800 & start_time <= 43200 & end_time >= 55800 & end_time <= 86400){
+      //upd240705  10:30 超 の勤務は、昼休憩のみをマイナスする
+      //add170328  11:00 ~ の勤務は、昼休憩のみをマイナスする
       //200608 restore 11:00~18:00のような勤務が１日扱いになるので
       tmp_kinmu_time = tmp_kinmu_time + end_time - start_time - 3600; 
     } else {
