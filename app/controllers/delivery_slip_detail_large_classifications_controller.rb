@@ -1032,8 +1032,9 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
         #  invoice_code = @delivery_slip_header.invoice_code
         #end
         #
-
-        invoice_header_params = { invoice_code: invoice_code, delivery_slip_code:  @delivery_slip_header.quotation_code, 
+        
+        #upd240709  "delivery_slip_code:  @delivery_slip_header.quotation_code"の誤りを訂正、payment_method_id追加
+        invoice_header_params = { invoice_code: invoice_code, quotation_code:  @delivery_slip_header.quotation_code, 
                                   delivery_slip_code:  @delivery_slip_header.delivery_slip_code, 
                                   construction_datum_id: @delivery_slip_header.construction_datum_id, construction_name: @delivery_slip_header.construction_name, 
                                   customer_id: @delivery_slip_header.customer_id, customer_name: @delivery_slip_header.customer_name, honorific_id: @delivery_slip_header.honorific_id,
@@ -1042,7 +1043,8 @@ class DeliverySlipDetailLargeClassificationsController < ApplicationController
                                   tel: @delivery_slip_header.tel, fax: @delivery_slip_header.fax, construction_period: @delivery_slip_header.construction_period,
                                   construction_place: @delivery_slip_header.construction_place, 
                                   construction_house_number: @delivery_slip_header.construction_house_number, construction_place2: @delivery_slip_header.construction_place2, 
-                                  billing_amount: @delivery_slip_header.delivery_amount, execution_amount: @delivery_slip_header.execution_amount, last_line_number: @delivery_slip_header.last_line_number} 
+                                  billing_amount: @delivery_slip_header.delivery_amount, execution_amount: @delivery_slip_header.execution_amount, last_line_number: @delivery_slip_header.last_line_number, 
+                                  payment_method_id: 0} 
         #上記、納品日は移行しないものとする。
         @invoice_header = InvoiceHeader.new(invoice_header_params)
         if @invoice_header.save!(:validate => false)

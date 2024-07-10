@@ -437,7 +437,8 @@ class StocktakesController < ApplicationController
     @stocktake = Stocktake.new(stocktake_params)
     
     #在庫マスターのIDをセットする
-	update_flag = 0
+    #update_flag = 0
+    @update_flag = 0
     set_inventories_id
 	
     respond_to do |format|
@@ -456,7 +457,7 @@ class StocktakesController < ApplicationController
   def update
   
     #在庫マスターのIDをセットする
-    update_flag = 1
+    @update_flag = 1
 	set_inventories_id
   
     respond_to do |format|
@@ -477,7 +478,10 @@ class StocktakesController < ApplicationController
 	inventory = Inventory.find_by(material_master_id: @stocktake.material_master_id, warehouse_id: 1, location_id: 1)
     
 	if inventory.present?
-	  if update_flag = 0
+    
+	  #if update_flag = 0
+    #upd240709
+    if @update_flag == 0
 	    @stocktake.inventory_id = inventory.id
 	  else
         params[:stocktake][:inventory_id] = inventory.id

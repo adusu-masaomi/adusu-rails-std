@@ -300,9 +300,11 @@ class ConstructionDataController < ApplicationController
 
             @construction_cost = ConstructionCost.create(construction_cost_params)
         end
-                
+        
+        
         #
-        if document_flag = false
+        #if document_flag = false
+        if !document_flag  #upd240709
           format.html { redirect_to @construction_datum, notice: 'Construction datum was successfully updated.' }
         else
           #資料更新の場合、indexへそのまま戻る

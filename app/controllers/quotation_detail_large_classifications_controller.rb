@@ -1032,6 +1032,7 @@ class QuotationDetailLargeClassificationsController < ApplicationController
         #一律で仮コードセット
         invoice_code = $HEADER_CODE_MAX
         
+        #upd240709  payment_method_id追加
         invoice_header_params = { invoice_code: invoice_code, quotation_code:  @quotation_header.quotation_code, 
                                   delivery_slip_code:  @quotation_header.delivery_slip_code, 
                                   construction_datum_id: @quotation_header.construction_datum_id, construction_name: @quotation_header.construction_name, 
@@ -1042,7 +1043,8 @@ class QuotationDetailLargeClassificationsController < ApplicationController
                                   construction_period: @quotation_header.construction_period, construction_place: @quotation_header.construction_place, 
                                   construction_house_number: @quotation_header.construction_house_number, construction_place2: @quotation_header.construction_place2, 
                                   invoice_period_start_date: @quotation_header.invoice_period_start_date, invoice_period_end_date: @quotation_header.invoice_period_end_date, 
-                                  billing_amount: @quotation_header.quote_price, execution_amount: @quotation_header.execution_amount, last_line_number: @quotation_header.last_line_number} 
+                                  billing_amount: @quotation_header.quote_price, execution_amount: @quotation_header.execution_amount, last_line_number: @quotation_header.last_line_number, 
+                                  payment_method_id: 0} 
         #上記、見積日は移行しないものとする。
         @invoice_header = InvoiceHeader.new(invoice_header_params)
         if @invoice_header.save!(:validate => false)

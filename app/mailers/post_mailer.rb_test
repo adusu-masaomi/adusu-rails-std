@@ -18,10 +18,11 @@ class PostMailer < ApplicationMailer
      end
     
      #現場住所
+     #upd240703 建物名の前にスペース追加(3Fなど、重なると紛らわしいものがあるため)
      @construction_place = "現場住所:"
      if user.construction_datum.address.present?
        @construction_place += user.construction_datum.post + "　" +
-       user.construction_datum.address + user.construction_datum.house_number + 
+       user.construction_datum.address + user.construction_datum.house_number + "　" +
        user.construction_datum.address2
      else
        @construction_place += "※ご確認下さい"
@@ -37,14 +38,14 @@ class PostMailer < ApplicationMailer
      #subject_time = "<" + Time.now.to_s + ">"
      subject_time = "<" + Time.zone.now.to_s + ">"
     
-     ##本番用
-     ###
+     #本番用
+     #
      #if user.supplier_master.id != 5
      #    mail to: email_responsible ,
      #    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
      #    subject: '注文番号登録依頼' + subject_time
      #else
-     ##ムサシで選んだ場合、テストメールとする
+     #ムサシで選んだ場合、テストメールとする
      #    mail to: "camille.saekiZZZ@gmail.com" ,
      #    cc: "ilovekyosukehimuro@yahoo.co.jp", 
      #    subject: '注文番号登録依頼' + subject_time
@@ -113,11 +114,11 @@ class PostMailer < ApplicationMailer
     #attachments['注文書_' + send_time + '.pdf'] = $attachment
     attachments['注文書_' + send_time + '.pdf'] = attachment
   
-    ##本番用
-    ##メアドは画面より反映(ccは固定)
+    #本番用
+    #メアドは画面より反映(ccは固定)
     #mail to: email_responsible ,
     #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    ##件名に日時を入れる（メール重なるのを防ぐため）
+    #件名に日時を入れる（メール重なるのを防ぐため）
     #subject: '注文依頼' + subject_time 
     
     #test用!!
@@ -175,14 +176,14 @@ class PostMailer < ApplicationMailer
     #メアド確認
     #binding.pry
     
-    ##本番用
-    ##メアドは画面より反映(ccは固定)
+    #本番用
+    #メアドは画面より反映(ccは固定)
     #mail to: email_responsible ,
-    ##担当者２のメアドがあれば、CCに加える。
+    #担当者２のメアドがあれば、CCに加える。
     #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    ##件名に日時を入れる（メール重なるのを防ぐため）
+    #件名に日時を入れる（メール重なるのを防ぐため）
     #subject: '見積依頼' + subject_time
-    ##本番用 end
+    #本番用 end
     
     #test時!!
     #メアドは画面より反映(ccは固定)
@@ -277,14 +278,14 @@ class PostMailer < ApplicationMailer
     #attachments['注文書_' + send_time + '.pdf'] = $attachment
     attachments['注文書_' + send_time + '.pdf'] = attachment
     
-    ##本番用
-    ##メアドは画面より反映(ccは固定)
+    #本番用
+    #メアドは画面より反映(ccは固定)
     #mail to: email_responsible ,
-    ##担当者２のメアドがあれば、CCに加える。
+    #担当者２のメアドがあれば、CCに加える。
     #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    ##件名に日時を入れる（メール重なるのを防ぐため）
+    #件名に日時を入れる（メール重なるのを防ぐため）
     #subject: '注文依頼' + subject_time 
-    ##本番用 end
+    #本番用 end
     
     #test用
     #メアドは画面より反映(ccは固定)
@@ -293,7 +294,7 @@ class PostMailer < ApplicationMailer
     #以下は消さない事!
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '注文依頼' + subject_time 
-    #test用　end
+    ##test用　end
     
   end
   

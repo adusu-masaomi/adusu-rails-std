@@ -917,11 +917,17 @@ class PurchaseOrderHistoriesController < ApplicationController
                 end
                 #
 
+                #purchase_unit_price_params = {material_id: material_id, supplier_id: supplier_id, 
+                #supplier_material_code: supplier_material_code, unit_price: 0 ,
+                #unit_id: item[:unit_master_id], unit_price: unit_price}
+                #@purchase_unit_prices = PurchaseUnitPrice.create(purchase_unit_price_params)
+                #upd240710 unit_price(=0)が重複していたので修正
+                                
                 purchase_unit_price_params = {material_id: material_id, supplier_id: supplier_id, 
-                supplier_material_code: supplier_material_code, unit_price: 0 ,
-                unit_id: item[:unit_master_id], unit_price: unit_price}
+                supplier_material_code: supplier_material_code, unit_id: item[:unit_master_id], unit_price: unit_price}
+                
                 @purchase_unit_prices = PurchaseUnitPrice.create(purchase_unit_price_params)
-
+                
               end  #@material_master.present?
 
             end  #item[:material_code] != ""
