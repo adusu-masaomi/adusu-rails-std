@@ -795,8 +795,9 @@ class QuotationMaterialHeadersController < ApplicationController
       
       if $seq_exists > 0
         #昇順になっている場合は、本来の降順にしておく。
-        #$tmp_detail_parameters = Hash[$detail_parameters.sort.reverse]
-        @detail_parameters = Hash[detail_parameters.sort.reverse]
+        #@detail_parameters = Hash[detail_parameters.sort.reverse]
+        #応急処置　240729
+        @detail_parameters = detail_parameters
       else
 	      #$tmp_detail_parameters = $detail_parameters
         @detail_parameters = detail_parameters
