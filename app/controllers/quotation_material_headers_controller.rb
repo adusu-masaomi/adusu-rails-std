@@ -795,9 +795,11 @@ class QuotationMaterialHeadersController < ApplicationController
       
       if $seq_exists > 0
         #昇順になっている場合は、本来の降順にしておく。
+        
         #@detail_parameters = Hash[detail_parameters.sort.reverse]
-        #応急処置　240729
-        @detail_parameters = detail_parameters
+        #upd240729
+        #rails6対応
+        @detail_parameters = detail_parameters.to_unsafe_h.sort.reverse.to_h
       else
 	      #$tmp_detail_parameters = $detail_parameters
         @detail_parameters = detail_parameters
@@ -898,9 +900,12 @@ class QuotationMaterialHeadersController < ApplicationController
     if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
       if $seq_exists > 0
       #昇順(編集時)になっている場合は、明細パラメータを本来の降順にしておく。
-        #DEL240729 応急処置
         #params[:quotation_material_header][:quotation_material_details_attributes] = 
         #  Hash[params[:quotation_material_header][:quotation_material_details_attributes].sort.reverse]
+        #upd240729
+        #rails6対応
+        params[:quotation_material_header][:quotation_material_details_attributes] = 
+          params[:quotation_material_header][:quotation_material_details_attributes].to_unsafe_h.sort.reverse.to_h
       end
   
       #メール送信フラグ(明細用)をセット＆データ更新
