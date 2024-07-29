@@ -899,7 +899,8 @@ class QuotationMaterialHeadersController < ApplicationController
     end
    
     if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
-      if $seq_exists > 0
+      #if $seq_exists > 0
+      if $seq_exists.present? && $seq_exists > 0
       #昇順(編集時)になっている場合は、明細パラメータを本来の降順にしておく。
         #params[:quotation_material_header][:quotation_material_details_attributes] = 
         #  Hash[params[:quotation_material_header][:quotation_material_details_attributes].sort.reverse]
