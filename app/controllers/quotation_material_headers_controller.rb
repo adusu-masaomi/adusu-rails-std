@@ -275,8 +275,7 @@ class QuotationMaterialHeadersController < ApplicationController
     if @quotation_material_header.quotation_material_details.present?
       @details = @quotation_material_header.quotation_material_details
     end
-     
-    
+        
     if @form_detail_order != "sequential_id DESC"
     #編集時（昇順）はのぞく
       if  @details.present?
@@ -788,7 +787,7 @@ class QuotationMaterialHeadersController < ApplicationController
 
   def send_email
    #メール送信する(メール送信ボタン押した場合)
-     
+        
     if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
       #$detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
       detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]

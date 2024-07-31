@@ -19,12 +19,24 @@ class ConstructionDataController < ApplicationController
     end
     ##upd end
     
-    #test
-    #query = nil
+    check_construction_on_null_search(query)
     
     #@q = ConstructionDatum.ransack(params[:q])
     #ransack保持用--上記はこれに置き換える
-    @q = ConstructionDatum.ransack(query)   
+    #@q = ConstructionDatum.ransack(query)   
+    
+    #upd240731
+    #全件の場合は処理重いため、以下に変更
+    if query.present? && !@null_search
+      #何らかの検索条件があった場合
+      @q = ConstructionDatum.ransack(query)
+    else
+      #検索条件がなければ、3年前までのデータを表示する
+      now = Time.current 
+      default_date = now.ago(3.years)
+      @q = ConstructionDatum.where('reception_date >= ?', default_date ).ransack(query)
+      
+    end
     
     #ransack保持用コード
     search_history = {
@@ -71,6 +83,20 @@ class ConstructionDataController < ApplicationController
             disposition: "inline")
         end  #format pdf do
       end    #format do
+    end
+  end
+
+  #add240731
+  #空で検索しているかのチェック
+  def check_construction_on_null_search(query)
+    @null_search = false
+    if query.present?
+      if query[:id_eq].blank? && query[:construction_code_cont].blank? && 
+         query[:customer_id_eq].blank? && query[:order_flag_eq].blank? && 
+         query[:billed_flag_eq].blank? && query[:calculated_flag_eq].blank?
+         
+        @null_search = true
+      end
     end
   end
 
