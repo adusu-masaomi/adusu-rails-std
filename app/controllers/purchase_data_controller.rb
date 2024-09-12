@@ -177,13 +177,16 @@ class PurchaseDataController < ApplicationController
       #何らかの検索条件があった場合
       @q = PurchaseDatum.ransack(query)
     else
-      #add240528
-      #検索条件がなければ、3年前までのデータを表示する
+      #upd240912
+      #---検索条件がなければ、1年前までのデータを表示する
+      
+      #---old検索条件がなければ、3年前までのデータを表示する
       #require 'objspace'
       #ObjectSpace.memsize_of_all
       
       now = Time.current 
-      default_date = now.ago(3.years)
+      #default_date = now.ago(3.years)
+      default_date = now.ago(1.years)
       @q = PurchaseDatum.where('purchase_date >= ?', default_date ).ransack(query)
       
       #@q = PurchaseDatum.includes([:MaterialMaster, :construction_datum, :unit_master, :SupplierMaster,
