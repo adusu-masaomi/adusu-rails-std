@@ -20,12 +20,22 @@
   <!--標準版はカット<%= f.input :hourly_wage %>-->
   <!--<%= f.input :daily_pay, hint: "*通常はこちらに登録して下さい。" %>-->
   <%= f.input :daily_pay %>
+  <div class="col-lg-6" style="margin-left: -15px;">
   <%= f.label :complete_flag, "外注の場合は、外注業者を登録して下さい", {} %>
-  <div style="margin-left: 0px;">
   <%= f.collection_select :supplier_master_id, SupplierMaster.all, :id, :supplier_name , 
      {:include_blank => true} , 
        {id: "supplier_master_id", :tabindex=>"7", style: 'width:350px;', :class => "searchableSupplier"} %>
   </div>
+  
+  </br></br>
+  <div class="col-lg-4" , style="margin-left : 50px">
+  <%= f.check_box :is_resign %> 
+  <%= f.label :order_flag, "退職", {style: 'color: purple', :tabindex=>"8"} %>
+  </div>
+  
+  </br>
+  
+  
   </br>
   
   <%= f.button :submit, :class => 'btn-primary' %>

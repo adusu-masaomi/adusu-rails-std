@@ -22,6 +22,14 @@
   -->
   <dt><strong><%= model_class.human_attribute_name(:daily_pay) %>:</strong></dt>
   <dd><%= @staff.daily_pay %></dd>
+  
+  <dt><strong>在職:</strong></dt>
+  <% if @staff.is_resign.present? && @staff.is_resign == 1 %>
+  <dd>退職</dd>
+  <% else %>
+  <dd>-</dd>
+  <% end %>
+  
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
