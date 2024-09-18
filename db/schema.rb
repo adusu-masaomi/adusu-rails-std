@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_14_234721) do
+ActiveRecord::Schema.define(version: 2024_09_17_090023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -882,6 +882,7 @@ ActiveRecord::Schema.define(version: 2024_05_14_234721) do
     t.integer "supplier_master_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "is_resign"
   end
 
   create_table "stocktakes", force: :cascade do |t|
