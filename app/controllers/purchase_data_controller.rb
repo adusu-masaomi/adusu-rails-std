@@ -171,6 +171,8 @@ class PurchaseDataController < ApplicationController
     #ransack保持用--上記はこれに置き換える
     #binding.pry
     check_purchase_on_null_search(query)
+       
+    #binding.pry
     
     #if query.present?
     if query.present? && !@null_search
@@ -437,7 +439,8 @@ class PurchaseDataController < ApplicationController
          query[:inventory_division_id_eq].blank? && query[:with_construction].blank? &&
          query[:with_customer].blank? && query[:with_material_code].blank? &&
          query[:with_material_category].blank? && query[:with_material_code_include].blank? &&
-         query[:with_material_name_include].blank? && query[:material_name_cont].blank? 
+         query[:with_material_name_include].blank? && query[:material_name_cont].blank? &&
+         query["with_construction"].blank?
        
          @null_search = true
       end 
