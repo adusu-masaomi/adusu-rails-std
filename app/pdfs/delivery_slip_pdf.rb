@@ -93,6 +93,10 @@ class DeliverySlipPDF
           !@delivery_slip_headers.ConstructionDatum.personnel.blank?
           responsible = @delivery_slip_headers.ConstructionDatum.personnel + "  様"
           @report.page.item(:responsible1).value(responsible)
+        else
+          #upd241008 件名ない場合でも担当者出すようにする
+          responsible = @delivery_slip_headers.responsible1 + "  様"
+          @report.page.item(:responsible1).value(responsible)
         end
         #if @delivery_slip_headers.responsible1.present?
         #  responsible = @delivery_slip_headers.responsible1 + "  様"
