@@ -390,7 +390,9 @@ class InvoiceHeadersController < ApplicationController
       id = params[:invoice_header][:construction_datum_id].to_i
       construction = ConstructionDatum.where(:id => id).first
       
-      if construction.present?    #マスター削除を考慮
+      #if construction.present?    #マスター削除を考慮
+      #(upd241008)
+      if @construction.present? && id != 1   #マスター削除を考慮し、工事ID=1には書き込まない。
         construction_params = { personnel: params[:invoice_header][:responsible1] }
         #更新する
 	    construction.update(construction_params)
