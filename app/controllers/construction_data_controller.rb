@@ -90,10 +90,12 @@ class ConstructionDataController < ApplicationController
   #空で検索しているかのチェック
   def check_construction_on_null_search(query)
     @null_search = false
+    
     if query.present?
       if query[:id_eq].blank? && query[:construction_code_cont].blank? && 
          query[:customer_id_eq].blank? && query[:order_flag_eq].blank? && 
-         query[:billed_flag_eq].blank? && query[:calculated_flag_eq].blank?
+         query[:billed_flag_eq].blank? && query[:calculated_flag_eq].blank? &&
+         query["customer_id_eq"].blank?
          
         @null_search = true
       end
