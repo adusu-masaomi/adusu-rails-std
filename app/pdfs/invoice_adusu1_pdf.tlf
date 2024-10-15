@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.12.0",
   "items": [
     {
       "id": "",
@@ -36,8 +36,8 @@
       "description": "",
       "x": 416.8,
       "y": 139,
-      "width": 72,
-      "height": 12.2,
+      "width": 72.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -63,7 +63,7 @@
       "x": 415,
       "y": 110,
       "width": 62.2,
-      "height": 14.5,
+      "height": 18.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -428,7 +428,7 @@
       "x": 71,
       "y": 201,
       "width": 240,
-      "height": 11.9,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -551,7 +551,7 @@
       "description": "",
       "x": 73,
       "y": 82,
-      "width": 202.5,
+      "width": 201,
       "height": 12.3,
       "style": {
         "font-family": [
@@ -778,7 +778,7 @@
       "x": 462,
       "y": 814.8,
       "width": 25.7,
-      "height": 13.1,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -868,7 +868,7 @@
       "x": 71,
       "y": 229,
       "width": 260,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -894,7 +894,7 @@
       "x": 62,
       "y": 321.5,
       "width": 36.3,
-      "height": 14.2,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -988,7 +988,7 @@
       "x": 161,
       "y": 388,
       "width": 83.3,
-      "height": 13.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAPMincho"
@@ -1033,7 +1033,7 @@
       "x": 344,
       "y": 29,
       "width": 118.9,
-      "height": 17.7,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1401,7 +1401,7 @@
       "x": 250,
       "y": 340.9,
       "width": 55.5,
-      "height": 12.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1579,7 +1579,7 @@
       "x": 354,
       "y": 388,
       "width": 21.7,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1607,7 +1607,7 @@
       "x": 392,
       "y": 388,
       "width": 20.6,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAPMincho"
@@ -1635,7 +1635,7 @@
       "x": 518,
       "y": 388,
       "width": 27.6,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1827,7 +1827,7 @@
       "x": 442,
       "y": 388,
       "width": 20.5,
-      "height": 11.2,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1927,7 +1927,7 @@
       "type": "text-block",
       "display": true,
       "description": "",
-      "x": 285,
+      "x": 275,
       "y": 83,
       "width": 24,
       "height": 12.3,
@@ -2026,7 +2026,7 @@
       "x": 371,
       "y": 233,
       "width": 60,
-      "height": 13.6,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2052,7 +2052,7 @@
       "x": 376,
       "y": 248,
       "width": 200.1,
-      "height": 13,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2078,7 +2078,7 @@
       "x": 376,
       "y": 283,
       "width": 105.1,
-      "height": 12.9,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2104,7 +2104,7 @@
       "x": 376,
       "y": 297,
       "width": 197.2,
-      "height": 13.6,
+      "height": 16.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2130,7 +2130,7 @@
       "x": 80,
       "y": 216,
       "width": 250,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2182,7 +2182,7 @@
       "x": 72.9,
       "y": 285,
       "width": 230,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2255,7 +2255,7 @@
       "x": 407,
       "y": 361,
       "width": 13.2,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2517,7 +2517,7 @@
       "x": 501,
       "y": 174,
       "width": 32.5,
-      "height": 11.2,
+      "height": 12,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2543,7 +2543,7 @@
       "x": 540,
       "y": 174,
       "width": 40,
-      "height": 11.1,
+      "height": 12,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2595,7 +2595,7 @@
       "x": 495,
       "y": 110,
       "width": 77.2,
-      "height": 12.2,
+      "height": 18.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2621,7 +2621,7 @@
       "x": 415,
       "y": 126,
       "width": 45.1,
-      "height": 11.6,
+      "height": 12.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2647,7 +2647,7 @@
       "x": 460,
       "y": 126,
       "width": 120.4,
-      "height": 12.7,
+      "height": 12.8,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2673,7 +2673,7 @@
       "x": 499,
       "y": 139,
       "width": 72,
-      "height": 9.6,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2699,7 +2699,7 @@
       "x": 444,
       "y": 15,
       "width": 148,
-      "height": 14.2,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
