@@ -183,17 +183,20 @@ class EstimationSheetPDF
           honorific_name = CustomerMaster.honorific[id].find{id} #"御中"
         end
         @report.page.item(:honorific).value(honorific_name) 
-
+        
+        
         #担当1
         if @quotation_headers.ConstructionDatum.present? && 
           !@quotation_headers.ConstructionDatum.personnel.blank?
           responsible = @quotation_headers.ConstructionDatum.personnel + "  様"
           @report.page.item(:responsible1).value(responsible)
         else
-          
-          #upd241008 件名の入力がない場合でも担当者出すようにする
-          responsible = @quotation_headers.responsible1 + "  様"
-          @report.page.item(:responsible1).value(responsible)
+          #upd241025
+          if !@quotation_headers.responsible1.blank?
+            #upd241008 件名の入力がない場合でも担当者出すようにする
+            responsible = @quotation_headers.responsible1 + "  様"
+            @report.page.item(:responsible1).value(responsible)
+          end
         end
         #担当2
         if @quotation_headers.responsible2.present?
