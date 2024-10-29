@@ -3,6 +3,9 @@ class ConstructionCost < ApplicationRecord
   #demo版対応
   MAX_RECORD_COUNT = 10
 
+  #kaminari用設定
+  paginates_per 200  # 1ページあたり項目表示
+
   belongs_to :construction_datum, optional: true, :touch => :construction_start_date
   accepts_nested_attributes_for :construction_datum
   has_one :construction_daily_reports

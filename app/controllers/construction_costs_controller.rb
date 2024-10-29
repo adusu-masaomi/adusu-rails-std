@@ -35,7 +35,11 @@ class ConstructionCostsController < ApplicationController
     #@construction_costs = @q.result(distinct: true)
     #Rails6
     @construction_costs = @q.result
-
+    
+    #add241029
+    #kaminari用設定
+    @construction_costs  = @construction_costs.page(params[:page])
+    
     $construction_costs = @construction_costs
     
     respond_to do |format|
