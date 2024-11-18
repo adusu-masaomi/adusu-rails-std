@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.12.0",
   "items": [
     {
       "id": "",
@@ -384,7 +384,7 @@
       "x": 71,
       "y": 215,
       "width": 240,
-      "height": 11.9,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -798,7 +798,7 @@
       "x": 462,
       "y": 814.8,
       "width": 25.7,
-      "height": 13.1,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -888,7 +888,7 @@
       "x": 71,
       "y": 243,
       "width": 195,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -914,7 +914,7 @@
       "x": 502,
       "y": 189,
       "width": 32.5,
-      "height": 11.2,
+      "height": 12,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -940,7 +940,7 @@
       "x": 541,
       "y": 189,
       "width": 40,
-      "height": 11.1,
+      "height": 12,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -966,7 +966,7 @@
       "x": 62,
       "y": 303.5,
       "width": 36.3,
-      "height": 14.2,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1060,7 +1060,7 @@
       "x": 161,
       "y": 388,
       "width": 83.3,
-      "height": 13.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAPMincho"
@@ -1105,7 +1105,7 @@
       "x": 344,
       "y": 29,
       "width": 118.9,
-      "height": 17.7,
+      "height": 21.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1489,8 +1489,8 @@
       "description": "",
       "x": 255,
       "y": 324,
-      "width": 49.5,
-      "height": 12.3,
+      "width": 50.6,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1653,7 +1653,7 @@
       "x": 345,
       "y": 324.5,
       "width": 40.5,
-      "height": 12.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1679,7 +1679,7 @@
       "x": 345,
       "y": 338,
       "width": 40.5,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1705,7 +1705,7 @@
       "x": 345,
       "y": 351,
       "width": 40.5,
-      "height": 12.6,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1731,7 +1731,7 @@
       "x": 345,
       "y": 366.3,
       "width": 40.5,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1806,7 +1806,7 @@
       "x": 354,
       "y": 388,
       "width": 21.7,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -1834,7 +1834,7 @@
       "x": 392,
       "y": 388,
       "width": 20.6,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAPMincho"
@@ -1862,7 +1862,7 @@
       "x": 518,
       "y": 388,
       "width": 27.6,
-      "height": 11.1,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2054,7 +2054,7 @@
       "x": 442,
       "y": 388,
       "width": 20.5,
-      "height": 11.2,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2188,7 +2188,7 @@
       "description": "",
       "x": 73,
       "y": 93.5,
-      "width": 80,
+      "width": 201.5,
       "height": 11.1,
       "style": {
         "font-family": [
@@ -2220,7 +2220,7 @@
       "description": "",
       "x": 73,
       "y": 109.5,
-      "width": 80,
+      "width": 201.5,
       "height": 11.1,
       "style": {
         "font-family": [
@@ -2394,8 +2394,8 @@
       "description": "",
       "x": 416.8,
       "y": 138,
-      "width": 72,
-      "height": 12.2,
+      "width": 72.3,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2421,7 +2421,7 @@
       "x": 499,
       "y": 138,
       "width": 72,
-      "height": 9.6,
+      "height": 13.6,
       "style": {
         "font-family": [
           "IPAMincho"
@@ -2447,7 +2447,7 @@
       "x": 444,
       "y": 15,
       "width": 148,
-      "height": 14.2,
+      "height": 14.4,
       "style": {
         "font-family": [
           "IPAMincho"
