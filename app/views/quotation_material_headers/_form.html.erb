@@ -487,6 +487,8 @@
     //(document).on('turbolinks:load', function(){
 
     //$(".sortThese").sortable();
+    //test241127
+    //$(".sortDone").sortable();
     
     //$("#filter").on("cocoon:after-insert", function() {
     //   $(".sortThese").sortable();
@@ -685,8 +687,11 @@
   //明細フォーム新規追加時の制御
   $(document).bind('cocoon:after-insert', function(e,inserted_item) {
    
-    //debugger;
-   
+    //test241127
+    //これで一応ソートができるようになるが、挙動がイマイチ
+    //$(".sortThese").parent().sortable();
+    
+    
     //連番をセットする
     $.get("<%= quotation_material_headerz_set_sequence_path %>",
     {},
@@ -818,7 +823,9 @@
   window.onload = function() {
      
     //170719ソート機能は不安定のため、一旦保留に  
+    //241127 ... 挙動がイマイチ
     //$(".sortDone").sortable();
+    
 
     //$("#filter").on("cocoon:after-insert", function() {
     //   $(".sortThese").parent().sortable();
