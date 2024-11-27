@@ -143,6 +143,9 @@ class QuotationMaterialHeadersController < ApplicationController
     
     is_reload = false
     
+    #upd241126
+    @update = false
+    
     #画面の並びは昇順にする
     #新規は昇順、編集は降順。
     @form_detail_order = "sequential_id ASC"
@@ -213,6 +216,10 @@ class QuotationMaterialHeadersController < ApplicationController
     #画面の並びは昇順にする
     #新規は昇順、編集は降順。
     #@form_detail_order = "sequential_id DESC"
+    
+    #add241126
+    @update = true
+    
     #upd230926 編集も昇順
     @form_detail_order = "sequential_id ASC"
   
@@ -1007,6 +1014,11 @@ class QuotationMaterialHeadersController < ApplicationController
         #送信済み・削除判定が必要なので現在のパラメータをセット
         #$order_parameters = params[:purchase_order_history][:orders_attributes]
         detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
+        
+        
+        #test
+        #detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
+        #detail_parameters = detail_parameters.order(params[:quotation_material_header][:quotation_material_details_attributes][:sequential_id] => :desc)
 	   
         #if $seq_exists > 0
         if session[:seq_exists] > 0  #upd231116
@@ -1051,7 +1063,11 @@ class QuotationMaterialHeadersController < ApplicationController
           format.pdf do
             #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
             #                                            @supplier, request_type, purchase_order_code, mail_flag)
-            report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+            #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+            #                               @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
+            
+            #upd241126
+            report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @quotation_material_header.quotation_material_details, 
                                            @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
             
             # ブラウザでPDFを表示する
@@ -1069,10 +1085,13 @@ class QuotationMaterialHeadersController < ApplicationController
           
           #$mail_flag = true
           #ＰＤＦを作成
-          #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
-          #                                            @supplier, request_type, purchase_order_code, mail_flag)
-          report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+          
+          #upd241126
+          report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @quotation_material_header.quotation_material_details, 
                                            @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
+          
+          #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+          #                                 @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
           
             
           # PDFファイルのバイナリデータを生成する

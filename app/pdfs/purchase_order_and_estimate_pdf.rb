@@ -217,7 +217,9 @@ class PurchaseOrderAndEstimatePDF
     #明細
     #注文でループ
     if detail_parameters.present?  #add230720
-      detail_parameters.values.each_with_index.reverse_each do |item, index|
+      #detail_parameters.values.each_with_index.reverse_each do |item, index|
+      #upd241126
+      detail_parameters.order(:sequential_id).each do |item|
         
         #出力判定
         check = false

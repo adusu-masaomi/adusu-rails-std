@@ -276,17 +276,25 @@
   
     <!-- moved170701 -->
     <!--<div id="filter" >--> 
+    
+    <!--test241127-->
+    
     <% if @form_detail_order != "sequential_id DESC" %>
-      <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
+      <% if @update == false %>
+        <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
           :data => { association_insertion_method: "after" } %> 
+      <% else %>
+        <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
+          :data => { association_insertion_method: "append" } %> 
+      <% end %>
     <% else %>
       <!--昇順の場合-->
       <!--代わりに「戻る」ボタン入れる-->
-      <%= link_to t('.cancel', :default => t("前画面に戻る")),
+        <%= link_to t('.cancel', :default => t("前画面に戻る")),
                 quotation_material_headers_path(construction_id: params[:construction_id], move_flag: params[:move_flag]), 
                   :onclick => "reset_value()", :class => 'btn btn-teal500_rsd' %>
     <% end %>
-     
+    
     <!--標準版はアデュースのみ表示-->
     <% if @company_id == 1 %>
       <%= f.button_tag "メール送信（見積）", :type => 'button', :class => "btn btn-indigo500_ftg", 
@@ -457,9 +465,9 @@
     </div>
    
     <!--昇順の場合-->
-    <% if @form_detail_order == "sequential_id DESC" %>
+    <% if @update == true %>
       <%= link_to_add_association 'アイテム追加' ,  f, :quotation_material_details  ,   :class => 'btn btn-success',  
-      :data => { association_insertion_method: "after" } %> 
+      :data => { association_insertion_method: "append" } %> 
     <% end %>
 
   <% end %>
@@ -677,6 +685,8 @@
   //明細フォーム新規追加時の制御
   $(document).bind('cocoon:after-insert', function(e,inserted_item) {
    
+    //debugger;
+   
     //連番をセットする
     $.get("<%= quotation_material_headerz_set_sequence_path %>",
     {},
@@ -690,10 +700,10 @@
       
       //debugger;
       
-      //if (document.querySelectorAll("#sequential_id")[controlNum] == undefined){
       if (sort_order == "DESC") {
         //降順
         document.getElementById("sequential_id").value = obj;
+      
       } else {
         //昇順の場合
         if (document.querySelectorAll("#sequential_id")[controlNum] != undefined) {
