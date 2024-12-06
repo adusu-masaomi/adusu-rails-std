@@ -20,7 +20,8 @@ class CustomerListCardPDF
     #$purchase_data.joins(:purchase_order_datum).order("purchase_order_code, purchase_date, id").each do |purchase_datum|
     #$customer.order("construction_code desc").each do |construction_datum|
 
-    $customers.each do |customer| 
+    #$customers.each do |customer|
+    $customers.order(:id).each do |customer| 
 
       #---見出し---
       page_count = report.page_count.to_s + "頁"
