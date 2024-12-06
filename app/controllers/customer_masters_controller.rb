@@ -27,11 +27,13 @@ class CustomerMastersController < ApplicationController
     #@customer_masters  = @q.result(distinct: true)
     #Rails6
     @customer_masters  = @q.result
-
+    #moved 241206
+    $customers = @customer_masters
+    
     @customer_masters  = @customer_masters.page(params[:page])
     
     
-    $customers = @customer_masters
+    #$customers = @customer_masters
     
     $print_flag_customer = params[:print_flag]
     
