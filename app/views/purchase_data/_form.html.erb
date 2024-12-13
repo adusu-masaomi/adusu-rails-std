@@ -54,7 +54,7 @@
     <%= f.collection_select :supplier_id, @supplier_master.order("id"), :id, :supplier_name, {},
       {id:"supplier_id", :class => "searchableSupplier", style: 'width:220px', :tabindex=>"4", :onchange => "setUnitPrice(this.form)"}  %>
   <% else %>
-    <%= f.collection_select :supplier_id, SupplierMaster.all, :id, :supplier_name, {:prompt => "どれか一つを選択して下さい"},
+    <%= f.collection_select :supplier_id, SupplierMaster.all.order(:id), :id, :supplier_name, {:prompt => "どれか一つを選択して下さい"},
       {id:"supplier_id", :class => "searchableSupplier", style: 'width:220px', :tabindex=>"4", :onchange => "setUnitPrice(this.form)"}  %>
   <% end %>
   </br>
