@@ -31,7 +31,7 @@
   <!---<%= f.select :supplier_id_eq, SupplierMaster.all.map{|st| [st.supplier_name, st.id]}, 
   {include_blank: true}, {style: 'width:220px' , class: "searchableSupplierName" } %>-->
   
-  <%= f.select :supplier_id_eq, @supplier_master_extract.map{|st| [st.supplier_name, st.id]}, 
+  <%= f.select :supplier_id_eq, @supplier_master_extract.order(:id).map{|st| [st.supplier_name, st.id]}, 
   {include_blank: true}, {style: 'width:220px' , class: "searchableSupplierName" } %>
   
   
