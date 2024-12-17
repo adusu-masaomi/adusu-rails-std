@@ -34,7 +34,7 @@
       <% end %>
       
       <%= f.label :supplier_master_id, '仕入先：：' %>
-      <%= f.select :supplier_master_id_eq, SupplierMaster.all.map{|st| [st.supplier_name, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableSupplierName" } %>
+      <%= f.select :supplier_master_id_eq, SupplierMaster.all.order(:id).map{|st| [st.supplier_name, st.id]}, {include_blank: true}, {style: 'width:220px' , class: "searchableSupplierName" } %>
       <!--モバイル用対応  add180830-->
       <% if browser.platform.ios? || browser.platform.android? %>
         <%= button_tag "×", type: 'button', :class => 'btn btn-grey400_rsd btn-xs', onclick: "clearSupplier()" %>
