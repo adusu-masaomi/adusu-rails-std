@@ -130,8 +130,6 @@
 
 <% end %>
 
- 
-
 <script type="text/javascript">
   
   var working_hour = 0;
@@ -314,7 +312,9 @@
     //calcWorkTime.call(); 
     //標準版仕様---会社ID取得
     company_id = document.getElementById("company_id").value
-     
+    
+    //debugger;
+    
     var tmp_kinmu_time = 0;
     if (company_id != 1) {
       kinmu_time = calcWorkTime(tmp_kinmu_time); 
@@ -672,7 +672,12 @@
 
     //var weekDay = weekDayList[ dateObj.getDay() ] ;	// 曜日
     var wday = dateObject.getDay();
-
+    
+    //add241224
+    //祝日の判定
+    //assetsに"holiday.min.js"追加し利用
+    var holiday = amaitortedays.isNationalHoliday(dateObject);
+    
     if (wday == 0) {
       //日曜？
       holiday_flag = FLAG_SUNDAY_HOLIDAY;
@@ -680,8 +685,9 @@
       addHoliday(holiday_flag, num_no_add,num);
     } else {
       //祝日or会社休日ないか判定。
-      if (getNationalHoliday(dateObject) == "祝日") {
-        //祝日判定(関数はapplication.htmlにて定義)
+      //if (getNationalHoliday(dateObject) == "祝日"){
+      if(holiday) {
+        //祝日判定
         holiday_flag = FLAG_SATURDAY_HOIDAY;
 
         //休日の判定＆労務費へのセット(必須！)
