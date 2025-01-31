@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_17_090023) do
+ActiveRecord::Schema.define(version: 2025_01_31_003102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -883,6 +883,7 @@ ActiveRecord::Schema.define(version: 2024_09_17_090023) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "is_resign"
+    t.integer "is_invisible"
   end
 
   create_table "stocktakes", force: :cascade do |t|
