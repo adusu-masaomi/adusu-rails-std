@@ -332,6 +332,9 @@
       //temp_kinmu_time = (kinmu_time + kinmu_time_2) / 27000;
       //標準版仕様---
       temp_kinmu_time = (kinmu_time + kinmu_time_2) / working_hour;
+      
+      //debugger;
+      
       temp_kinmu_time =  floatFormat(temp_kinmu_time, 3) ; 
       document.getElementById("man_month").value = temp_kinmu_time;
        
@@ -359,6 +362,11 @@
  
   function calcTimeVariousOverTime() {
     //休日・残業時間の加算 
+    //upd250212
+    overtime_25 = 0;
+    overtime_50 = 0;
+    //
+    
     //早出時間(規定)の取得
     overtime_early_start_time = 0;
     if (document.getElementById('overtime_early_start_time').value != null) {
@@ -402,10 +410,11 @@
    
    
     //残業時間(18:00~22:00)の計算
-    //debugger;
-   
+    
     //if (end_time > 64800 && start_time < 79200) {
-    if (end_time > overtime_start_time && start_time < overtime_end_time) {
+    //if (end_time > overtime_start_time && start_time < overtime_end_time) {
+    //upd250212
+    if (((end_time == 0 && start_time != 0) || end_time > overtime_start_time) && start_time < overtime_end_time) {
       tmp_time = 0;
      
       //if (end_time < 79200 && start_time >= 64800) {
@@ -413,11 +422,15 @@
         //終了時間２２時以前かつ開始時間１８時以降の場合
         tmp_time = end_time - start_time;
         //}else if (end_time < 79200 && start_time >= 18000) { 
-      } else if (end_time < overtime_end_time && start_time >= overtime_early_start_time) { 
+      ///} else if (end_time < overtime_end_time && start_time >= overtime_early_start_time) { 
+      //upd250212
+      } else if ((end_time != 0 && end_time < overtime_end_time) && start_time >= overtime_early_start_time) { 
         //終了時間２２時以前かつ開始時間５時以降の場合
         tmp_time = end_time - overtime_start_time;
         //}else if (end_time < 86400 && end_time >=79200) {
-      } else if (end_time < 86400 && end_time >= overtime_end_time) {
+      //} else if (end_time < 86400 && end_time >= overtime_end_time) {
+      //upd250212
+      } else if (end_time < 86400 && (end_time >= overtime_end_time || end_time == 0)) {
         //終了時間２２時以降かつ終了時間２４時前の場合
         //if (start_time >= 64800) {
         if (start_time >= overtime_start_time) {
@@ -433,6 +446,8 @@
         //終了時間０時以降かつ開始時間５時以降の場合
         //tmp_time = 79200 - 64800;
         tmp_time = overtime_end_time - overtime_start_time;
+      //} else if (start_time <= overtime_end_time && end_time == 0)
+      //  tmp_time = 
       }
      
       overtime_25 += tmp_time;
@@ -465,11 +480,15 @@
     }
    
    
+    //debugger;
+   
     //深夜帯(22:00~5:00)の計算
-    //if (start_time >=79200 || start_time >= 0 && start_time <= 18000 || end_time >=79200 ) {
+    //if (start_time >= overtime_midnight_start_time || 
+    //  start_time >= 0 && start_time <= overtime_midnight_end_time || 
+    //  end_time >= overtime_midnight_start_time ) {
     if (start_time >= overtime_midnight_start_time || 
       start_time >= 0 && start_time <= overtime_midnight_end_time || 
-      end_time >= overtime_midnight_start_time ) {
+      end_time >= overtime_midnight_start_time || end_time == 0) {
 
       //if (start_time >=79200 && (end_time >=79200 && end_time <= 89940) ){
       if (start_time >= overtime_midnight_start_time && (end_time >= overtime_midnight_start_time
@@ -498,10 +517,17 @@
         overtime_50 = 86400 - end_time;  //upd230623
         overtime_50 += overtime_midnight_end_time - start_time;
         //}else if (start_time >= 0 && end_time > 79200) {
-      } else if (start_time >= 0 && end_time > overtime_midnight_start_time) {
+      //} else if (start_time >= 0 && end_time > overtime_midnight_start_time) {
+      //upd250212
+      } else if (start_time >= 0 && (end_time > overtime_midnight_start_time || end_time == 0)) {
         //開始０時以降で終了時間が２２時以降
         //overtime_50 = end_time - 79200;
-        overtime_50 = end_time - overtime_midnight_start_time;
+        
+        if (end_time != 0){
+          overtime_50 = end_time - overtime_midnight_start_time;
+        }else{
+          overtime_50 = 86400 - overtime_midnight_start_time;
+        }
       }
       //}else if (start_time >= 64800 && end_time <= 18000) {
     } else if (start_time >= overtime_start_time && end_time <= overtime_midnight_end_time) {
@@ -581,6 +607,8 @@
       var temp_kinmu_time = 0 ;
       //temp_kinmu_time = (kinmu_time + kinmu_time_2) / 27000 ;
       temp_kinmu_time = (kinmu_time + kinmu_time_2) / working_hour;
+          
+      //debugger;
           
       temp_kinmu_time =  floatFormat(temp_kinmu_time, 3) ; 
       document.getElementById("man_month").value = temp_kinmu_time;

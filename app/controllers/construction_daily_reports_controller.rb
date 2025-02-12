@@ -507,6 +507,7 @@ class ConstructionDailyReportsController < ApplicationController
     working_hour -= (break_time_1 + break_time_2 + break_time_3)
     
     #binding.pry
+    
     return working_hour
     
     #start_time = time_to_seconds(start_time.hour, end_time.min)
