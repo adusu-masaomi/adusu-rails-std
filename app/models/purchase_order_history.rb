@@ -59,12 +59,16 @@ class PurchaseOrderHistory < ApplicationRecord
     
     attr_accessor :company_id_hide   #230914
     
-	#工事画面からの遷移にて使用
-	#attr_accessor :construction_id
-	#attr_accessor :move_flag
-	
-	validates_associated :orders
-	
+    #add250213
+    #注文書再発行用
+    attr_accessor :purchase_order_reissue
+    
+    #工事画面からの遷移にて使用
+    #attr_accessor :construction_id
+    #attr_accessor :move_flag
+    
+    validates_associated :orders
+    
     #validates :quantity, presence: true
     #validate :no_quantity
 	
