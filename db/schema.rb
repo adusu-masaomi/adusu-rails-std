@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_13_083519) do
+ActiveRecord::Schema.define(version: 2025_02_13_085546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -527,6 +527,7 @@ ActiveRecord::Schema.define(version: 2025_02_13_083519) do
     t.integer "sequential_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "printed_flag"
   end
 
   create_table "outsourcing_costs", force: :cascade do |t|
