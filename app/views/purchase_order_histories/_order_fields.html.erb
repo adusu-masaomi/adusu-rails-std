@@ -36,12 +36,21 @@
   <!--二重注文にならないよう、やはり必要-->
   <%= f.select :mail_sent_flag, Order.mail_flag, {:include_blank => true}, 
        {id:'mail_sent_flag', :class => "my-custom-class", style: 'width:120px;margin-left:0px;font-size:16px;font-weight:bold;color:red;' } %>
+  <!--test-->
+  <% if @company_id == 1 %>
+    <!--アデュース仕様 注文書発行したか否かのフラグ-->
+    <%= f.select :printed_flag, Order.issue_flag, {:include_blank => true}, 
+       {id:'printed_flag', :class => "my-custom-class", style: 'width:120px;margin-left:0px;font-size:16px;color:blue;' } %>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <% else %>  
+    <!--標準版仕様-->
+    <%= f.input :printed_flag, input_html:{id:'printed_flag'} , as: :hidden %>
   
-  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  <% end %>
   
   <!--以下スペースあり-->
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,8 +99,6 @@
                                                
   <%= f.input :order_price,  input_html:{ id: "order_price", style: 'width:100px;' , :tabindex=>"8" } %>
   
-  <!--アデュース仕様-->
-  <%= f.input :printed_flag, input_html:{id:'printed_flag'} , as: :hidden %>
   
 </div>
 </div>

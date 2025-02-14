@@ -46,6 +46,12 @@ class Order < ApplicationRecord
      [["注文済", 1]] 
    end
    
+   def self.issue_flag 
+    #[["送信済", 1]] 
+     #標準はメール使えないため、変更
+     [["発行済", 1]] 
+   end
+   
    def self.ransackable_attributes(auth_object = nil)
      ["created_at", "delivery_complete_flag", "id", "list_price", "mail_sent_flag", "maker_id", "maker_name", "material_category_id", "material_code", "material_id", "material_name", "order_price", "order_unit_price", "purchase_order_history_id", "quantity", "sequential_id", "unit_master_id", "updated_at"]
    end

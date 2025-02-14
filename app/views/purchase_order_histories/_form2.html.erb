@@ -196,10 +196,15 @@
       <%= f.button_tag( '注文書', :type => 'button', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitPurchaseOrder()") %>
       
-      &nbsp;&nbsp;&nbsp;
-      <%= f.check_box :purchase_order_reissue, :id => "purchase_order_reissue" %>
-      <%= f.label :force_order_flag, '再発行', { style: 'color:grey'}  %>
-             
+      <% if @company_id == 1 %>
+        <!--アデュース仕様 再発行できるようにする-->
+        &nbsp;&nbsp;&nbsp;
+        <%= f.check_box :purchase_order_reissue, :id => "purchase_order_reissue" %>
+        <%= f.label :force_order_flag, '再発行', { style: 'color:grey'}  %>
+      <% else %>
+        <!--標準版仕様-->
+        <%= f.input :purchase_order_reissue, input_html:{id:'purchase_order_reissue'} , as: :hidden %>
+      <% end %>
       <!--
       <%= f.button_tag( 'ＦＡＸ', :type => 'button', :class => "btn btn-lime500_ftg" , 
       form: {target: '_blank'},  :onclick => "submitFax()") %>
