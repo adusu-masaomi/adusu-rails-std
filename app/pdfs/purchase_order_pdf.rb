@@ -5,7 +5,7 @@ class PurchaseOrderPDF
   
   #def self.create purchase_order_and_estimate
   #def self.create purchase_order
-  def self.create(purchase_order, company_id, user_id)
+  def self.create(purchase_order, company_id, user_id, reissue_flag)
   #注文書PDF発行
   
     #add230719
@@ -192,8 +192,16 @@ class PurchaseOrderPDF
         if $mail_flag == 0
         #帳票の場合
           if company_id == 1
+            
             #アデュース仕様　メール送信済のチェックをしない(全部出し)
-            if item[:_destroy] != "true" && item[:_destroy] != "1"
+            #upd250214 印刷済みの場合は発行しない
+            #if item[:_destroy] != "true" && item[:_destroy] != "1"
+            if item[:_destroy] != "true" && item[:_destroy] != "1" && 
+              item[:printed_flag] != 1 && item[:printed_flag] != "1"
+              check = true
+            elsif item[:_destroy] != "true" && item[:_destroy] != "1" && 
+                  reissue_flag == "1"
+              #再発行の場合
               check = true
             end
           else

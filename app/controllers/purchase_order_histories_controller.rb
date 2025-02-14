@@ -586,6 +586,7 @@ class PurchaseOrderHistoriesController < ApplicationController
     
     respond_to do |format|
       #if PurchaseOrderHistory.create(purchase_order_history_params)
+            
       if @purchase_order_history.save!(:validate => false)   
 
         #臨時FAX用
@@ -593,7 +594,10 @@ class PurchaseOrderHistoriesController < ApplicationController
 
         #注文書発行
         set_purchase_order(format)
-
+        
+        #add250214
+        set_printed_flag(format)
+      
         #メール送信する
         send_email
 
@@ -669,6 +673,8 @@ class PurchaseOrderHistoriesController < ApplicationController
       format.any { render json: purchase_order_history_params}
       
       @purchase_order_history.attributes = purchase_order_history_params
+      
+      
       #@quotation_headers.save(:validate => false)
       if @purchase_order_history.save!
       #if @purchase_order_history.update(purchase_order_history_params)
@@ -680,6 +686,10 @@ class PurchaseOrderHistoriesController < ApplicationController
         #注文書発行
         set_purchase_order(format)
         
+        #add250213
+        #注文書発行の場合にフラグをセットする
+        set_printed_flag(format)
+      
         #binding.pry
         
         #メール送信する
@@ -1019,6 +1029,23 @@ class PurchaseOrderHistoriesController < ApplicationController
       end
     end
   end
+  
+  #add250213
+  #印刷(注文書発行済)フラグの設定
+  def set_printed_flag(format)
+    
+    if params[:format] == "pdf"
+      if @purchase_order_history.sent_flag != "1"
+        if @purchase_order_history.orders.present?   
+            @purchase_order_history.orders.each do |item|
+              item[:printed_flag] = "1"
+            end
+            
+            @purchase_order_history.save!  #ここで保存する
+        end    
+      end
+    end
+  end
 
   #仕入担当者の追加・更新
   def update_responsible
@@ -1076,6 +1103,8 @@ class PurchaseOrderHistoriesController < ApplicationController
       #送信済み・削除判定が必要なので現在のパラメータをセット
       $order_parameters = params[:purchase_order_history][:orders_attributes]
       
+      reissue_flag = params[:purchase_order_history][:purchase_order_reissue]
+      
       #if $order_parameters.present?  #add230719
       
       #ログイン中のUser確認(Standard)
@@ -1089,7 +1118,7 @@ class PurchaseOrderHistoriesController < ApplicationController
           
           #report = PurchaseOrderPDF.create(@purchase_order, @company_id)
           #upd240311
-          report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id])
+          report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id], reissue_flag)
           
           #report = PurchaseOrderAndEstimatePDF.create @purchase_order
           # ブラウザでPDFを表示する
@@ -1105,7 +1134,7 @@ class PurchaseOrderHistoriesController < ApplicationController
         $mail_flag = 1
         #PDFを作成
         #report = PurchaseOrderPDF.create @purchase_order
-        report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id])
+        report = PurchaseOrderPDF.create(@purchase_order, @company_id, session[:user_id], reissue_flag)
         
         # PDFファイルのバイナリデータを生成する
         #$attachment = report.generate
@@ -1337,10 +1366,12 @@ class PurchaseOrderHistoriesController < ApplicationController
     #               :maker_id, :maker_name, :list_price, :mail_sent_flag, :_destroy])
     #upd170616 メーカー名は抹消
     #upd231004 sequential_id追加
+    #upd250213 printed_flag追加
     params.require(:purchase_order_history).permit(:purchase_order_datum_id, :supplier_master_id, :purchase_order_date, :mail_sent_flag, 
                    :delivery_place_flag, :notes, 
                     orders_attributes: [:id, :material_id, :material_code, :material_name, :quantity, :unit_master_id, 
-                   :maker_id, :list_price, :order_unit_price, :order_price, :material_category_id, :mail_sent_flag, :sequential_id, :_destroy])
+                   :maker_id, :list_price, :order_unit_price, :order_price, :material_category_id, :mail_sent_flag, 
+                   :sequential_id, :printed_flag, :_destroy])
   end
 
 end
