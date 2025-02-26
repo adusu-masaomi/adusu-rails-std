@@ -536,7 +536,7 @@
      
       overtime_50 = end_time + midnight_time;   //(22:00~24:00分を足す。)
     }
-   
+    
     //労務費の加算分を算出
     //daily_pay = document.getElementById("daily_pay").options[0].innerText;
     tmp_daily_pay = parseInt(daily_pay);
@@ -771,7 +771,9 @@
 
     switch (holiday_flag) {
       case FLAG_SATURDAY_HOIDAY:
-        pay_holiday = num_no_add * 0.25
+        //upd250226
+        //土祝は所定休日の為、割増にならない(残業時を除く)
+        //pay_holiday = num_no_add * 0.25
         num += pay_holiday
       break;
       case FLAG_SUNDAY_HOLIDAY:
