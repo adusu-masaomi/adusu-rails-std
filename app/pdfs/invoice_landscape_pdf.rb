@@ -293,7 +293,9 @@ class InvoiceLandscapePDF
         end 
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.2g" %  @quantity
+          #@quantity = "%.2g" %  @quantity
+          #upd250304
+          @quantity = "%.4g" %  @quantity
         end
  
         @execution_quantity = invoice_detail_large_classification.execution_quantity
@@ -528,7 +530,9 @@ class InvoiceLandscapePDF
         end  
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.2g" %  @quantity
+          #@quantity = "%.2g" %  @quantity
+          #upd250304
+          @quantity = "%.4g" %  @quantity
         end
                   
         @execution_quantity = invoice_detail_middle_classification.execution_quantity
@@ -537,7 +541,9 @@ class InvoiceLandscapePDF
         end  
         #小数点以下１位があれば表示、なければ非表示
         if @execution_quantity.present?
-          @execution_quantity = "%.2g" %  @execution_quantity
+          #@execution_quantity = "%.2g" %  @execution_quantity
+          #upd250304
+          @execution_quantity = "%.4g" %  @execution_quantity
         end
         if invoice_detail_middle_classification.WorkingUnit.present?
           @unit_name = invoice_detail_middle_classification.WorkingUnit.working_unit_name
