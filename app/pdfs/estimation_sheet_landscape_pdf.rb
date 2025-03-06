@@ -261,7 +261,15 @@ class EstimationSheetLandscapePDF
         end
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250305
+          #最大５桁とする
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #型が整数の為上記変換は必要なし(桁区切りのみ行う)
+          #@quantity = @quantity.to_s(:delimited)
         end
         @execution_quantity = quotation_detail_large_classification.execution_quantity
         if @execution_quantity == 0 
@@ -269,7 +277,14 @@ class EstimationSheetLandscapePDF
         end 
         #小数点以下１位があれば表示、なければ非表示
         if @execution_quantity.present?
-          @execution_quantity = "%.4g" %  @execution_quantity
+          #@execution_quantity = "%.4g" %  @execution_quantity
+          #upd250305
+          @execution_quantity = "%.5g" %  @execution_quantity
+          #桁区切り(delimiterは使えないので)
+          @execution_quantity = @execution_quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #型が整数の為上記変換は必要なし(桁区切りのみ行う)
+          #@execution_quantity = @execution_quantity.to_s(:delimited)
         end
         
         if quotation_detail_large_classification.WorkingUnit.present?
@@ -472,7 +487,14 @@ class EstimationSheetLandscapePDF
         end 
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250305
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #型が整数の為上記変換は必要なし(桁区切りのみ行う)
+          #@quantity = @quantity.to_s(:delimited)
         end
 
         @execution_quantity = quotation_detail_middle_classification.execution_quantity
@@ -481,7 +503,14 @@ class EstimationSheetLandscapePDF
         end 
         #小数点以下１位があれば表示、なければ非表示
         if @execution_quantity.present?
-          @execution_quantity = "%.4g" %  @execution_quantity
+          #@execution_quantity = "%.4g" %  @execution_quantity
+          #upd250305
+          @execution_quantity = "%.5g" %  @execution_quantity
+          桁区切り(delimiterは使えないので)
+          @execution_quantity = @execution_quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #型が整数の為上記変換は必要なし(桁区切りのみ行う)
+          #@execution_quantity = @execution_quantity.to_s(:delimited)
         end
         if quotation_detail_middle_classification.WorkingUnit.present?
           @unit_name = quotation_detail_middle_classification.WorkingUnit.working_unit_name

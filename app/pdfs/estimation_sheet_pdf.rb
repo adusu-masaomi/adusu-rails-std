@@ -344,7 +344,13 @@ class EstimationSheetPDF
         end  
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present? 
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250305
+          @quantity = "%.5g" %  @quantity
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #@quantity = @quantity.to_s(:delimited)
+        
         end
         if quotation_detail_large_classification.WorkingUnit.present?
           @unit_name = quotation_detail_large_classification.WorkingUnit.working_unit_name
@@ -528,7 +534,12 @@ class EstimationSheetPDF
         end  
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present? 
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250305
+          @quantity = "%.5g" %  @quantity
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
+          
+          #@quantity = @quantity.to_s(:delimited)
         end    
         if quotation_detail_middle_classification.WorkingUnit.present?
           @unit_name = quotation_detail_middle_classification.WorkingUnit.working_unit_name

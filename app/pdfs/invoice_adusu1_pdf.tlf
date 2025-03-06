@@ -184,11 +184,7 @@
             "multiple-line": false,
             "format": {
               "base": "",
-              "type": "number",
-              "number": {
-                "delimiter": ",",
-                "precision": 0
-              }
+              "type": ""
             }
           },
           {

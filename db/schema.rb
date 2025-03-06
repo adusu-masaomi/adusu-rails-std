@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_13_085546) do
+ActiveRecord::Schema.define(version: 2025_03_06_004605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,8 +241,8 @@ ActiveRecord::Schema.define(version: 2025_02_13_085546) do
     t.integer "working_middle_item_subcategory_id_call"
     t.integer "line_number"
     t.string "working_middle_specification"
-    t.integer "quantity"
-    t.integer "execution_quantity"
+    t.float "quantity"
+    t.float "execution_quantity"
     t.integer "working_unit_id"
     t.string "working_unit_name"
     t.integer "working_unit_price"

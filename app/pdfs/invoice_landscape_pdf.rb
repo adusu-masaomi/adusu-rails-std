@@ -295,7 +295,10 @@ class InvoiceLandscapePDF
         if @quantity.present?
           #@quantity = "%.2g" %  @quantity
           #upd250304
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
  
         @execution_quantity = invoice_detail_large_classification.execution_quantity
@@ -304,7 +307,12 @@ class InvoiceLandscapePDF
         end
         #小数点以下１位があれば表示、なければ非表示
         if @execution_quantity.present?
-          @execution_quantity = "%.2g" %  @execution_quantity  
+          #@execution_quantity = "%.2g" %  @execution_quantity  
+          #upd250304
+          #@execution_quantity = "%.4g" %  @execution_quantity
+          @execution_quantity = "%.5g" %  @execution_quantity
+          #桁区切り(delimiterは使えないので)
+          @execution_quantity = @execution_quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
         if invoice_detail_large_classification.WorkingUnit.present?
           @unit_name = invoice_detail_large_classification.WorkingUnit.working_unit_name
@@ -532,7 +540,10 @@ class InvoiceLandscapePDF
         if @quantity.present?
           #@quantity = "%.2g" %  @quantity
           #upd250304
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
                   
         @execution_quantity = invoice_detail_middle_classification.execution_quantity
@@ -543,7 +554,10 @@ class InvoiceLandscapePDF
         if @execution_quantity.present?
           #@execution_quantity = "%.2g" %  @execution_quantity
           #upd250304
-          @execution_quantity = "%.4g" %  @execution_quantity
+          #@execution_quantity = "%.4g" %  @execution_quantity
+          @execution_quantity = "%.5g" %  @execution_quantity
+          #桁区切り(delimiterは使えないので)
+          @execution_quantity = @execution_quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
         if invoice_detail_middle_classification.WorkingUnit.present?
           @unit_name = invoice_detail_middle_classification.WorkingUnit.working_unit_name

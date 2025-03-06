@@ -235,8 +235,14 @@ class DeliverySlipPDF
         if @quantity == 0 
           @quantity = ""
         end  
+        #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250306
+          #最大５桁とする
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
         if delivery_slip_detail_large_classification.WorkingUnit.present?
           @unit_name = delivery_slip_detail_large_classification.WorkingUnit.working_unit_name
@@ -430,7 +436,10 @@ class DeliverySlipPDF
         end  
         #小数点以下１位があれば表示、なければ非表示
         if @quantity.present?
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          #upd250306
+          #最大５桁とする
+          @quantity = "%.5g" %  @quantity
         end
         if delivery_slip_detail_middle_classification.WorkingUnit.present?
           @unit_name = delivery_slip_detail_middle_classification.WorkingUnit.working_unit_name

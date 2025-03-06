@@ -263,7 +263,10 @@ class InvoicePDF
         if @quantity.present? 
           #@quantity = "%.2g" %  @quantity
           #upd250304
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
                   
         if invoice_detail_large_classification.WorkingUnit.present?
@@ -529,7 +532,10 @@ class InvoicePDF
         if @quantity.present?
           #@quantity = "%.2g" %  @quantity
           #upd250304
-          @quantity = "%.4g" %  @quantity
+          #@quantity = "%.4g" %  @quantity
+          @quantity = "%.5g" %  @quantity
+          #桁区切り(delimiterは使えないので)
+          @quantity = @quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
         end
         
         if invoice_detail_middle_classification.WorkingUnit.present?

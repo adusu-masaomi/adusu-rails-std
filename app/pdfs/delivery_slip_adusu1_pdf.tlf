@@ -127,7 +127,11 @@
             "multiple-line": false,
             "format": {
               "base": "",
-              "type": ""
+              "type": "number",
+              "number": {
+                "delimiter": ",",
+                "precision": 0
+              }
             }
           },
           {
