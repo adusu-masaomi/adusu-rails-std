@@ -506,7 +506,7 @@ class EstimationSheetLandscapePDF
           #@execution_quantity = "%.4g" %  @execution_quantity
           #upd250305
           @execution_quantity = "%.5g" %  @execution_quantity
-          桁区切り(delimiterは使えないので)
+          #桁区切り(delimiterは使えないので)
           @execution_quantity = @execution_quantity.to_s.gsub(/(\d)(?=\d{3}+$)/, '\\1,')
           
           #型が整数の為上記変換は必要なし(桁区切りのみ行う)

@@ -97,7 +97,7 @@ class ConstructionDataController < ApplicationController
          query[:billed_flag_eq].blank? && query[:calculated_flag_eq].blank? 
          
          #upd250306
-         #画面遷移して戻ったた場合は、queryの中身が異なる
+         #画面遷移して戻った場合は、queryの持ち方が異なる
          if query["id_eq"].blank? && query["construction_code_cont"].blank? && 
             query["customer_id_eq"].blank? && query["order_flag_eq"].blank? && 
             query["billed_flag_eq"].blank? && query["calculated_flag_eq"].blank?
