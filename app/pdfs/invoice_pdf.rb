@@ -105,19 +105,22 @@ class InvoicePDF
         @report.page.item(:honorific).value(honorific_name) 
 		   
 		    #add250311
+        #工事データに入ってる担当者は出さない。あくまでも請求書データに担当者が載っている
+        #場合のみ、出力する(請求書の場合)
 		    #担当1
-        if @invoice_headers.ConstructionDatum.present? && 
-          !@invoice_headers.ConstructionDatum.personnel.blank?
-          responsible = @invoice_headers.ConstructionDatum.personnel + "  様"
+        #if @invoice_headers.ConstructionDatum.present? && 
+        #  !@invoice_headers.ConstructionDatum.personnel.blank?
+        #  responsible = @invoice_headers.ConstructionDatum.personnel + "  様"
+        #  @report.page.item(:responsible1).value(responsible)
+        #else
+         
+        #upd241025
+        if !@invoice_headers.responsible1.blank?
+          #upd241008 件名の入力がない場合でも担当者出すようにする
+          responsible = @invoice_headers.responsible1 + "  様"
           @report.page.item(:responsible1).value(responsible)
-        else
-          #upd241025
-          if !@invoice_headers.responsible1.blank?
-            #upd241008 件名の入力がない場合でも担当者出すようにする
-            responsible = @invoice_headers.responsible1 + "  様"
-            @report.page.item(:responsible1).value(responsible)
-          end
         end
+        #end
         #担当2
         if @invoice_headers.responsible2.present?
           responsible = @invoice_headers.responsible2 + "  様"
