@@ -104,6 +104,28 @@ class InvoicePDF
         end
         @report.page.item(:honorific).value(honorific_name) 
 		   
+		    #add250311
+		    #担当1
+        if @invoice_headers.ConstructionDatum.present? && 
+          !@invoice_headers.ConstructionDatum.personnel.blank?
+          responsible = @invoice_headers.ConstructionDatum.personnel + "  様"
+          @report.page.item(:responsible1).value(responsible)
+        else
+          #upd241025
+          if !@invoice_headers.responsible1.blank?
+            #upd241008 件名の入力がない場合でも担当者出すようにする
+            responsible = @invoice_headers.responsible1 + "  様"
+            @report.page.item(:responsible1).value(responsible)
+          end
+        end
+        #担当2
+        if @invoice_headers.responsible2.present?
+          responsible = @invoice_headers.responsible2 + "  様"
+          @report.page.item(:responsible2).value(responsible)
+        end
+        ##
+
+		   
         #件名
         if @invoice_headers.present?
           @report.page.item(:construction_name).value(@invoice_headers.construction_name) 
