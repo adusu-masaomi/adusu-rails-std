@@ -357,7 +357,6 @@ class PurchaseOrderHistoriesController < ApplicationController
 
       flag_nil = false
       
-      #binding.pry
       
       if $purchase_order_history.nil?
         flag_nil = true
@@ -367,8 +366,6 @@ class PurchaseOrderHistoriesController < ApplicationController
           flag_nil = true
         end
       end
-
-      #binding.pry
 
       #ここでは例外的に、newをする
       if flag_nil == true
@@ -458,8 +455,6 @@ class PurchaseOrderHistoriesController < ApplicationController
 
       end
       
-      #binding.pry
-      
       if @purchase_order_history.present?
 
         #kaminariは更新でうまくいかないので一旦保留・・・
@@ -473,8 +468,6 @@ class PurchaseOrderHistoriesController < ApplicationController
         if @purchase_order_history.orders.present?
           @orders = @purchase_order_history.orders
         end
-
-        #binding.pry
 
         if  @orders.present?
           if @orders.maximum(:sequential_id).present?
@@ -502,6 +495,7 @@ class PurchaseOrderHistoriesController < ApplicationController
 
     #連番が登録と逆順になっているので、みやすいように正しい順に（逆に）する
     def reverse_seq
+
 
       if $max.present?
 
@@ -1025,6 +1019,9 @@ class PurchaseOrderHistoriesController < ApplicationController
 
         #再度ここで更新をかける(削除後)
         destroy_before_update
+        
+        #binding.pry
+        
         @purchase_order_history.update(purchase_order_history_params)
       end
     end
@@ -1102,6 +1099,8 @@ class PurchaseOrderHistoriesController < ApplicationController
       
       #送信済み・削除判定が必要なので現在のパラメータをセット
       $order_parameters = params[:purchase_order_history][:orders_attributes]
+      
+      #binding.pry
       
       reissue_flag = params[:purchase_order_history][:purchase_order_reissue]
       

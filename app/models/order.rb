@@ -1,5 +1,7 @@
 class Order < ApplicationRecord
   
+  #default_scope { order(id: :asc) }  #add250317
+  
   #paginates_per 10  # 1ページあたり項目表示
   #upd220107
   paginates_per 100  # 1ページあたり項目表示
