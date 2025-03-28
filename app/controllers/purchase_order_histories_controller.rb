@@ -1262,9 +1262,14 @@ class PurchaseOrderHistoriesController < ApplicationController
     end
 
     #supplier_master_id
+    #@order_unit_price = PurchaseUnitPrice.where(:material_id => params[:id], :supplier_id => params[:supplier_master_id]).
+    #                    where("id is NOT NULL").pluck(:unit_price).flatten.join(" ")
+    #upd250328
+    #仕入先単価が２重登録されているケースもあるので、distinctを追加
     @order_unit_price = PurchaseUnitPrice.where(:material_id => params[:id], :supplier_id => params[:supplier_master_id]).
-                        where("id is NOT NULL").pluck(:unit_price).flatten.join(" ")
-
+                        where("id is NOT NULL").distinct.pluck(:unit_price).flatten.join(" ")
+                        
+    
   end
 
   #メーカーから該当する商品を取得
