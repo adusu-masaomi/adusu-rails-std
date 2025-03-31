@@ -280,9 +280,12 @@ class PurchaseOrderDataController < ApplicationController
         #メール送信する(メール送信ボタン押した場合)
 	      if params[:send].present?
           #PostMailer.send_when_update(@purchase_order_datum).deliver
-          #upd230502
+          #PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
+          #                            @email_responsible2).deliver
+          #upd250331
+          #CC、2人目追加
           PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
-                                      @email_responsible2).deliver
+                                      @email_responsible2, @email_responsible3).deliver
         end
         #
         
@@ -387,6 +390,18 @@ class PurchaseOrderDataController < ApplicationController
         @email_responsible2 = supplier.email_cc
       end
     end
+    
+    #add250331 
+    #CC、2人目追加
+    @email_responsible3 = nil
+    if params[:purchase_order_datum][:supplier_master_id].present?
+      supplier_responsible = SupplierResponsible.where(supplier_master_id: params[:purchase_order_datum][:supplier_master_id]).second
+      
+      if supplier_responsible.present? && supplier_responsible.responsible_email.present?
+        @email_responsible3 = supplier_responsible.responsible_email
+      end 
+    end
+    #    
     
     #仕入担当者の追加・更新
     update_responsible

@@ -1,8 +1,8 @@
 class PostMailer < ApplicationMailer
    
    
-   #def send_when_update(user)
-   def send_when_update(user, responsible_name, email_responsible, email_responsible2)
+   #def send_when_update(user, responsible_name, email_responsible, email_responsible2)
+   def send_when_update(user, responsible_name, email_responsible, email_responsible2, email_responsible3)
      #layout "mailer"
      
      @user = "注文No:" + user.purchase_order_code
@@ -61,7 +61,7 @@ class PostMailer < ApplicationMailer
   
   #注文依頼
   #def send_purchase_order(user)
-  def send_purchase_order(user, responsible, email_responsible, email_responsible2, attachment)
+  def send_purchase_order(user, responsible, email_responsible, email_responsible2, email_responsible3, attachment)
    
     @purchase_order_code = "注文No:" + user.purchase_order_datum.purchase_order_code
     
@@ -133,8 +133,9 @@ class PostMailer < ApplicationMailer
   
   #見積依頼メール
   #def send_quotation_material(user)
-  def send_quotation_material(user, responsible, email_responsible, email_responsible2, notes,
+  def send_quotation_material(user, responsible, email_responsible, email_responsible2, email_responsible3, notes,
                             attachment)
+                            
     @quotation_code = "見積No:" + user.quotation_code
     if user.construction_datum.alias_name.present?
     #通称名をセット
@@ -196,7 +197,7 @@ class PostMailer < ApplicationMailer
   
   #注文依頼メール(見積後)
   #def send_order_after_quotation(user)
-  def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, notes, 
+  def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, email_responsible3, notes, 
                                  new_code_flag, purchase_order_code, supplier, attachment)
    
     #@purchase_order_code = "注文No:" + $purchase_order_code

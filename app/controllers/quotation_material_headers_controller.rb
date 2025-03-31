@@ -849,7 +849,19 @@ class QuotationMaterialHeadersController < ApplicationController
         @email_responsible2 = supplier.email_cc
       end
     end
-     
+    
+    #add250331 
+    #CC、2人目追加
+    @email_responsible3 = nil
+    if params[:quotation_material_header][:supplier_master_id].present?
+      supplier_responsible = SupplierResponsible.where(supplier_master_id: params[:quotation_material_header][:supplier_master_id]).second
+      
+      if supplier_responsible.present? && supplier_responsible.responsible_email.present?
+        @email_responsible3 = supplier_responsible.responsible_email
+      end 
+    end
+    #    
+    
     #仕入先（１〜３）の判定
     setSupplier
     
@@ -858,9 +870,11 @@ class QuotationMaterialHeadersController < ApplicationController
     if params[:quotation_material_header][:sent_flag] == "1" then
     #見積メールの場合
       mail_flag = true
-      #PostMailer.send_quotation_material(@quotation_material_header).deliver
+      #PostMailer.send_quotation_material(@quotation_material_header, @responsible, @email_responsible, 
+      #                                      @email_responsible2, @notes, @attachment).deliver
       PostMailer.send_quotation_material(@quotation_material_header, @responsible, @email_responsible, 
-                                            @email_responsible2, @notes, @attachment).deliver
+                                            @email_responsible2, @email_responsible3, @notes, @attachment).deliver
+
     elsif params[:quotation_material_header][:sent_flag] == "2" then
     #注文メールの場合
       mail_flag = true
@@ -885,9 +899,11 @@ class QuotationMaterialHeadersController < ApplicationController
         #
 	    end
 	   
-      #PostMailer.send_order_after_quotation(@quotation_material_header).deliver
+      #PostMailer.send_order_after_quotation(@quotation_material_header, @responsible, @email_responsible, 
+      #                                      @email_responsible2, @notes, @new_code_flag, @purchase_order_code,
+      #                                      @supplier, @attachment).deliver
       PostMailer.send_order_after_quotation(@quotation_material_header, @responsible, @email_responsible, 
-                                            @email_responsible2, @notes, @new_code_flag, @purchase_order_code,
+                                            @email_responsible2, @email_responsible3, @notes, @new_code_flag, @purchase_order_code,
                                             @supplier, @attachment).deliver
       
     end

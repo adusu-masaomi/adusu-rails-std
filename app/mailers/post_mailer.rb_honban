@@ -1,8 +1,8 @@
 class PostMailer < ApplicationMailer
    
    
-   #def send_when_update(user)
-   def send_when_update(user, responsible_name, email_responsible, email_responsible2)
+   #def send_when_update(user, responsible_name, email_responsible, email_responsible2)
+   def send_when_update(user, responsible_name, email_responsible, email_responsible2, email_responsible3)
      #layout "mailer"
      
      @user = "注文No:" + user.purchase_order_code
@@ -42,7 +42,8 @@ class PostMailer < ApplicationMailer
      #
      if user.supplier_master.id != 5
          mail to: email_responsible ,
-         cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+         #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+         cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
          subject: '注文番号登録依頼' + subject_time
      else
      #ムサシで選んだ場合、テストメールとする
@@ -61,7 +62,7 @@ class PostMailer < ApplicationMailer
   
   #注文依頼
   #def send_purchase_order(user)
-  def send_purchase_order(user, responsible, email_responsible, email_responsible2, attachment)
+  def send_purchase_order(user, responsible, email_responsible, email_responsible2, email_responsible3, attachment)
    
     @purchase_order_code = "注文No:" + user.purchase_order_datum.purchase_order_code
     
@@ -117,7 +118,8 @@ class PostMailer < ApplicationMailer
     #本番用
     #メアドは画面より反映(ccは固定)
     mail to: email_responsible ,
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+    #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '注文依頼' + subject_time 
     
@@ -133,7 +135,7 @@ class PostMailer < ApplicationMailer
   
   #見積依頼メール
   #def send_quotation_material(user)
-  def send_quotation_material(user, responsible, email_responsible, email_responsible2, notes,
+  def send_quotation_material(user, responsible, email_responsible, email_responsible2, email_responsible3, notes,
                             attachment)
     @quotation_code = "見積No:" + user.quotation_code
     if user.construction_datum.alias_name.present?
@@ -180,7 +182,8 @@ class PostMailer < ApplicationMailer
     #メアドは画面より反映(ccは固定)
     mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+    #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '見積依頼' + subject_time
     #本番用 end
@@ -195,8 +198,9 @@ class PostMailer < ApplicationMailer
   end
   
   #注文依頼メール(見積後)
-  #def send_order_after_quotation(user)
-  def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, notes, 
+  #def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, notes, 
+  #                               new_code_flag, purchase_order_code, supplier, attachment)
+  def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, email_responsible3, notes, 
                                  new_code_flag, purchase_order_code, supplier, attachment)
    
     #@purchase_order_code = "注文No:" + $purchase_order_code
@@ -282,7 +286,7 @@ class PostMailer < ApplicationMailer
     #メアドは画面より反映(ccは固定)
     mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 , email_responsible3 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
     subject: '注文依頼' + subject_time 
     #本番用 end

@@ -986,10 +986,26 @@ class PurchaseOrderHistoriesController < ApplicationController
         end
       end
       #
+      
+      #add250331 
+      #CC、2人目追加
+      @email_responsible3 = nil
+      #if params[:purchase_order_history][:supplier_responsible_id].present?
+      if params[:purchase_order_history][:supplier_master_id].present?
+        supplier_responsible = SupplierResponsible.where(supplier_master_id: params[:purchase_order_history][:supplier_master_id]).second
+      
+        if supplier_responsible.present? && supplier_responsible.responsible_email.present?
+          @email_responsible3 = supplier_responsible.responsible_email
+        end 
+      end
+      #    
 
-      #PostMailer.send_purchase_order(@purchase_order_history).deliver
+      #PostMailer.send_purchase_order(@purchase_order_history, @responsible, @email_responsible,
+      #                               @email_responsible2, @attachment).deliver
+      #upd250331
       PostMailer.send_purchase_order(@purchase_order_history, @responsible, @email_responsible,
-                                     @email_responsible2, @attachment).deliver
+                                     @email_responsible2, @email_responsible3, @attachment).deliver
+                                     
 
       #仕入担当者の追加・更新
       app_update_responsible(params[:purchase_order_history][:supplier_master_id],
