@@ -195,8 +195,10 @@ class PurchaseOrderDataController < ApplicationController
         #end
         #
             
+        #PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
+        #                          @email_responsible2).deliver
         PostMailer.send_when_update(@purchase_order_datum, @responsible_name, @email_responsible,
-                                  @email_responsible2).deliver
+                                  @email_responsible2, @email_responsible3).deliver
       end
     end
     
