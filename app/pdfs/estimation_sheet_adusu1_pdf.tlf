@@ -647,7 +647,7 @@
       "height": 12.1,
       "style": {
         "font-family": [
-          "Helvetica"
+          "IPAMincho"
         ],
         "font-size": 9,
         "color": "#000000",
@@ -1463,7 +1463,7 @@
       "description": "",
       "x": 255,
       "y": 324,
-      "width": 50.6,
+      "width": 59.1,
       "height": 12.3,
       "style": {
         "font-family": [
