@@ -220,6 +220,7 @@
   
   //$(document).on('ready page:load', function(){
   $(document).ready(function(){
+  
     //test
     //$(document).on('turbolinks:load', function(){
     //ドラッグできるようにする add171107
@@ -301,7 +302,9 @@
     });
     //add end
  
-
+    
+    //debugger;
+    
     //add170822
     //記号(短縮)名を最新の情報にする
     setShortName();
@@ -932,27 +935,30 @@
 
   //カテゴリー別にアイテムを抽出する処理
   function setItemExtractByCategory(controlFlag){
-  var category_id = document.activeElement.value;
+    
+    //debugger;
+  
+    var category_id = document.activeElement.value;
    
-  if (category_id != "0"){
+    if (category_id != "0"){
      
-    $.get("<%= working_middle_itemz_item_extract_path %>",
-      {working_middle_item_category_id: category_id},
-      function(data){
-        //アイテムのリストを再配置
-        document.getElementById("working_middle_item_id").innerHTML = document.getElementById("working_middle_item_id_select_hide").innerHTML;
-        //短縮名のリストを再配置
-        document.getElementById("working_middle_item_short_name").innerHTML = document.getElementById("working_middle_item_short_name_select_hide").innerHTML;
-        //一旦手入力で選択する
-        document.getElementById("working_middle_item_short_name").value = "1"; 
-        $(".searchableSelect2_2").trigger("change"); 
+      $.get("<%= working_middle_itemz_item_extract_path %>",
+        {working_middle_item_category_id: category_id},
+        function(data){
+          //アイテムのリストを再配置
+          document.getElementById("working_middle_item_id").innerHTML = document.getElementById("working_middle_item_id_select_hide").innerHTML;
+          //短縮名のリストを再配置
+          document.getElementById("working_middle_item_short_name").innerHTML = document.getElementById("working_middle_item_short_name_select_hide").innerHTML;
+          //一旦手入力で選択する
+          document.getElementById("working_middle_item_short_name").value = "1"; 
+          $(".searchableSelect2_2").trigger("change"); 
            
-        //add180205
-        //カテゴリー別のサブカテゴリーを抽出する
-        setSubacategoryExtractByParent(controlFlag);
-      });
-    }
-  }
+          //add180205
+          //カテゴリー別のサブカテゴリーを抽出する
+          setSubacategoryExtractByParent(controlFlag);
+        });
+      }
+   }
   //add180210
   //カテゴリー別にアイテムを抽出する処理(引継用)
   function setItemExtractByCategoryInitial(){
@@ -972,6 +978,7 @@
         //編集モードならば、カテゴリー別のサブカテゴリーを抽出。
         //if (document.getElementById("action_flag").value == "edit"){
         var selectIndex = document.getElementById("working_middle_item_subcategory_id_call").value;
+                
         setSubCategoryExtractByParentInitial(selectIndex);
         //}
            
@@ -982,7 +989,8 @@
   }
   //カテゴリー&サブカテゴリー別にアイテムを抽出する処理
   function setItemExtractBySubCategory(){
-   
+    //debugger;
+    
     var category_id = document.getElementById("working_middle_item_category_id_call").value;
     //var working_subcategory_id = document.activeElement.value;
     //upd180208
@@ -1005,6 +1013,8 @@
   //カテゴリー別のサブカテゴリーを抽出する
   //add180202
   function setSubacategoryExtractByParent(controlFlag){
+    
+    //debugger;
     
     var category_id = document.activeElement.value;
     
@@ -1034,6 +1044,8 @@
   //カテゴリー別のサブカテゴリーを抽出する
   //add180210
   function setSubCategoryExtractByParentInitial(selectIndex){
+    
+    //debugger;
     
     var category_id = document.getElementById("working_middle_item_category_id_call").value;
     

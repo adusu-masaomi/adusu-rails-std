@@ -207,6 +207,10 @@ class QuotationDetailMiddleClassificationsController < ApplicationController
     #カテゴリー保持フラグを取得
     get_category_save_flag
     
+    #add250423
+    #先に抽出しておく
+    extract_middle_item
+    
     #確定済みのものは、変更できないようにする
     if params[:quotation_header_id].present?
       quotation_header = QuotationHeader.find(params[:quotation_header_id])
