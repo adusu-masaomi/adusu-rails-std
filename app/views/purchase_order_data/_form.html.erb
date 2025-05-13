@@ -92,10 +92,20 @@
     <!--   <%= m.input :alias_name, label:"通称" , input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>-->
     <%= m.input :alias_name, label:"通称" , as: :hidden  %>
   <% end %>
-  <!--<%= f.input :alias_name, label:"通称／備考（メール送信しない場合は”備考”としても登録ができます。）" , 
-           input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>-->
+  
+  
+  <div class="col-lg-6 " , style="margin-left : -15px;">
   <%= f.input :alias_name, label:"通称" , 
            input_html:{ id:"alias_name",  style: 'width:220px', :tabindex=>"9"}  %>
+  </div>
+  <!-- 備考追加 -->
+  <div class="col-lg-6 " , style="margin-left : -370px;">
+  <%= f.input :notes, label:"備考" , 
+           input_html:{ id:"notes",  style: 'width:620px', :tabindex=>"10"}  %>
+  
+  </div>
+  </br></br></br></br></br>
+  <!-- -->
   
   <%= f.check_box :mail_sent_flag,  { :id => "mail_sent_flag",  :class => "mail_sent_flag"} , '1', '0' %> 
   <!--<%= f.label :mail_sent_label, "メール送信済フラグ（障害発生等で再送信したい場合は、チェックを外してください）", {style: 'color: green;font-size:12px;', :tabindex=>"12"} %>-->
@@ -113,6 +123,9 @@
   <%= hidden_field_tag(:move_flag, params[:move_flag]) %>
   
   <div>
+  
+  </br>
+  
   <!--これを使いたいがsubmitでは現状sweetalertが使えないので、保留中・・・-->
   <!--<%= f.submit "メール送信＆登録",name: "send", class: "btn btn-info", id: "mail_sent_button", data: {confirm: "メール送信&更新します。よろしいですか？"} %>-->
   
