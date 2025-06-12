@@ -240,6 +240,8 @@ class PurchaseOrderAndEstimatePDF
           get_supplier_when_order(item)
         end
       
+        #binding.pry
+        
         #各アイテムの出力判定
         #if !$mail_flag
         if !mail_flag
@@ -274,6 +276,8 @@ class PurchaseOrderAndEstimatePDF
           end
         end
         ##
+      
+        #binding.pry
       
         if check
         
@@ -337,8 +341,6 @@ class PurchaseOrderAndEstimatePDF
             @num = amount
             formatNum()
             str_amount = @num
-          
-            #binding.pry
           
             subtotal += amount
           

@@ -595,6 +595,8 @@ class QuotationMaterialHeadersController < ApplicationController
   end
   
   def destroy_before_update
+    #binding.pry
+    
     #すでに登録していた注文データは一旦抹消する。
     quotation_material_header_id = @quotation_material_header.id
     QuotationMaterialDetail.where(quotation_material_header_id: quotation_material_header_id).destroy_all
@@ -1067,7 +1069,8 @@ class QuotationMaterialHeadersController < ApplicationController
             end
           end
           
-          set_mail_sent_flag
+          #del(moved) 250612
+          #set_mail_sent_flag
           
           #
           
@@ -1114,6 +1117,11 @@ class QuotationMaterialHeadersController < ApplicationController
           #$attachment = report.generate
           @attachment = report.generate
           
+          
+          #add 250612
+          #メール送信済みフラグをここでセットする
+          set_mail_sent_flag
+                    
         end
     #  end
       end
@@ -1362,6 +1370,8 @@ class QuotationMaterialHeadersController < ApplicationController
       sent_flag = params[:quotation_material_header][:sent_flag].to_i - 6
     end
     //
+    
+    #binding.pry
     
     
     #if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2" 
