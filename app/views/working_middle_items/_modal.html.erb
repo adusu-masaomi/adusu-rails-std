@@ -57,19 +57,21 @@
 		<div class="col-md-6" , style="margin-left : -15px">
           <%= f.input :working_middle_item_short_name, input_html:{:tabindex=> "3", style: 'width:190px'} %>
 		</div>
-		
+        
+        <%= f.check_box :check_not_update_small_items, {}, "true", "false" %>
+        <%= f.label_tag :check_not_update_small_items, '明細の単価は更新しない　　' , style: 'margin-top :30px' %>
         
         </br></br></br></br></br>
         
         <div class="col-md-6", style="margin-top : -10px;margin-left : -15px;">
-		<%= f.label :"カテゴリー　" , {:class => "my-custom-class-l", style: 'margin-right :0px;width:80px;font-size:4' } %>
+		<%= f.label :"カテゴリー　" , {:class => "my-custom-class-l", style: 'margin-right :0px;width:80px;font-size:10' } %>
         <%= f.select :working_middle_item_category_id, WorkingCategory.order('seq').all.map{|t| [t.category_name, t.id]}, {:selected => @working_middle_item.working_middle_item_category_id || 1}, 
            {id:'working_middle_item_category_id', :class => "my-custom-class", :onchange => "setSubacategoryExtractByParent()", style: 'width:180px;height:25px;margin-top:-22px;margin-left : 40px;font-size:14;', :tabindex=> "4" } %>
 		</div>
         
         <!--サブカテゴリー add180202-->
         <div class="col-md-6", style="margin-top : -10px;margin-left : -25px;">
-		<%= f.label :"サブカテゴリー　" , {:class => "my-custom-class-l", style: 'margin-left : -0px;width:80px;font-size:2' } %>
+		<%= f.label :"サブカテゴリー　" , {:class => "my-custom-class-l", style: 'margin-left : -0px;width:80px;font-size:10' } %>
         
         <%= f.select :working_subcategory_id, WorkingSubcategory.order('seq').where(:working_category_id => @working_middle_item.working_middle_item_category_id).map{|t| [t.name, t.id]}, {:include_blank => true }, 
            {id:'working_subcategory_id', :class => "my-custom-class", style: 'width:180px;height:25px;margin-top:-22px;margin-left : 75px;font-size:14;', :tabindex=> "5" } %>

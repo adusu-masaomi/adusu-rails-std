@@ -20,6 +20,9 @@ class WorkingMiddleItem < ApplicationRecord
   #add180202
   belongs_to :working_subcategory, optional: true
   
+  #add250614
+  attr_accessor :check_not_update_small_items
+  
   #明細（小）フォームajax用
   attr_accessor :material_id_hide     
   attr_accessor :material_code_hide

@@ -1233,6 +1233,7 @@ class PurchaseDataController < ApplicationController
         if id != 1  #手入力以外
           @material_masters = MaterialMaster.find(id)
           if @material_masters.present?
+          
             #定価
             #if @material_masters.list_price.nil? || @material_masters.list_price == 0 then
             params[:purchase_datum][:MaterialMaster_attributes][:list_price] = params[:purchase_datum][:list_price]
@@ -1273,17 +1274,31 @@ class PurchaseDataController < ApplicationController
   #見積用の定価を登録する
   def set_material_list_price_quotation
 
-    #@@list_price_quotation = 0
     @list_price_quotation = 0
-
-    if params[:purchase_datum][:list_price].to_i > 0
-      #@@list_price_quotation = params[:purchase_datum][:list_price]
-      @list_price_quotation = params[:purchase_datum][:list_price]
-    else
-      #定価が0の場合は、単価を登録する
-      #@@list_price_quotation = params[:purchase_datum][:purchase_unit_price]
-      @list_price_quotation = params[:purchase_datum][:purchase_unit_price]
+    #upd25614 初期値
+    if @material_masters.present?
+      @list_price_quotation = @material_masters.list_price_quotation  
+    elsif @material_master.present?
+      @list_price_quotation = @material_master.list_price_quotation 
     end
+    
+    #定価の初期値は入れた方がいい？(保留250614)
+    #if @material_masters.blank? && @material_master.blank?
+    #  if params[:purchase_datum][:list_price].to_i > 0
+    #    @list_price_quotation = params[:purchase_datum][:list_price]
+    #  end
+    #end
+    
+    #del250614
+    #if params[:purchase_datum][:list_price].to_i > 0
+      #定価があれば、常に最新のものに更新させる
+      #250614 更新しない(見積明細のみで更新させる。切り離し)
+      #@list_price_quotation = params[:purchase_datum][:list_price]
+    #else
+      ##定価が0の場合は、単価を登録する
+      #250614 更新しない(見積明細のみで更新させる。切り離し)
+      #@list_price_quotation = params[:purchase_datum][:purchase_unit_price]
+    #end
 
   end
 
