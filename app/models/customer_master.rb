@@ -97,9 +97,9 @@ class CustomerMaster < ApplicationRecord
         # 例: {"id"=>1, "name"=>"レコーダー", "price"=>3000, ... }
         # valudes_at はハッシュから引数で指定したキーに対応する値を取り出し、配列にして返す
         # 下の行は最終的に column_namesで指定したvalue値の配列を返す
-    	  if customer_master.card_not_flag != 1     #年賀状対象外は外す。
+    	  #if customer_master.card_not_flag != 1     #年賀状対象外は外す。(del250616)
 		      csv << customer_master.csv_column_values
-        end
+        #end
 		  end
     end
   end

@@ -135,8 +135,10 @@ class LaborCostSummaryMasaomiPDF
       #社長
         @man_month_1 += construction_daily_report.man_month
         @labor_cost_1 += construction_daily_report.labor_cost
-      when 2 then
-      #岡戸
+      #when 2 then
+      when 6 then
+      #須戸
+      #---岡戸
         @man_month_2 += construction_daily_report.man_month
         @labor_cost_2 += construction_daily_report.labor_cost
       when 3 then
@@ -209,7 +211,8 @@ class LaborCostSummaryMasaomiPDF
     if @labor_cost_1_total != ""
       report.page.item(:labor_cost_1_total).value(@labor_cost_1_total)
     end
-    #岡戸
+    #須戸
+    #----岡戸
     if @man_month_2_total != ""
       report.page.item(:man_month_2_total).value(@man_month_2_total)
     end
@@ -256,8 +259,10 @@ class LaborCostSummaryMasaomiPDF
     #トータルへカウント
       @man_month_1_total += @man_month_1
       @labor_cost_1_total += @labor_cost_1
-    when 2 
-    #岡戸
+    #when 2 
+    when 6
+    #須戸
+    #---岡戸
     #トータルへカウント
       @man_month_2_total += @man_month_2
       @labor_cost_2_total += @labor_cost_2
@@ -285,7 +290,8 @@ class LaborCostSummaryMasaomiPDF
       @labor_cost_1_total = "￥" + @labor_cost_1_total.to_s(:delimited)
     end
     
-    #岡戸
+    #須戸
+    #---岡戸
     if @man_month_2_total == 0
       @man_month_2_total = ""
       @labor_cost_2_total = ""

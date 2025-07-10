@@ -110,35 +110,65 @@ class ConstructionDailyReportsController < ApplicationController
           #report = LaborCostSummaryPDF.create @construction_daily_reports
           
           is_landscape = false
-          if @company_id == 1  #アデュース仕様
-            if confirm_outsourcing == true
-              is_landscape = true
-            end
-          end
           
-          if !is_landscape
-            
-            if @company_id == 1 && exist_takano
-              #アデュース仕様
+          #del250710
+          #if @company_id == 1  #アデュース仕様
+          #  if confirm_outsourcing == true
+          #    is_landscape = true
+          #  end
+          #end
+          
+          #add250710
+          is_exist_takano = exist_takano
+          is_exist_okado = exist_okado
+          #
+          
+          
+          if @company_id != 1
+            #通常型
+            report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
+          else
+            #アデュース仕様
+            if is_exist_okado
+              #岡戸存在の場合---須戸、高野存在の横型レイアウトにする
+              @outsourcing_staff = 6  #須戸さんをセット
+              report = LaborCostSummaryOutsourcingTakanoPDF.create(@construction_daily_reports, @outsourcing_staff)
+            elsif is_exist_takano
+              #岡戸不在・高野存在の場合
               report = LaborCostSummaryMasaomiPDF.create @construction_daily_reports
             else
-              if @company_id != 1
-                report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
-              else
-                #アデュース仕様の縦バージョン
-                report = LaborCostSummaryAdusuPDF.create(@construction_daily_reports)
-              end
+              #岡戸・高野不在の場合--縦型レイアウトにする
+              #アデュース仕様の縦バージョン
+              report = LaborCostSummaryAdusuPDF.create(@construction_daily_reports)
             end
-          else
-             #アデュース仕様　横型
-             if exist_takano == false
-               report = LaborCostSummaryLandscapePDF.create @construction_daily_reports
-             else
-             #外注＆高野いる場合(ただし、小柳・須戸・高野のペアはないものとする)
-               report = LaborCostSummaryOutsourcingTakanoPDF.create(@construction_daily_reports, @outsourcing_staff)
-             end
-          
+            
           end
+          
+          
+          
+          #del250710
+          #if !is_landscape
+          #  if @company_id == 1 && exist_takano
+          #    #アデュース仕様
+          #    report = LaborCostSummaryMasaomiPDF.create @construction_daily_reports
+          #  else
+          #    if @company_id != 1
+          #      report = LaborCostSummaryPDF.create(@construction_daily_reports, @company_id)
+          #    else
+          #      #アデュース仕様の縦バージョン
+          #      report = LaborCostSummaryAdusuPDF.create(@construction_daily_reports)
+          #    end
+          #  end
+          #else
+          #   #アデュース仕様　横型
+          #   if exist_takano == false
+          #     report = LaborCostSummaryLandscapePDF.create @construction_daily_reports
+          #   else
+          #   #外注＆高野いる場合(ただし、小柳・須戸・高野のペアはないものとする)
+          #     report = LaborCostSummaryOutsourcingTakanoPDF.create(@construction_daily_reports, @outsourcing_staff)
+          #   end
+          #end
+          
           #if confirm_outsourcing == false
             #縦型PDF（外注のいない場合）
             #if exist_takano == false
@@ -226,22 +256,37 @@ class ConstructionDailyReportsController < ApplicationController
     end
   end
   
+  #add250710
+  def exist_okado
+    okado = @construction_daily_reports.where('staff_id= ?', '2')
+    
+    if okado.present?
+      return true
+    else
+      return false
+    end
+  end
+  #
+  
   def confirm_outsourcing
   #外注さんが作業に関わっているかどうかのチェック(PDF用)
+  #250709～未使用
   #(社員IDが5または6の場合。)
+    #小柳さん
     check_outsourcing_5 = @construction_daily_reports.where('staff_id= ?', '5')
     if check_outsourcing_5.present?
-      #$outsoucing_staff = 5
       @outsourcing_staff = 5
-    else
-      check_outsourcing_6 = @construction_daily_reports.where('staff_id= ?', '6')
-      if check_outsourcing_6.present?
-        #$outsoucing_staff = 6
-        @outsourcing_staff = 6
-      end
     end
+    #else
     
-    #if $outsoucing_staff.present?
+    #須戸さん(このケースはないので抹消 250709)
+    #check_outsourcing_6 = @construction_daily_reports.where('staff_id= ?', '6')
+    #if check_outsourcing_6.present?
+    #  @outsourcing_staff = 6
+    #end
+    
+    #end
+    
     if @outsourcing_staff.present?
       return true
     else   

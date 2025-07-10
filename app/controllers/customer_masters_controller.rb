@@ -44,16 +44,38 @@ class CustomerMastersController < ApplicationController
     #標準版仕様--会社IDを取得
     app_get_session_user
     
+    
+     
 	respond_to do |format|
 	  format.html
+      
+      #upd250614
+      #CSVの出力
+      #format.csv do |csv|
+      # csv_data = CSV.generate do |csv|
+      #   header = %w(id 得意先名 検索文字 郵便番号 住所 番地 アパート・建物 Tel Fax 担当者)
+      #   csv << header           #header(Excelの一行目部分)をcsvにぶち込む
+      #   $customers.order(:id).each do |customer|
+      #     values = [customer.id, customer.customer_name, customer.search_character, customer.post, 
+      #               customer.address, customer.house_number, customer.address2, 
+      #               customer.tel_main, customer.fax_main, customer.responsible1]
+      #     csv << values         #values(Excelの二行目以降部分)をcsvにぶち込む
+      #   end
+      # end
+      # send_data(csv_data.encode("SJIS"), filename: "customers.csv")
+      #end
+      #
+      
       
       #format.csv { send_data @customer_masters.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis' }
       
       #csv
-      format.csv { send_data @customer_masters.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
-      
-      
-	  format.pdf do
+      #format.csv { send_data @customer_masters.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
+      #upd250614
+      format.csv { send_data $customers.order(:id).to_csv.encode("Shift_JIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
+            
+           
+      format.pdf do
         report = CustomerListCardPDF.create @customer_list_card 
         # ブラウザでPDFを表示する
         # disposition: "inline" によりダウンロードではなく表示させている

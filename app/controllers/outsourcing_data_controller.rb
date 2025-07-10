@@ -1201,7 +1201,7 @@ class OutsourcingDataController < ApplicationController
          @construction_datum_id).maximum(:working_date)
     
     #請求書コードを取得
-    invoice_code = set_invoice_code
+    invoice_code = set_invoice_code(supplier_master_id)
     
     #作業日=作業完了日とする
     if @working_end_date.present?
@@ -1373,38 +1373,54 @@ class OutsourcingDataController < ApplicationController
   end
   
   #外注用の請求ナンバーを作成
-  def set_invoice_code
+  def set_invoice_code(supplier_master_id)
     
     if @working_end_date.nil?
       search_date = @purchase_date
       return search_date
     end
     
+    #保持用(add250710)
+    working_end_date_final = @working_end_date
+    
     purchaseDate = @working_end_date.strftime("%Y%m%d")
     search_date = nil
     search_date_update = nil
     
+    ##未使用？なので抹消 250710
     #作業日<>完了日
-    differDate = false
-    if @purchase_date != @working_end_date
-      differDate = true
+    #differDate = false
+    #if @purchase_date != @working_end_date
+    #  differDate = true
+    #end
+    #作業完了日が手入力の場合
+    if @working_end_date_form.present?
+      if @working_end_date_form != @working_end_date
+        working_end_date_final = @working_end_date_form
+        purchaseDate = @working_end_date_form.strftime("%Y%m%d")
+      end
     end
+    
     
     for i in 1..99 do
       num = "%02d" % i
       search_date = purchaseDate + num
       outsourcing_cost = OutsourcingCost.where(:invoice_code => search_date).first
+      #outsourcing_cost = OutsourcingCost.where(:invoice_code => search_date, :supplier_master_id => supplier_master_id).first
       
       if outsourcing_cost.nil?
         
         #190930 未使用？？？
         #状況によっては、請求ナンバーを空きコードでアプデしないようにする
         if params[:action] == "update"  #アプデなら、空きコードでアップしない
-          outsourcing_cost_a = OutsourcingCost.where(:construction_datum_id => params[:purchase_datum][:construction_datum_id]).first
+          #outsourcing_cost_a = OutsourcingCost.where(:construction_datum_id => params[:purchase_datum][:construction_datum_id]).first
+          outsourcing_cost_a = OutsourcingCost.where(:construction_datum_id => params[:purchase_datum][:construction_datum_id], 
+                                                     :supplier_master_id => supplier_master_id).first
           if outsourcing_cost_a.present?
             invoice_code = outsourcing_cost_a.invoice_code.slice(0, 8) 
                  
-            if invoice_code== @working_end_date.strftime("%Y%m%d")
+            #if invoice_code== @working_end_date.strftime("%Y%m%d")
+            if invoice_code== working_end_date_final.strftime("%Y%m%d")
               search_date = outsourcing_cost_a.invoice_code
             end
           end

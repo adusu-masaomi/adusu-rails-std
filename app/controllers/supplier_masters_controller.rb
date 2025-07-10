@@ -16,7 +16,9 @@ class SupplierMastersController < ApplicationController
     respond_to do |format|
 	    format.html
       #csv
-      format.csv { send_data @supplier_masters.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
+      #format.csv { send_data @supplier_masters.to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
+      format.csv { send_data @supplier_masters.order(:id).to_csv.encode("SJIS"), type: 'text/csv; charset=shift_jis', disposition: 'attachment' }
+      
       #format.csv { send_data SupplierMaster.all.to_csv }
       
       #format.csv do |csv|

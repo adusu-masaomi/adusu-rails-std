@@ -42,7 +42,8 @@ class SupplierMaster < ApplicationRecord
         #csv << ["id", "customer_name", "post"]
         
         #ヘッダ
-        csv_column_names = ["id", "仕入先名", "電話番号", "FAX", "担当者"]
+        #csv_column_names = ["id", "仕入先名", "電話番号", "FAX", "担当者"]
+        csv_column_names = ["id", "仕入先名", "電話番号", "FAX", "E-Mail", "担当者"]
         csv << csv_column_names
         
         all.each do |supplier_master|
