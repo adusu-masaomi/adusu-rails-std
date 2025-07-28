@@ -16,8 +16,7 @@ class ApplicationMailer < ActionMailer::Base
   #for centos6(220209) 
   #default from:     "株式会社アデュース<adusudenki@gmail.com>"
   default from:     @company_name + "<postmailerddxz@gmail.com>"
-  #default from: @company_name + 'Acme <onboarding@resend.dev>'
-  #default from: @company_name + 'Acme <postmailerddxz@gmail.com>'
+  #default from:     @company_name + "<adusu-info@adusu.net>"
   
   #default from:     @company_name + "<adusudenki@gmail.com>"
   

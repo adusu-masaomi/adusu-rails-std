@@ -19,14 +19,30 @@ Rails.application.configure do
   
   #config.action_mailer.delivery_method = :smtp
   
+  #gmail
+  host = "https://adusu-rails.onrender.com"
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+
   config.action_mailer.smtp_settings = {
-    :address   => 'smtp.resend.com',
+    :address   => 'smtp.gmail.com',
     :port      => 587,
-    :user_name => 'resend',
-    :password  => ENV['RESEND_APIKEY'],
+    :user_name => ENV['GMAIL_USERNAME'],
+    :password  => ENV['GMAIL_PASSWORD],
     :authentication => 'plain',
+    :domain         => 'gmail.com',
     :enable_starttls_auto => true
   }
+  
+  #resend用
+  #config.action_mailer.smtp_settings = {
+  #  :address   => 'smtp.resend.com',
+  #  :port      => 587,
+  #  :user_name => 'resend',
+  #  :password  => ENV['RESEND_APIKEY'],
+  #  :authentication => 'plain',
+  #  :enable_starttls_auto => true
+  #}
+  #resend用
   
   #config.action_mailer.smtp_settings = {
   #  #:address   => 'smtp.resend.com',
