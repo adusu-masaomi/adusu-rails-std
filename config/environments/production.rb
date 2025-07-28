@@ -7,7 +7,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:               'smtp.postmarkapp.com',
+    address:               'smtp-broadcasts.postmarkapp.com',
     port:      	           587,
     domain:                'smtp.gmail.com',
     user_name:             'apikey',
