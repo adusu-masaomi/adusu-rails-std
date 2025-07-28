@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '3.1.4'
 
+gem 'postmark-rails'
+
 #render用
 #gem 'rake' , '13.0.3'
 #gem 'webpacker', github: 'rails/webpacker'
