@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 ruby '3.1.4'
 
-gem 'postmark-rails'
+#gem 'postmark-rails'
+gem 'resend'
 
 #render用
 #gem 'rake' , '13.0.3'

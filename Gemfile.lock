@@ -77,6 +77,7 @@ GEM
       nokogiri (>= 1.4.1)
       rubyzip (~> 1.0.0)
     bcrypt (3.1.19)
+    bigdecimal (3.2.2)
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
@@ -110,6 +111,7 @@ GEM
       activerecord (~> 6.1.0)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    csv (3.3.5)
     date (3.3.3)
     debug_inspector (1.1.0)
     deep_cloneable (3.2.0)
@@ -126,6 +128,10 @@ GEM
     globalid (1.1.0)
       activesupport (>= 5.0)
     htmlentities (4.3.4)
+    httparty (0.23.1)
+      csv
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -144,7 +150,6 @@ GEM
       turbolinks
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.13.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -182,6 +187,8 @@ GEM
     minitest (5.18.1)
     momentjs-rails (2.29.4.1)
       railties (>= 3.1)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     nested_form (0.3.2)
     net-imap (0.3.6)
       date
@@ -201,11 +208,6 @@ GEM
     pg (1.5.3)
     pg (1.5.3-x64-mingw-ucrt)
     pkg-config (1.5.2)
-    postmark (1.25.1)
-      json
-    postmark-rails (0.22.1)
-      actionmailer (>= 3.0.0)
-      postmark (>= 1.21.3, < 2.0)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
       ttfunk (~> 1.7)
@@ -269,6 +271,8 @@ GEM
       activesupport (>= 6.1.5)
       i18n
     rdoc (6.1.2)
+    resend (0.22.0)
+      httparty (>= 0.21.0)
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -378,7 +382,6 @@ DEPENDENCIES
   momentjs-rails
   nested_form
   pg
-  postmark-rails
   pry-byebug
   pry-doc
   pry-rails
@@ -392,6 +395,7 @@ DEPENDENCIES
   rails4-autocomplete
   ransack
   rdoc (= 6.1.2)
+  resend
   responders
   rmagick
   sass-rails (>= 3.2)
