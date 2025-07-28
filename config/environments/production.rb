@@ -7,18 +7,6 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   
-  #config.action_mailer.delivery_method = :postmark
-  #config.action_mailer.postmark_settings = = ENV['POSTMARK_APIKEY']
-  #config.action_mailer.postmark_settings = {
-  #   api_token: ENV['POSTMARK_APIKEY']
-  #}
-
-  #config.action_mailer.perform_deliveries = true
-  #config.action_mailer.delivery_method = :resend
-  #config.action_mailer.default_url_options = { host: "adusu.com", protocol:"https" }
-  
-  #config.action_mailer.delivery_method = :smtp
-  
   #gmail
   host = "https://adusu-rails.onrender.com"
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
@@ -32,42 +20,18 @@ Rails.application.configure do
     :domain         => 'gmail.com',
     :enable_starttls_auto => true
   }
-  
-  #resend用
+    
+  #250729以前
   #config.action_mailer.smtp_settings = {
-  #  :address   => 'smtp.resend.com',
-  #  :port      => 587,
-  #  :user_name => 'resend',
-  #  :password  => ENV['RESEND_APIKEY'],
-  #  :authentication => 'plain',
-  #  :enable_starttls_auto => true
-  #}
-  #resend用
-  
-  #config.action_mailer.smtp_settings = {
-  #  #:address   => 'smtp.resend.com',
-  #  :address   => 'smtp.postmarkapp.com',
-  #  :port      => 587,
-  #  :user_name => ENV['POSTMARK_APIKEY'],
-  #  :password  => ENV['POSTMARK_APIKEY'],
-  #  :authentication => 'plain',
-  #  :enable_starttls_auto => true
-  #}
-  
-  #:port      => 465,
-  
-  #config.action_mailer.postmark_settings = { :api_token => "fdc9f66d-c053-4165-8b71-d73803e2cd8b" }
-  
-  #test del
-  #config.action_mailer.smtp_settings = {
-  #  address:               'smtp-broadcasts.postmarkapp.com',
+  #  address:               'smtp.sendgrid.net',
   #  port:      	           587,
   #  domain:                'smtp.gmail.com',
   #  user_name:             'apikey',
-  #  password:              ENV['POSTMARK_APIKEY'],
+  #  password:              ENV['SENDGRID_APIKEY'],
   #  authentication:        'plain',
   # enable_starttls_auto: true
   #}
+  
   #メール設定 end
 
   # Code is not reloaded between requests.

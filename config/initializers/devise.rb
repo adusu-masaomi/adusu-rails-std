@@ -1,1 +1,0 @@
-#config.mailer_sender = 'postmailerddxz@gmail.com'
