@@ -150,6 +150,7 @@ GEM
       turbolinks
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.13.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -208,6 +209,11 @@ GEM
     pg (1.5.3)
     pg (1.5.3-x64-mingw-ucrt)
     pkg-config (1.5.2)
+    postmark (1.25.1)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
       ttfunk (~> 1.7)
@@ -382,6 +388,7 @@ DEPENDENCIES
   momentjs-rails
   nested_form
   pg
+  postmark-rails
   pry-byebug
   pry-doc
   pry-rails
