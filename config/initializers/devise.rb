@@ -1,1 +1,1 @@
-config.mailer_sender = 'postmailerddxz@gmail.com'
+#config.mailer_sender = 'postmailerddxz@gmail.com'
