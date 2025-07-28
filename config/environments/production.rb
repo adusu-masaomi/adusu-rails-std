@@ -14,10 +14,11 @@ Rails.application.configure do
   
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address   => 'smtp.resend.com',
-    :port      => 2587,
-    :user_name => 'resend',
-    :password  => ENV['RESEND_APIKEY'],
+    #:address   => 'smtp.resend.com',
+    :address   => 'smtp.postmarkapp.com',
+    :port      => 587,
+    :user_name => ENV['POSTMARK_APIKEY'],
+    :password  => ENV['POSTMARK_APIKEY'],
     :authentication => 'plain',
     :enable_starttls_auto => true
   }
