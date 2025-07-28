@@ -10,15 +10,15 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :resend
   #config.action_mailer.postmark_settings = { :api_token => "fdc9f66d-c053-4165-8b71-d73803e2cd8b" }
   
-  config.action_mailer.smtp_settings = {
-    address:               'smtp-broadcasts.postmarkapp.com',
-    port:      	           587,
-    domain:                'smtp.gmail.com',
-    user_name:             'apikey',
-    password:              ENV['POSTMARK_APIKEY'],
-    authentication:        'plain',
-   enable_starttls_auto: true
-  }
+  #config.action_mailer.smtp_settings = {
+  #  address:               'smtp-broadcasts.postmarkapp.com',
+  #  port:      	           587,
+  #  domain:                'smtp.gmail.com',
+  #  user_name:             'apikey',
+  #  password:              ENV['POSTMARK_APIKEY'],
+  #  authentication:        'plain',
+  # enable_starttls_auto: true
+  #}
   #メール設定 end
 
   # Code is not reloaded between requests.
