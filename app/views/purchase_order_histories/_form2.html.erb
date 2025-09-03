@@ -1061,45 +1061,52 @@
     sessionStorage.removeItem('onvisible');       //add200915 一旦消さないと壊れるケースあり？  
     sessionStorage.setItem('onvisible', 'true');
 
-    $.get("<%= purchase_order_historiez_get_data_path %>",
+    //$.get("<%= purchase_order_historiez_get_data_path %>",
+    //  {purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, 
+    //  supplier_master_id: supplier_master_id, delivery_place_flag: delivery_place_flag},
+    //  function(data){
+    //    // マウスカーソルの形を変える
+    //    $("body").css("cursor", "progress");
+    //    // Loadingイメージ表示
+    //    $('#loading-indicator').show();
+    //  //5秒待つ（描写されないことがあるため）
+    //    setTimeout("reloadDiv()", 5000);
+    //  }
+    //);
+    
+    $.when(
+      $.get("<%= purchase_order_historiez_get_data_path %>",
       {purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, 
       supplier_master_id: supplier_master_id, delivery_place_flag: delivery_place_flag},
       function(data){
-        // マウスカーソルの形を変える
-        $("body").css("cursor", "progress");
-
-        // Loadingイメージ表示
-        $('#loading-indicator').show();
-
-        //add200915
-        //sessionStorage.setItem('onvisible', 'true');
-       
-        //5秒待つ（描写されないことがあるため）
-        //centOS上では必須なようである！
-
-        //debugger;
-     
-        //del230508
-        setTimeout("reloadDiv()", 5000);
-        //test
-        //setTimeout("reloadDiv()", 10000);
-        //setTimeout("reloadDiv()", 30000);
-       
-        //setTimeout(reloadDiv(), 30000);  
-        //reloadDiv();      
-
-        //隠れていたボタンをここで表示させる
-        //$('#filter').removeClass('hide');
-       
-        //movev200915
-        //セッション用のパラメータへセットする
-        //sessionStorage.setItem('onvisible', 'true');
-       
-        // Loadingイメージを消す
-        // $('#loading-indicator').hide();
-
-      }
-    );
+        //// マウスカーソルの形を変える
+        //$("body").css("cursor", "progress");
+        //// Loadingイメージ表示
+        //$('#loading-indicator').show();
+        ////5秒待つ（描写されないことがあるため）
+        //setTimeout("reloadDiv()", 5000);
+        //  }
+        })
+      
+      //$.ajax({
+      //  url:  '<%= purchase_order_historiez_get_data_path %>',
+      //  type: 'GET',
+      //  data: {purchase_order_datum_id: purchase_order_datum_id, purchase_order_date: purchase_order_date, 
+      //        supplier_master_id: supplier_master_id, delivery_place_flag: delivery_place_flag},
+      //  dataType: 'json',
+      //  success: function(data, status, xhr) {
+      //  }
+      //})
+    ).done(function(){
+      //upd250903 ajax処理完了後に描写させるようにする
+    
+      // マウスカーソルの形を変える
+      $("body").css("cursor", "progress");
+      // Loadingイメージ表示
+      $('#loading-indicator').show();
+      //読み込んだデータを表示するため、リロードする
+      reloadDiv();
+    });
    
     //debugger;
    
