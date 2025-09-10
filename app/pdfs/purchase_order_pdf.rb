@@ -191,6 +191,7 @@ class PurchaseOrderPDF
         check = false
         if $mail_flag == 0
         #帳票の場合
+          
           if company_id == 1
             
             #アデュース仕様　メール送信済のチェックをしない(全部出し)

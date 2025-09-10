@@ -172,7 +172,7 @@
       <!--標準版はアデュースのみ表示-->
       <% if @company_id == 1 %>
         <%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
-        id: "mail_sent_button", :value => 'pdf', :name => 'format', 
+        id: "mail_sent_button", :value => 'pdf', :name => 'format',
         :onclick => "submitAfterValidationEmail()" %>
       <% end %>
         
@@ -190,9 +190,6 @@
         
       <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
         
-      <!--<%= f.button_tag( '注文書', :value => 'pdf', :name => 'format', :class => "btn btn-orange500_ftg" , 
-             formtarget: "_blank" , :onclick => "return submitPurchaseOrder()") %>-->
-         
       <%= f.button_tag( '注文書', :type => 'button', :class => "btn btn-orange500_ftg" , 
              formtarget: "_blank" , :onclick => "return submitPurchaseOrder()") %>
       
@@ -1073,6 +1070,10 @@
     //    setTimeout("reloadDiv()", 5000);
     //  }
     //);
+    
+    //test
+    //return false;
+    //
     
     $.when(
       $.get("<%= purchase_order_historiez_get_data_path %>",

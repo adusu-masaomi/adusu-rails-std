@@ -11,7 +11,12 @@
   
   <!--<%= f.input :purchase_order_history_id,  input_html:{ id: "purchase_order_history_id" }, as: :hidden %>-->
   <%= f.label :品番選択, {style: 'width:770px'}  %>
+  
   <%= f.label :単位, {style: 'width:50px;margin-left:-85px;'}  %>
+  
+  <!--add250910-->
+  <%= f.input :id, label: "ID", input_html:{ id: "id" , style: 'width:100px;margin-left:0px;', :readonly => true} %>
+  
   <!--
   <%= f.label :メール送信フラグ, {style: 'width:120px;margin-left:-5px;'}  %>
   -->

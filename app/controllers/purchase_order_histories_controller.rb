@@ -201,9 +201,7 @@ class PurchaseOrderHistoriesController < ApplicationController
 
       #global set
       $orders = @orders
-
-      #binding.pry
-
+      
       #PDF用
       #工事コード、工事名、得意先名
       if construction.present?
@@ -574,6 +572,8 @@ class PurchaseOrderHistoriesController < ApplicationController
     #メール送信済みフラグをセット
     #set_mail_sent_flag
     
+    #binding.pry
+    
     #add230922
     #注文書を2回押した場合等、データ2重登録しないようにする
     get_data_on_create_twice
@@ -640,7 +640,8 @@ class PurchaseOrderHistoriesController < ApplicationController
     if tmp_history.present?
       @purchase_order_history = tmp_history
       #すでに登録していた注文データは一旦抹消する。
-      destroy_before_update
+      #del250910 前回注文したデータが消える不具合発生したため以下は行わない
+      #destroy_before_update
       #
       @purchase_order_history.attributes = purchase_order_history_params
     end
@@ -649,10 +650,11 @@ class PurchaseOrderHistoriesController < ApplicationController
   # PATCH/PUT /purchase_order_histories/1
   # PATCH/PUT /purchase_order_histories/1.json
   def update
-
+        
     #del170724 
+    #del250910 前回注文したデータが消える不具合発生したため以下は行わない
     #すでに登録していた注文データは一旦抹消する。
-    destroy_before_update
+    #destroy_before_update
 
     #パラーメータ補完する
     set_params_complement
@@ -667,10 +669,10 @@ class PurchaseOrderHistoriesController < ApplicationController
       format.any { render json: purchase_order_history_params}
       
       @purchase_order_history.attributes = purchase_order_history_params
-      
-      
+           
       #@quotation_headers.save(:validate => false)
       if @purchase_order_history.save!
+      #if is_saved == true
       #if @purchase_order_history.update(purchase_order_history_params)
 
         #臨時FAX用
@@ -1025,33 +1027,52 @@ class PurchaseOrderHistoriesController < ApplicationController
 
   #レコード毎にメール送信済みフラグをセットする
   def set_mail_sent_flag
-
-    #if params[:purchase_order_history][:sent_flag] == "1"
-    if params[:purchase_order_history][:sent_flag] == "1" || @order_flag  #upd230914 
-      if params[:purchase_order_history][:orders_attributes].present?
-        params[:purchase_order_history][:orders_attributes].values.each do |item|
-          item[:mail_sent_flag] = 1
-        end
-
-        #再度ここで更新をかける(削除後)
-        destroy_before_update
-        
-        #binding.pry
-        
-        @purchase_order_history.update(purchase_order_history_params)
+    
+    #updd250910
+    if params[:purchase_order_history][:sent_flag] == "1" || @order_flag
+      if @purchase_order_history.orders.present?   
+         @purchase_order_history.orders.each do |item|
+           order = Order.where(:id => item.id).first
+           if order.present?
+             order_params = {mail_sent_flag: 1}
+             order.update(order_params)
+           end    
+           #
+         end
       end
     end
+    ##
+    
+    #if params[:purchase_order_history][:sent_flag] == "1" || @order_flag  #upd230914 
+    #  if params[:purchase_order_history][:orders_attributes].present?
+    #    params[:purchase_order_history][:orders_attributes].values.each do |item|
+    #      item[:mail_sent_flag] = 1
+    #    end
+    #    #再度ここで更新をかける(削除後)
+    #    destroy_before_update
+    #    @purchase_order_history.update(purchase_order_history_params)
+    #  end
+    #end
   end
   
   #add250213
   #印刷(注文書発行済)フラグの設定
   def set_printed_flag(format)
-    
+        
     if params[:format] == "pdf"
-      if @purchase_order_history.sent_flag != "1"
+      #if @purchase_order_history.sent_flag != "1" 
+      
+      if @purchase_order_history.sent_flag != "1" && params[:purchase_order_history][:sent_flag] != "1"
         if @purchase_order_history.orders.present?   
             @purchase_order_history.orders.each do |item|
+              
               item[:printed_flag] = "1"
+            
+              #order = Order.where(:id => item.id).first
+              #if order.present?
+              #  order_params = {printed_flag: "1"}
+              #  order.update(order_params)
+              #end
             end
             
             @purchase_order_history.save!  #ここで保存する
@@ -1115,9 +1136,7 @@ class PurchaseOrderHistoriesController < ApplicationController
       
       #送信済み・削除判定が必要なので現在のパラメータをセット
       $order_parameters = params[:purchase_order_history][:orders_attributes]
-      
-      #binding.pry
-      
+            
       reissue_flag = params[:purchase_order_history][:purchase_order_reissue]
       
       #if $order_parameters.present?  #add230719
