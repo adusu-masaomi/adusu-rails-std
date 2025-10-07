@@ -100,16 +100,24 @@ class StocktakesController < ApplicationController
   
   #在庫マスターから対象のデータをコピー
   def copyFromInventory
-  
-    #最初にデータを一旦抹消させる。
-    Stocktake.where(stocktake_date: params[:q][:stocktake_date_gteq]).destroy_all
+    
+    if params[:q][:with_material_category_include].to_i == 0
+      #最初に全データを一旦抹消させる(カテゴリーで絞っていない場合のみ)
+      Stocktake.where(stocktake_date: params[:q][:stocktake_date_gteq]).destroy_all
+    else
+      #upd251007
+      #カテゴリーで絞っている場合は、同一のカテゴリーのみ一旦消去する
+      Stocktake.joins(:material_master).where(stocktake_date: params[:q][:stocktake_date_gteq]).
+                   where(material_master: { inventory_category_id: params[:q][:with_material_category_include].to_i }).destroy_all
+    end
     
     #検索用のカテゴリーは１つずれているので、マイナスさせる -> しない(220216)
     category = params[:q][:with_material_category_include].to_i 
     #category -= 1
   
     Inventory.all.each do |iv|
-      if  iv.material_master.inventory_category_id == category
+      if  (iv.material_master.present? && iv.material_master.inventory_category_id.present?) &&
+          iv.material_master.inventory_category_id == category
       #カテゴリー一致？
         #stocktake_params = { stocktake_date: params[:q][:stocktake_date_gteq], material_master_id: iv.material_master_id, 
         #                     inventory_id: iv.id, physical_quantity: iv.current_quantity, unit_price: iv.current_unit_price, 
