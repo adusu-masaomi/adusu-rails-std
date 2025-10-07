@@ -25,7 +25,11 @@ class StocktakesController < ApplicationController
     #@stocktakes  = @q.result(distinct: true)
     #Rails6
     @stocktakes  = @q.result
-
+    
+    #moved251007
+    #global set
+    $stocktakes = @stocktakes
+    
     #kaminari用設定
     @stocktakes  = @stocktakes.page(params[:page])
 	  #
@@ -55,7 +59,7 @@ class StocktakesController < ApplicationController
     end
 	
     #global set
-    $stocktakes = @stocktakes
+    #$stocktakes = @stocktakes
 	
     #棚卸日をセット
     $stocktake_date = nil
