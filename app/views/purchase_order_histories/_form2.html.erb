@@ -173,12 +173,12 @@
       <% if @company_id == 1 %>
         <%= f.button_tag "メール送信＆登録", :type => 'button', :class => "btn btn-info", 
         id: "mail_sent_button", :value => 'pdf', :name => 'format',
-        :onclick => "submitAfterValidationEmail()" %>
+        :onclick => "submitAfterValidationEmail(event)" %>
       <% end %>
         
         
       <%= f.button_tag "登録のみ", :type => 'button', name: "upd", :class => "btn btn-primary", 
-               :onclick => "submitAfterValidation(0)" %>
+               :onclick => "submitAfterValidation(0, event)" %>
         
       <!--add200427-->
       <!--<%= f.submit "ＦＡＸ", :type => 'button', :value => 'pdf', :name => 'format',  class: "btn btn-pink500_ftg", formtarget: "_blank", 
@@ -886,13 +886,13 @@
  
  
   //入力チェック(eメール用）
-  function submitAfterValidationEmail(){
+  function submitAfterValidationEmail(e){
     document.getElementById("sent_flag").value = 1;
-    submitAfterValidation(1);
+    submitAfterValidation(1,e);
   }
  
   //入力チェック後の、更新処理
-  function submitAfterValidation(flag) {
+  function submitAfterValidation(flag, e) {
     var ok_flag = true;
     var after_check = checkQuantity(ok_flag);
     
@@ -917,6 +917,12 @@
           document.getElementById("format").value = "pdf";
           sessionStorage.setItem('onvisible', 'true');
         }
+         
+        //add251014
+        //ボタンを２回押せないようにする
+        e.target.disabled = true;
+        //e.target.value = 'Submitting...';
+        //
          
         document.forms[0].target = "";  //add220615
         document.forms[0].submit();

@@ -32,7 +32,7 @@ class PostMailer < ApplicationMailer
     
      #@responsible_name = $responsible_name + "様"
      @responsible_name = responsible_name + "様"
-    
+     
      #add250513
      #備考追加
      @notes = user.notes
@@ -45,23 +45,22 @@ class PostMailer < ApplicationMailer
     
      #本番用
      #
-     if user.supplier_master.id != 5
-         mail to: email_responsible ,
-         #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-         cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
-         subject: '注文番号登録依頼' + subject_time
-     else
+     #if user.supplier_master.id != 5
+     #    mail to: email_responsible ,
+     #    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
+     #    subject: '注文番号登録依頼' + subject_time
+     #else
      #ムサシで選んだ場合、テストメールとする
-         mail to: "camille.saekiZZZ@gmail.com" ,
-         cc: "ilovekyosukehimuro@yahoo.co.jp", 
-         subject: '注文番号登録依頼' + subject_time
-     end
+     #    mail to: "camille.saekiZZZ@gmail.com" ,
+     #    cc: "ilovekyosukehimuro@yahoo.co.jp", 
+     #    subject: '注文番号登録依頼' + subject_time
+     #end
      
      #test用
-     #mail to: "camille.saekiZZZ@gmail.com" ,
-     #cc: "i_kyohim@yahoo.co.jp", 
+     mail to: "camille.saekiZZZ@gmail.com" ,
+     cc: "i_kyohim@yahoo.co.jp", 
      #件名に日時を入れる（メール重なるのを防ぐため）
-     #subject: '注文番号登録依頼' + subject_time
+     subject: '注文番号登録依頼' + subject_time
      #test用 end
   end
   
@@ -122,18 +121,17 @@ class PostMailer < ApplicationMailer
   
     #本番用
     #メアドは画面より反映(ccは固定)
-    mail to: email_responsible ,
+    #mail to: email_responsible ,
     #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
-    subject: '注文依頼' + subject_time 
+    #subject: '注文依頼' + subject_time 
     
     #test用!!
     #メアドは画面より反映(ccは固定)
-    #mail to: "camille.saekiZZZ@gmail.com" ,
-    #cc: "i_kyohim@yahoo.co.jp", 
+    mail to: "camille.saekiZZZ@gmail.com" ,
+    cc: "i_kyohim@yahoo.co.jp", 
     #件名に日時を入れる（メール重なるのを防ぐため）
-    #subject: '注文依頼' + subject_time 
+    subject: '注文依頼' + subject_time 
     #test用 end
   end
   
@@ -142,6 +140,7 @@ class PostMailer < ApplicationMailer
   #def send_quotation_material(user)
   def send_quotation_material(user, responsible, email_responsible, email_responsible2, email_responsible3, notes,
                             attachment)
+                            
     @quotation_code = "見積No:" + user.quotation_code
     if user.construction_datum.alias_name.present?
     #通称名をセット
@@ -185,26 +184,24 @@ class PostMailer < ApplicationMailer
     
     #本番用
     #メアドは画面より反映(ccは固定)
-    mail to: email_responsible ,
+    #mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
     #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2, email_responsible3 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
-    subject: '見積依頼' + subject_time
+    #subject: '見積依頼' + subject_time
     #本番用 end
     
     #test時!!
     #メアドは画面より反映(ccは固定)
-    #mail to: "camille.saekiZZZ@gmail.com" ,
-    #cc: "i_kyohim@yahoo.co.jp", 
+    mail to: "camille.saekiZZZ@gmail.com" ,
+    cc: "i_kyohim@yahoo.co.jp", 
     #件名に日時を入れる（メール重なるのを防ぐため）
-    #subject: '見積依頼' + subject_time
+    subject: '見積依頼' + subject_time
 
   end
   
   #注文依頼メール(見積後)
-  #def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, notes, 
-  #                               new_code_flag, purchase_order_code, supplier, attachment)
+  #def send_order_after_quotation(user)
   def send_order_after_quotation(user, responsible, email_responsible, email_responsible2, email_responsible3, notes, 
                                  new_code_flag, purchase_order_code, supplier, attachment)
    
@@ -289,20 +286,20 @@ class PostMailer < ApplicationMailer
     
     #本番用
     #メアドは画面より反映(ccは固定)
-    mail to: email_responsible ,
+    #mail to: email_responsible ,
     #担当者２のメアドがあれば、CCに加える。
-    cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 , email_responsible3 ] ,
+    #cc: ["adusu@coda.ocn.ne.jp", "adusu-info@eos.ocn.ne.jp" , email_responsible2 ] ,
     #件名に日時を入れる（メール重なるのを防ぐため）
-    subject: '注文依頼' + subject_time 
+    #subject: '注文依頼' + subject_time 
     #本番用 end
     
     #test用
     #メアドは画面より反映(ccは固定)
-    #mail to: "camille.saekiZZZ@gmail.com" ,
-    #cc: "i_kyohim@yahoo.co.jp", 
+    mail to: "camille.saekiZZZ@gmail.com" ,
+    cc: "i_kyohim@yahoo.co.jp", 
     #以下は消さない事!
     #件名に日時を入れる（メール重なるのを防ぐため）
-    #subject: '注文依頼' + subject_time 
+    subject: '注文依頼' + subject_time 
     ##test用　end
     
   end
