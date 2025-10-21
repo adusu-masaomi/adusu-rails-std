@@ -69,7 +69,11 @@
   <!--add180331 パナソニックの値上がり分は色をセット(201710分)-->
   <!--変更時はコントローラ側も要変更-->
   <% if f.object.maker_master_id.present? %>
-    <% @material_master = MaterialMaster.find(f.object.working_small_item_id) %>
+    <% if f.object.working_small_item_id.present? %>
+      <% @material_master = MaterialMaster.find(f.object.working_small_item_id) %>
+    <% else %>
+      <% @material_master = nil %>
+    <% end %>
   <% else %>
     <% @material_master = nil %>
   <% end %>
