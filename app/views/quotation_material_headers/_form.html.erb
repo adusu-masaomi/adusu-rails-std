@@ -1045,8 +1045,9 @@
    
     //アデュース以外--(必要？？)
     if (company_id != 1) {
+      //del251022
       //4秒待つ（描写されないことがあるため）
-      setTimeout("reloadDiv()", 4000);
+      //setTimeout("reloadDiv()", 4000);
     }
   }
 
@@ -1290,7 +1291,7 @@
 
   //強制的に注文ボタン表示
   function changeDispOrderButton(t) {
-    debugger;
+    //debugger;
     if (t.checked == true) {
       //チェックした場合
       if (quotation_flag == "false") {

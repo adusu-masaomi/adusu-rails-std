@@ -149,9 +149,12 @@ class QuotationMaterialHeadersController < ApplicationController
     #画面の並びは昇順にする
     #新規は昇順、編集は降順。
     @form_detail_order = "sequential_id ASC"
-  
-   # binding.pry
-  
+    
+    #moved251022
+    #標準版仕様--会社IDを取得
+    app_get_session_user
+    
+    
     #コード参照元がある場合、セットする。
     if $quotation_material_header.present?
       #ここは現在通らない??(カットしても良い?)
@@ -177,8 +180,15 @@ class QuotationMaterialHeadersController < ApplicationController
         @quotation_material_header = QuotationMaterialHeader.new
       else
         #リロードした場合 #add230912
+         
+        @quotation_material_header = nil
         
-        @quotation_material_header = QuotationMaterialHeader.where(id: session[:quotation_material_headers_id]).first
+        #del251022
+        #別の情報を引き継ぐケースが生じるので、抹消
+        #if @company_id != 1  #アデュース以外
+        #  @quotation_material_header = QuotationMaterialHeader.where(id: session[:quotation_material_headers_id]).first
+        #end
+        
         session[:quotation_material_headers_id] = nil
         if @quotation_material_header.nil?
           @quotation_material_header = QuotationMaterialHeader.new
@@ -199,7 +209,7 @@ class QuotationMaterialHeadersController < ApplicationController
     end
     
     #標準版仕様--会社IDを取得
-    app_get_session_user
+    #app_get_session_user
   end
 
   #レコード毎のメール送信済みフラグを初期化する
@@ -416,8 +426,6 @@ class QuotationMaterialHeadersController < ApplicationController
   # POST /quotation_material_headers.json
   def create
   
-    #binding.pry
-  
     @quotation_material_header = QuotationMaterialHeader.new(quotation_material_header_params)
    
     #備考１〜３のいずれかへセット
@@ -459,8 +467,6 @@ class QuotationMaterialHeadersController < ApplicationController
         
         #add230912
         #session[:quotation_material_headers_id] = @quotation_material_header.id
-        
-        #binding.pry
         
         #見積依頼書・注文書の発行
         set_purchase_order_and_estimate(format)
@@ -513,8 +519,6 @@ class QuotationMaterialHeadersController < ApplicationController
       
       respond_to do |format|
         
-        #binding.pry
-        
         if @quotation_material_header.update(quotation_material_header_params)
         
           #比較表・ＦＡＸ
@@ -539,9 +543,7 @@ class QuotationMaterialHeadersController < ApplicationController
           #メール送信
           send_email
 		      
-		      #binding.pry
-		      
-          #メール送信の場合、見積／注文書を後から発行する場合もあるため、画面遷移させない
+		      #メール送信の場合、見積／注文書を後から発行する場合もあるため、画面遷移させない
           if params[:quotation_material_header][:sent_flag] == "1" || params[:quotation_material_header][:sent_flag] == "2"
             redirect_to request.referer, alert: "Successfully sending message"  #ここでalertを適当に入れないと下部のflashメッセージが出ない。
             flash[:notice] = "メールを送信しました。"
@@ -555,8 +557,6 @@ class QuotationMaterialHeadersController < ApplicationController
           format.html {redirect_to quotation_material_headers_path( 
                    :construction_id => params[:construction_id] , :move_flag => params[:move_flag] ) }
           
-          
-          #binding.pry
           
           #if params[:quotation_material_header][:sent_flag] == "7"
           
@@ -595,7 +595,6 @@ class QuotationMaterialHeadersController < ApplicationController
   end
   
   def destroy_before_update
-    #binding.pry
     
     #すでに登録していた注文データは一旦抹消する。
     quotation_material_header_id = @quotation_material_header.id
@@ -976,9 +975,6 @@ class QuotationMaterialHeadersController < ApplicationController
   
   #見積依頼書・注文書の発行
   def set_purchase_order_and_estimate(format)
-    
-    
-    #binding.pry
     
     check = false
     mail_flag = false
