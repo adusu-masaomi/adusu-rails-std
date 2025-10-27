@@ -585,7 +585,8 @@ class WorkingMiddleItemsController < ApplicationController
               @material_master = nil
               
               if item[:working_small_item_id].present?
-                @material_master = MaterialMaster.find(item[:working_small_item_id])
+                #@material_master = MaterialMaster.find(item[:working_small_item_id])
+                @material_master = MaterialMaster.where(:id => item[:working_small_item_id]).first
               end
               
               #upd240120
