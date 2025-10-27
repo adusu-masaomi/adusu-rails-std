@@ -91,7 +91,9 @@ class BidComparisonListPDF
 
     if quotation_material_details.present?
 
-      quotation_material_details.order("sequential_id desc").each do |quotation_material_detail| 
+      #quotation_material_details.order("sequential_id desc").each do |quotation_material_detail| 
+      #upd251027
+      quotation_material_details.order(:sequential_id).each do |quotation_material_detail| 
         report.list(:default).add_row do |row|
 
           material_code = ""
