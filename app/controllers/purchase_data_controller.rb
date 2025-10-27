@@ -1238,7 +1238,7 @@ class PurchaseDataController < ApplicationController
             #if @material_masters.list_price.nil? || @material_masters.list_price == 0 then
             params[:purchase_datum][:MaterialMaster_attributes][:list_price] = params[:purchase_datum][:list_price]
             #end
-
+            
             #add180726
             if (params[:purchase_datum][:unit_price_not_update_flag] == '0')
               #見積用の定価をセット
@@ -1248,7 +1248,9 @@ class PurchaseDataController < ApplicationController
 
               #params[:purchase_datum][:MaterialMaster_attributes][:list_price_quotation] = @@list_price_quotation
               params[:purchase_datum][:MaterialMaster_attributes][:list_price_quotation] = @list_price_quotation
-
+              #add251027
+              params[:purchase_datum][:MaterialMaster_attributes][:last_unit_price_update_at] = @last_unit_price_update_at
+              
               #見積用の掛け率をセット
               params[:purchase_datum][:MaterialMaster_attributes][:standard_rate] = set_material_standard_rate
             end
@@ -1275,11 +1277,16 @@ class PurchaseDataController < ApplicationController
   def set_material_list_price_quotation
 
     @list_price_quotation = 0
+    @last_unit_price_update_at = nil
+      
+    
     #upd25614 初期値
     if @material_masters.present?
       @list_price_quotation = @material_masters.list_price_quotation  
+      @last_unit_price_update_at = @material_masters.last_unit_price_update_at  #add251027
     elsif @material_master.present?
       @list_price_quotation = @material_master.list_price_quotation 
+      @last_unit_price_update_at = @material_master.last_unit_price_update_at  #add251027
     end
     
     #定価の初期値は入れた方がいい？(保留250614)
@@ -1288,6 +1295,21 @@ class PurchaseDataController < ApplicationController
     #    @list_price_quotation = params[:purchase_datum][:list_price]
     #  end
     #end
+    
+    #@tmp_date = DateTime.now
+    
+    #restore251027
+    if params[:purchase_datum][:list_price].to_i > 0
+      
+      #定価を更新した場合、最終単価更新日を更新させる。
+      if @list_price_quotation != params[:purchase_datum][:list_price]
+        @last_unit_price_update_at = DateTime.now
+      end
+    
+      #定価があれば、常に最新のものに更新させる
+      @list_price_quotation = params[:purchase_datum][:list_price]
+      
+    end
     
     #del250614
     #if params[:purchase_datum][:list_price].to_i > 0

@@ -19,6 +19,7 @@ class WorkingSmallItemsController < ApplicationController
 
   # GET /working_small_items/1/edit
   def edit
+  #  binding.pry
   end
 
   # POST /working_small_items

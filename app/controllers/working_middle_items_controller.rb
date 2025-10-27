@@ -211,6 +211,8 @@ class WorkingMiddleItemsController < ApplicationController
   # GET /working_middle_items/1/edit
   def edit
     
+    #binding.pry
+    
     #労務単価の初期値をセットする
     #upd200108 単価変更
     #if @working_middle_item.labor_unit_price_standard.blank? || @working_middle_item.labor_unit_price_standard == 12100

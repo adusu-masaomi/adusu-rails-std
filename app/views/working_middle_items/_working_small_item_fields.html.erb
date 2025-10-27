@@ -9,8 +9,35 @@
 	   <% @action_flag = "new" %>
 	<% end %> -->
   <!-- -->
-
-
+  
+  <!--moved251027-->
+  <% if f.object.maker_master_id.present? %>
+    <% if f.object.working_small_item_id.present? %>
+      <% @material_master = MaterialMaster.where(:id => f.object.working_small_item_id).first %>
+    <% else %>
+      <% @material_master = nil %>
+    <% end %>
+  <% else %>
+    <% @material_master = nil %>
+  <% end %>
+  
+  <!--add251027-->
+  <% if @material_master.present? %>
+    <% @last_unit_price_update_at = @material_master.last_unit_price_update_at %>
+  <% else %>
+    <% @last_unit_price_update_at = nil %>
+  <% end %>
+  
+  <!--251027保留
+  <% if @material_master.present? %>
+    <% @material_name = @material_master.material_name %>
+    <% @list_price = @material_master.list_price_quotation %>
+  <% else %>
+    <% @material_name = f.object.working_small_item_name %>
+    <% @list_price = f.object.unit_price %>
+  <% end %>
+  -->
+  
   <%= f.label :working_small_item_code, "品番:" %>
   
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -18,8 +45,9 @@
   <!--品番-->
   <!--<%= f.collection_select :working_small_item_id, MaterialMaster.all, :id, :p_material_code_name, {:selected => f.object.working_small_item_id || 1, } , 
     {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:690px' } %>-->
+  <!--upd251027 chg width 350px to-->
   <%= f.collection_select :working_small_item_id, MaterialMaster.all, :id, :p_material_code_name, {:selected => f.object.working_small_item_id || 1, } , 
-    {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:350px' } %>
+    {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:305px' } %>
   
   <!--メーカー追加-->
   <%= f.label :maker_master_id, "メーカー:　" %>
@@ -27,8 +55,13 @@
   <!--<%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
       {class: "searchableMaker" , id: "maker_master_id" , style: 'width:180px;'} %>-->
   <!-- upd231013 -->
+  <!--upd251027 chg width 180px to-->
   <%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
-      {class: "searchableMaker" , id: "maker_master_id" << f.options[:child_index].to_s , style: 'width:180px;'} %>
+      {class: "searchableMaker" , id: "maker_master_id" << f.options[:child_index].to_s , style: 'width:130px;'} %>
+  
+  <%= f.label :label_last_unit_price_update_at, "更新日:" %>
+   <%= f.text_field :last_unit_price_update_at , :style => 'width:100px', :id => "last_unit_price_update_at" << f.options[:child_index].to_s,
+                                                 :value => @last_unit_price_update_at, :readonly => true %>
   
   </br>
   <%= f.label :working_small_item_code, "品番手入力:　"%>
@@ -68,6 +101,7 @@
   
   <!--add180331 パナソニックの値上がり分は色をセット(201710分)-->
   <!--変更時はコントローラ側も要変更-->
+  <!--moved251027
   <% if f.object.maker_master_id.present? %>
     <% if f.object.working_small_item_id.present? %>
       <% @material_master = MaterialMaster.find(f.object.working_small_item_id) %>
@@ -77,6 +111,8 @@
   <% else %>
     <% @material_master = nil %>
   <% end %>
+  -->
+  
   <% @color = "black" %>
   <% if @material_master.present? %>
     <%require "date"%>
@@ -87,7 +123,7 @@
   <!--add end-->
   <font color = <%= @color %>  >
   <%= f.text_field :unit_price , :style => 'width:60px; text-align:right;ime-mode:disabled;font-size:12px;' , :tabindex => (26 + (f.options[:child_index] * 7)).to_s , 
-       :onkeyup => "focusNextModal(this, event, 'modal_unit_price', 'modal_rate')", id:'modal_unit_price' << f.options[:child_index].to_s  %>
+       :onkeyup => "focusNextModal(this, event, 'modal_unit_price', 'modal_rate')", id:'modal_unit_price' << f.options[:child_index].to_s %>
   </font>
   <!---->
   
@@ -144,6 +180,8 @@
    
   //$(document).on('ready page:load', function(){
   $(document).ready(function(){
+    
+    //RefleshMaterialInfo();
     
     // ↓以下は機能してないよう?
     
@@ -214,7 +252,26 @@
 	
 
   });
-  
+    
+  //add251027
+  //function RefleshMaterialInfo(){
+  //  var child_index = $(this)[0].id;
+  //  child_index = child_index.replace( /working_small_item_id/g , "" ) ;
+  //  material_id = document.getElementById("modal_working_small_item_code").value;
+    
+    //debugger;
+    
+    //if (material_id != undefined){
+    //  //ajax
+    //  $.get("<%= working_small_itemz_material_standard_select_path %>",
+    //         { material_id: material_id },
+    //   function(data){ 
+    //             //各種アイテム情報のセット
+    //              setMaterialDetail(child_index);
+    //     }
+    //   );
+    //}
+  //}  
   
   //ENTER→TABキーに変換する処理。
    $('[tabindex]').keydown(function (e) {

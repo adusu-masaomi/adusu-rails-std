@@ -6,6 +6,9 @@ class WorkingSmallItem < ApplicationRecord
   #attr_accessor :material_price  フィールド化180201
   attr_accessor :labor_productivity_unit_total
   
+  #add251027
+  attr_accessor :last_unit_price_update_at
+  
   #attr_accessor :action_flag_child
   
 end
