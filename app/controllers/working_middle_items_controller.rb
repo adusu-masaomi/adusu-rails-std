@@ -582,8 +582,12 @@ class WorkingMiddleItemsController < ApplicationController
             #名称のみの更新では古い単価に置き換わってしまうので、別途チェック判定を用意
             if params[:working_middle_item][:check_not_update_small_items] != "true"
               
-              @material_master = MaterialMaster.find(item[:working_small_item_id])
-            
+              @material_master = nil
+              
+              if item[:working_small_item_id].present?
+                @material_master = MaterialMaster.find(item[:working_small_item_id])
+              end
+              
               #upd240120
               #古いデータを更新した場合、古くて安い定価は更新されないようにする
               list_price_quotation = @material_master.list_price_quotation
