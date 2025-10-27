@@ -59,10 +59,11 @@
   <%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
       {class: "searchableMaker" , id: "maker_master_id" << f.options[:child_index].to_s , style: 'width:130px;'} %>
   
-  <%= f.label :label_last_unit_price_update_at, "更新日:" %>
+   <!--<%= f.label :label_last_unit_price_update_at, "更新日:" %>
    <%= f.text_field :last_unit_price_update_at , :style => 'width:100px', :id => "last_unit_price_update_at" << f.options[:child_index].to_s,
                                                  :value => @last_unit_price_update_at, :readonly => true %>
-  
+   -->
+   
   </br>
   <%= f.label :working_small_item_code, "品番手入力:　"%>
   <!--tabindexの右端の数は、トータルのタブ数。-->
