@@ -587,22 +587,26 @@ class WorkingMiddleItemsController < ApplicationController
               if item[:working_small_item_id].present?
                 #@material_master = MaterialMaster.find(item[:working_small_item_id])
                 @material_master = MaterialMaster.where(:id => item[:working_small_item_id]).first
+                
+                if @material_master.present?
+                
+                  #upd240120
+                  #古いデータを更新した場合、古くて安い定価は更新されないようにする
+                  list_price_quotation = @material_master.list_price_quotation
+                end
+                ###--old見積定価が直近単価以上の場合のみ更新させる
+              
+                #upd 250614 
+                #常に更新させる
+                #if (@material_master.last_unit_price.nil?) || (@material_master.last_unit_price  <= item[:unit_price].to_i)
+                list_price_quotation = item[:unit_price]
+                #end
+                #...数量は、どうする..!?
+                #
+            
               end
               
-              #upd240120
-              #古いデータを更新した場合、古くて安い定価は更新されないようにする
-              list_price_quotation = @material_master.list_price_quotation
-            
-              ###--old見積定価が直近単価以上の場合のみ更新させる
               
-              #upd 250614 
-              #常に更新させる
-              #if (@material_master.last_unit_price.nil?) || (@material_master.last_unit_price  <= item[:unit_price].to_i)
-              list_price_quotation = item[:unit_price]
-              #end
-              #...数量は、どうする..!?
-              #
-            
               if @material_master.present?
                 #品名・メーカーのみ登録とする
                 #material_master_params = {material_name: item[:working_small_item_name], 
