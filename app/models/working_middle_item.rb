@@ -29,6 +29,7 @@ class WorkingMiddleItem < ApplicationRecord
   attr_accessor :material_name_hide
   attr_accessor :quantity_hide
   attr_accessor :unit_price_hide
+  attr_accessor :last_list_price_update_at_hide  #add251028
   attr_accessor :labor_productivity_unit_hide
   attr_accessor :material_price_hide  
   attr_accessor :maker_id_hide        

@@ -235,7 +235,8 @@
         <%= f.input :material_code_hide, input_html:{id:'material_code_hide'}, as: :hidden  %>
 		<%= f.input :material_name_hide, input_html:{id:'material_name_hide'}, as: :hidden  %>
         <%= f.input :quantity_hide, input_html:{id:'quantity_hide'}, as: :hidden  %>
-		<%= f.input :unit_price_hide, input_html:{id:'unit_price_hide'}, as: :hidden  %>
+        <%= f.input :unit_price_hide, input_html:{id:'unit_price_hide'}, as: :hidden  %>
+        <%= f.input :last_list_price_update_at_hide, input_html:{id:'last_list_price_update_at_hide'}, as: :hidden  %>
 		<%= f.input :labor_productivity_unit_hide, input_html:{id:'labor_productivity_unit_hide'}, as: :hidden  %>
         <%= f.input :material_price_hide, input_html:{id:'material_price_hide'}, as: :hidden  %>
         <%= f.input :maker_id_hide, input_html:{id:'maker_id_hide'}, as: :hidden  %>
@@ -634,6 +635,11 @@
 	    //upd171205
 	    var unit_price = "modal_unit_price" + child_index;
 	    document.getElementById(unit_price).value = obj.innerText;
+	    
+	    //定価更新日をセット
+	    obj = document.getElementById("last_list_price_update_at_hide");
+	    var last_unit_price_update_at = "last_unit_price_updated_at" + child_index;
+	    document.getElementById(last_unit_price_update_at).value = obj.innerText;
 	    
         //add180726
         //掛け率をセット

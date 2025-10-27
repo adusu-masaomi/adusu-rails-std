@@ -79,7 +79,10 @@
   <%= f.input :last_unit_price, hint: "*仕入データ登録後に自動反映されるので（原則的に）入力不要です。", input_html:{ :tabindex=> @tab_index + 1} %>
   <%= f.input :last_unit_price_update_at, default: Date.strptime("2000/01/01", "%Y/%m/%d"), 
      hint: "*仕入データ登録後に自動反映されるので入力不要です。", input_html:{ :readonly => true } %>
-
+  
+  <%= f.input :list_price_update_at,  
+     hint: "*仕入データ登録後に自動反映されるので入力不要です。" %>
+     
   <%= f.button :submit, :class => 'btn-primary', :tabindex=> @tab_index + 2 %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 material_masters_path, :class => 'btn btn-white_rsd' %>

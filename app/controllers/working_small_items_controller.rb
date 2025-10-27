@@ -68,51 +68,91 @@ class WorkingSmallItemsController < ApplicationController
   
   # ajax
   def material_standard_select
+     
+     
+     #upd251028
      #品番
-     @material_code = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:material_code).flatten.join(",")
-     #品名
-     @material_name = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:material_name).flatten.join(",")
-	 
-	 #数量
-	 @quantity = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_quantity).flatten.join(",")
-	 
-     if @quantity.blank?   #未登録(null)なら１をセット
-       @quantity = 1
+     material_master = MaterialMaster.where(:id => params[:material_id]).first
+     
+     if material_master.present?
+       @material_code = material_master.material_code
+       @material_name = = material_master.material_name
+       @quantity = material_master.quantity
+       if @quantity.blank?   #未登録(null)なら１をセット
+         @quantity = 1
+       end
+              
+       #見積で使用するための定価(ケーブル等、定価ゼロなら直近単価が入っている）
+       @unit_price = material_master.list_price_quotation
+       @rate = material_master.standard_rate
+       
+       #定価一斉更新時の場合などで色をつける
+       @update_date = material_master.list_price_update_at
+       case @update_date 
+       when "2017/10/01"   #パナソニック一斉値上時
+         @list_price_color = "blue"
+       else
+         @list_price_color = "black"
+       end
+       #add end
+       
+       #定価更新日
+       @last_list_price_update_at = @update_date 
+       
+       #歩掛
+       @labor_productivity_unit = material_master.standard_labor_productivity_unit
+       
+       #メーカー 
+       @maker_master_id = material_master.maker_id
+       
+       #単位  
+       @unit_master_id = material_master.unit_id
+       
+       #資材費（最終単価）
+       @material_price = material_master.last_unit_price
      end
-	 
-	 #単価（定価）
-	 #@unit_price = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price).flatten.join(",")
-     #upd180726
+   
+     #@material_code = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:material_code).flatten.join(",")
+     #品名
+     #@material_name = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:material_name).flatten.join(",")
+     
+     #数量
+     #@quantity = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_quantity).flatten.join(",")
+      
+     #if @quantity.blank?   #未登録(null)なら１をセット
+     #  @quantity = 1
+     #end
+     
+     
+	   #単価（定価）
+	   #upd180726
      #見積で使用するための定価(ケーブル等、定価ゼロなら直近単価が入っている）
-     @unit_price = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price_quotation).flatten.join(",")
+     #@unit_price = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price_quotation).flatten.join(",")
 	 
      #掛率
-     #@rate = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price).flatten.join(",")
-     #update180726
-     @rate = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_rate).flatten.join(",")
+     #@rate = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_rate).flatten.join(",")
      
-     #add180331
      #定価一斉更新時の場合などで色をつける
-     @update_date = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price_update_at).flatten.join(",")
-     case @update_date 
-     when "2017/10/01"   #パナソニック一斉値上時
-       @list_price_color = "blue"
-     else
-       @list_price_color = "black"
-     end
+     #@update_date = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:list_price_update_at).flatten.join(",")
+     #case @update_date 
+     #when "2017/10/01"   #パナソニック一斉値上時
+     #  @list_price_color = "blue"
+     #else
+     #  @list_price_color = "black"
+     #end
      #add end
      
-	 #歩掛
-	 @labor_productivity_unit = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_labor_productivity_unit).flatten.join(",")
+     #歩掛
+     #@labor_productivity_unit = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:standard_labor_productivity_unit).flatten.join(",")
 	 
      #メーカー add1802021
-     @maker_master_id = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:maker_id).flatten.join(" ")
+     #@maker_master_id = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:maker_id).flatten.join(" ")
      
      #単位  add1802021
-     @unit_master_id = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:unit_id).flatten.join(" ")
+     #@unit_master_id = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:unit_id).flatten.join(" ")
      
      #資材費（最終単価）add180201
-     @material_price = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:last_unit_price).flatten.join(",")
+     #@material_price = MaterialMaster.where(:id => params[:material_id]).where("id is NOT NULL").pluck(:last_unit_price).flatten.join(",")
   end
   
   #add171113

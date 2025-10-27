@@ -32,6 +32,7 @@ ja:
     notes: 備考
     last_unit_price: 直近単価
     last_unit_price_update_at: 直近単価更新日
+    list_price_update_at: 定価更新日
     unit_id: 単位
     unit_master_id: 単位
     purchase_order_date: 注文日

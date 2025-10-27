@@ -47,7 +47,7 @@
     {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:690px' } %>-->
   <!--upd251027 chg width 350px to-->
   <%= f.collection_select :working_small_item_id, MaterialMaster.all, :id, :p_material_code_name, {:selected => f.object.working_small_item_id || 1, } , 
-    {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:305px' } %>
+    {class: "searchableMaterial" , id: "working_small_item_id" << f.options[:child_index].to_s ,  style: 'width:260px' } %>
   
   <!--メーカー追加-->
   <%= f.label :maker_master_id, "メーカー:　" %>
@@ -59,11 +59,14 @@
   <%= f.collection_select :maker_master_id, MakerMaster.all, :id, :maker_name, {:selected => f.object.maker_master_id || 1} , 
       {class: "searchableMaker" , id: "maker_master_id" << f.options[:child_index].to_s , style: 'width:130px;'} %>
   
-   <!--<%= f.label :label_last_unit_price_update_at, "更新日:" %>
-   <%= f.text_field :last_unit_price_update_at , :style => 'width:100px', :id => "last_unit_price_update_at" << f.options[:child_index].to_s,
-                                                 :value => @last_unit_price_update_at, :readonly => true %>
+   <!--251027 test del
+   <%= f.label :label_last_list_price_update_at, "更新日:" %>
+   <%= f.text_field :last_list_price_update_at , :style => 'width:100px', :id => "last_unit_price_update_at" << f.options[:child_index].to_s,
+                                                 :readonly => true %>
+    <%= link_to "更新", "#" ,
+            :class => 'btn btn-cyan400_ftg' , :onclick => 'setDetailTotalToOriginal()' %>
    -->
-   
+            
   </br>
   <%= f.label :working_small_item_code, "品番手入力:　"%>
   <!--tabindexの右端の数は、トータルのタブ数。-->
@@ -79,8 +82,8 @@
      :id => "modal_working_small_item_name" << f.options[:child_index].to_s %>
   
   <%= f.hidden_field :_destroy %>
-  <%= link_to "削除", '#', class: "remove_fields btn btn-pink500_rsd", id: f.options[:child_index]%>
-  
+  <%= link_to "削", '#', class: "remove_fields btn btn-pink500_rsd btn-xs", id: f.options[:child_index] %>
+  <!--<%= link_to_remove_association 'Remove', f, data: { confirm: 'Are you sure that you want to remove these nested fields?' } %>-->
   </br>
   
   <%= f.label :quantity, "数量:"%>
