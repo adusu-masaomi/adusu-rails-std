@@ -99,12 +99,12 @@ function setWorkingSmallItemDetail(child_index, form_flag){
      //add251028
      //定価更新日をセット
      obj = document.getElementById("last_list_price_update_at_hide");
-     var last_list_price_update_at = "last_list_price_update_at" + child_index;
+     var nm = "working_middle_item[working_small_items_attributes][" + child_index + "][last_list_price_update_at]"
      
-     if (document.getElementById(last_list_price_update_at) != undefined){
-       document.getElementById(last_list_price_update_at).value = obj.innerText;
+     if (document.getElementsByName(nm)[0] != undefined){
+       document.getElementsByName(nm)[0].value = obj.innerText;
      }
-     //debugger;
+     //
      
      //資材費を算出
      //del171118 基本手入力になる（単純に数量×単価にならない）

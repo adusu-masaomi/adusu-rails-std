@@ -472,6 +472,8 @@
        
          material_id =  parseInt(material_id);
          
+         //debugger;
+         
         //ajax
          $.get("<%= working_small_itemz_material_standard_select_path %>",
                { material_id: material_id },
@@ -577,7 +579,7 @@
   
   
   //アイテム選択後の、各種アイテム情報のセット
-  //通常はjsの"setWorkingSmallItemDetail"を使用！！
+  //通常はcommon.jsの"setWorkingSmallItemDetail"を使用！！
   function setMaterialDetail(child_index){
            
       
@@ -721,13 +723,6 @@
                   //各種アイテム情報のセット
 			     //setMaterialDetail(child_index);
                  
-                 //定価更新日をセット
-                 //obj = document.getElementById("last_list_price_update_at_hide");
-                 //var last_list_price_update_at = "last_list_price_update_at" + child_index;
-                 //document.getElementById(last_list_price_update_at).value = obj.innerText;
-                 //test
-                 //debugger;
-                 
                  //upd180331
                  setWorkingSmallItemDetail(child_index, 1);
              });
@@ -781,6 +776,38 @@
    //}
   }
   
+  //add251028
+  //アイテムを最新の情報に更新する
+  function RefleshItem(child_index){
+    nm = "working_middle_item[working_small_items_attributes][" + child_index + "][working_small_item_id]"
+    
+    if (document.getElementsByName(nm)[0] != undefined){
+      material_id = parseInt(document.getElementsByName(nm)[0].value);
+      $.get("<%= working_small_itemz_material_standard_select_path %>",
+          { material_id: material_id },
+           function(data){ 
+               setWorkingSmallItemDetail(child_index, 1);
+           });
+    }
+  }
+  
+  //明細の更新日を最新日付にする
+  function SetUpdateDateToday(){
+      var now_date = new Date().toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+        day: "2-digit"})
+      
+     // debugger;
+      
+      //item = document.getElementsByName("last_list_price_update_at[]");
+      item = document.querySelectorAll("#last_list_price_update_at");
+      
+      //debugger;
+      
+      for (var index = 0; index < item.length  ; index ++) {
+        item[index].value = now_date;
+      }
+  }
+  
   //明細の合計を元画面へ反映させる
   function setDetailTotalToOriginal(){
 	//debugger;
@@ -808,6 +835,9 @@
 	  
 	  //add240113
     clearCalcData();
+	  
+	  //add251028
+	  SetUpdateDateToday();
 	  
 	  //del240113
 	  //add171031
@@ -1181,6 +1211,7 @@
 	  document.getElementById(material_price_id).value = 0
     }
   }
+    
 
   //明細の資材費合計を計算する
   function CalcLaborMaterialCostTotal(value){
@@ -1534,6 +1565,8 @@
   
   //商品コードクリック時にインデックスを取得、更にプルダウンと照合する
   function searchItemCode(t){
+   
+      //debugger;
    
        child_index = t.id;
 	   

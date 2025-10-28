@@ -531,6 +531,8 @@ class WorkingMiddleItemsController < ApplicationController
   
     if params[:working_middle_item][:working_small_items_attributes].present?
       
+      #binding.pry
+      
       params[:working_middle_item][:working_small_items_attributes].values.each do |item|
         
         if item[:_destroy] != "1"
@@ -558,9 +560,15 @@ class WorkingMiddleItemsController < ApplicationController
             #material_master_params = {material_code: item[:working_small_item_code], material_name: item[:working_small_item_name], 
             #                          maker_id: item[:maker_master_id] }
             #upd240113
+            new_date = nil
+            if item[:last_list_price_update_at].present?
+              new_date = DateTime.parse(item[:last_list_price_update_at])
+            end
+            
             material_master_params = {material_code: item[:working_small_item_code], material_name: item[:working_small_item_name], 
                                       maker_id: item[:maker_master_id], standard_quantity: item[:quantity], unit_id: item[:unit_master_id],
-                                      list_price_quotation: item[:unit_price], standard_labor_productivity_unit: item[:labor_productivity_unit] }
+                                      list_price_quotation: item[:unit_price], standard_labor_productivity_unit: item[:labor_productivity_unit],
+                                      list_price_update_at: new_date}
                                       
             if item[:working_small_item_code].present?  #add180131 品番がなければマスター反映させない。
               @material_master = MaterialMaster.find_by(material_code: item[:working_small_item_code], 
@@ -590,11 +598,31 @@ class WorkingMiddleItemsController < ApplicationController
                 #@material_master = MaterialMaster.find(item[:working_small_item_id])
                 @material_master = MaterialMaster.where(:id => item[:working_small_item_id]).first
                 
+                list_price_update_at = nil
+                
                 if @material_master.present?
                 
                   #upd240120
                   #古いデータを更新した場合、古くて安い定価は更新されないようにする
                   list_price_quotation = @material_master.list_price_quotation
+                  
+                  list_price_update_at = @material_master.list_price_update_at
+                  
+                  #現在日の場合は、更新させる
+                  if list_price_update_at.blank? 
+                    list_price_update_at = item[:last_list_price_update_at]
+                  else
+                    if item[:last_list_price_update_at].present?
+                      new_date = DateTime.parse(item[:last_list_price_update_at])
+                      
+                      #binding.pry
+                      if list_price_update_at < new_date
+                        list_price_update_at = new_date
+                      end
+                    end
+                  end
+                  
+                  #binding.pry
                 end
                 ###--old見積定価が直近単価以上の場合のみ更新させる
               
@@ -617,10 +645,11 @@ class WorkingMiddleItemsController < ApplicationController
                 #material_master_params = {material_name: item[:working_small_item_name], 
                 #  maker_id: item[:maker_master_id], standard_quantity: item[:quantity], unit_id: item[:unit_master_id],
                 #  list_price_quotation: item[:unit_price], standard_labor_productivity_unit: item[:labor_productivity_unit] }
-                #upd240120
+                #定価更新日追加
                 material_master_params = {material_name: item[:working_small_item_name], 
                   maker_id: item[:maker_master_id], standard_quantity: item[:quantity], unit_id: item[:unit_master_id],
-                  list_price_quotation: list_price_quotation, standard_labor_productivity_unit: item[:labor_productivity_unit] }
+                  list_price_quotation: list_price_quotation, standard_labor_productivity_unit: item[:labor_productivity_unit], 
+                  list_price_update_at: list_price_update_at }
               
                 @material_master.update(material_master_params)
               end
@@ -707,8 +736,11 @@ class WorkingMiddleItemsController < ApplicationController
 	    i = 0
     
       params[:working_middle_item][:working_small_items_attributes].values.each do |item|
+        #binding.pry
+        
         #varidate用のために、本来の箇所から離れたパラメータを再セットする
         item[:material_price] = params[:material_price][i]
+        
         i += 1
       end
 		
@@ -865,6 +897,7 @@ class WorkingMiddleItemsController < ApplicationController
             :accessory_base_cost, :accessory_rate, :miscellaneous_base_cost, :miscellaneous_rate, :miscellaneous_cost,
             :other_base_cost, :other_rate, :benefit_rate,
             working_small_items_attributes:   [:id, :working_specific_middle_item_id, :working_small_item_id, :working_small_item_code, :working_small_item_name, 
-            :unit_price, :rate, :quantity, :material_price, :maker_master_id, :unit_master_id, :labor_productivity_unit, :_destroy] )
+            :unit_price, :rate, :quantity, :material_price, :maker_master_id, :unit_master_id, :labor_productivity_unit, :last_list_price_update_at,
+            :_destroy] )
     end
 end

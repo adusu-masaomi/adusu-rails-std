@@ -230,6 +230,7 @@ class WorkingSmallItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def working_small_item_params
-      params.require(:working_small_item).permit(:working_middle_item_id, :working_small_item_code, :working_small_item_name, :unit_price, :rate, :quantity, :labor_productivity_unit)
+      params.require(:working_small_item).permit(:working_middle_item_id, :working_small_item_code, :working_small_item_name, :unit_price, 
+                      :rate, :quantity, :labor_productivity_unit)
     end
 end
