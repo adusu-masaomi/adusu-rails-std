@@ -1308,16 +1308,16 @@ class PurchaseDataController < ApplicationController
     if params[:purchase_datum][:list_price].to_i > 0
       
       #定価を更新した場合、最終単価更新日を更新させる。("更新しない"フラグ未チェック時)
-      
-      #if (params[:purchase_datum][:unit_price_not_update_flag] == '0')
-      if @list_price_quotation != params[:purchase_datum][:list_price]
-        @list_price_update_at = DateTime.now
+      #常に更新する(定価の差異を考慮しない)
+      #if @list_price_quotation != params[:purchase_datum][:list_price]
         
-        #定価があれば、常に最新のものに更新させる(定価が更新された場合のみ)
-        @list_price_quotation = params[:purchase_datum][:list_price]
-      end
+      @list_price_update_at = DateTime.now
+        
+      #定価があれば、常に最新のものに更新させる(定価が更新された場合のみ)
+      @list_price_quotation = params[:purchase_datum][:list_price]
+      
       #end
-    
+      
       #定価があれば、常に最新のものに更新させる
       #@list_price_quotation = params[:purchase_datum][:list_price]
       
