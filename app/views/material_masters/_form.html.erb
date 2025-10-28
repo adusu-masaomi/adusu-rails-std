@@ -80,7 +80,7 @@
   <%= f.input :last_unit_price_update_at, default: Date.strptime("2000/01/01", "%Y/%m/%d"), 
      hint: "*仕入データ登録後に自動反映されるので入力不要です。", input_html:{ :readonly => true } %>
   
-  <%= f.input :list_price_update_at,  
+  <%= f.input :list_price_update_at, :include_blank => true, 
      hint: "*仕入データ登録後に自動反映されるので入力不要です。" %>
      
   <%= f.button :submit, :class => 'btn-primary', :tabindex=> @tab_index + 2 %>

@@ -1233,24 +1233,26 @@ class PurchaseDataController < ApplicationController
         if id != 1  #手入力以外
           @material_masters = MaterialMaster.find(id)
           if @material_masters.present?
-          
+            
             #定価
             #if @material_masters.list_price.nil? || @material_masters.list_price == 0 then
             params[:purchase_datum][:MaterialMaster_attributes][:list_price] = params[:purchase_datum][:list_price]
             #end
             
             #add180726
-            if (params[:purchase_datum][:unit_price_not_update_flag] == '0')
+            if (params[:purchase_datum][:unit_price_not_update_flag] == '0')  #"単価・定価更新しない"が未チェックの場合のみ
               #見積用の定価をセット
               set_material_list_price_quotation
-
-              #binding.pry
 
               #params[:purchase_datum][:MaterialMaster_attributes][:list_price_quotation] = @@list_price_quotation
               params[:purchase_datum][:MaterialMaster_attributes][:list_price_quotation] = @list_price_quotation
               #add251027
               #params[:purchase_datum][:MaterialMaster_attributes][:last_unit_price_update_at] = @last_unit_price_update_at
+              #定価更新日を更新(変更時のみ)
               params[:purchase_datum][:MaterialMaster_attributes][:list_price_update_at] = @list_price_update_at
+              #add251028
+              #単価更新日を更新(変更時のみ)
+              params[:purchase_datum][:MaterialMaster_attributes][:last_unit_price_update_at] = @unit_price_update_at
               
               #見積用の掛け率をセット
               params[:purchase_datum][:MaterialMaster_attributes][:standard_rate] = set_material_standard_rate
@@ -1279,15 +1281,17 @@ class PurchaseDataController < ApplicationController
 
     @list_price_quotation = 0
     @list_price_update_at = nil
-      
+    @unit_price_update_at = nil
     
     #upd25614 初期値
     if @material_masters.present?
       @list_price_quotation = @material_masters.list_price_quotation  
       @list_price_update_at = @material_masters.list_price_update_at  #add251027
+      @unit_price_update_at = @material_masters.last_unit_price_update_at
     elsif @material_master.present?
       @list_price_quotation = @material_master.list_price_quotation 
       @list_price_update_at = @material_master.list_price_update_at  #add251027
+      @unit_price_update_at = @material_master.last_unit_price_update_at
     end
     
     #定価の初期値は入れた方がいい？(保留250614)
@@ -1299,21 +1303,31 @@ class PurchaseDataController < ApplicationController
     
     #@tmp_date = DateTime.now
     
+    
     #restore251027
     if params[:purchase_datum][:list_price].to_i > 0
       
-      #定価を更新した場合、最終単価更新日を更新させる。
+      #定価を更新した場合、最終単価更新日を更新させる。("更新しない"フラグ未チェック時)
+      
+      #if (params[:purchase_datum][:unit_price_not_update_flag] == '0')
       if @list_price_quotation != params[:purchase_datum][:list_price]
-        #@last_unit_price_update_at = DateTime.now
         @list_price_update_at = DateTime.now
         
         #定価があれば、常に最新のものに更新させる(定価が更新された場合のみ)
         @list_price_quotation = params[:purchase_datum][:list_price]
       end
+      #end
     
       #定価があれば、常に最新のものに更新させる
       #@list_price_quotation = params[:purchase_datum][:list_price]
       
+    end
+    
+    #単価の日付も更新
+    if params[:purchase_datum][:purchase_unit_price].to_i > 0
+      if @unit_price_update_at != params[:purchase_datum][:purchase_unit_price]
+        @unit_price_update_at = DateTime.now
+      end
     end
     
     #del250614
@@ -1331,9 +1345,7 @@ class PurchaseDataController < ApplicationController
 
   #見積用の掛け率を登録する
   def set_material_standard_rate
-
-    #binding.pry
-
+    
     standard_rate = 0
 
     #if @@list_price_quotation.to_f > 0
