@@ -76,8 +76,8 @@ class WorkingSmallItemsController < ApplicationController
      
      if material_master.present?
        @material_code = material_master.material_code
-       @material_name = = material_master.material_name
-       @quantity = material_master.quantity
+       @material_name = material_master.material_name
+       @quantity = material_master.standard_quantity
        if @quantity.blank?   #未登録(null)なら１をセット
          @quantity = 1
        end
@@ -95,6 +95,8 @@ class WorkingSmallItemsController < ApplicationController
          @list_price_color = "black"
        end
        #add end
+       
+       #binding.pry
        
        #定価更新日
        @last_list_price_update_at = @update_date 

@@ -579,6 +579,7 @@
   //アイテム選択後の、各種アイテム情報のセット
   //通常はjsの"setWorkingSmallItemDetail"を使用！！
   function setMaterialDetail(child_index){
+           
       
       //品番をセット
 	  obj = document.getElementById("material_code_hide");
@@ -638,7 +639,8 @@
 	    
 	    //定価更新日をセット
 	    obj = document.getElementById("last_list_price_update_at_hide");
-	    var last_unit_price_update_at = "last_unit_price_updated_at" + child_index;
+	    	    
+	    var last_unit_price_update_at = "last_list_price_updated_at" + child_index;
 	    document.getElementById(last_unit_price_update_at).value = obj.innerText;
 	    
         //add180726
@@ -718,6 +720,13 @@
 			   function(data){ 
                   //各種アイテム情報のセット
 			     //setMaterialDetail(child_index);
+                 
+                 //定価更新日をセット
+                 //obj = document.getElementById("last_list_price_update_at_hide");
+                 //var last_list_price_update_at = "last_list_price_update_at" + child_index;
+                 //document.getElementById(last_list_price_update_at).value = obj.innerText;
+                 //test
+                 //debugger;
                  
                  //upd180331
                  setWorkingSmallItemDetail(child_index, 1);

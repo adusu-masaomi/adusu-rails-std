@@ -3,7 +3,11 @@
 //アイテム選択後の、各種アイテム情報のセット
 //(作業明細フォーム共通用)
 //form_flag 1:共通マスター 2:固有マスター
+//251028 現在未使用？？(common.jsを見ている)
+
 function setWorkingSmallItemDetail(child_index, form_flag){
+   
+   //debugger;
    
    //共通マスター・固有マスターでコントロール名が違う為、それぞれ名前を取得
    var attributes_name = getWorkingSmallItemAttributesName(form_flag);
@@ -60,6 +64,11 @@ function setWorkingSmallItemDetail(child_index, form_flag){
 	 obj = document.getElementById("rate_hide");
 	 var rate = "modal_rate" + child_index;
 	 document.getElementById(rate).value = obj.innerText;
+         
+     //定価更新日をセット
+     //obj = document.getElementById("last_list_price_update_at_hide");
+     //var last_list_price_update_at = "last_list_price_update_at" + child_index;
+     //document.getElementById(last_list_price_update_at).value = obj.innerText;
     
      //定価の色をセット
      //add180331

@@ -129,6 +129,6 @@ class MaterialMastersController < ApplicationController
     def material_master_params
       params.require(:material_master).permit(:material_code, :internal_code, :material_name, :maker_id, :unit_id, :list_price, :standard_quantity,
                                               :standard_labor_productivity_unit, :last_unit_price, :last_unit_price_update_at, :inventory_category_id,
-                                              :material_category_id, :notes, :list_price_quotation)
+                                              :material_category_id, :notes, :list_price_quotation, :list_price_update_at)
     end
 end

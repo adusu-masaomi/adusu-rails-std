@@ -32,6 +32,7 @@ $(document).ready(function() {
   //アイテム選択後の、各種アイテム情報のセット
 //(作業明細フォーム共通用)
 //form_flag 1:共通マスター 2:固有マスター
+
 function setWorkingSmallItemDetail(child_index, form_flag){
    
    //共通マスター・固有マスターでコントロール名が違う為、それぞれ名前を取得
@@ -94,6 +95,16 @@ function setWorkingSmallItemDetail(child_index, form_flag){
      //add180331
      obj = document.getElementById("list_price_color_hide");
      document.getElementById(unit_price).style.color = obj.innerText;
+     
+     //add251028
+     //定価更新日をセット
+     obj = document.getElementById("last_list_price_update_at_hide");
+     var last_list_price_update_at = "last_list_price_update_at" + child_index;
+     
+     if (document.getElementById(last_list_price_update_at) != undefined){
+       document.getElementById(last_list_price_update_at).value = obj.innerText;
+     }
+     //debugger;
      
      //資材費を算出
      //del171118 基本手入力になる（単純に数量×単価にならない）

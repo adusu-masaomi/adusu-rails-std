@@ -1306,10 +1306,13 @@ class PurchaseDataController < ApplicationController
       if @list_price_quotation != params[:purchase_datum][:list_price]
         #@last_unit_price_update_at = DateTime.now
         @list_price_update_at = DateTime.now
+        
+        #定価があれば、常に最新のものに更新させる(定価が更新された場合のみ)
+        @list_price_quotation = params[:purchase_datum][:list_price]
       end
     
       #定価があれば、常に最新のものに更新させる
-      @list_price_quotation = params[:purchase_datum][:list_price]
+      #@list_price_quotation = params[:purchase_datum][:list_price]
       
     end
     
