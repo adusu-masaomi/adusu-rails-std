@@ -5,110 +5,93 @@
 //form_flag 1:共通マスター 2:固有マスター
 //251028 現在未使用？？(common.jsを見ている)
 
-function setWorkingSmallItemDetail(child_index, form_flag){
-   
-   //debugger;
-   
-   //共通マスター・固有マスターでコントロール名が違う為、それぞれ名前を取得
-   var attributes_name = getWorkingSmallItemAttributesName(form_flag);
-   
-   //品番をセット
-   obj = document.getElementById("material_code_hide");
-   var itemIdName = attributes_name + "[" + child_index + "][working_small_item_id]"
-   
-   var working_small_item_code = "modal_working_small_item_code" + child_index;
-   if (document.getElementsByName(itemIdName)[0].value != "1"){
-   //手入力品番以外の場合のみ、品番をセット 
-     var working_small_item_code = "modal_working_small_item_code" + child_index;
-     document.getElementById(working_small_item_code).value = obj.innerText;
-   }
-   
-   //品番有、手入力以外の場合
-   if (document.getElementById(working_small_item_code).value != "" && 
-      document.getElementsByName(itemIdName)[0].value != "1"){   
-          
-     //品名をセット
-     obj = document.getElementById("material_name_hide");
-     var working_small_item_name = "modal_working_small_item_name" + child_index;
-     document.getElementById(working_small_item_name).value = obj.innerText;
-	 
-     //メーカー名をセット add180201
-	 obj = document.getElementById("maker_id_hide").textContent;
-	 if (obj != null){
-	   var index = parseInt(obj);
-	   nm = attributes_name + "[" + child_index + "][maker_master_id]"
-	   document.getElementsByName(nm)[0].value = index; 
-       $(".searchableMaker").trigger("change"); 
-	 }
-     //単位名をセット add180201
-     obj = document.getElementById("unit_master_id_hide").textContent;
-     if (obj != null){
-       var index = parseInt(obj);
-       nm = attributes_name + "[" + child_index + "][unit_master_id]"
-       document.getElementsByName(nm)[0].value = index; 
-       $(".searchableUnit").trigger("change"); 
-     }
-        
-     //数量をセット
-     obj = document.getElementById("quantity_hide");
-     var quantity = "modal_quantity" + child_index;
-     document.getElementById(quantity).value = obj.innerText;
-				 
-     //定価をセット
-     obj = document.getElementById("unit_price_hide");
-     var unit_price = "modal_unit_price" + child_index;
-     document.getElementById(unit_price).value = obj.innerText;
-	
-     //add180726
-     //掛け率をセット
-	 obj = document.getElementById("rate_hide");
-	 var rate = "modal_rate" + child_index;
-	 document.getElementById(rate).value = obj.innerText;
-         
-     //定価更新日をセット
-     //obj = document.getElementById("last_list_price_update_at_hide");
-     //var last_list_price_update_at = "last_list_price_update_at" + child_index;
-     //document.getElementById(last_list_price_update_at).value = obj.innerText;
-    
-     //定価の色をセット
-     //add180331
-     obj = document.getElementById("list_price_color_hide");
-     document.getElementById(unit_price).style.color = obj.innerText;
-     
-     //資材費を算出
-     //del171118 基本手入力になる（単純に数量×単価にならない）
-     //calcMaterialPrice(child_index, document.getElementById(quantity).value, 
-     //                  document.getElementById(unit_price).value);
-     //資材費を算出
-	 //add180201フィールド化
-     obj = document.getElementById("material_price_hide");
-	 var material_price = "modal_material_price" + child_index;
-	 document.getElementById(material_price).value = obj.innerText;
-   }
-   
-     //歩掛をセット
-     obj = document.getElementById("labor_productivity_unit_hide");
-     var labor_productivity_unit = "modal_labor_productivity_unit" + child_index;
-     document.getElementById(labor_productivity_unit).value = obj.innerText;
-				 
-     //歩掛り計を算出
-     if (document.getElementById(quantity) != undefined){
-     //180317 add condition
-       calcLaborProductivityUnitTotal(child_index, document.getElementById(quantity).value, 
-		document.getElementById(labor_productivity_unit).value);
-	 }
-        
-     //資材費合計を算出
-     CalcLaborMaterialCostTotal("modal_material_price");
-				
-     //歩掛計を算出
-     //CalcLaborLaborProductivityUnitSum("modal_labor_productivity_unit_total");
-     //upd240113
-     CalcLaborLaborProductivityUnitSum("labor_productivity_unit_total");
-				 
-     //労務費を算出
-     calcLaborCostTotal();
-}
+//function setWorkingSmallItemDetail(child_index, form_flag){
+//   //共通マスター・固有マスターでコントロール名が違う為、それぞれ名前を取得
+//   var attributes_name = getWorkingSmallItemAttributesName(form_flag);
+//   //品番をセット
+//   obj = document.getElementById("material_code_hide");
+//   var itemIdName = attributes_name + "[" + child_index + "][working_small_item_id]"
+//   var working_small_item_code = "modal_working_small_item_code" + child_index;
+//   if (document.getElementsByName(itemIdName)[0].value != "1"){
+//   //手入力品番以外の場合のみ、品番をセット 
+//     var working_small_item_code = "modal_working_small_item_code" + child_index;
+//     document.getElementById(working_small_item_code).value = obj.innerText;
+//   }
+//   //品番有、手入力以外の場合
+//   if (document.getElementById(working_small_item_code).value != "" && 
+//      document.getElementsByName(itemIdName)[0].value != "1"){   
+//     //品名をセット
+//     obj = document.getElementById("material_name_hide");
+//     var working_small_item_name = "modal_working_small_item_name" + child_index;
+//     document.getElementById(working_small_item_name).value = obj.innerText;
+//     //メーカー名をセット add180201
+//	 obj = document.getElementById("maker_id_hide").textContent;
+//	 if (obj != null){
+//	   var index = parseInt(obj);
+//	   nm = attributes_name + "[" + child_index + "][maker_master_id]"
+//	   document.getElementsByName(nm)[0].value = index; 
+//       $(".searchableMaker").trigger("change"); 
+//	 }
+//     //単位名をセット add180201
+//     obj = document.getElementById("unit_master_id_hide").textContent;
+//     if (obj != null){
+//       var index = parseInt(obj);
+//       nm = attributes_name + "[" + child_index + "][unit_master_id]"
+//       document.getElementsByName(nm)[0].value = index; 
+//       $(".searchableUnit").trigger("change"); 
+//    }
+//        
+//     //数量をセット
+//     obj = document.getElementById("quantity_hide");
+//     var quantity = "modal_quantity" + child_index;
+//     document.getElementById(quantity).value = obj.innerText;
+//   //定価をセット
+//     obj = document.getElementById("unit_price_hide");
+//     var unit_price = "modal_unit_price" + child_index;
+//     document.getElementById(unit_price).value = obj.innerText;
+//     //add180726
+//     //掛け率をセット
+//	 obj = document.getElementById("rate_hide");
+//	 var rate = "modal_rate" + child_index;
+//	 document.getElementById(rate).value = obj.innerText;
+//     //定価更新日をセット
+//     //obj = document.getElementById("last_list_price_update_at_hide");
+//     //var last_list_price_update_at = "last_list_price_update_at" + child_index;
+//     //document.getElementById(last_list_price_update_at).value = obj.innerText;
+//     //定価の色をセット
+//     //add180331
+//     obj = document.getElementById("list_price_color_hide");
+//     document.getElementById(unit_price).style.color = obj.innerText;
+//     //資材費を算出
+//     //del171118 基本手入力になる（単純に数量×単価にならない）
+//     //calcMaterialPrice(child_index, document.getElementById(quantity).value, 
+//     //                  document.getElementById(unit_price).value);
+//     //資材費を算出
+//	 //add180201フィールド化
+//     obj = document.getElementById("material_price_hide");
+//	 var material_price = "modal_material_price" + child_index;
+//	 document.getElementById(material_price).value = obj.innerText;
+//   }
+//     //歩掛をセット
+//     obj = document.getElementById("labor_productivity_unit_hide");
+//     var labor_productivity_unit = "modal_labor_productivity_unit" + child_index;
+//     document.getElementById(labor_productivity_unit).value = obj.innerText;
+//   //歩掛り計を算出
+//     if (document.getElementById(quantity) != undefined){
+//     //180317 add condition
+//       calcLaborProductivityUnitTotal(child_index, document.getElementById(quantity).value, 
+//		document.getElementById(labor_productivity_unit).value);
+//	 }
+//        
+//     //資材費合計を算出
+//     CalcLaborMaterialCostTotal("modal_material_price");
+//   //歩掛計を算出
+//     //CalcLaborLaborProductivityUnitSum("modal_labor_productivity_unit_total");
+//     //upd240113
+//     CalcLaborLaborProductivityUnitSum("labor_productivity_unit_total");
+//     //労務費を算出
+//     calcLaborCostTotal();
+//}
 
 
 function getWorkingSmallItemAttributesName(form_flag){
