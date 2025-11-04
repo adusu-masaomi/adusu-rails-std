@@ -836,19 +836,27 @@ class PurchaseOrderHistoriesController < ApplicationController
             (item[:unit_master_id] != @material_master.unit_id )
 
             #品名・メーカーを登録or変更した場合は、商品マスターへ反映させる。
-            materials = MaterialMaster.where(:id => @material_master.id).first
-            if materials.present?
-              #materials.update_attributes!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
-              #                             :list_price => item[:list_price], 
-              #                             :notes => item[:notes], :material_category_id => item[:material_category_id],
-              #                             :unit_id => item[:unit_master_id])
-              #Rails6
-              materials.update!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
-                                           :list_price => item[:list_price], 
-                                           :notes => item[:notes], :material_category_id => item[:material_category_id],
-                                           :unit_id => item[:unit_master_id])
-              
-            end 
+            #upd251104
+            if @material_master.present?
+              @material_master.material_name = item[:material_name]
+              @material_master.maker_id = item[:maker_id]
+              @material_master.list_price = item[:list_price]
+              @material_master.notes = item[:notes]
+              @material_master.material_category_id = item[:material_category_id]
+              @material_master.unit_id = item[:unit_id]
+            
+              @material_master.save!
+            end
+            
+            #del251104
+            #ここで２重にデータが呼ばれるため、遅くなっていると思われる
+            #materials = MaterialMaster.where(:id => @material_master.id).first
+            #if materials.present?
+            #  materials.update!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
+            #                               :list_price => item[:list_price], 
+            #                               :notes => item[:notes], :material_category_id => item[:material_category_id],
+            #                               :unit_id => item[:unit_master_id])
+            #end 
           end
 
           purchase_unit_price = PurchaseUnitPrice.where(["supplier_id = ? and material_id = ?", 
@@ -1032,11 +1040,17 @@ class PurchaseOrderHistoriesController < ApplicationController
     if params[:purchase_order_history][:sent_flag] == "1" || @order_flag
       if @purchase_order_history.orders.present?   
          @purchase_order_history.orders.each do |item|
-           order = Order.where(:id => item.id).first
-           if order.present?
-             order_params = {mail_sent_flag: 1}
-             order.update(order_params)
-           end    
+           #upd251104 高速化
+           if item.id.present?
+             item.mail_sent_flag = 1
+             item.save
+           end
+           
+           #order = Order.where(:id => item.id).first
+           #if order.present?
+           #  order_params = {mail_sent_flag: 1}
+           #  order.update(order_params)
+           #end    
            #
          end
       end
