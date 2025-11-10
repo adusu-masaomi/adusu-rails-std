@@ -1204,11 +1204,16 @@ class QuotationMaterialHeadersController < ApplicationController
       
         @order = Order.where(["purchase_order_history_id = ? and sequential_id = ?", 
            purchase_order_history_id, sequential_id]).first
-        if @order.present?  #上書き(メール異常等で再送信の場合もあり得るため)
-          @order.update(order_params)
-        else
-          @order = Order.create(order_params)
-        end
+        
+        #upd251110
+        @order = Order.create(order_params)
+        
+        #本来別に注文したデータまで上書きしてしまうため、以下は抹消(251110)
+        #if @order.present?  #上書き(メール異常等で再送信の場合もあり得るため)
+        #  @order.update(order_params)
+        #else
+        #  @order = Order.create(order_params)
+        #end
         
       end
     end  #loop end

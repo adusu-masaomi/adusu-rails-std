@@ -580,7 +580,7 @@ class PurchaseOrderHistoriesController < ApplicationController
     
     respond_to do |format|
       #if PurchaseOrderHistory.create(purchase_order_history_params)
-            
+      
       if @purchase_order_history.save!(:validate => false)   
 
         #臨時FAX用
@@ -637,6 +637,9 @@ class PurchaseOrderHistoriesController < ApplicationController
   def get_data_on_create_twice
     tmp_history = PurchaseOrderHistory.where(purchase_order_date: params[:purchase_order_history][:purchase_order_date],
                                              purchase_order_datum_id: params[:purchase_order_history][:purchase_order_datum_id]).first
+    
+    #binding.pry
+    
     if tmp_history.present?
       @purchase_order_history = tmp_history
       #すでに登録していた注文データは一旦抹消する。
@@ -668,10 +671,17 @@ class PurchaseOrderHistoriesController < ApplicationController
       #format.any ##???
       format.any { render json: purchase_order_history_params}
       
+      #if @purchase_order_history.orders.blank? #add251110
+      #if params[:purchase_order_history][:sent_flag] != "1"
+      
       @purchase_order_history.attributes = purchase_order_history_params
-           
+      
+      #end
+            
+      
       #@quotation_headers.save(:validate => false)
       if @purchase_order_history.save!
+      
       #if is_saved == true
       #if @purchase_order_history.update(purchase_order_history_params)
 
@@ -699,6 +709,11 @@ class PurchaseOrderHistoriesController < ApplicationController
           flash[:notice] = "メールを送信しました。"
 
           break
+        
+        #test 
+        #elsif params[:purchase_order_history][:sent_flag] == "0"
+        #  redirect_to request.referer, alert: "Successfully sending message"  #ここでalertを適当に入れないと下部のflashメッセージが出ない。
+        #  break
         end
 
         if params[:move_flag] != "1"

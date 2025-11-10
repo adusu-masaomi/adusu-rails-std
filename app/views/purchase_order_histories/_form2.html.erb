@@ -1006,6 +1006,13 @@
         
       document.forms[0].target="_blank";  //add220615
       document.forms[0].submit();
+      
+      //add251110
+      //読み込んだデータを表示するため、リロードする
+      //これを行わないと注文書発行→メールのタイミングでデータが２重になってしまう
+      reloadDiv();
+      //
+      
       return true;
     }else{
       return false;
