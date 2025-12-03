@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_02_083616) do
+ActiveRecord::Schema.define(version: 2025_12_03_004111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -592,6 +592,8 @@ ActiveRecord::Schema.define(version: 2025_12_02_083616) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "purchase_unit_price_tax"
+    t.date "construction_period_start"
+    t.date "construction_period_end"
   end
 
   create_table "purchase_divisions", force: :cascade do |t|
