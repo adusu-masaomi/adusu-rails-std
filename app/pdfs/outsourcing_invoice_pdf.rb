@@ -190,6 +190,57 @@ class OutsourcingInvoicePDF
       report.page.item(:construction_place).value(all_address) 
       #
       
+      #add251203
+      #工事期間開始日
+      if purchase_data_current.construction_period_start.present?
+        gengou_date = purchase_data_current.construction_period_start
+        #元号は令和のみとする(追加時は要変更)
+        
+        #このコードも一応残しておく
+        #gengou_date = $gengo_name_2 + "#{gengou_date.year - $gengo_minus_ad_2}年#{gengou_date.strftime('%-m')}月#{gengou_date.strftime('%-d')}日"
+        
+        #空白埋め
+        gengo = gengou_date.year - $gengo_minus_ad_2
+        gengo = sprintf("%2d", gengo)
+        
+        month = gengou_date.strftime('%-m')
+        month = sprintf("%2d", month)
+        
+        #day = gengou_date.strftime('%-d')
+        #day = sprintf("%2d", day)
+        #
+        
+        gengou_date = $gengo_name_2 + "#{gengo}年#{month}月#{gengou_date.strftime('%e')}日"
+        
+        report.page.item(:construction_period_start).value(gengou_date)
+        report.page.item(:from_to).value("～")
+      end
+      #工事期間終了日
+      if purchase_data_current.construction_period_end.present?
+        if purchase_data_current.construction_period_start.blank?
+          report.page.item(:from_to).value("～")
+        end
+      
+        gengou_date = purchase_data_current.construction_period_end
+        #元号は令和のみとする(追加時は要変更)
+        
+        #このコードも一応残しておく
+        #gengou_date = $gengo_name_2 + "#{gengou_date.year - $gengo_minus_ad_2}年#{gengou_date.strftime('%-m')}月#{gengou_date.strftime('%-d')}日"
+        
+        #空白埋め
+        gengo = gengou_date.year - $gengo_minus_ad_2
+        gengo = sprintf("%2d", gengo)
+        
+        month = gengou_date.strftime('%-m')
+        month = sprintf("%2d", month)
+        
+        gengou_date = $gengo_name_2 + "#{gengo}年#{month}月#{gengou_date.strftime('%e')}日"
+        #
+        
+        report.page.item(:construction_period_end).value(gengou_date)
+      end
+      #add end
+      
       #着工日
       if outsourcing_cost.present? && outsourcing_cost.working_start_date.present?
         @gengou = outsourcing_cost.working_start_date

@@ -510,6 +510,8 @@ class OutsourcingDataController < ApplicationController
   # PATCH/PUT /purchase_data/1.json
   def update
   
+    #binding.pry
+  
     #viewで分解されたパラメータを、正常更新できるように復元させる。
     adjust_purchase_date_params
    
@@ -931,7 +933,32 @@ class OutsourcingDataController < ApplicationController
       params[:purchase_datum][:working_end_date] = params[:purchase_datum][:working_end_date][0] + "/" + 
                                                   params[:purchase_datum][:working_end_date][1] + "/" + 
                                                   params[:purchase_datum][:working_end_date][2]
+    end                                            
+                                                
+    #add251203
+    #工事期間開始日
+    if params[:purchase_datum][:construction_period_start] == ["", "", ""]
+       params[:purchase_datum][:construction_period_start] = ""
     end
+    if !(params[:purchase_datum][:construction_period_start].blank?)
+      params[:purchase_datum][:construction_period_start] = params[:purchase_datum][:construction_period_start][0] + "/" + 
+                                                  params[:purchase_datum][:construction_period_start][1] + "/" + 
+                                                  params[:purchase_datum][:construction_period_start][2]
+    end                                                 
+    #
+    #工事期間終了日
+    if params[:purchase_datum][:construction_period_end] == ["", "", ""]
+       params[:purchase_datum][:construction_period_end] = ""
+    end
+    if !(params[:purchase_datum][:construction_period_end].blank?)
+      params[:purchase_datum][:construction_period_end] = params[:purchase_datum][:construction_period_end][0] + "/" + 
+                                                  params[:purchase_datum][:construction_period_end][1] + "/" + 
+                                                  params[:purchase_datum][:construction_period_end][2]
+    end                                                 
+    #
+    
+    #
+                                                
     #締日
     if params[:purchase_datum][:closing_date] == ["", "", ""]
        params[:purchase_datum][:closing_date] = ""
@@ -1582,7 +1609,7 @@ class OutsourcingDataController < ApplicationController
   end
   #
   
-  #--ここは未使用？？(230609)
+  #--ここは未使用？？(230609--purchase_dataのものを使用中 251203)
   #外注の場合に、労務費をセットする
   def get_labor_cost
     
@@ -1603,8 +1630,6 @@ class OutsourcingDataController < ApplicationController
     #
     
     #joins(:Staff) #where(:supplier_master_id => supplier_master_id)
-    
-    #binding.pry
     
     #労務費をそのままセット
     #@purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
@@ -1731,7 +1756,8 @@ class OutsourcingDataController < ApplicationController
       params.require(:purchase_datum).permit(:purchase_date, :slip_code, :purchase_order_datum_id, :construction_datum_id, 
                      :material_id, :material_code, :material_name, :maker_id, :maker_name, :quantity, :unit_id, :purchase_unit_price, 
                      :purchase_amount, :list_price, :division_id, :supplier_id, :inventory_division_id, :unit_price_not_update_flag, :outsourcing_invoice_flag, 
-                     :notes, :purchase_header_id, :working_end_date, :closing_date, :payment_due_date, :purchase_unit_price_tax)
+                     :notes, :purchase_header_id, :working_end_date, :closing_date, :payment_due_date, :purchase_unit_price_tax, 
+                     :construction_period_start, :construction_period_end)
     end
     
     def purchase_unit_prices_params

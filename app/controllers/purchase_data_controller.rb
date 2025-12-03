@@ -1713,7 +1713,13 @@ class PurchaseDataController < ApplicationController
   #add190124
   #外注の場合に、労務費をセットする
   def get_labor_cost
-
+    #
+    no_date = 0
+    from_to_date = 1
+    from_date_only = 2
+    to_date_only = 3
+    #
+    
     #あとで社員マスターとリンクさせる。ひとまず固定で。
     staff_id = 0
     #supplier_id = params[:supplier_id].to_i
@@ -1729,17 +1735,64 @@ class PurchaseDataController < ApplicationController
     #  staff_id = 5
     #end
     #
-
-
+    
+    #add251203
+    #工事期間開始日・終了日を考慮
+    construction_period_start = nil
+    if params[:construction_period_start].present?
+      construction_period_start = params[:construction_period_start].to_date
+    end
+    construction_period_end = nil
+    if params[:construction_period_end].present?
+      construction_period_end = params[:construction_period_end].to_date
+    end
+    
+    date_flag = no_date
+    
+    if construction_period_start.present? && construction_period_end.present?
+      #開始日・終了日が入力?
+      date_flag = from_to_date
+    elsif construction_period_start.present?
+      #開始日のみ
+      date_flag = from_date_only
+    elsif construction_period_end.present?
+      #終了日のみ
+      date_flag = to_date_only
+    end
+    #
+    
     #労務費をそのままセット
-    # @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
-    #    params[:construction_datum_id]).where(:staff_id => staff_id).sum(:labor_cost)
-
+    #@purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
+    #  params[:construction_datum_id]).joins(:Staff).
+    #  where(staffs: { supplier_master_id: supplier_master_id }).sum(:labor_cost)
+      
+    #binding.pry
+      
     #標準版仕様--230609
-    @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
-    params[:construction_datum_id]).joins(:Staff).
-    where(staffs: { supplier_master_id: supplier_master_id }).sum(:labor_cost)
-
+    #工事期間により分岐
+    case date_flag
+    when no_date
+      #期間指定なし→全て取得
+      @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
+      params[:construction_datum_id]).joins(:Staff).
+      where(staffs: { supplier_master_id: supplier_master_id }).sum(:labor_cost)
+    when from_to_date
+      #開始終了日のある場合
+      @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
+      params[:construction_datum_id]).joins(:Staff).
+      where(staffs: { supplier_master_id: supplier_master_id }).where('working_date >= ?', construction_period_start ).
+      where('working_date <= ?', construction_period_end ).sum(:labor_cost)
+    when from_date_only
+      #開始日のみ
+      @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
+      params[:construction_datum_id]).joins(:Staff).
+      where(staffs: { supplier_master_id: supplier_master_id }).where('working_date >= ?', construction_period_start ).sum(:labor_cost)
+    when to_date_only
+      #終了日のみ
+      @purchase_unit_price = ConstructionDailyReport.where(:construction_datum_id => 
+      params[:construction_datum_id]).joins(:Staff).
+      where(staffs: { supplier_master_id: supplier_master_id }).where('working_date <= ?', construction_period_end ).sum(:labor_cost)
+    end 
 
   end
   #
