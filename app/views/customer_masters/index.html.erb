@@ -164,27 +164,27 @@
   //検索可能なリストボックス
   $(document).ready(function(){
 
-     $(".searchableCustomerName").select2({ theme: "classic" });
+    $(".searchableCustomerName").select2({ theme: "classic" });
+    $(".searchableSelect2_1").select2({ theme: "classic", allowClear: true, placeholder: "" });
+ 
+    //見出し固定用設定追加
+    var sz = window.parent.screen.width;
+    //var fc = 1;    //デフォルトの固定列数(社長PC基準)
+    //upd251205
+    var fc = 2;    //デフォルトの固定列数(社長PC基準)
+    var ht = 610;  //デフォルトの高さ(社長PC基準)
 	 
-	 $(".searchableSelect2_1").select2({ theme: "classic", allowClear: true, placeholder: "" });
-	 
-	 
-	 //見出し固定用設定追加
-	 var sz = window.parent.screen.width;
-	 var fc = 1;    //デフォルトの固定列数(社長PC基準)
-	 var ht = 610;  //デフォルトの高さ(社長PC基準)
-	 
-	 if (sz != 1920) {
-	 //画面サイズ1920px(社長PC基準)以外は、列固定させる。
-        fc = 1;  //固定列数
-		ht -= 70;
-        //sz -= 0;
-        sz = 1920; //for ipad pro (add180829)
-	 }
-	 $('#tablefix').tablefix({width: sz, height: ht, fixRows: 1, fixCols: fc});
-     //$('#tablefix').tablefix({width: 1920, height: 610, fixRows: 1, fixCols: 1});
-	 
-	 //画面位置を保持する
+    if (sz != 1920) {
+      //画面サイズ1920px(社長PC基準)以外は、列固定させる。
+      fc = 2;  //固定列数  upd251205
+      ht -= 70;
+      //sz -= 0;
+      sz = 1920; //for ipad pro (add180829)
+    }
+    $('#tablefix').tablefix({width: sz, height: ht, fixRows: 1, fixCols: fc});
+    //$('#tablefix').tablefix({width: 1920, height: 610, fixRows: 1, fixCols: 1});
+ 
+  //画面位置を保持する
      $('form').keepPosition();
   });
 
