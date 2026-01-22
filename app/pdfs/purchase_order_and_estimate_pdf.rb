@@ -240,8 +240,6 @@ class PurchaseOrderAndEstimatePDF
           get_supplier_when_order(item)
         end
       
-        #binding.pry
-        
         #各アイテムの出力判定
         #if !$mail_flag
         if !mail_flag
@@ -291,10 +289,17 @@ class PurchaseOrderAndEstimatePDF
           
             material_name = item[:material_name]
           
+          
+            #binding.pry
+            
             #備考(資材単位)
-            if item[:notes].present?
-              #material_name2 = item[:material_name]
-              notes = "※" + item[:notes]
+            material_master = MaterialMaster.where(id: item[:material_id]).first
+                        
+            #if item[:notes].present?
+            #upd260122
+            if material_master.notes.present?
+              #notes = "※" + item[:notes]
+              notes = "※" + material_master.notes
             end
           
             #定価

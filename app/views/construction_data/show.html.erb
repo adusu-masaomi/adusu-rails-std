@@ -12,7 +12,11 @@
   <dt><strong><%= model_class.human_attribute_name(:reception_date) %>:</strong></dt>
   <dd><%= @construction_datum.reception_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:customer_name) %>:</strong></dt>
-  <dd><%= @construction_datum.CustomerMaster.customer_name %></dd>
+  <% if @construction_datum.CustomerMaster.present? %>
+    <dd><%= @construction_datum.CustomerMaster.customer_name %></dd>
+  <% else %>
+    <dd> - </dd>
+  <% end %>
   <dt><strong><%= model_class.human_attribute_name(:construction_period_start) %>:</strong></dt>
   <dd><%= @construction_datum.construction_period_start %></dd>
   <dt><strong><%= model_class.human_attribute_name(:construction_period_end) %>:</strong></dt>

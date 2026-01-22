@@ -1029,6 +1029,7 @@ class QuotationMaterialHeadersController < ApplicationController
         #$order_parameters = params[:purchase_order_history][:orders_attributes]
         detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
         
+        #binding.pry
         
         #test
         #detail_parameters = params[:quotation_material_header][:quotation_material_details_attributes]
@@ -1084,6 +1085,12 @@ class QuotationMaterialHeadersController < ApplicationController
             #upd241126
             report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @quotation_material_header.quotation_material_details, 
                                            @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
+            
+            #test260122
+            #備考が表示されないため
+            #report = PurchaseOrderAndEstimatePDF.create(@quotation_material_header, @detail_parameters, 
+            #                               @supplier, request_type, purchase_order_code, mail_flag, @company_id, session[:user_id])
+
             
             # ブラウザでPDFを表示する
             # disposition: "inline" によりダウンロードではなく表示させている
@@ -1851,7 +1858,7 @@ class QuotationMaterialHeadersController < ApplicationController
                       :quotation_price_1, :quotation_price_2, :quotation_price_3, 
                       :bid_flag_1, :bid_flag_2, :bid_flag_3, :mail_sent_flag, :quotation_email_flag_1, :quotation_email_flag_2, 
                       :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, 
-                      :_destroy])
+                      :notes, :_destroy])
         
     end
 end

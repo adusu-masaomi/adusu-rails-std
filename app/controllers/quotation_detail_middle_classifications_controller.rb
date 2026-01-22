@@ -118,7 +118,29 @@ class QuotationDetailMiddleClassificationsController < ApplicationController
         flash[:notice] = "データ作成が完了しました。"
       end
     end
+    
+    #add251208 pdf発行
+    if params[:format] == "pdf" then
       
+      #作業明細PDF発行
+      respond_to do |format|
+        format.html # index.html.erb
+        format.pdf do
+          
+          report = WorkingItemListPDF.create(@quotation_detail_middle_classifications, 2)
+          
+          #ブラウザでPDFを表示する
+          # disposition: "inline" によりダウンロードではなく表示させている
+          send_data report.generate,
+          filename:    "作業明細.pdf",
+          type:        "application/pdf",
+          disposition: "inline"
+          
+        end
+      end
+    end
+    ###
+    
   end
     
   #ドラッグ＆ドロップによる並び替え機能(seqをセットする)

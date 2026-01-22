@@ -1165,7 +1165,9 @@ class PurchaseOrderHistoriesController < ApplicationController
       
       #送信済み・削除判定が必要なので現在のパラメータをセット
       $order_parameters = params[:purchase_order_history][:orders_attributes]
-            
+      
+      #binding.pry
+      
       reissue_flag = params[:purchase_order_history][:purchase_order_reissue]
       
       #if $order_parameters.present?  #add230719

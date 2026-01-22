@@ -65,6 +65,12 @@
             working_large_item_name: params[:working_large_item_name], working_large_specification: params[:working_large_specification], data_type: "1" ),
             :class => 'btn btn-yellow300 btn-xs keep-disp' , :data => {:confirm => '内訳へデータを移行しますか？'} %>
 
+<!-- テスト中
+<%= link_to "作業明細表(作成中)",
+            quotation_detail_middle_classifications_path(@quotation_detail_middle_classifications, format: "pdf", 
+                                                                                         move_flag: params[:move_flag], print_type: "1"),
+            :class => 'btn  btn-lightgreen100_ftg keep-disp', :target=>["_blank"] %>
+-->
 
 </br>
 <!--upd170626 global valiable erased-->
