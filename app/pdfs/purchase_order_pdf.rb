@@ -160,7 +160,8 @@ class PurchaseOrderPDF
       #if user_id == 5  #test
       if user_id == 1
         #ユーザー"adusu"で入った場合は高野とする
-        name = "高野"
+        #name = "高野"
+        name = "薄田"  #退職により変更 260128
         responsible_email = "adusu-info@eos.ocn.ne.jp"
       else
         #ユーザー"masami"で入った場合は社長とする

@@ -1858,7 +1858,7 @@ class QuotationMaterialHeadersController < ApplicationController
                       :quotation_price_1, :quotation_price_2, :quotation_price_3, 
                       :bid_flag_1, :bid_flag_2, :bid_flag_3, :mail_sent_flag, :quotation_email_flag_1, :quotation_email_flag_2, 
                       :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, 
-                      :notes, :_destroy])
+                      :_destroy])
         
     end
 end
