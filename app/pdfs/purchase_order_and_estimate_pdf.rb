@@ -298,11 +298,15 @@ class PurchaseOrderAndEstimatePDF
                         
             #if item[:notes].present?
             #upd260122
-            if material_master.notes.present?
-              #notes = "※" + item[:notes]
-              notes = "※" + material_master.notes
+            #if material_master.notes.present?
+            #  #notes = "※" + item[:notes]
+            #  notes = "※" + material_master.notes
+            #end
+            #upd260213
+            if item[:memo].present?
+              notes = "※" + item[:memo]
             end
-          
+            
             #定価
             @num = item[:list_price].to_i
             formatNum()

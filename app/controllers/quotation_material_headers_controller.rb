@@ -1612,6 +1612,15 @@ class QuotationMaterialHeadersController < ApplicationController
     
     #
     exist = false
+        
+    #add260213 初回時　表示されないバグ対応
+    if params[:quotation_material_header][:supplier_id_1].blank? && params[:quotation_material_header][:supplier_id_2].blank? && 
+       params[:quotation_material_header][:supplier_id_3].blank?
+      if params[:quotation_material_header][:supplier_master_id].present?
+        params[:quotation_material_header][:notes_1] = params[:quotation_material_header][:notes]
+      end
+    end
+    #
     
     if params[:quotation_material_header][:supplier_id_1].present?
       if params[:quotation_material_header][:supplier_master_id] == params[:quotation_material_header][:supplier_id_1]
@@ -1871,7 +1880,7 @@ class QuotationMaterialHeadersController < ApplicationController
                       :quantity, :unit_master_id, :list_price, :quotation_unit_price_1, :quotation_unit_price_2, :quotation_unit_price_3, 
                       :quotation_price_1, :quotation_price_2, :quotation_price_3, 
                       :bid_flag_1, :bid_flag_2, :bid_flag_3, :mail_sent_flag, :quotation_email_flag_1, :quotation_email_flag_2, 
-                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, :notes, 
+                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, :memo, 
                       :_destroy])
         
     end

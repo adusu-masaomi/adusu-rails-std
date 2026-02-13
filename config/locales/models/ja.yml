@@ -30,6 +30,7 @@ ja:
     quantity: 数量
     list_price: 定価
     notes: 備考
+    memo: 備考
     last_unit_price: 直近単価
     last_unit_price_update_at: 直近単価更新日
     list_price_update_at: 定価更新日

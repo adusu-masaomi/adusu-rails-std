@@ -856,7 +856,8 @@ class PurchaseOrderHistoriesController < ApplicationController
               @material_master.material_name = item[:material_name]
               @material_master.maker_id = item[:maker_id]
               @material_master.list_price = item[:list_price]
-              @material_master.notes = item[:notes]
+              #del260213
+              #@material_master.notes = item[:notes]
               @material_master.material_category_id = item[:material_category_id]
               @material_master.unit_id = item[:unit_id]
             
@@ -907,9 +908,10 @@ class PurchaseOrderHistoriesController < ApplicationController
 
               @material_master = MaterialMaster.find_by(material_code: item[:material_code])
               #商品マスターへセット(商品コード存在しない場合)
+              #notes: item[:notes] 抹消 260213
               if @material_master.nil?
                 material_master_params = {material_code: item[:material_code], material_name: item[:material_name], 
-                maker_id: item[:maker_id], list_price: item[:list_price], notes: item[:notes], 
+                maker_id: item[:maker_id], list_price: item[:list_price], 
                 material_category_id: item[:material_category_id],
                 unit_id: item[:unit_master_id] }
 
@@ -1441,7 +1443,7 @@ class PurchaseOrderHistoriesController < ApplicationController
                    :delivery_place_flag, :notes, 
                     orders_attributes: [:id, :material_id, :material_code, :material_name, :quantity, :unit_master_id, 
                    :maker_id, :list_price, :order_unit_price, :order_price, :material_category_id, :mail_sent_flag, 
-                   :sequential_id, :printed_flag, :_destroy])
+                   :sequential_id, :printed_flag, :memo, :_destroy])
   end
 
 end

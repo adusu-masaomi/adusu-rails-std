@@ -89,9 +89,7 @@
   </br>
   <!--備考-->
   <!--タブ移動はjs側の”setNextControl”で制御-->
-  <% @notes = MaterialMaster.where(:id => f.object.material_id).where("id is NOT NULL").pluck(:notes).flatten.join(" ") %>
-  
-  <%= f.input :notes,  input_html:{ id: "notes",  style: 'width:610px' , :tabindex=>"5", :value => @notes} %>
+  <%= f.input :memo,  input_html:{ id: "memo",  style: 'width:610px' , :tabindex=>"5" } %>
   
   <!--スペース-->
   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -469,7 +467,7 @@
        
       e.keyCode = 0;  //キーコードをリセットする（しないと次のコントロールまで進んでしまう）
     
-    }else if (gControl_id == "notes") {
+    }else if (gControl_id == "memo") {
       //add190226
       //備考→分類
       //name属性に埋め込まれているIDを抜き出す

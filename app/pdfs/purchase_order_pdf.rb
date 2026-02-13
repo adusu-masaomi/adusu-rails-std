@@ -178,7 +178,9 @@ class PurchaseOrderPDF
     report.page.item(:notes).value("※記載されている金額は、前回納品時の金額です。変更のある場合は、納品書にて修正して下さい。")
     if !$purchase_order_history[:notes].blank?
       #report.page.item(:notes).value("※" + $purchase_order_history[:notes])
-      report.page.item(:notes2).value($purchase_order_history[:notes])
+      #report.page.item(:notes2).value($purchase_order_history[:notes])
+      #upd260213
+      report.page.item(:notes2).value("※" + $purchase_order_history[:notes])
     end
     
     subtotal = 0
@@ -237,9 +239,12 @@ class PurchaseOrderPDF
             material_name = item[:material_name]
           
             #備考(資材単位)
-            if item[:notes].present?
-              #material_name2 = item[:material_name]
-              notes = "※" + item[:notes]
+            #if item[:notes].present?
+            #  notes = "※" + item[:notes]
+            #end
+            #upd260213
+            if item[:memo].present?
+              notes = "※" + item[:memo]
             end
           
             #定価
