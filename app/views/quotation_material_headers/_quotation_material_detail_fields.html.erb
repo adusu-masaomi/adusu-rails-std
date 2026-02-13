@@ -122,9 +122,7 @@
   
   <!--備考-->
   <!--タブ移動はjs側の”setNextControl”で制御-->
-  <% @notes = MaterialMaster.where(:id => f.object.material_id).where("id is NOT NULL").pluck(:notes).flatten.join(" ") %>
-  
-  <%= f.input :notes,  input_html:{ id: "notes",  style: 'width:581px' , :tabindex=>"5", :value => @notes} %>
+  <%= f.input :notes,  input_html:{ id: "notes",  style: 'width:581px' , :tabindex=>"5"} %>
   
   <!--add200129-->
   <!--資材分類-->
@@ -732,10 +730,11 @@
           var nm = "quotation_material_header[quotation_material_details_attributes][" + selected_index + "][list_price]";
           document.getElementsByName(nm)[0].value = obj;
           //add180509
+          //del260213
           //備考をセット
-          obj = document.getElementById("notes").textContent;
-          var nm = "quotation_material_header[quotation_material_details_attributes][" + selected_index + "][notes]";
-          document.getElementsByName(nm)[0].value = obj;
+          //obj = document.getElementById("notes").textContent;
+          //var nm = "quotation_material_header[quotation_material_details_attributes][" + selected_index + "][notes]";
+          //document.getElementsByName(nm)[0].value = obj;
           
         }
       );

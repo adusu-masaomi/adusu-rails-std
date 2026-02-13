@@ -520,6 +520,8 @@ class QuotationMaterialHeadersController < ApplicationController
       respond_to do |format|
         
         if @quotation_material_header.update(quotation_material_header_params)
+           
+          #binding.pry
         
           #比較表・ＦＡＸ
           if params[:quotation_material_header][:sent_flag] == "4"
@@ -717,8 +719,14 @@ class QuotationMaterialHeadersController < ApplicationController
                 #                               :unit_id => item[:unit_master_id])
                 
                 #Rails6
+                #materials.update!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
+                #                               :list_price => item[:list_price], :notes => item[:notes], 
+                #                               :material_category_id => item[:material_category_id], 
+                #                               :unit_id => item[:unit_master_id])
+                
+                #upd260213
                 materials.update!(:material_name => item[:material_name], :maker_id => item[:maker_id], 
-                                               :list_price => item[:list_price], :notes => item[:notes], 
+                                               :list_price => item[:list_price], 
                                                :material_category_id => item[:material_category_id], 
                                                :unit_id => item[:unit_master_id])
                 
@@ -752,8 +760,14 @@ class QuotationMaterialHeadersController < ApplicationController
               #商品マスターへセット(商品コード存在しない場合)
               if @material_master.nil?
                 #単位追加
+                #material_master_params = {material_code: item[:material_code], material_name: item[:material_name], 
+                #                        maker_id: item[:maker_id], list_price: item[:list_price], notes: item[:notes],
+                #                        material_category_id: item[:material_category_id],
+                #                        unit_id: item[:unit_master_id] }
+                
+                #upd260213
                 material_master_params = {material_code: item[:material_code], material_name: item[:material_name], 
-                                        maker_id: item[:maker_id], list_price: item[:list_price], notes: item[:notes],
+                                        maker_id: item[:maker_id], list_price: item[:list_price], 
                                         material_category_id: item[:material_category_id],
                                         unit_id: item[:unit_master_id] }
                                         
@@ -1857,7 +1871,7 @@ class QuotationMaterialHeadersController < ApplicationController
                       :quantity, :unit_master_id, :list_price, :quotation_unit_price_1, :quotation_unit_price_2, :quotation_unit_price_3, 
                       :quotation_price_1, :quotation_price_2, :quotation_price_3, 
                       :bid_flag_1, :bid_flag_2, :bid_flag_3, :mail_sent_flag, :quotation_email_flag_1, :quotation_email_flag_2, 
-                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, 
+                      :quotation_email_flag_3, :order_email_flag_1, :order_email_flag_2, :order_email_flag_3, :sequential_id, :notes, 
                       :_destroy])
         
     end
