@@ -430,14 +430,17 @@ def get_notes_by_supplier
   #case $supplier
   case @supplier
     when 1
-      #@notes = $quotation_material_header[:notes_1]
-      @notes = @quotation_material_header[:notes_1]
+      #@notes = @quotation_material_header[:notes_1]
+      #upd260213
+      @notes = "※" + @quotation_material_header[:notes_1]
     when 2
-      #@notes = $quotation_material_header[:notes_2]
-      @notes = @quotation_material_header[:notes_2]
+      #@notes = @quotation_material_header[:notes_2]
+      #upd260213
+      @notes = "※" + @quotation_material_header[:notes_2]
     when 3
-      #@notes = $quotation_material_header[:notes_3]
-      @notes = @quotation_material_header[:notes_3]
+      #@notes = @quotation_material_header[:notes_3]
+      #upd260213
+      @notes = "※" + @quotation_material_header[:notes_3]
   end
   
 end
