@@ -436,11 +436,21 @@ def get_notes_by_supplier
     when 2
       #@notes = @quotation_material_header[:notes_2]
       #upd260213
-      @notes = "※" + @quotation_material_header[:notes_2]
+      #upd260520
+      if @quotation_material_header[:notes_2].nil?
+        @notes = ""
+      else
+        @notes = "※" + @quotation_material_header[:notes_2]
+      end
     when 3
       #@notes = @quotation_material_header[:notes_3]
       #upd260213
-      @notes = "※" + @quotation_material_header[:notes_3]
+      #upd260520
+      if @quotation_material_header[:notes_3].nil?
+        @notes = ""
+      else
+        @notes = "※" + @quotation_material_header[:notes_3]
+      end
   end
   
 end
