@@ -833,8 +833,24 @@
             document.getElementById("labor_cost").value;
 	  }
 	  
-	  //add240113
-    clearCalcData();
+	  //upd260617
+    //割合が既に入力されている場合、再計算させる。割合がない場合は
+    //数値をそのままクリア
+    accessory_rate = document.getElementById("accessory_rate").value;
+    miscellaneous_rate = document.getElementById("miscellaneous_rate").value;
+    other_rate = document.getElementById("other_rate").value;
+    benefit_rate = document.getElementById("benefit_rate").value;
+    
+    if (accessory_rate != undefined && miscellaneous_rate != undefined && 
+        other_rate != undefined && benefit_rate != undefined){
+        //割合が入ってる場合→再計算
+        calcMaterialCost();
+    }else{
+      clearCalcData();
+    }
+	  //clearCalcData();
+	  
+	  //upd end
 	  
 	  //add251028
 	  SetUpdateDateToday();
