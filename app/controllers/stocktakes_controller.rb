@@ -30,6 +30,9 @@ class StocktakesController < ApplicationController
     #global set
     $stocktakes = @stocktakes
     
+    #add260930
+    @stocktakes_all = @stocktakes
+    
     #kaminari用設定
     @stocktakes  = @stocktakes.page(params[:page])
 	  #
@@ -164,10 +167,18 @@ class StocktakesController < ApplicationController
   #在庫マスターへの反映
   def update_inventory
   
-    @stocktakes.where(inventory_update_flag: nil).each do |stocktake| 
+    #binding.pry
+  
+    #@stocktakes.where(inventory_update_flag: nil).each do |stocktake|
+    #upd260930
+    @stocktakes_all.where(inventory_update_flag: nil).each do |stocktake| 
       if stocktake.physical_quantity.present? && stocktake.book_quantity.present?
       #在庫履歴マスターを更新
-    
+        
+        #if stocktake.id == 11766
+        #  binding.pry
+        #end
+        
         #棚卸日	#在庫区分
         #工事ID
         @stocktake_record = stocktake
