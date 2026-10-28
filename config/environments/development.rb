@@ -11,9 +11,10 @@ Rails.application.configure do
   #user_name:             'adusudenki@gmail.com',
   user_name:              Rails.application.secrets.access_key_id,
   #password:              'a0256470200z',
-  password:               Rails.application.secrets.secret_access_key,
-	authentication:        'login'
-	#enable_starttls_auto:  true
+  #password:               Rails.application.secrets.secret_access_key,
+  password:                Rails.application.secrets.smtp_password,
+  authentication:        'login'
+  #enable_starttls_auto:  true
   }
 
   # In the development environment your application's code is reloaded any time
